@@ -1,0 +1,76 @@
+<%@ MasterClass="Application.layouts.MainLayout" %>
+<com:TContent ID="jdMain">
+	<com:TActiveLabel ID="judul"/>
+    
+    <a href="<%= $this->Service->constructUrl('Simak') %>" onclick="maskContent()">
+    <span class="close-btn">
+        <span class="ui-icon ui-icon-circle-close"></span>
+    </span>
+    </a>
+    
+</com:TContent>	
+<com:TContent ID="Main">
+	<com:TActiveLabel ID="tes"/>
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td>
+            	<com:TInlineFrame
+                	ID="frame1"
+                	Width="100%"
+                    Height="800"
+                    ShowBorder="false"                    
+                    Style="overflow:visible;"/>
+            </td>
+          </tr>
+          <tr>
+            <td style="display:none;">
+            	<com:TInlineFrame
+                	ID="frame"
+                	Width="100%"
+                    Height="800"
+                    ShowBorder="false"                    
+                    Style="overflow:visible;"/>
+            </td>
+          </tr>
+          
+          <tr>
+             
+          <tr>
+            <td><hr /></td>
+          </tr>
+          <tr>
+            <td style="display:none;"><table width="10" border="0" align="center" cellpadding="0" cellspacing="2">
+                <tr>
+                  <td>
+                    <com:TActiveButton 
+                        Text="Simpan" 
+                        Attributes.onclick="if(!confirm('Simpan data sekarang ?')) return false;" 
+                        OnClick="simpanClicked" 
+                        CssClass="button_01" 
+                        ValidationGroup="val"/>
+                   </td>
+                  <td>
+                  <td><com:TActiveButton Text="Batal" Visible="True" Attributes.onclick="if(!confirm('Batalkan pengisian data ?')) return false;" 
+                            OnClick="keluarClicked" 
+                            CausesValidation="false" 
+                            CssClass="button_01"  />
+                  </td>
+                </tr>
+            </table></td>
+          </tr>
+      </table>
+    
+    <com:TCallback ID="UpdateCallback" OnCallback="prosesKonfirmasi" ActiveControl.CausesValidation="false"/>
+	<script type="text/javascript">
+		//<![CDATA[
+		function konfirmasi(mode){
+			var request= <%= $this->UpdateCallback->ActiveControl->Javascript %>;
+				request.setCallbackParameter({
+					Id:mode
+				});
+				request.dispatch();
+		}
+		//]]>
+	</script>     
+          
+</com:TContent>

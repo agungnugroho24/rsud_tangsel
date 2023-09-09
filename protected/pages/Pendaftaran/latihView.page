@@ -1,0 +1,87 @@
+<com:TContent ID="Main">
+<table width="100%"  border="0" cellspacing="0" cellpadding="0">  
+  <tr>
+    <td><table width="750" border="0" align="center" cellpadding="0" cellspacing="0">
+      <tr>
+        <td background="<%=$this->Page->Theme->BaseUrl.'/images/bkg02.png'%>"><table width="715"  border="0" align="center" cellpadding="0" cellspacing="0">
+          <tr>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td><table width="100%"  border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td width="1%">&nbsp;</td>
+                  <td width="99%"><img src="<%=$this->Page->Theme->BaseUrl.'/images/text07.png'%>" width="188" height="21"></td>
+                </tr>
+            </table></td>
+          </tr>
+          <tr>
+            <td background="../theme/bkg06.png"><div align="center">
+                <table width="90%"  border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td>&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td class="text_04">Jadwal Kegiatan Pariwisata </td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                  </tr>
+				  <com:TRepeater 
+				  	ID="Repeater" 
+					AllowPaging="true"
+					AllowCustomPaging="true"
+					PageSize="3">
+				  <prop:ItemTemplate>
+                  <tr>
+                    <td class="text_03">&#8226;&nbsp;<%#$this->Data->nama%></td>
+                  </tr>
+                  <tr>
+                    <td height="5"></td>
+                  </tr>
+                  <tr>
+                    <td valign="top"><div align="justify">
+                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                          <tr>
+                            <td width="3%"></td>
+                            <td width="31%" valign="top">&nbsp;
+							</td>                            	
+							<td width="3%" valign="top">&nbsp;
+							</td>
+                            <td width="63%" valign="top">
+								Nama File : <%#$this->Data->nama_file%>
+								<br/>
+								Tipe File : <%#$this->Data->tipe%>
+							</td>
+                          </tr>
+                          <tr>
+                            <td></td>
+                            <td valign="top">&nbsp;</td>
+                            <td valign="top"></td>
+                            <td valign="top">&nbsp;</td>
+                          </tr>
+                        </table>
+                   	</td>
+                  </tr>                  
+				  </prop:ItemTemplate>
+                  </com:TRepeater>
+                  <tr>
+                    <td  class="text_03" align="center">
+						<com:TPager ControlToPaginate="Repeater" 	
+							PageButtonCount="3" 
+							Mode="DropDownList" 
+							OnPageIndexChanged="pageChanged" />
+					</td>
+                  </tr>
+				  <tr>
+                    <td class="text_04" align="center">&nbsp;</td>
+                  </tr>
+                </table>
+            </div></td>
+          </tr>
+        </table></td>
+      </tr>
+    </table></td>
+  </tr>
+</table>
+</com:TContent>

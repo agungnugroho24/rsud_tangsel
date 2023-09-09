@@ -1,0 +1,206 @@
+<%@ MasterClass="Application.layouts.DialogLayout" %>
+
+<com:TContent ID="isi">
+	<com:TActiveLabel ID="msg"/>
+	<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+      <tr>
+        <td>
+            <table width="100%"  border="0" align="left">	
+                          <tr>
+                            <td width="150"><span>&#8226;</span>&nbsp;&nbsp;Jenis Pasien</td>
+                            <td width="5">:</td>
+                            <td><com:TActiveLabel ID="txt"/></td>
+                          </tr>				
+                          <tr>
+                            <td><span>&#8226;</span>&nbsp;&nbsp;No. Rekam Medis</td>
+                            <td>:</td>
+                            <td><com:TActiveLabel ID="txt2"/></td>
+                          </tr>		
+                          <tr>
+                            <td><span>&#8226;</span>&nbsp;&nbsp;Nama</td>
+                            <td>:</td>
+                            <td><com:TActiveLabel ID="txt3"/></td>
+                          </tr>	
+                          <tr>
+                            <td><span>&#8226;</span>&nbsp;&nbsp;Total Transaksi </td>
+                            <td>:</td>
+                            <td><strong><com:TActiveLabel ID="txt4"/></strong></td>
+                          </tr>	
+                          <tr>
+                            <td colspan="3"><hr /></td>
+                          </tr>				
+                          <tr>
+                            <td colspan="3">
+                            	
+                                <com:TControl ID="nonRacikanCtrl">
+                                <table width="100%" border="0" cellpadding="1" cellspacing="1">
+                                  <tr>
+                                    <td colspan="3"><em><strong>Non Racikan</strong></em></td>
+                                  </tr>
+                                  <tr>
+                                    <td valign="top" align="left" width="50%"><strong>Nama Obat / Alkes</strong></td>
+                                    <td valign="top" align="center" width="20%"><strong>Expired</strong></td>
+                                    <td valign="top" align="center" width="15%"><strong>Jumlah</strong></td>
+                                    <td valign="top" align="right" width="15%"><strong>Total</strong></td>
+                                  </tr>
+                                  
+                                  <com:TActiveRepeater 
+                                        ID="Repeater"
+                                        OnItemCreated="repeaterDataBound"
+                                        EnableViewState="true" >                        
+                                        <prop:ItemTemplate>
+                                          <tr>
+                                            <td valign="top" align="left"><com:TActiveLabel ID="nama"/><com:TActiveHiddenField ID="id" Value="<%#$this->Data['id']%>"/></td>
+                                            <td valign="top" align="center"><com:TActiveLabel ID="expired"/></td>
+                                            <td valign="top" align="center"><com:TActiveTextBox ID="jml" Width="80px" Style="text-align:right"/></td>
+                                            <td valign="top" align="right"><com:TActiveLabel ID="total"/></td>
+                                          </tr>
+                                  		</prop:ItemTemplate>
+                               	  </com:TActiveRepeater>        
+                              </table>
+                              </com:TControl>
+                              
+                              <com:TControl ID="racikanCtrl">
+                              	<br/>
+                                <table width="100%" border="0" cellpadding="1" cellspacing="1">
+                                  <tr>
+                                    <td colspan="3"><em><strong>Racikan</strong></em></td>
+                                  </tr>
+                                  <tr>
+                                    <td valign="top" align="left" width="55%"><strong>Nama Obat / Alkes</strong></td>
+                                    <td valign="top" align="center" width="15%"><strong>Expired</strong></td>
+                                    <td valign="top" align="center" width="15%"><strong>Jumlah</strong></td>
+                                    <td valign="top" align="right" width="15%"><strong>Total</strong></td>
+                                  </tr>
+                                  
+                                  <com:TActiveRepeater 
+                                        ID="Repeater2"
+                                        OnItemCreated="repeaterDataBound2"
+                                        EnableViewState="true" >                        
+                                        <prop:ItemTemplate>
+                                          <tr>
+                                            <td valign="top" align="left"><com:TActiveLabel ID="nama"/><com:TActiveHiddenField ID="id" Value="<%#$this->Data['id']%>"/></td>
+                                            <td valign="top" align="center"><com:TActiveLabel ID="expired"/></td>
+                                            <td valign="top" align="center"><com:TActiveTextBox ID="jml" Width="80px" Style="text-align:right"/></td>
+                                            <td valign="top" align="right"><com:TActiveLabel ID="total"/></td>
+                                          </tr>
+                                  		</prop:ItemTemplate>
+                               	  </com:TActiveRepeater>        
+                              </table>
+                              </com:TControl>
+                              
+                              <com:TControl ID="imunisasiCtrl">
+                              	<br/>
+                                <table width="100%" border="0" cellpadding="1" cellspacing="1">
+                                  <tr>
+                                    <td colspan="3"><em><strong>Imunisasi</strong></em></td>
+                                  </tr>
+                                  <tr>
+                                    <td valign="top" align="left" width="55%"><strong>Nama Obat / Alkes</strong></td>
+                                    <td valign="top" align="center" width="15%"><strong>Expired</strong></td>
+                                    <td valign="top" align="center" width="15%"><strong>Jumlah</strong></td>
+                                    <td valign="top" align="right" width="15%"><strong>Total</strong></td>
+                                  </tr>
+                                  
+                                  <com:TActiveRepeater 
+                                        ID="Repeater3"
+                                        OnItemCreated="repeaterDataBound3"
+                                        EnableViewState="true" >                        
+                                        <prop:ItemTemplate>
+                                          <tr>
+                                            <td valign="top" align="left"><com:TActiveLabel ID="nama"/><com:TActiveHiddenField ID="id" Value="<%#$this->Data['id']%>"/></td>
+                                            <td valign="top" align="center"><com:TActiveLabel ID="expired"/></td>
+                                            <td valign="top" align="center"><com:TActiveTextBox ID="jml" Width="80px" Style="text-align:right"/></td>
+                                            <td valign="top" align="right"><com:TActiveLabel ID="total"/></td>
+                                          </tr>
+                                  		</prop:ItemTemplate>
+                               	  </com:TActiveRepeater>        
+                              </table>
+                              </com:TControl>
+                              
+                              <com:TControl ID="bhpCtrl">
+                              	<br/>
+                                <table width="100%" border="0" cellpadding="1" cellspacing="1">
+                                  <tr>
+                                    <td colspan="3"><em><strong>BHP</strong></em></td>
+                                  </tr>
+                                  <tr>
+                                    <td valign="top" align="left" width="80%"><strong>Nama BHP</strong></td>
+                                    <td valign="top" align="right" width="20%"><strong>Total</strong></td>
+                                  </tr>
+                                  
+                                  <com:TActiveRepeater 
+                                        ID="Repeater4"
+                                        OnItemCreated="repeaterDataBound4"
+                                        EnableViewState="true" >                        
+                                        <prop:ItemTemplate>
+                                          <tr>
+                                            <td valign="top" align="left"><com:TActiveLabel ID="nama"/><com:TActiveHiddenField ID="id" Value="<%#$this->Data['id']%>"/></td>
+                                            <td valign="top" align="right"><com:TActiveLabel ID="total"/></td>
+                                          </tr>
+                                  		</prop:ItemTemplate>
+                               	  </com:TActiveRepeater>        
+                              </table>
+                              </com:TControl>
+								
+                                	
+                            </td>
+                          </tr>
+                          <tr>
+                            <td colspan="3"><hr /></td>
+                          </tr>
+                          <tr>
+                            <td colspan="3" align="center">
+                              <com:TActiveButton
+                                Text="Update"
+                                CssClass="button_01" 
+                                CausesValidation="false"
+                                OnClick="updateClicked"
+                                IsDefaultButton="true"
+                                Visible="true"
+                                Attributes.OnClick = "if(!confirm('Update Data Sekarang ?')) return false;" >
+                                <prop:ClientSide
+                                 OnLoading="maskContent();" 
+                                 OnComplete="unmaskContent();"/>
+                            </com:TActiveButton>
+                            	
+                              <com:TActiveButton
+                                ID="cetakBtn"
+                                Text="Cetak"
+                                CssClass="button_01" 
+                                CausesValidation="false"
+                                OnClick="cetakClicked"
+                                IsDefaultButton="true"
+                                Visible="true"
+                                Attributes.OnClick = "if(!confirm('Cetak Nota Transaksi Sekarang ?')) return false;" >
+                                <prop:ClientSide
+                                 OnLoading="maskContent();" 
+                                 OnComplete="unmaskContent();"/>
+                            </com:TActiveButton>
+                            
+                             <com:TActiveButton 
+                                Text="Tutup" 
+                                OnClick="batalClicked" 
+                                CssClass="button_01" >
+                                <prop:ClientSide
+                                 OnLoading="maskContent(); "
+                                 OnComplete="unmaskContent();"/>
+                             </com:TActiveButton>     
+                             
+                            <com:TActiveButton 
+                                Text="Keluar" 
+                                OnClick="keluarClicked" 
+                                CausesValidation="false" 
+                                CssClass="button_01"
+                                Visible="false"
+                                Attributes.OnClick = "if(!confirm('Keluar sekarang ?')) return false;" >
+                                <prop:ClientSide
+                                 OnLoading="maskContent(); "/>
+                            </com:TActiveButton>                            </td>
+                          </tr>
+                        </table>
+        </td>
+        </tr>
+    </table>
+          
+</com:TContent>

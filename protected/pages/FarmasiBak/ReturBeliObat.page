@@ -1,0 +1,114 @@
+<%@ MasterClass="Application.layouts.MainLayout" %>
+<com:TContent ID="jdMain">
+	Retur Pembelian Obat PBF
+    
+    <a href="<%= $this->Service->constructUrl('Simak') %>" onclick="maskContent()">
+    <span class="close-btn">
+        <span class="ui-icon ui-icon-circle-close"></span>
+    </span>
+    </a>
+    
+</com:TContent>	
+
+<com:TContent ID="Main"> 
+
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>			  
+                <td>
+				<com:TLabel ID="showSql" />
+				<table width="100%" align="center" border="0">
+			  		<tr>
+						<td align="center"><com:TPanel GroupingText="Pencarian Data Obat" >
+							<table width="100%"  border="0" align="left">
+							  <tr>
+								<td width="150"><span>&#8226;</span>&nbsp;&nbsp;No. Faktur</td>
+								<td width="5">:</td>
+								<td ><com:TTextBox CssClass="input_text" 
+												  ID="notrans" 
+												  AutoPostBack="true"													   
+												  MaxLength="30"
+												  OnTextChanged="checkRegister" 
+												  TabIndex="1"
+												  Width="200px" />
+                                                  &nbsp;<com:TLabel ID="errMsg" ForeColor="#FF0000" />	
+                                      <com:TRequiredFieldValidator
+										Display="Dynamic"
+										ControlToValidate="notrans"
+										Text="No. Faktur belum diisi" 
+										ValidationGroup="val"/>            
+                                                  								</td>
+							  </tr>
+                              <tr>
+							    <td><span>&#8226;</span>&nbsp;&nbsp;Nama Obat </td>
+							    <td>:</td>
+							    <td><com:TDropDownList 
+										ID="DDObat"
+										PromptText ="--Silakan Pilih--"
+										PromptValue ="empty"											
+										DataTextField="nama"
+										DataValueField="kode" 	
+										ToolTip="Pilih Obat" 
+										TabIndex="4" 
+										Width="300px"
+										AutoPostBack="true"										
+										OnSelectedIndexChanged="chObat"/>
+								  <com:TRequiredFieldValidator
+										Display="Dynamic"
+										ControlToValidate="DDObat"
+										Text="Obat/Alkes belum dipilih" 
+										InitialValue="empty" 
+										ValidationGroup="val"/>
+                                   <com:TLabel ID="test"/>
+                                  </td>
+							    </tr>
+							  <tr>
+								<td ><span>&#8226;</span>&nbsp;&nbsp;Jumlah </td>
+								<td>:</td>
+								<td ><com:TTextBox CssClass="input_text" 
+												  ID="jml" 
+												  Width="300px" /> 
+                                                                                 
+                                	<com:TRequiredFieldValidator
+										Display="Dynamic"
+										ControlToValidate="jml"
+										Text="Jumlah belum diisi" 
+										ValidationGroup="val"/>
+                                </td>
+							  </tr>							
+							</table>
+							</com:TPanel>						</td>
+			  		</tr>
+					
+				</table>			</td>
+              </tr>
+                <td><hr /></td>
+              </tr>
+              <tr>
+                <td><table width="10" border="0" align="center" cellpadding="0" cellspacing="2">
+                    <tr>                                        
+                      <td><com:TButton Text="Simpan" 
+					  				   OnClick="simpanClicked"
+									   ID="simpanBtn" 
+                                       ValidationGroup="val"
+									   CausesValidation="true" 
+									   CssClass="button_01" 
+									   TabIndex="7" 
+                                       Attributes.onclick = "maskContent();"/></td>
+					  <td><com:TButton Text="Batal" 
+					  				   OnClick="batalClicked" 
+									   CausesValidation="false" 
+									   CssClass="button_01" 
+									   TabIndex="8" 
+                                       Attributes.onclick = "maskContent();"/></td>				   
+					  <td><com:TButton Text="Keluar" 
+					  				   OnClick="keluarClicked" 
+									   CausesValidation="false" 
+									   CssClass="button_01" 
+									   TabIndex="9"
+                                       Attributes.onclick = "maskContent();" /></td>
+                    </tr>
+                </table></td>
+              </tr>
+          </table>
+
+</com:TContent>	

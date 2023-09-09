@@ -1,0 +1,333 @@
+<%@ MasterClass="Application.layouts.MainLayout" %>
+<com:TContent ID="jdMain">
+	Retur Penjualan Obat Rawat Jalan
+    
+    <a href="<%= $this->Service->constructUrl('Simak') %>" onclick="maskContent()">
+    <span class="close-btn">
+        <span class="ui-icon ui-icon-circle-close"></span>
+    </span>
+    </a>
+    
+</com:TContent>	
+
+<com:TContent ID="Main"> 
+
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>			  
+                <td>
+				<com:TLabel ID="showSql" />
+				<table width="100%" align="center" border="0">
+			  		<tr>
+						<td align="center">
+							<table width="100%"  border="0" align="left">
+							  <tr>
+							    <td><span>&#8226;</span>&nbsp;&nbsp;Mode Input</td>
+							    <td>:</td>
+							    <td>
+                                	<com:TRadioButtonList
+                                          ID="modeInput" 
+                                          OnSelectedIndexChanged="modeActive" 
+                                          AutoPostBack="true" 
+                                          CausesValidation="false" 
+                                          SelectedIndex="0" 
+                                          RepeatDirection="Horizontal">
+                                        <com:TListItem Text="No. Resep" Value="0" />
+                                        <com:TListItem Text="No. CM" Value="1" />
+                                    </com:TRadioButtonList>                                </td>
+							    </tr>
+								<tr>
+							    <td><span>&#8226;</span>&nbsp;&nbsp;Mode Transaksi</td>
+							    <td>:</td>
+							    <td>
+                                	<com:TRadioButtonList
+                                          ID="modeInputTrans" 
+                                          OnSelectedIndexChanged="modeActiveTrans" 
+                                          AutoPostBack="true" 
+                                          CausesValidation="false" 
+                                          SelectedIndex="0" 
+                                          RepeatDirection="Horizontal">
+                                        <com:TListItem Text="Sudah Bayar" Value="1" />
+                                        <com:TListItem Text="Belum Bayar" Value="2" />
+                                    </com:TRadioButtonList>                                </td>
+							    </tr>
+                              <tr>
+                                <td width="19%"><span>&#8226;</span>&nbsp;&nbsp;<com:TLabel ID="modeInputTxt" Text="No. Resep"/></td>
+                                <td width="1%">:</td>
+                                <td width="80%">
+                                    <com:TPanel ID="noTransPanel" Visible="true">
+                                    	<com:TTextBox CssClass="input_text" 
+                                                  ID="notrans"												   
+                                                  MaxLength="14"
+                                                  Width="200px" />
+                                     	<com:TRequiredFieldValidator
+                                              ControlToValidate="notrans"
+                                              ErrorMessage="Anda harus mengisikan No. Resep"
+                                              Display="Dynamic" 
+                                              ValidationGroup="cari" />
+                                     </com:TPanel>             
+                                     
+                                     <com:TPanel ID="noCmPanel" Visible="false">
+                                     	<com:TTextBox CssClass="input_text" 
+                                                  ID="noCM" 													   
+                                                  MaxLength="7"
+                                                  Width="70px" />
+                                                  &nbsp;
+										<com:TRequiredFieldValidator
+                                              ControlToValidate="noCM"
+                                              ErrorMessage="Anda harus mengisikan No. CM"
+                                              Display="Dynamic" 
+                                              ValidationGroup="cari" />
+                                     </com:TPanel>                                     </td>
+                              </tr>
+							  <com:Tcontrol ID="tglCtrl" Visible="false">
+                              <tr>
+                                <td><span>&#8226;</span>&nbsp;&nbsp;Tanggal</td>
+                                <td>:</td>
+                                <td>
+									<com:TDatePicker 
+										ID="tglBeli"
+										Width="70px" 
+										DateFormat="dd-MM-yyyy"	
+										ToolTip="Masukan tanggal pembelian obat" 
+										MaxLength="10" />
+									<com:TRequiredFieldValidator 
+										ControlToValidate="tglBeli"											 
+										ErrorMessage="Anda harus mengisi tanggal pembelian obat"
+										Display="Dynamic" 
+										ValidationGroup="cari"/>								</td>
+                              </tr>
+							  </com:Tcontrol>
+                              <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>
+                                	<com:TButton Text="Cari" 
+					  				   OnClick="cariClicked"
+									   ID="cariBtn" 
+                                       ValidationGroup="cari"
+									   CssClass="button_01" />                                 </td>
+                              </tr>
+								
+							    <tr>
+							      <td colspan="3">
+                                  	
+                                    <table width="100%"  border="0" align="left">
+                                      <tr>
+                                        <td colspan="5"><hr/></td>
+                                        </tr>
+									<com:Tcontrol ID="DDtransCtrl" Visible="false">
+                                      <tr>
+                                        <td><span>&#8226;</span>&nbsp;&nbsp;No. Resep </td>
+                                        <td>:</td>
+                                        <td colspan="3" align="left">
+											<com:TDropDownList 
+												ID="DDtrans" 
+												PromptText ="--Silakan Pilih--"
+												PromptValue =""	
+												Width="130px" 
+												OnSelectedIndexChanged="DDtransChanged" 
+												AutoPostBack="true" 
+												CausesValidation="false" />
+												
+											 <com:TRequiredFieldValidator 
+												ControlToValidate="DDtrans" 											 
+												ErrorMessage="Anda harus memilih No. Resep"
+												Display="Dynamic" 
+												ValidationGroup="cari"/>											</td>
+                                        </tr>
+									  </com:Tcontrol>
+									  <com:Tcontrol ID="errMsgCtrl" Visible="false">
+                                      <tr>
+                                        <td colspan="5" align="center">
+											<com:TLabel 
+												ID="errMsg" 
+												ForeColor="#FF0000" 
+												Text="Data tidak ditemukan atau Pembayaran belum diselesaikan"												
+											/>
+										</td>
+                                      </tr>
+									  </com:Tcontrol>
+									  <com:Tcontrol ID="hasilCariCtrl" Visible="false">
+                                            <tr>
+                                              <td>&nbsp;</td>
+                                              <td>&nbsp;</td>
+                                              <td>&nbsp;</td>
+                                              <td>&nbsp;</td>
+                                              <td width="32%" rowspan="5" valign="top">  
+                                                <com:TTextBox 
+                                            	ID="alasan" 
+                                                MaxLength="50"
+                                                Width="200px"
+							 		  			TextMode="MultiLine"
+                                                ToolTip="Isi alasan retur" />										</td>
+                                            </tr>
+                                            <tr>
+                                        <td><span>&#8226;</span>&nbsp;&nbsp;No. CM</td>
+                                        <td>:</td>
+                                        <td width="39%"><com:TLabel ID="noCmTxt2"/></td>
+                                        <td width="11%"><span>&#8226;</span>&nbsp;&nbsp;Alasan :</td>
+                                        </tr>
+                                      <tr>
+                                        <td width="17%"><span>&#8226;</span>&nbsp;&nbsp;Nama Pasien</td>
+                                        <td width="1%">:</td>
+                                        <td colspan="2"><com:TLabel ID="nmPasien2"/></td>
+                                        </tr>
+                                      <tr>
+                                        <td><span>&#8226;</span>&nbsp;&nbsp;Dokter</td>
+                                        <td>:</td>
+                                        <td colspan="2"><com:TLabel ID="nmDokter"/></td>
+                                        </tr>
+                                      <tr>
+                                        <td><span>&#8226;</span>&nbsp;&nbsp;Tanggal</td>
+                                        <td>:</td>
+                                        <td colspan="2"><com:TLabel ID="tgl"/></td>
+                                        </tr>
+                                      <tr>
+                                        <td colspan="5">
+											<table width="95%"  border="0" align="center" cellpadding="0" cellspacing="1">
+											  <tr>
+												<td align="center">
+													<com:TDataGrid ID="UserGrid"
+															DataKeyField="id"
+															AutoGenerateColumns="false"	
+															AllowPaging="true"
+															AllowCustomPaging="true"
+															AllowSorting="false"
+															Width="100%"					
+															PageSize="15"
+															PagerStyle.Mode="Numeric"			
+															PagerStyle.Font.Name="Arial"
+															PagerStyle.Font.Size="12"
+															PagerStyle.HorizontalAlign="Right"			
+															GridLines="None"
+															CellSpacing="1"
+															CellPadding="2"
+															HeaderStyle.CssClass="headerstyle"
+															ItemStyle.CssClass="itemstyle"
+															AlternatingItemStyle.CssClass="itemstyle2"
+															OnPageIndexChanged="dtgSomeData_PageIndexChanged"
+															OnSortCommand="dtgSomeData_SortCommand"	
+															OnItemCreated="itemCreated"
+															OnEditCommand="editItem"
+															OnUpdateCommand="saveItem"
+															OnCancelCommand="cancelItem">
+														
+														<com:TTemplateColumn 
+															 HeaderText="Kode" 	
+															 SortExpression="id_obat"					 
+															 ItemStyle.Width="50px" 
+															 ItemStyle.HorizontalAlign="Center" >									
+															<prop:ItemTemplate>
+																<%=	$this->Parent->DataItem['id_obat'] %>                                                    </prop:ItemTemplate>
+														</com:TTemplateColumn>
+													   
+													   <com:TTemplateColumn HeaderText="Nama" 						 
+															 ItemStyle.Width="150px" 
+															 ItemStyle.HorizontalAlign="Center" >									
+															<prop:ItemTemplate>
+																<%=	ObatRecord::finder()->findByPk($this->Parent->DataItem['id_obat'])->nama;	  %>                                                    </prop:ItemTemplate>
+														</com:TTemplateColumn>
+										
+														<com:TTemplateColumn 
+															 HeaderText="jumlah" 	
+															 SortExpression="jumlah"					 
+															 ItemStyle.Width="75px" 
+															 ItemStyle.HorizontalAlign="Center" >									
+															<prop:ItemTemplate>
+																<%=	$this->Parent->DataItem['jumlah'] %>                                                    </prop:ItemTemplate>
+														</com:TTemplateColumn>
+														
+													   <com:TTemplateColumn 
+															 HeaderText="Harga" 	
+															 SortExpression="hrg_bulat"					 
+															 ItemStyle.Width="75px" 
+															 ItemStyle.HorizontalAlign="Right" >									
+															<prop:ItemTemplate>
+																<%=	$this->Parent->DataItem['hrg_bulat'] %>                                                    </prop:ItemTemplate>
+														</com:TTemplateColumn>
+														
+														<com:TTemplateColumn 
+															 HeaderText="Total" 	
+															 SortExpression="total"					 
+															 ItemStyle.Width="75px" 
+															 ItemStyle.HorizontalAlign="Right" >									
+															<prop:ItemTemplate>
+																<%=	$this->Parent->DataItem['total'] %>                                                    </prop:ItemTemplate>
+														</com:TTemplateColumn>
+														
+														<com:TBoundColumn
+															ID="jmlRetur"
+															SortExpression="jml_retur"
+															HeaderText="Jumlah Retur"
+															ItemStyle.Width="75px"
+															DataField="jml_retur" 
+															ItemStyle.HorizontalAlign="Right"/>
+												
+														<com:TEditCommandColumn
+															HeaderText="Retur"
+															HeaderStyle.Width="50px"
+															UpdateText="Save"
+															ItemStyle.HorizontalAlign="Center"
+															ItemStyle.Font.Italic="false"
+															/>	
+													</com:TDataGrid>                                        </td>                       
+											  </tr>
+											</table>										</td>
+                                        </tr>
+										</com:Tcontrol>
+                                    </table>
+                                              </td>
+							      </tr>
+							    <tr>
+							      <td colspan="3"><hr/> </td>
+							    </tr>							
+							</table>
+                        </td>
+			  		</tr>
+					
+				</table>
+                </td>
+              </tr>
+              <tr>
+                <td><table width="10" border="0" align="center" cellpadding="0" cellspacing="2">
+                    <tr>                                        
+                      <td><com:TButton Text="Cetak" 
+					  				   OnClick="cetakClicked"
+									   ID="cetakBtn" 
+									   CausesValidation="false" 
+									   CssClass="button_01"  
+									   Enabled="false" /></td>
+					  <td><com:TButton Text="Batal" 
+					  				   OnClick="batalClicked" 
+									   CausesValidation="false" 
+									   CssClass="button_01"
+                                       Attributes.onclick = "if(!confirm('Batalkan Retur..?')) return false; else maskContent();"/></td>	
+					  <td><com:TButton Text="Hapus" 
+					  				   OnClick="hapusClicked" 
+									   CausesValidation="false" 
+									   CssClass="button_01"
+                                       Attributes.onclick = "if(!confirm('Hapus Transaksi Penjualan Obat..?')) return false; else maskContent();"/></td>				   			   
+					  <td><com:TButton Text="Keluar" 
+					  				   OnClick="keluarClicked" 
+									   CausesValidation="false" 
+                                       Visible="False"
+									   CssClass="button_01" /></td>
+                    </tr>
+                </table></td>
+              </tr>
+          </table>
+
+<com:TCallback ID="UpdateCallback" OnCallback="reloadpage" ActiveControl.CausesValidation="false"/>
+	<script type="text/javascript">
+		//<![CDATA[
+		function reloadpage(){
+			var request= <%= $this->UpdateCallback->ActiveControl->Javascript %>;
+				//request.setCallbackParameter({
+					//Id:personId
+				//});
+				request.dispatch();
+		}
+		//]]>
+	</script>
+              
+</com:TContent> 

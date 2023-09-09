@@ -1,0 +1,467 @@
+<%@ MasterClass="Application.layouts.MainLayout" %>
+<com:TContent ID="jdMain">
+	Pengeluaran BHP Poli
+    
+    <a href="<%= $this->Service->constructUrl('Simak') %>" onclick="maskContent()">
+    <span class="close-btn">
+        <span class="ui-icon ui-icon-circle-close"></span>
+    </span>
+    </a>
+    
+</com:TContent>	
+
+<com:TContent ID="Main"> 
+		<com:TActiveLabel ID="showSql" />
+    	
+      <table width="100%">
+        <tr>
+         <td width="100"><span>&#8226;</span>&nbsp;&nbsp;Depo Stok</td>
+         <td width="5">:</td>
+         <td >
+         	<com:TActiveDropDownList 
+              ID="modeStok"
+              PromptText ="--Silakan Pilih--"
+              PromptValue ="empty"											
+              DataTextField="nama"
+              DataValueField="id" 	
+              Width="300px"
+              AutoPostBack="true"
+              CausesValidation="false"
+              OnSelectedIndexChanged="modeStokChanged"
+              OnCallback="obatPanelCallBack"/>  
+         </td>
+      	</tr> 
+      </table>
+      
+      <div style="clear:both"></div>
+      
+      <com:TActivePanel ID="obatPanel">   
+      <table width="100%">
+        <tr style="display:none">
+         <td width="100"><span>&#8226;</span>&nbsp;&nbsp;Mode Paket</td>
+         <td width="5">:</td>
+         <td >
+            <com:TActiveRadioButtonList
+              ID="modePaket"
+              RepeatDirection="Horizontal" 
+              AutoPostBack="true" 
+              CausesValidation="false" 
+              SelectedValue="0"
+              OnSelectedIndexChanged="modePaketChanged"
+              Style="display:inline; vertical-align:bottom;">
+                <com:TListItem Text="Non Paket" Value="0" />
+                <com:TListItem Text="Paket" Value="1" />
+              </com:TActiveRadioButtonList>
+              &nbsp;&nbsp;
+              <com:TActiveCheckBox
+                ID="CBabaikanHarga"
+                Text="Abaikan Harga Paket"
+                AutoPostBack="false" 
+                CausesValidation="false"/>
+           </td>
+         </tr> 
+         <tr>
+          <td width="100"><span>&#8226;</span>&nbsp;&nbsp;Nama BHP </td>
+          <td width="5">:</td>
+          <td>
+            <com:TAutoComplete
+              ID="AutoComplete" 
+              Width="300px"
+              OnSuggest="suggestNames"
+              OnSuggestionSelected="suggestionSelected1"
+              ResultPanel.CssClass="acomplete"
+              Suggestions.DataKeyField="kode"
+              CausesValidation="false" 
+              OnCallback="secondCallBack" 
+              MinChars="3" >
+              <prop:Suggestions.ItemTemplate>
+                <li><%# $this->Data['nama'] %></li>
+              </prop:Suggestions.ItemTemplate>
+            </com:TAutoComplete>
+            
+            <com:TActiveTextBox ID="kodeObat" Width="50px" ReadOnly="true" Visible="false" />
+            
+            <com:TRequiredFieldValidator
+              Display="Dynamic"
+              ControlToValidate="AutoComplete"
+              Text="BHP belum diisi" 
+              ValidationGroup="valTambah"
+              FocusOnError="true" />
+                            
+            <com:TActiveDropDownList 
+              ID="DDObat"
+              PromptText ="--Silakan Pilih--"
+              PromptValue ="empty"											
+              DataTextField="nama"
+              DataValueField="kode" 	
+              ToolTip="Pilih BHP" 
+              Width="300px"
+              AutoPostBack="true"										
+              OnSelectedIndexChanged="chObat"
+              OnCallback="secondCallBack"
+              CausesValidation="false"
+              Visible="false"
+              Enabled="false"/>
+            <com:TRequiredFieldValidator
+              Display="Dynamic"
+              ControlToValidate="DDObat"
+              Text="BHP belum dipilih" 
+              InitialValue="empty" 
+              ValidationGroup="valTambah"
+              FocusOnError="true"
+              Enabled="false"/>
+                          
+              <com:TActiveDropDownList ID="RBtipeRacik"
+                AutoPostBack="true"
+                CausesValidation="false"
+                OnSelectedIndexChanged="tipeRacikChanged"
+                Width="100px"
+                Style="display:none;">
+                  <com:TListItem Value="0" Text="Non Racikan" />
+                  <com:TListItem Value="1" Text="Racikan" />
+                  <com:TListItem Value="2" Text="Imunisasi" />
+                </com:TActiveDropDownList>
+                <com:TRequiredFieldValidator
+                  Display="Dynamic"
+                  ControlToValidate="RBtipeRacik"
+                  Text="*" 
+                  InitialValue="empty" 
+                  ValidationGroup="valTambah"
+                  FocusOnError="true"/>                  
+                            
+                <com:TActiveDropDownList 
+                  ID="DDRacik"
+                  PromptText ="--Silakan Pilih--"
+                  PromptValue ="empty"											
+                  DataTextField="nama"
+                  DataValueField="id" 	
+                  ToolTip="Pilih kelompok obat racikan.." 
+                  Width="150px"
+                  AutoPostBack="true"
+                  CausesValidation="false"
+                  OnSelectedIndexChanged="DDRacikChanged" 
+                  Style="display:none;"/>
+                <com:TRequiredFieldValidator
+                  Display="Dynamic"
+                  ControlToValidate="DDRacik"
+                  Text="kelompok obat racikan belum dipilih" 
+                  InitialValue="empty" 
+                  ValidationGroup="valTambah"/>
+                            
+                <com:TActiveDropDownList 
+                  ID="DDKemasan"
+                  PromptText ="--Silakan Pilih--"
+                  PromptValue ="empty"											
+                  DataTextField="nama"
+                  DataValueField="id" 	
+                  Width="100px"
+                  Style="display:none;"/>
+                <com:TRequiredFieldValidator
+                  Display="Dynamic"
+                  ControlToValidate="DDKemasan"
+                  Text="*" 
+                  InitialValue="empty" 
+                  ValidationGroup="valTambah"/>
+                                
+                <!--&nbsp; Jml Bungkus	-->
+                <com:TActiveTextBox CssClass="input_text" 
+                  ID="jmlBungkus" 
+                  Width="50px"
+                  Style="display:none;"/>
+                <com:TRequiredFieldValidator
+                  Display="Dynamic"
+                  ControlToValidate="jmlBungkus"
+                  Text="*"  
+                  ValidationGroup="valTambah"/> 
+                <com:TRegularExpressionValidator
+                  ValidationGroup="valTambah"
+                  ControlToValidate="jmlBungkus"
+                  RegularExpression="(^[1-9]+\d*$)"
+                  Text="*" /> 
+                
+                &nbsp; Jml BHP	
+                <com:TActiveTextBox CssClass="input_text" 
+                ID="jml"											  
+                ToolTip="Jumlah yang diambil.." 
+                Width="50px"
+                OnTextChanged="prosesClicked"
+                AutoPostBack="true"
+                CausesValidation="true"
+                ValidationGroup="valTambah">
+                  <prop:ClientSide 
+                  OnLoading="maskContent();"
+                  OnComplete="unmaskContent();"/>
+                </com:TActiveTextBox>      
+                <com:TRequiredFieldValidator
+                  Display="Dynamic"
+                  ControlToValidate="jml"
+                  Text="*" 
+                  ValidationGroup="valTambah"/>
+                <com:TRegularExpressionValidator
+                  ControlToValidate="jml"
+                  FocusOnError="true"
+                  RegularExpression="[\d]{1,}"
+                  ErrorMessage="*"
+                  ValidationGroup="valTambah"/>
+                
+                &nbsp; Jml Stok
+                <com:TActiveTextBox 
+                ID="jmlStok"
+                Width="50px"
+                CssClass="input_text" 
+                AutoPostBack="false"
+                CausesValidation="false"/>
+              </td>
+              </tr>
+    </table>
+    </com:TActivePanel>
+    
+    <div style="clear:both"></div>
+    
+    <com:TActivePanel ID="showGridObat">
+    	<div align="center" style="border-top:#999 solid 1px; padding-top:5px;"><com:TActiveLabel ID="msgStok" ForeColor="#FF0000" Style="font-weight:bold; font-size:12px;" /> </div> 
+        <com:TActiveDataGrid ID="UserGridObat"
+          DataKeyField="id"
+          AutoGenerateColumns="false"	
+          AllowPaging="true"
+          AllowCustomPaging="true"
+          AllowSorting="true"
+          Width="100%"					
+          PageSize="100"
+          PagerStyle.Mode="Numeric"			
+          PagerStyle.Font.Name="Arial"
+          PagerStyle.Font.Size="12"
+          PagerStyle.HorizontalAlign="Right"			
+          GridLines="None"
+          CellSpacing="1"
+          CellPadding="2"						
+          HeaderStyle.CssClass="headerstyle"
+          ItemStyle.CssClass="itemstyle"
+          AlternatingItemStyle.CssClass="itemstyle2"								
+          OnDeleteCommand="deleteClickedObat"	
+          OnItemCreated="itemCreatedObat"							
+          OnPageIndexChanged="changePageObat"
+          OnPagerCreated="pagerCreatedObat"
+          OnEditCommand="editItemObat"
+          OnUpdateCommand="saveItem"
+          OnCancelCommand="cancelItem">
+                  
+                  <com:TActiveTemplateColumn 
+                       SortExpression="nama"
+                       ID="namaColumn"
+                       HeaderText="Nama BHP" 
+                       ItemStyle.Width="350px" 
+                       ItemStyle.HorizontalAlign="Center" >									
+                      <prop:ItemTemplate>
+                          <%=	$this->Parent->DataItem['nama'] %>
+                      </prop:ItemTemplate>
+                  </com:TActiveTemplateColumn> 
+      
+                  <com:TActiveTemplateColumn 
+                       SortExpression="jml"
+                       ID="jmlColumn"
+                       HeaderText="Jumlah" 
+                       ItemStyle.Width="100px" 
+                       ItemStyle.HorizontalAlign="Center" >
+                      <prop:EditItemTemplate >
+                           <com:TActiveTextBox 
+                              ID="jmlEdit" 
+                              MaxLength="5"/>
+                           <com:TRequiredFieldValidator
+                              ControlToValidate="jmlEdit"
+                              ValidationGroup="valTabel"
+                              ErrorMessage=""
+                              Display="Dynamic"
+                              FocusOnError="true" 
+                              CssClass="valRequired"
+                              ControlCssClass="valctrl" />
+                      </prop:EditItemTemplate>
+                  </com:TActiveTemplateColumn>			
+      
+                  <com:TActiveTemplateColumn 
+                       SortExpression="total"
+                       ID="totalColumn"
+                       HeaderText="Total" 
+                       ItemStyle.Width="100px" 
+                       ItemStyle.HorizontalAlign="Center" 
+                       Visible="False">									
+                      <prop:ItemTemplate>
+                          <%=	$this->Parent->DataItem['total'] %>
+                      </prop:ItemTemplate>
+                  </com:TActiveTemplateColumn> 						
+                 
+                  <com:TActiveTemplateColumn
+            HeaderText="Ket"
+            ItemStyle.Width="100px"
+            ItemStyle.Horizontalalign="Center"
+            Visible="False">	
+                    <prop:ItemTemplate>
+                        <%%	
+                            $st_imunisasi = $this->Parent->DataItem['st_imunisasi'];
+                              $id_kel_imunisasi = $this->Parent->DataItem['id_kel_imunisasi'];
+                              if($st_imunisasi=='0')
+                              {
+                                $st_racik = $this->Parent->DataItem['st_racik'];
+                                  $id_kel_racik = $this->Parent->DataItem['id_kel_racik'];
+                                  if($st_racik=='0')
+                                  {
+
+                                      echo 'Non Racikan';
+                                  }
+                                  else
+                                  {
+                                      echo 'Racikan '.$id_kel_racik;
+                                  }
+                              }
+                              else
+                              {
+                                echo 'Imunisasi '.ImunisasiRecord::finder()->findByPk($id_kel_imunisasi)->nama;
+                              }
+                              
+                          %>
+                    </prop:ItemTemplate>
+                  </com:TActiveTemplateColumn>
+                  
+                  <com:TActiveTemplateColumn
+                    ID="fssColumn"
+                    HeaderText="FFS"
+                    ItemStyle.Width="10px"
+                    ItemStyle.Horizontalalign="Center"
+                    Visible="False">	
+                    <prop:ItemTemplate>
+                      <com:TActiveHiddenField ID="idTableVal" Value="<%=	$this->Parent->DataItem['id'] %>"/>
+                      <com:TActiveCheckBox
+                        ID="st_ffs"
+                        OnCheckedChanged="Page.stFfsChanged"
+                        AutoPostBack="true"
+                        CausesValidation="false"/>
+                    </prop:ItemTemplate>
+                  </com:TActiveTemplateColumn>
+                  
+                  <com:TActiveEditCommandColumn
+                              ID="editBtn"
+                              HeaderText="Edit"
+                              HeaderStyle.Width="50px"
+                              UpdateText="Save"
+                              ItemStyle.HorizontalAlign="Center"
+                              ButtonType="LinkButton"
+                              ValidationGroup="valTabel"
+                              ItemStyle.Font.Italic="false"
+                              Visible="False"/>
+                                                                       
+                  <com:TActiveButtonColumn												
+                  HeaderText="Mode"
+                  Text="Delete"
+                  ID="Hapus"
+                  ItemStyle.HorizontalAlign="Center"									
+                  ButtonType="PushButton"									
+                  CommandName="delete" 
+                  ItemStyle.Width="100px"/>
+                </com:TActiveDataGrid>
+      
+      <div style="clear:both"></div>
+      
+      <table width="100%">
+        <tr><td><hr/></td></tr>
+        <tr>
+         <td >
+         	Keterangan Pemakaian BHP<br/>
+         	<com:TActiveTextBox 
+            ID="ket"
+            Width="100%"
+            TextMode="MultiLine"
+            CssClass="input_text" 
+            MaxLength="255"
+            Height="50px"/>
+         </td>
+      	</tr> 
+      </table>
+                
+      </com:TActivePanel>
+    
+    <hr style="clear:both"></hr>
+                            
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="center">
+          <com:TActiveButton Text="Cetak" 
+            OnClick="konfirmasiAmbil"
+            ID="cetakBtn" 
+            CausesValidation="true" 
+            ValidationGroup="val"
+            IsDefaultButton="false"
+            CssClass="button_01">
+            <prop:ClientSide
+              OnLoading="maskContent();"
+              OnComplete="unmaskContent();"/>
+          </com:TActiveButton>
+          
+          <com:TActiveButton Text="Batal" 
+            ID="batalBtn"
+            OnClick="batalClicked" 
+            CausesValidation="false" 
+            CssClass="button_01" 
+            IsDefaultButton="false"
+            Attributes.onclick = "maskContent();"/>
+          
+          <com:TActiveButton Text="Keluar" 
+            OnClick="keluarClicked" 
+            CausesValidation="false" 
+            CssClass="button_01" 
+            Visible="false"
+            Attributes.onclick = "maskContent();"/>
+        </td>
+      </tr>
+  </table>
+	
+    <com:TCallback ID="UpdateCallback" OnCallback="prosesKonfirmasi" ActiveControl.CausesValidation="false"/>
+    <com:TCallback ID="CloseModalCallback" OnCallback="prosesCloseModal" ActiveControl.CausesValidation="false"/>
+    <com:TCallback ID="PilihModalCallback" OnCallback="prosesPilihModal" ActiveControl.CausesValidation="false"/>
+    <com:TCallback ID="CetakCallback" OnCallback="cetakClicked" ActiveControl.CausesValidation="false"/>
+	<script type="text/javascript">
+		//<![CDATA[
+		function konfirmasi(mode){
+			var request= <%= $this->UpdateCallback->ActiveControl->Javascript %>;
+				request.setCallbackParameter({
+					Id:mode
+				});
+				request.dispatch();
+		}
+		
+		function modalCloseCallback(id){
+			var request= <%= $this->CloseModalCallback->ActiveControl->Javascript %>;
+				request.setCallbackParameter({
+					Id:id
+				});
+				request.dispatch();
+		}
+		
+		function modalClosePasLuarCallback(id){
+			var request= <%= $this->CloseModalCallback->ActiveControl->Javascript %>;
+				request.setCallbackParameter({
+					Id:'pasluar'
+				});
+				request.dispatch();
+		}
+		
+		function modalPilihCallback(id,modeInput,modeMedicalCheckUp,tglawal,tglakhir){
+			var request= <%= $this->PilihModalCallback->ActiveControl->Javascript %>;
+				request.setCallbackParameter({
+					Id:id,modeInput:modeInput,modeMedicalCheckUp:modeMedicalCheckUp,tglawal:tglawal,tglakhir:tglakhir
+				});
+				request.dispatch();
+		}
+		
+		function prosesKonfirmasiCetak(mode){
+			var request= <%= $this->CetakCallback->ActiveControl->Javascript %>;
+				request.setCallbackParameter({
+					Id:mode
+				});
+				request.dispatch();
+		}
+		
+		
+		//]]>
+	</script> 
+              
+</com:TContent> 

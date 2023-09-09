@@ -1,0 +1,502 @@
+<%@ MasterClass="Application.layouts.MainLayout" %>
+<style type="text/css">
+<!--
+.style1 {color: #7FA1E6}
+-->
+</style>
+
+<com:TContent ID="Main">
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td height="18"></td>
+  </tr>
+  <tr>
+    <td><table width="10"  border="0" align="center" cellpadding="0" cellspacing="0">
+      <tr>
+        <td width="1%"><table width="100%"  border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="1%"><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndAppTopLft.png'%>" width="15" height="15" /></td>
+            <td width="99%" background="<%=$this->Page->Theme->BaseUrl.'/images/bkg3.png'%>">&nbsp;</td>
+            <td width="1%"><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndAppTopRgt.png'%>" width="15" height="15" /></td>
+          </tr>
+        </table></td>
+        </tr>
+      <tr>
+        <td valign="top" background="<%=$this->Page->Theme->BaseUrl.'/images/bkg3.png'%>"><table width="10" border="0" cellpadding="0" cellspacing="0">
+          <tr>
+            <td><table width="15" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+            </table></td>
+            <td><table width="750" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td class="text_08">Pelayanan Radiologi </td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td><table width="10" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndTopLft.png'%>" width="15" height="15" /></td>
+          <td><table width="720" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td><table width="720" border="0" align="right" cellpadding="0" cellspacing="0">
+                    <tr>
+                      <td width="100" class="text_07">&nbsp;Rincian Radiologi </td>
+					  <td width="450" background="<%=$this->Page->Theme->BaseUrl.'/images/rndBkgTop.png'%>"></td>
+                      </tr>
+                </table></td>
+              </tr>
+          </table></td>
+          <td><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndTopRgt.png'%>" width="15" height="15" /></td>
+        </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="10" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td background="<%=$this->Page->Theme->BaseUrl.'/images/rndBkgLft.png'%>"><table width="15" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+          </table></td>
+          <td><com:TMultiView ID="MultiView" ActiveViewIndex="0" OnActiveViewChanged="viewChanged">
+   			<com:TView ID="utama">
+			<table width="720" border="0" cellspacing="0" cellpadding="0">
+		  <tr height="15px">
+		  	<td></td>
+		  </tr>
+              <tr>			  
+                <td>
+				<com:TLabel ID="showSql" />
+				<table width="700" align="center" border="0">
+			  		<tr>
+						<td align="center"><com:TPanel GroupingText="Pencarian Data Radiologi" Width="680px">
+							<table width="100%"  border="0" align="left">
+							 <com:TControl ID="showFirst">
+                             <tr>
+								<td><span>&#8226;</span>&nbsp;&nbsp;Jenis Pasien</td>
+							   	<td>:</td>
+							   	<td>
+							   		<com:TRadioButtonList
+                                          ID="modeInput" 
+                                          RepeatDirection="Horizontal" 
+										  AutoPostBack="true" 
+										  CausesValidation="false" 
+										  OnSelectedIndexChanged="modeInputChanged">
+										<com:TListItem Text="Rawat Jalan" Value="0" />
+										<com:TListItem Text="Rawat Inap" Value="1" />
+										<com:TListItem Text="Rujukan" Value="2" />
+                                  	</com:TRadioButtonList>								</td>
+							 </tr>
+							 <com:TControl ID="jnsBayarInapCtrl" Visible="false">
+							 <tr>
+								<td width="26%"><span>&#8226;</span>&nbsp;&nbsp;Jenis Bayar Rawat Inap</td>
+								<td width="1%">:</td>
+								<td width="73%">
+									<com:TRadioButtonList
+                                          ID="modeByrInap" 
+                                          SelectedIndex="0" 
+                                          RepeatDirection="Horizontal" 
+										  AutoPostBack="true" 
+										  CausesValidation="false" 
+										  OnSelectedIndexChanged="modeByrInapChanged">
+                                    <com:TListItem Text="Kredit" Value="0" />
+                                    <com:TListItem Text="Tunai" Value="1" />
+                                  </com:TRadioButtonList>								</td>
+							 </tr>
+                             </com:TControl>
+							 
+							 <com:TControl ID="jnsPasRujukCtrl" Visible="false">
+							 <tr>
+								<td width="26%"><span>&#8226;</span>&nbsp;&nbsp;Jenis</td>
+								<td width="1%">:</td>
+								<td width="73%">
+									<com:TDropDownList ID="embel"
+									   	PromptText ="--Silakan Pilih--"
+										AutoPostBack="true"
+										CausesValidation="false"
+								       	PromptValue ="" TabIndex="2"
+                                       	OnSelectedIndexChanged="embelChanged" >
+										<com:TListItem Text="Rujukan" Value="01" />
+										<com:TListItem Text="Sendiri" Value="02" />
+									</com:TDropDownList>								</td>
+							 </tr>
+							 </com:TControl>
+							 
+							 <tr>
+                               <td><span>&#8226;</span>&nbsp;&nbsp;No. CM</td>
+							   <td>:</td>
+							   <td><com:TTextBox CssClass="input_text" 
+												  ID="notrans" 
+												  AutoPostBack="true"													   
+												  MaxLength="7"
+												  OnTextChanged="checkRegister" 
+												  TabIndex="1" 
+												  Enabled="false"												  
+												  ToolTip="No. Register Pasien" 
+												  Width="50px" />
+							     &nbsp;
+							     <com:TLabel ID="errMsg" ForeColor="#FF0000" />
+                               </td>
+							   </tr> 
+							 
+							 <!---
+							 <tr>							 
+								<td width="30%"><span>&#8226;</span>&nbsp;&nbsp;Rawat Inap</td>
+								<td width="3%">:</td>
+								<td width="67%">
+									<com:TCheckBox 
+										ID="rwtInapCB" 
+										AutoPostBack="true" 
+										OnCheckedChanged="rwtInapCBchanged"/>								</td>
+							  </tr>
+                              <tr>
+								<td width="30%"><span>&#8226;</span>&nbsp;&nbsp;Rujukan</td>
+								<td width="3%">:</td>
+								<td width="67%">
+									<com:TCheckBox 
+										ID="rujukanCB" 
+										AutoPostBack="true" 
+										OnCheckedChanged="rujukanCBchanged"/>								</td>
+							  </tr>
+							  --->
+							  <com:TControl ID="poliCtrl" Visible="false">
+							 <tr>
+								<td width="26%"><span>&#8226;</span>&nbsp;&nbsp;Poliklinik</td>
+								<td width="1%">:</td>
+								<td width="73%"><com:TDropDownList 
+										ID="DDKlinik"
+										PromptText ="--Silakan Pilih--"
+										PromptValue =""											
+										DataTextField="nama"
+										DataValueField="id" 	
+										ToolTip="Pilih Poloklinik.." 
+										TabIndex="1" 
+										Width="300px"
+										AutoPostBack="true"
+									    OnSelectedIndexChanged="showDokter"
+										Enabled="false"	/>
+								  <com:TRequiredFieldValidator
+										Display="Dynamic"
+										ControlToValidate="DDKlinik"
+										Text="Klinik belum dipilih" 
+										InitialValue="--Silakan Pilih--" 
+										ValidationGroup="val"
+									/></td>
+							  </tr>
+							 <tr>
+								<td width="26%"><span>&#8226;</span>&nbsp;&nbsp;Dokter</td>
+								<td width="1%">:</td>
+								<td width="73%"><com:TDropDownList 
+										ID="DDDokter"
+										PromptText ="--Silakan Pilih--"
+										PromptValue =""											
+										DataTextField="nama"
+										DataValueField="id" 	
+										ToolTip="Pilih Dokter yang merujuk.." 
+										TabIndex="1" 
+										Width="300px"
+										OnSelectedIndexChanged="showNotrans"
+										AutoPostBack="true"
+										Enabled="false"	/>
+								  <com:TRequiredFieldValidator
+										Display="Dynamic"
+										ControlToValidate="DDDokter"
+										Text="Doketr belum dipilih" 
+										InitialValue="--Silakan Pilih--" 
+										ValidationGroup="val"/>
+								</td>
+							  </tr>
+							  </com:TControl>
+							   </com:TControl>
+							   
+							  <com:TControl ID="dokRujukCtrl" Visible="false">							
+							 <tr>
+								<td width="26%"><span>&#8226;</span>&nbsp;&nbsp;Dokter</td>
+								<td width="1%">:</td>
+								<td width="73%">
+                                 <com:TTextBox
+									  CssClass="input_text"
+									  ID="nmDok" 
+									  Width="300px"
+									  Visible="false" />
+								<com:TRequiredFieldValidator
+										Display="Dynamic"
+										ControlToValidate="nmDok"
+										Text="Nama dokter belum diisi"  
+										ErrorMessage="Isi nama dokter"
+										ValidationGroup="val"/>
+								 <com:TLabel ID="nmDokErrMsg" Text="Nama dokter belum diisi" Visible="false" />								</td>
+							  </tr>
+							  </com:TControl>
+							   
+							  <com:TControl ID="showSecond">
+							  <tr>
+								<td width="26%"><span>&#8226;</span>&nbsp;&nbsp;Nama Pasien </td>
+								<td width="1%">:</td>
+								<td width="73%">
+									<com:TLabel ID="nama" />
+                                	<com:TTextBox CssClass="input_text" 
+									  ID="nmPas"
+									  Width="300px"
+									  Visible="false" /> 
+									<com:TRequiredFieldValidator
+										Display="Dynamic"
+										ControlToValidate="nmPas"
+										Text="Nama pasien belum diisi"  
+										ErrorMessage="Isi nama dokter"
+										ValidationGroup="val"/>	
+                                </td>
+							  </tr>
+							  <tr>
+							    <td><span>&#8226;</span>&nbsp;&nbsp;Ukuran Film</td>
+							    <td>:</td>
+							    <td><com:TDropDownList ID="DDFilm"
+									   	PromptText ="--Silakan Pilih--"
+										AutoPostBack="true"
+										PromptValue ="" 
+										TabIndex="2" 
+										OnSelectedIndexChanged="DDFilmChanged">
+										<com:TListItem Text="18 x 24" Value="0" />
+										<com:TListItem Text="24 x 30" Value="1" />
+										<com:TListItem Text="30 x 40" Value="2" />
+										<com:TListItem Text="35 x 35" Value="3" />
+									</com:TDropDownList>
+									<com:TRequiredFieldValidator
+										Display="Dynamic"
+										ControlToValidate="DDFilm"
+										Text="Film belum dipilih" 
+										InitialValue="--Silakan Pilih--" 
+										ValidationGroup="val"/>
+								</td>
+							  </tr>
+								<!---
+							  <tr>
+							    <td><span>&#8226;</span>&nbsp;&nbsp;Kategori</td>
+							    <td>:</td>
+							    <td><com:TDropDownList 
+								ID="DDRadKateg"
+								PromptText ="--Silakan Pilih--"
+								PromptValue =""											
+								DataTextField="jenis"
+								DataValueField="kode" 	
+								ToolTip="Pilih Kategori Radiologi" 
+								TabIndex="3" 
+								Width="300px"
+								AutoPostBack="true"
+								OnSelectedIndexChanged="DDRadKategChanged"/>
+						<com:TRequiredFieldValidator
+								Display="Dynamic"
+								ControlToValidate="DDRadKateg"
+								Text="Kategori Radiologi belum dipilih" 
+								InitialValue="--Silakan Pilih--" 
+								ValidationGroup="val"	/></td>
+							    </tr>--->
+							  <tr>
+							    <td><span>&#8226;</span>&nbsp;&nbsp;Kode Tindakan </td>
+							    <td>:</td>
+							    <td><com:TDropDownList 
+										ID="DDTdkRad"
+										PromptText ="--Silakan Pilih--"
+										PromptValue =""											
+										DataTextField="nama"
+										DataValueField="kode" 	
+										ToolTip="Pilih Jenis Foto" 
+										TabIndex="4" 
+										Width="300px"
+										AutoPostBack="true"
+										Enabled="false"
+										OnSelectedIndexChanged="prosesClicked"/>
+								  <com:TRequiredFieldValidator
+										Display="Dynamic"
+										ControlToValidate="DDTdkRad"
+										Text="Jenis tindakan Lab belum dipilih" 
+										InitialValue="--Silakan Pilih--" 
+										ValidationGroup="val"
+									/></td>
+							    </tr>
+							</com:TControl>
+							<com:TControl ID="showBayar">
+							  <tr>
+							    <td><span>&#8226;</span>&nbsp;&nbsp;Jumlah</td>
+							    <td>:</td>
+							    <td><com:TLabel ID="jmlShow" /></td>
+							    </tr>
+								</com:TControl>
+							</table>
+							</com:TPanel>						</td>
+			  		</tr>
+					
+				</table>			</td>
+              </tr>
+			  <tr height="15px"><td></td></tr>
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+              <tr>
+                <td><hr align="center" width="96%" size="2" noshade color="#CECECE"/></td>
+              </tr>
+              <tr>
+                <td align="center"><table width="95%"  border="0" align="center" cellpadding="0" cellspacing="1">
+                  <tr>
+                    <td align="center"><com:TDataGrid ID="UserGrid"
+								DataKeyField="id"
+								AutoGenerateColumns="false"	
+								AllowPaging="true"
+								AllowCustomPaging="true"
+								AllowSorting="true"
+								Width="680px"					
+								PageSize="15"
+								PagerStyle.Mode="Numeric"			
+								PagerStyle.Font.Name="Arial"
+								PagerStyle.Font.Size="12"
+								PagerStyle.HorizontalAlign="Right"			
+								GridLines="None"
+								CellSpacing="1"
+								CellPadding="2"
+								BackColor="#000000"								
+								HeaderStyle.CssClass="headerstyle"
+								ItemStyle.CssClass="itemstyle"
+								AlternatingItemStyle.CssClass="itemstyle2"								
+								OnDeleteCommand="deleteClicked"								
+								OnPageIndexChanged="changePage"
+								OnPagerCreated="pagerCreated"			
+								OnSortCommand="sortGrid">
+                        </div>                 
+                        
+						<com:TBoundColumn
+									SortExpression="nm_film"
+									HeaderText="Ukuran Film"
+									ItemStyle.Width="350px"
+									ItemStyle.Horizontalalign="Center"
+									DataField="nm_film" />
+						
+						<com:TBoundColumn
+									SortExpression="nama"
+									HeaderText="Tindakan"
+									ItemStyle.Width="350px"
+									ItemStyle.Horizontalalign="Center"
+									DataField="nama" />
+												
+                        <com:TBoundColumn
+									SortExpression="total"
+									HeaderText="Tarif"
+									ItemStyle.Width="100px"
+									ItemStyle.Horizontalalign="Right"
+									DataField="total" />					
+									                       
+                        <com:TButtonColumn												
+									HeaderText="Mode"
+									Text="Delete"
+									ID="Hapus"
+									ItemStyle.HorizontalAlign="Center"									
+									ButtonType="PushButton"									
+									CommandName="delete" />
+                      </com:TDataGrid>
+                    </td>
+                  </tr>
+                </table></td>
+              </tr>
+              <tr>
+                <td><table width="10" border="0" align="center" cellpadding="0" cellspacing="2">
+                    <tr>                                        
+                      <td><com:TButton Text="Simpan" 
+					  				   OnClick="cetakClicked"
+									   ID="cetakBtn" 
+									   CausesValidation="true" 
+									   CssClass="button_01" 
+									   Enabled="false" 
+									   ValidationGroup="val"
+									   TabIndex="7" /></td>
+					  <td><com:TButton Text="Batal" 
+					  				   OnClick="batalClicked" 
+									   CausesValidation="false" 
+									   CssClass="button_01" 
+									   TabIndex="8" /></td>				   
+					  <td><com:TButton Text="Keluar" 
+					  				   OnClick="keluarClicked" 
+									   CausesValidation="false" 
+									   CssClass="button_01" 
+									   TabIndex="9" /></td>
+                    </tr>
+                </table></td>
+              </tr>
+          </table>-
+		  </com:TView>
+			  <com:TView ID="sukses">
+			  	<table width="720" border="0" cellspacing="0" cellpadding="0">
+				  <tr height="15px">
+					<td></td>
+				  </tr>
+					  <tr>			  
+						<td align="center" style="color:#FF0000; font-size:12px; ">
+							DATA REKAM BILLING RADIOLOGI TELAH MASUK KE DALAM DATABASE				</td>
+					  </tr>
+					   <tr>
+						 <td align="center">&nbsp;</td>
+						 </tr>
+					   <tr>			  
+						<td align="center">
+							<com:TButton  
+								ID="kembaliBtn"
+								Text="Kembali" 
+								OnClick="kembaliClicked" 
+								CausesValidation="false"
+							   />				</td>
+					  </tr>
+					  <tr>
+						<td>&nbsp;</td>
+					  </tr>
+				</table>
+			  </com:TView>
+			  </com:TMultiView>
+		  </td>
+          <td background="<%=$this->Page->Theme->BaseUrl.'/images/rndBkgRgt.png'%>"><table width="15" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+          </table></td>
+        </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="10" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndBtmLft.png'%>" width="15" height="15" /></td>
+          <td background="<%=$this->Page->Theme->BaseUrl.'/images/rndBkgBtm.png'%>"><table width="720" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+          </table></td>
+          <td><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndBtmRgt.png'%>" width="15" height="15" /></td>
+        </tr>
+    </table></td>
+  </tr>
+</table></td>
+            <td><table width="15" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+            </table></td>
+          </tr>
+        </table></td>
+      </tr>
+      <tr>
+        <td><table width="100%"  border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="1%"><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndAppBtmLft.png'%>" width="15" height="15" /></td>
+            <td width="99%" background="<%=$this->Page->Theme->BaseUrl.'/images/bkg3.png'%>">&nbsp;</td>
+            <td width="1%"><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndAppBtmRgt.png'%>" width="15" height="15" /></td>
+          </tr>
+        </table></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+</com:TContent>

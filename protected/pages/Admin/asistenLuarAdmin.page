@@ -1,0 +1,404 @@
+<%@ MasterClass="Application.layouts.MainLayout" %>
+<style type="text/css">
+<!--
+.style1 {color: #7FA1E6}
+-->
+</style>
+
+<com:TContent ID="Main">
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td height="18"></td>
+  </tr>
+  <tr>
+    <td><table width="10"  border="0" align="center" cellpadding="0" cellspacing="0">
+      <tr>
+        <td width="1%"><table width="100%"  border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="1%"><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndAppTopLft.png'%>" width="15" height="15" /></td>
+            <td width="99%" background="<%=$this->Page->Theme->BaseUrl.'/images/bkg3.png'%>">&nbsp;</td>
+            <td width="1%"><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndAppTopRgt.png'%>" width="15" height="15" /></td>
+          </tr>
+        </table></td>
+        </tr>
+      <tr>
+        <td valign="top" background="<%=$this->Page->Theme->BaseUrl.'/images/bkg3.png'%>"><table width="10" border="0" cellpadding="0" cellspacing="0">
+          <tr>
+            <td><table width="15" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+            </table></td>
+            <td><table width="750" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td class="text_08">Administrasi Asisten Luar </td>
+  </tr>
+  <tr>
+    <td><com:TLabel ID="showSql" /></td>
+  </tr>
+  <tr>
+    <td><table width="10" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndTopLft.png'%>" width="15" height="15" /></td>
+          <td><table width="720" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td><table width="720" border="0" align="right" cellpadding="0" cellspacing="0">
+                    <tr>
+                      <td width="100" class="text_07">&nbsp;Data Asisten Luar 
+					  <td width="508" background="<%=$this->Page->Theme->BaseUrl.'/images/rndBkgTop.png'%>"></td>
+                      </tr>
+                </table></td>
+              </tr>
+          </table></td>
+          <td><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndTopRgt.png'%>" width="15" height="15" /></td>
+        </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="10" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td background="<%=$this->Page->Theme->BaseUrl.'/images/rndBkgLft.png'%>"><table width="15" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+          </table></td>
+          <td>
+		  <com:TMultiView ID="MultiView" ActiveViewIndex="0" OnActiveViewChanged="viewChanged">
+   		  <com:TView ID="admin">
+		  <table width="720" border="0" cellspacing="0" cellpadding="0">
+		  <tr height="15px">
+		  	<td></td>
+		  </tr>
+              <tr>			  
+                <td>				
+				<table width="700" align="center" border="0">
+			  		<tr>
+						<td align="center"><com:TPanel GroupingText="Pencarian Data" Width="680px">
+							<table width="85%"  border="0" align="left">
+							  <tr>
+								<td width="30%"><span>&#8226;</span>&nbsp;&nbsp;ID Asisten</td>
+								<td width="5%">:</td>
+								<td width="65%">
+								<com:TTextBox ID="cariIDAs" 
+										MaxLength="30" 
+										Width="180px" 										
+										ToolTip="Cari berdasarkan ID Asisten!" 
+										TabIndex="2"
+								/>
+								</td>
+							  </tr>
+							  <tr>
+								<td><span>&#8226;</span>&nbsp;&nbsp;Nama Asisten </td>
+								<td>:</td>
+								<td>
+									<com:TTextBox ID="cariNamaAs" 
+										MaxLength="30"										
+										Width="180px" 
+										ToolTip="Cari berdasarkan nama Asisten!" 
+										TabIndex="3"
+									/>
+									 <com:TCheckBox 
+										ID="Advance" 
+										Text="Elemen Kata" 
+										Value="1" 
+									/></td>
+								</tr>
+								<tr>
+								<td>&nbsp;</td><td>&nbsp;</td>
+								<td>
+								 <com:TButton Text="Cari" OnClick="cariClicked" CssClass="button_01" />
+								</td>
+							  </tr>							  
+							</table>
+							</com:TPanel>
+						</td>
+			  		</tr>
+				</table>
+			</td>
+              </tr>
+			  <tr height="15px"><td>&nbsp;</td></tr>
+			  <tr height="15px"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Jumlah Data : <com:TLabel ID="jmlData" /></td></tr>
+              <tr>
+                <td><table width="95%"  border="0" align="center" cellpadding="0" cellspacing="1">                      
+                      <tr>
+                        <td align="center">
+						<com:TDataGrid ID="dtgSomeData"
+								DataKeyField="id"
+								AutoGenerateColumns="false"	
+								AllowPaging="true"
+								AllowCustomPaging="true"
+								AllowSorting="true"
+								Width="680px"					
+								PageSize="10"
+								PagerStyle.Mode="Numeric"			
+								PagerStyle.Font.Name="Arial"
+								PagerStyle.Font.Size="12"
+								PagerStyle.HorizontalAlign="Right"			
+								GridLines="None"
+								CellSpacing="1"
+								CellPadding="2"
+								BackColor="#000000"
+								HeaderStyle.CssClass="headerstyle"
+								ItemStyle.CssClass="itemstyle"
+								AlternatingItemStyle.CssClass="itemstyle2"
+								OnItemCreated="itemCreated"
+								OnDeleteCommand="deleteButtonClicked"
+								OnPageIndexChanged="dtgSomeData_PageIndexChanged"
+								OnSortCommand="dtgSomeData_SortCommand"								
+                                EmptyTemplate="<div class='info'>Data Tidak Ada!.</div>">								
+							</div>	
+								
+								<com:THyperLinkColumn   
+									SortExpression="id"     
+									HeaderText="ID"									
+									DataTextField="id"
+									ItemStyle.HorizontalAlign="Center"
+									ItemStyle.Width="150px"		
+									DataNavigateUrlField="id">
+									<prop:DataNavigateUrlFormatString>#
+									  $this->Service->constructUrl('Admin.asistenLuarAdmin',array('id'=>{0}))
+									</prop:DataNavigateUrlFormatString>
+								</com:THyperLinkColumn>	
+                
+								<com:TBoundColumn
+									SortExpression="nama"
+									HeaderText="Nama Asisten"
+									ItemStyle.Width="450px"
+									DataField="nama" />
+									
+								<com:TBoundColumn
+									SortExpression="alamat"
+									HeaderText="Alamat"
+									ItemStyle.Width="450px"
+									DataField="alamat" />
+								
+								<com:TBoundColumn
+									SortExpression="telpon"
+									HeaderText="No. Telpon"
+									ItemStyle.Width="450px"
+									DataField="telpon" />
+								
+								<com:TBoundColumn
+									SortExpression="keterangan"
+									HeaderText="Keterangan"
+									ItemStyle.Width="450px"
+									DataField="keterangan" />	
+									
+								<com:TButtonColumn												
+									HeaderText="Mode"
+									Text="Delete"
+									ID="Hapus"
+									ItemStyle.HorizontalAlign="Center"
+									ButtonType="PushButton"									
+									CommandName="delete" />	
+							</com:TDataGrid>
+						</td>                       
+                      </tr>
+                    </table></td>
+              </tr>
+              <tr>
+                <td><hr align="center" width="96%" size="2" noshade color="#CECECE"/></td>
+              </tr>
+              <tr>
+                <td><table width="10" border="0" align="center" cellpadding="0" cellspacing="2">
+                    <tr>
+                      <td>
+					  <com:TControl Visible="<%= $this->User->IsAdmin %>">
+					  	<com:TButton Text="Baru" OnClick="baruClicked" CssClass="button_01" TabIndex="4" />
+					  </com:TControl>
+					  </td>                      
+                      <td><com:TButton Text="Keluar" OnClick="keluarClicked" CausesValidation="false" CssClass="button_01" TabIndex="5" /></td>
+                    </tr>
+                </table></td>
+              </tr>
+          </table>
+		  </com:TView>
+		  <com:TView ID="baru">
+		  	<table width="720" border="0" cellspacing="0" cellpadding="0">
+				<tr height="250px">
+					<td width="20">&nbsp;</td>
+					<td width="700"><com:TPanel GroupingText="Pencarian Data" Width="680px">
+						<table width="97%" border="0" align="center" cellpadding="0">
+							<tr>
+								<td ><span>&#8226;</span> ID Asisten</td>
+								<td >:</td>
+								<td ><com:TTextBox CssClass="input_text"
+												  ID="IdAsisten" 									  
+												  Width="50px"
+												  ReadOnly="true" />
+								</td>
+							 </tr>	
+							 <tr>
+								<td><span>&#8226;</span> Nama Asisten</td>
+								<td>:</td>
+								<td><com:TTextBox CssClass="input_text"
+											  ID="Nama" 									  
+											  Width="220px" 
+											  MaxLength="30"									  
+											  TabIndex="2" 
+											  ToolTip="Masukan nama asisten..." 
+											  ValidationGroup="Nama" />
+									<com:TRequiredFieldValidator 
+											  ControlToValidate="Nama"
+											  ValidationGroup="Nama"
+											  ErrorMessage="Anda harus mengisikan nama asisten"
+											  Display="Dynamic" />			
+									<com:TRegularExpressionValidator
+											ControlToValidate="Nama"
+											ValidationGroup="Nama"
+											Display="Dynamic"  
+											FocusOnError="true"
+											RegularExpression="[\w]{2,30}"									
+											ErrorMessage="Nama asisten harus huruf alphabet & minimal 2 huruf maksimal 30 huruf!"/>
+								</td>
+							</tr>
+							<tr>
+								<td><span>&#8226;</span> Alamat Asisten</td>
+								<td>:</td>
+								<td><com:TTextBox CssClass="input_text"
+											  ID="Alm" 									  
+											  Width="220px" 
+											  MaxLength="30"									  
+											  TabIndex="2" 
+											  ToolTip="Masukan alamat asisten..." 
+											  ValidationGroup="Alm" />
+									<com:TRequiredFieldValidator 
+											  ControlToValidate="Alm"
+											  ValidationGroup="Alm"
+											  ErrorMessage="Anda harus mengisikan alamat asisten"
+											  Display="Dynamic" />
+								</td>
+							</tr>
+							<tr>
+								<td><span>&#8226;</span> Telpon Asisten</td>
+								<td>:</td>
+								<td><com:TTextBox CssClass="input_text"
+											  ID="Tlp" 									  
+											  Width="220px" 
+											  MaxLength="30"									  
+											  TabIndex="2" 
+											  ToolTip="Masukan telpon asisten..." 
+											  ValidationGroup="Tlp" />
+									<com:TRequiredFieldValidator 
+											  ControlToValidate="Tlp"
+											  ValidationGroup="Tlp"
+											  ErrorMessage="Anda harus mengisikan telpon asisten"
+											  Display="Dynamic" />
+								</td>
+							</tr>
+							<tr>
+								<td><span>&#8226;</span> Keterangan</td>
+								<td>:</td>
+								<td><com:TTextBox CssClass="input_text"
+											  ID="ket" 									  
+											  Width="220px" 
+											  MaxLength="30"									  
+											  TabIndex="2" 
+											  ToolTip="Masukan Keterangan..." 
+											  ValidationGroup="ket" />
+								</td>
+							</tr>
+							<tr>
+								<td><span>&#8226;</span> Kelompok Pegawai</td>
+								<td>:</td>
+								<td><com:TActiveDropDownList ID="DDKelompok"
+										PromptText ="--Silakan Pilih--"
+										AutoPostBack="true"
+										CausesValidation="false"
+								       	PromptValue ="" TabIndex="2" >
+											<com:TListItem Text="Paramedis" Value="0" />
+											<com:TListItem Text="Dokter" Value="1" />
+											<com:TListItem Text="Bidan" Value="2" />
+	  								 </com:TActiveDropDownList>
+									 <com:TRequiredFieldValidator 
+											 ControlToValidate="DDKelompok"
+											 ErrorMessage="Anda harus memilih kelompok asisten"
+											 Display="Dynamic" />
+								</td> 
+							</tr>
+							<tr>
+								<td colspan="3"><hr align="center" width="96%" size="2" noshade color="#CECECE"/></td>
+						  	</tr>
+							<tr>			  
+								<td align="center" colspan="3">
+									<com:TControl ID="asbar" Visible="false">
+										<com:TButton  
+											ID="simpanNewBtn"
+											Text="Simpan" 
+											OnClick="simpanClicked" 
+											CausesValidation="true"/>
+									</com:TControl>	
+									<com:TControl ID="ased" Visible="false">
+										<com:TButton  
+											ID="simpanEditBtn"
+											Text="Simpan" 
+											OnClick="simpanClicked" 
+											CausesValidation="true"/>
+									</com:TControl>	
+									<com:TButton  
+										ID="batalBtn"
+										Text="Batal" 
+										OnClick="batalClicked" 
+										CausesValidation="false"/>
+									<com:TButton  
+										ID="keluarBtn"
+										Text="Keluar" 
+										OnClick="keluarViewClicked" 
+										CausesValidation="false"/>
+								</td>
+							</tr>
+						</table>
+						</com:TPanel>
+					</td>
+				</tr>
+			</table>
+		  </com:TView>
+		  
+		  </com:TMultiView>
+		  </td>
+          <td background="<%=$this->Page->Theme->BaseUrl.'/images/rndBkgRgt.png'%>"><table width="15" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+          </table></td>
+        </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="10" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndBtmLft.png'%>" width="15" height="15" /></td>
+          <td background="<%=$this->Page->Theme->BaseUrl.'/images/rndBkgBtm.png'%>"><table width="720" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+          </table></td>
+          <td><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndBtmRgt.png'%>" width="15" height="15" /></td>
+        </tr>
+    </table></td>
+  </tr>
+</table></td>
+            <td><table width="15" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+            </table></td>
+          </tr>
+        </table></td>
+      </tr>
+      <tr>
+        <td><table width="100%"  border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="1%"><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndAppBtmLft.png'%>" width="15" height="15" /></td>
+            <td width="99%" background="<%=$this->Page->Theme->BaseUrl.'/images/bkg3.png'%>">&nbsp;</td>
+            <td width="1%"><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndAppBtmRgt.png'%>" width="15" height="15" /></td>
+          </tr>
+        </table></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+</com:TContent>

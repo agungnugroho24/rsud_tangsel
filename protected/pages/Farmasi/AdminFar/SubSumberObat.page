@@ -1,0 +1,261 @@
+<%@ MasterClass="Application.layouts.MainLayout" %>
+<style type="text/css">
+<!--
+.style1 {color: #7FA1E6}
+-->
+</style>
+
+<com:TContent ID="Main">
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td height="18"></td>
+  </tr>
+  <tr>
+    <td><table width="10"  border="0" align="center" cellpadding="0" cellspacing="0">
+      <tr>
+        <td width="1%"><table width="100%"  border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="1%"><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndAppTopLft.png'%>" width="15" height="15" /></td>
+            <td width="99%" background="<%=$this->Page->Theme->BaseUrl.'/images/bkg3.png'%>">&nbsp;</td>
+            <td width="1%"><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndAppTopRgt.png'%>" width="15" height="15" /></td>
+          </tr>
+        </table></td>
+        </tr>
+      <tr>
+        <td valign="top" background="<%=$this->Page->Theme->BaseUrl.'/images/bkg3.png'%>"><table width="10" border="0" cellpadding="0" cellspacing="0">
+          <tr>
+            <td><table width="15" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+            </table></td>
+            <td><table width="750" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td class="text_08">Daftar Sub Sumber Obat</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td><table width="10" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndTopLft.png'%>" width="15" height="15" /></td>
+          <td><table width="720" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td><table width="720" border="0" align="right" cellpadding="0" cellspacing="0">
+                    <tr>
+                      <td width="266" class="text_07">&nbsp;Daftar Data Pencarian Sub Sumber Obat</td>
+					  <td width="454" background="<%=$this->Page->Theme->BaseUrl.'/images/rndBkgTop.png'%>"></td>
+                      </tr>
+                </table></td>
+              </tr>
+          </table></td>
+          <td><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndTopRgt.png'%>" width="15" height="15" /></td>
+        </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="10" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td background="<%=$this->Page->Theme->BaseUrl.'/images/rndBkgLft.png'%>"><table width="15" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+          </table></td>
+          <td><table width="720" border="0" cellspacing="0" cellpadding="0">
+		  <tr height="15px">
+		  	<td></td>
+		  </tr>
+              <tr>			  
+                <td>
+				<com:TLabel ID="showSql" />
+				<table width="700" align="center" border="0">
+			  		<tr>
+						<td align="center"><com:TPanel GroupingText="Pencarian Data Sub Sumber Obat" Width="680px">
+							<table width="85%"  border="0" align="left">
+							  <tr>
+								<td width="32%"><span>&#8226;</span>&nbsp;&nbsp;ID</td>
+								<td width="2%">:</td>
+								<td width="66%"><com:TTextBox ID="ID" 
+										MaxLength="7"										
+										Width="100px" 
+										ToolTip="Cari berdasarkan ID Sub Sumber Obat !!" 
+										TabIndex="1"/></td>
+							  </tr>
+							  <tr>
+                                <td><span>&#8226;</span>&nbsp;&nbsp;Sumber Obat </td>
+                                <td>:</td>
+                                <td>
+                                  <com:TDropDownList 
+										ID="DDSumber"
+										PromptText ="--Silakan Pilih--"
+										PromptValue =""											
+										DataTextField="nama"
+										DataValueField="id" 	
+										ToolTip="Pilih Sub Sumber Obat" 
+										TabIndex="2" 
+										Width="300px"/>
+                                </td>
+							    </tr>
+							  <tr>
+								<td><span>&#8226;</span>&nbsp;&nbsp;Nama Sub Sumber Obat </td>
+								<td>:</td>
+								<td>
+									<com:TTextBox ID="cariNama" 
+										MaxLength="30" 
+										Width="180px" 										
+										ToolTip="Cari berdasarkan Nama!!" 
+										TabIndex="2"
+									/>
+										&nbsp;
+									<com:TCheckBox 
+										ID="Advance" 
+										Text="Elemen Kata" 
+										Value="1" 
+									/>
+								</td>
+							  </tr>
+							  <tr>
+							    <td>&nbsp;</td>
+							    <td>&nbsp;</td>
+							    <td>
+									<com:TButton Text="Cari" OnClick="cariClicked" CssClass="button_01" TabIndex="6" />
+								</td>
+							    </tr>
+							</table>
+							</com:TPanel>
+						</td>
+			  		</tr>
+				</table>
+			</td>
+              </tr>
+			  <tr height="15px"><td></td></tr>
+              <tr>
+                <td><table width="95%"  border="0" align="center" cellpadding="0" cellspacing="1">                      
+                      <tr>
+                        <td align="center">
+						<com:TDataGrid ID="UserGrid"
+								DataKeyField="id"
+								AutoGenerateColumns="false"	
+								AllowPaging="true"
+								AllowCustomPaging="true"
+								AllowSorting="true"
+								Width="680px"					
+								PageSize="5"
+								PagerStyle.Mode="Numeric"			
+								PagerStyle.Font.Name="Arial"
+								PagerStyle.Font.Size="12"
+								PagerStyle.HorizontalAlign="Right"			
+								GridLines="None"
+								CellSpacing="1"
+								CellPadding="2"
+								BackColor="#000000"
+								HeaderStyle.CssClass="headerstyle"
+								ItemStyle.CssClass="itemstyle"
+								AlternatingItemStyle.CssClass="itemstyle2"
+								OnItemCreated="itemCreated"
+								OnDeleteCommand="deleteButtonClicked"								
+								OnPageIndexChanged="changePage"
+								OnPagerCreated="pagerCreated"			
+								OnSortCommand="sortGrid">								
+							</div>	
+								
+								<com:THyperLinkColumn   
+									SortExpression="id"     
+									HeaderText="ID"									
+									DataTextField="id"
+									ItemStyle.HorizontalAlign="Center"
+									ItemStyle.Width="100px"		
+									DataNavigateUrlField="id">
+									<prop:DataNavigateUrlFormatString>#
+									  $this->Service->constructUrl('Farmasi.SubSumberObatEdit',array('ID'=>{0},'mode'=>'01'))
+									</prop:DataNavigateUrlFormatString>
+								</com:THyperLinkColumn>	 
+								
+								<com:TBoundColumn
+									SortExpression="b.nama"
+									HeaderText="Sumber Obat"
+									ItemStyle.Width="200px"
+									DataField="id_sumber" />	
+								
+								<com:TBoundColumn
+									SortExpression="nama"
+									HeaderText="Nama Sub Sumber Obat"
+									ItemStyle.Width="400px"
+									DataField="nama" />	
+									               
+								<com:TButtonColumn												
+									HeaderText="Mode"
+									Text="Delete"
+									ID="Hapus"
+									ItemStyle.HorizontalAlign="Center"
+									ButtonType="PushButton"									
+									CommandName="delete" />	
+							</com:TDataGrid>
+						</td>                       
+                      </tr>
+                    </table></td>
+              </tr>
+              <tr>
+                <td><hr align="center" width="96%" size="2" noshade color="#CECECE"/></td>
+              </tr>
+              <tr>
+                <td><table width="10" border="0" align="center" cellpadding="0" cellspacing="2">
+                    <tr>
+                      <td>
+                      <!---
+					  <com:TControl Visible="<%= $this->User->IsAdmin %>"> --->
+					  	<com:TButton Text="Baru" OnClick="baruClicked" CssClass="button_01" TabIndex="6" />
+					  <!---</com:TControl> --->
+					  </td>                      
+                      <td><com:TButton Text="Keluar" OnClick="keluarClicked" CausesValidation="false" CssClass="button_01" TabIndex="7" /></td>
+                    </tr>
+                </table></td>
+              </tr>
+          </table></td>
+          <td background="<%=$this->Page->Theme->BaseUrl.'/images/rndBkgRgt.png'%>"><table width="15" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+          </table></td>
+        </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="10" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndBtmLft.png'%>" width="15" height="15" /></td>
+          <td background="<%=$this->Page->Theme->BaseUrl.'/images/rndBkgBtm.png'%>"><table width="720" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+          </table></td>
+          <td><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndBtmRgt.png'%>" width="15" height="15" /></td>
+        </tr>
+    </table></td>
+  </tr>
+</table></td>
+            <td><table width="15" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+            </table></td>
+          </tr>
+        </table></td>
+      </tr>
+      <tr>
+        <td><table width="100%"  border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="1%"><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndAppBtmLft.png'%>" width="15" height="15" /></td>
+            <td width="99%" background="<%=$this->Page->Theme->BaseUrl.'/images/bkg3.png'%>">&nbsp;</td>
+            <td width="1%"><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndAppBtmRgt.png'%>" width="15" height="15" /></td>
+          </tr>
+        </table></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+</com:TContent>

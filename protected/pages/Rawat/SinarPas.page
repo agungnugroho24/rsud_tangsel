@@ -1,0 +1,140 @@
+<%@ MasterClass="Application.layouts.MainLayout" %>
+<com:TContent ID="jdMain">
+	Rekam Pemakaian Sinar
+    
+    <a href="<%= $this->Service->constructUrl('Simak') %>" onclick="maskContent()">
+    <span class="close-btn">
+        <span class="ui-icon ui-icon-circle-close"></span>
+    </span>
+    </a>
+    
+</com:TContent>	
+
+<com:TContent ID="Main">
+
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td>&nbsp;</td>
+      </tr>
+      
+      <com:TPanel ID="mainPanel" Visible="true"> <!-- AWAL MAIN PANEL -->
+      <tr>
+        <td><table width="100%" border="0" align="right" cellpadding="0" cellspacing="2">
+          <tr>
+            <td width="17%" valign="top"><span>&#8226;</span> No. CM </td>
+            <td width="1%" valign="top">:</td>
+            <td width="82%" valign="top">
+                <com:TTextBox 
+                    ID="cm" 
+                    Width="70px"
+                    MaxLength="7" 
+                    OnTextChanged="checkCM" 
+                    AutoPostBack="true"
+                    />&nbsp;<com:TLabel ID="errMsg" ForeColor="#FF0000" />					</td>
+          </tr>
+          
+          <tr>
+            <td valign="top"><span>&#8226;</span> Satuan </td>
+            <td valign="top">:</td>
+            <td valign="top">
+                <com:TRadioButtonList
+                      ID="modeSatuan" 
+                      AutoPostBack="true"
+                      RepeatDirection="Horizontal" 
+                      CausesValidation="false" 
+                      OnSelectedIndexChanged="modeSatuanChanged"  
+                      SelectedIndex="0"
+                      >
+                <com:TListItem Text="Hari" Value="0" />
+                <com:TListItem Text="Jam" Value="1" />                                    
+              </com:TRadioButtonList>
+             </td>
+          </tr>
+          <tr>
+            <td valign="top"><span>&#8226; Jumlah Pemakaian </span></td>
+            <td valign="top">:</td>
+            <td valign="top">
+                <com:TTextBox 
+                    ID="koef" 
+                    Width="50px" 
+                    MaxLength="4" />
+                &nbsp;
+                    <com:TActiveLabel
+                        ID="sat" 
+                        Text="Hari" />
+                <com:TRequiredFieldValidator
+                        Display="Dynamic"
+                        ControlToValidate="koef"
+                        Text="Satuan belum diisi" 
+                        ValidationGroup="val"
+                />
+                <com:TRegularExpressionValidator
+                    ControlToValidate="koef"
+                    FocusOnError="true"
+                    RegularExpression="[\d]{1,}"
+                    ErrorMessage="Jumlah satuan yang dimasukan tidak sesuai"
+                    ValidationGroup="val"
+                />
+            </td>
+          </tr>
+          
+          <tr>
+            <td valign="top"><span>&#8226;</span> Catatan </td>
+            <td valign="top">&nbsp;</td>
+            <td valign="top"><com:TTextBox TextMode="MultiLine" 
+                              ID="catatan" />&nbsp;&nbsp;<com:TLabel ID="msg" ForeColor="#FF0000" /></td>
+          </tr>
+        </table></td>
+      </tr>
+      </com:TPanel> <!-- AKHIR MAIN PANEL -->
+      <tr>
+        <td>
+        <!-- ---------------------- Awal Konfirmasi Bila ada transaksi yg sama dalam 1 hari ----------------------  -->
+        <com:TPanel ID="konfPanel"  Visible="false">
+        <table width="100%"  border="0" align="left">
+          <tr>
+            <td width="100%" align="center" style="color:#FF0000; font-size:14px;">
+                Rekam Pemakaian Sinar untuk Pasien dengan No. Rekam Medis <strong><com:TLabel ID="cmKonf"/></strong> telah dilakukan.
+            </td>
+          </tr>
+          <tr>
+            <td align="center" style="color:#FF0000; font-size:14px;">&nbsp;
+                  
+            </td>
+          </tr>
+        </table>
+        </com:TPanel>
+        
+        </td>
+      </tr>
+      <tr>
+        <td><hr/></td>
+      </tr>
+      <tr>
+        <td><table width="10" border="0" align="center" cellpadding="0" cellspacing="2">
+            <tr>
+              <td><com:TButton Text="Simpan" 
+                                ID="simpanBtn" 	
+                                OnClick="simpanClicked" 
+                                CssClass="button_01" 
+                                Enabled="false"
+                                ValidationGroup="val"
+                                Attributes.onclick = "if(!confirm('Simpan data sekarang..?')) return false; else maskContent();"/></td>
+              <td><com:TButton Text="Batal" 
+                            ID="batalBtn"
+                                CausesValidation="false"
+                                OnClick="batalClicked" 
+                                CssClass="button_01"
+                                Attributes.onclick = "if(!confirm('Batalkan pengisian data..?')) return false; else maskContent();"/></td>
+              <td><com:TButton Text="Keluar" 
+                        OnClick="keluarClicked" 
+                        CausesValidation="false" 
+                        CssClass="button_01" 
+                        Visible="false"
+                        /></td>
+            </tr>
+        </table></td>
+      </tr>
+  </table>
+  
+</com:TContent>

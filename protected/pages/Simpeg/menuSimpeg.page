@@ -1,0 +1,147 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<com:THead Title="Simpeg v2.5 Suite ~ CodeName: GreenCore" >
+<meta http-equiv="Expires" content="Fri, Jan 01 1900 00:00:00 GMT"/>
+<meta http-equiv="Pragma" content="no-cache"/>
+<meta http-equiv="Cache-Control" content="no-cache"/>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="content-language" content="en"/>
+<link href="<%=$this->Page->Theme->BaseUrl.'/simpeg/css/style.css'%>" rel="stylesheet" type="text/css">
+<script type="text/javascript" language="JavaScript1.2" src="<%=$this->Page->Theme->BaseUrl.'/simpeg/js/stmenu.js'%>"></script>
+</com:THead>
+<body>
+<table width="0" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td height="100">&nbsp;</td>
+  </tr>
+  <tr>
+    <td><table width="10" border="0" align="center" cellpadding="0" cellspacing="0">
+      <tr>
+        <td height="10"><table width="10" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <td><img src="<%=$this->Page->Theme->BaseUrl.'/simpeg/images/rndtplft.png'%>" width="13" height="13"></td>
+              <td height="10" background="<%=$this->Page->Theme->BaseUrl.'/simpeg/images/rndbkgtp.png'%>"><table width="674" border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td height="10"></td>
+                  </tr>
+              </table></td>
+              <td><img src="<%=$this->Page->Theme->BaseUrl.'/simpeg/images/rndtprgt.png'%>" width="13" height="13"></td>
+            </tr>
+        </table></td>
+      </tr>
+      <tr>
+        <td background="<%=$this->Page->Theme->BaseUrl.'/simpeg/images/bkg6.png'%>"><table width="660"  border="0" align="center" cellpadding="0" cellspacing="0">
+            <tr>
+              <td width="46%"><table width="90%"  border="0" align="right" cellpadding="0" cellspacing="0">
+                  <tr>
+                    <td class="text_04">Selamat Datang Pada</td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td><div align="right"><img src="<%=$this->Page->Theme->BaseUrl.'/simpeg/images/logo2.png'%>" width="300" height="91"></div></td>
+                  </tr>
+              </table></td>
+              <td width="5%"><div align="center"><img src="<%=$this->Page->Theme->BaseUrl.'/simpeg/images/gap.png'%>" width="5" height="400"></div></td>
+              <td width="49%"><table width="100%"  border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td><img src="<%=$this->Page->Theme->BaseUrl.'/simpeg/images/mm.png'%>" width="170" height="28"></td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td><table width="95%"  border="0" align="right" cellpadding="0" cellspacing="0">
+                        <tr>
+                          <td class="text_04">Master Data Pegawai </td>
+                        </tr>
+                        <tr>
+                          <td height="10"></td>
+                        </tr>
+                        <tr>
+                          <td><table width="95%"  border="0" align="right" cellpadding="0" cellspacing="2">
+                              <tr>
+                                <td height="22"><a href="<%= $this->Service->constructUrl('Simpeg.mainSimpeg') %>">&#8226; Data Pegawai Negeri Sipil</a></td>
+                              </tr>
+                              <tr>
+                                <td height="22"><a href="#">&#8226; Data Tenaga Kerja Kontrak </a></td>
+                              </tr>
+                              <tr>
+                                <td height="22"><a href="#">&#8226; Data Lainnya </a></td>
+                              </tr>
+                          </table></td>
+                        </tr>
+                        <tr>
+                          <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                          <td><span class="text_04">Laporan</span></td>
+                        </tr>
+                        <tr>
+                          <td height="10"></td>
+                        </tr>
+                        <tr>
+                          <td><table width="95%"  border="0" align="right" cellpadding="0" cellspacing="2">
+                            <tr>
+                              <td height="22"><a href="<%= $this->Service->constructUrl('Simpeg.lapSimpeg') %>">&#8226; Laporan Daftar Urut Kepangkatan </a></td>
+                            </tr>
+                            
+                            <tr>
+                              <td height="22"><a href="<%= $this->Service->constructUrl('Simpeg.lapKgbSimpeg') %>">&#8226; Kenaikan Gaji Berkala </a></td>
+                            </tr>
+                            
+                          </table></td>
+                        </tr>
+                    </table></td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td height="1" bgcolor="#CCCCCC"></td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td><table width="70" border="0" align="center" cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td><script type="text/javascript" language="JavaScript1.2">
+<!--
+stm_bm(["menu797a",720,"","<%=$this->Page->Theme->BaseUrl.'/simpeg/images/blank.gif'%>",0,"","",0,0,250,0,250,1,0,0,"","",0,1,1,2,"default","hand",""],this);
+stm_bp("p0",[1,4,0,0,0,0,79,0,100,"stEffect(\"slip\")",-2,"stEffect(\"slip\")",-2,100,0,0,"#999999","transparent","",3,0,0,"#000000"]);
+stm_ai("p0i0",[0,"","","",-1,-1,0,"<%= $this->Service->constructUrl('Home') %>","_self","","","<%=$this->Page->Theme->BaseUrl.'/simpeg/images/btn03off.png'%>","<%=$this->Page->Theme->BaseUrl.'/simpeg/images/btn03on.png'%>",79,33,0,"","",0,0,0,0,1,"#FFFFF7",1,"#B5BED6",1,"","",3,3,0,0,"#FFFFF7","#000000","#000000","#000000","8pt Verdana","8pt Verdana",0,0]);
+stm_ep();
+stm_em();
+//-->
+</script></td>
+                      </tr>
+                    </table></td>
+                  </tr>
+              </table></td>
+            </tr>
+        </table></td>
+      </tr>
+      <tr>
+        <td><table width="10" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <td><img src="<%=$this->Page->Theme->BaseUrl.'/simpeg/images/rndbtmlft.png'%>" width="13" height="13"></td>
+              <td height="10" background="<%=$this->Page->Theme->BaseUrl.'/simpeg/images/rndbkgbtm.png'%>"><table width="674" border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td height="10"></td>
+                  </tr>
+              </table></td>
+              <td><img src="<%=$this->Page->Theme->BaseUrl.'/simpeg/images/rndbtmrgt.png'%>" width="13" height="13"></td>
+            </tr>
+        </table></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+</body>
+</html>

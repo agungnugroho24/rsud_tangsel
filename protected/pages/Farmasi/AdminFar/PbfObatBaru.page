@@ -1,0 +1,163 @@
+<%@ MasterClass="Application.layouts.MainLayout" %>
+<com:TContent ID="jdMain">
+	Daftar Perusahaan Besar Farmasi - Baru
+    
+    <a href="<%= $this->Service->constructUrl('Simak') %>" onclick="maskContent()">
+    <span class="close-btn">
+        <span class="ui-icon ui-icon-circle-close"></span>
+    </span>
+    </a>
+    
+</com:TContent>	
+<com:TContent ID="Main">
+
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+              
+              <tr>
+                <td><table width="100%" border="0" align="right" cellpadding="0" cellspacing="2">
+                  <tr>
+                    <td width="30%"><span>&#8226;</span> ID</td>
+                    <td width="1%">:</td>
+                    <td width="69%"><com:TActiveTextBox CssClass="input_text" 
+												  ID="ID" 
+												  AutoPostBack="true"													   
+												  MaxLength="4" 
+												  TabIndex="1"												   
+												  ToolTip="ID Perusahaan Besar Farmasi" 
+												  Width="55px"													  
+												  ValidationGroup="ID" 
+												  />
+									<com:TActiveCustomValidator
+												ControlToValidate="ID"
+												ValidationGroup="ID"
+												ErrorMessage="Maaf, ID tersebut sudah ada!"
+												OnServerValidate="checkRM" 
+												FocusOnError="true"												
+												Display="Dynamic" />
+								<com:TRequiredFieldValidator 
+											  ControlToValidate="ID"											 
+											  ErrorMessage="Anda harus mengisi ID Perusahaan Besar Farmasi"
+											  Display="Dynamic" />
+								<com:TRegularExpressionValidator
+											  ValidationGroup="Group1"
+											  ControlToValidate="ID"
+											  FocusOnError="true"
+											  RegularExpression="\w{4}"
+											  Text="ID harus 4 digit" /></td>
+                  </tr>
+                  <tr>
+                    <td><span>&#8226; </span>Nama </td>
+                    <td>:</td>
+                    <td>
+						<com:TTextBox 
+							ID="nama" 
+							Width="200px" 
+							TabIndex="2" 
+						/>
+						<com:TRequiredFieldValidator 
+							ControlToValidate="nama"											 
+						  	ErrorMessage="Anda harus mengisikan nama Perusahaan Besar Farmasi"
+						  	Display="Dynamic" 
+						/>
+					</td>
+                  </tr>
+                   <tr>
+                    <td><span>&#8226; </span>Alamat </td>
+                    <td>:</td>
+                    <td>
+						<com:TTextBox 
+							ID="alamat" 
+							Width="300px" 
+							TabIndex="3" 
+						/>
+						<com:TRequiredFieldValidator 
+							ControlToValidate="alamat"											 
+						  	ErrorMessage="Anda harus mengisikan alamat Perusahaan Besar Farmasi"
+						  	Display="Dynamic" 
+						/>
+					</td>
+                  </tr>
+				  <tr>
+                    <td><span>&#8226; </span>Nomor Telepon </td>
+                    <td>:</td>
+                    <td>
+						<com:TTextBox 
+							ID="telp" 
+							Width="100px" 
+							TabIndex="3" 
+						/>
+						<com:TRequiredFieldValidator 
+							ControlToValidate="telp"											 
+						  	ErrorMessage="Anda harus mengisikan nomor telepon Perusahaan Besar Farmasi"
+						  	Display="Dynamic" 
+						/>
+						<com:TRegularExpressionValidator
+							ErrorMessage="Pengisian nomor telepon tidak sesuai"
+							ControlToValidate="telp"
+							Display="Dynamic"
+							RegularExpression="[\d]{5,15}"
+							FocusOnError="true"
+							/>
+					</td>
+                  </tr>
+				  <tr>
+                    <td><span>&#8226; </span>NPWP </td>
+                    <td>:</td>
+                    <td>
+						<com:TTextBox 
+							ID="npwp" 
+							Width="200px" 
+							TabIndex="4" 
+						/>
+						<com:TRequiredFieldValidator 
+							ControlToValidate="npwp"											 
+						  	ErrorMessage="Anda harus mengisikan NPWP Perusahaan Besar Farmasi"
+						  	Display="Dynamic" 
+						/>
+					</td>
+                  </tr>
+				  <tr>
+                    <td><span>&#8226; </span>NPKP </td>
+                    <td>:</td>
+                    <td>
+						<com:TTextBox 
+							ID="npkp" 
+							Width="200px" 
+							TabIndex="5" 
+						/>
+						<com:TRequiredFieldValidator 
+							ControlToValidate="npkp"											 
+						  	ErrorMessage="Anda harus mengisikan NPKP Perusahaan Besar Farmasi"
+						  	Display="Dynamic" 
+						/>
+					</td>
+                  </tr>
+                </table></td>
+              </tr>
+              <tr>
+                <td><hr /></td>
+              </tr>
+              <tr>
+                <td><table width="10" border="0" align="center" cellpadding="0" cellspacing="2">
+                    <tr>
+                      <td><com:TButton Text="Simpan" Attributes.onclick = "maskContent();" 
+					  					OnClick="simpanClicked" 
+										CssClass="button_01" 
+										TabIndex="6" /></td>
+                      <td><!--<com:TButton Text="Batal" 					  					
+										ButtonType="Reset" 
+										OnClick="batalClicked"
+										CausesValidation="false" 
+										CssClass="button_01" 
+										TabIndex="7" />--></td>
+                      <td><com:TButton Text="Keluar" Attributes.onclick = "maskContent();" 
+					  			OnClick="keluarClicked" 
+								CausesValidation="false" 
+								CssClass="button_01" 
+								TabIndex="8" />
+					  </td>
+                    </tr>
+                </table></td>
+              </tr>
+          </table>
+</com:TContent>

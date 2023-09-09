@@ -1,0 +1,398 @@
+<%@ MasterClass="Application.layouts.MainLayout" %>
+<com:TContent ID="jdMain">
+	History Data Pasien
+</com:TContent>
+
+<com:TContent ID="Main">
+	<com:TClientScript Enabled="true">
+    
+		jQuery(document).ready(function(){
+			
+			jQuery("#flex1").flexigrid
+			(
+					{
+					url: 'index.php?page=Pendaftaran.DaftarCariDataSearch',
+					dataType: 'json',
+					colModel : [
+						{display: 'No. RM', name : 'cm', width : 40, sortable : true, align: 'center'},
+						{display: 'Nama', name : 'nama', width : 40, sortable : true, align: 'center'},
+						{display: 'Penanggung', name : 'tmp_lahir', width : 180, sortable : true, align: 'left'},
+						{display: 'Tgl. Lahir', name : 'tgl_lahir', width : 120, sortable : true, align: 'left'},
+						{display: 'Alamat', name : 'alamat', width : 130, sortable : true, align: 'left'},
+						{display: 'Jenis Kelamin', name : 'jkel', width : 80, sortable : true, align: 'right'}
+						],
+					buttons : [
+						{name: 'Add', bclass: 'add', onpress : test},
+						{name: 'Delete', bclass: 'delete', onpress : test},
+						{separator: true},
+						{name: 'A', onpress: sortAlpha},
+						{name: 'B', onpress: sortAlpha},
+						{name: 'C', onpress: sortAlpha},
+						{name: 'D', onpress: sortAlpha},
+						{name: 'E', onpress: sortAlpha},
+						{name: 'F', onpress: sortAlpha},
+						{name: 'G', onpress: sortAlpha},
+						{name: 'H', onpress: sortAlpha},
+						{name: 'I', onpress: sortAlpha},
+						{name: 'J', onpress: sortAlpha},
+						{name: 'K', onpress: sortAlpha},
+						{name: 'L', onpress: sortAlpha},
+						{name: 'M', onpress: sortAlpha},
+						{name: 'N', onpress: sortAlpha},
+						{name: 'O', onpress: sortAlpha},
+						{name: 'P', onpress: sortAlpha},
+						{name: 'Q', onpress: sortAlpha},
+						{name: 'R', onpress: sortAlpha},
+						{name: 'S', onpress: sortAlpha},
+						{name: 'T', onpress: sortAlpha},
+						{name: 'U', onpress: sortAlpha},
+						{name: 'V', onpress: sortAlpha},
+						{name: 'W', onpress: sortAlpha},
+						{name: 'X', onpress: sortAlpha},
+						{name: 'Y', onpress: sortAlpha},
+						{name: 'Z', onpress: sortAlpha},
+						{name: '#', onpress: sortAlpha}
+		
+						],
+					searchitems : [
+						{display: 'No. RM', name : 'cm'},
+						{display: 'Nama', name : 'nama', isdefault: true}
+						],
+					sortname: "cm",
+					sortorder: "asc",
+					usepager: true,
+					title: 'Pencarian Pasien',
+					useRp: false,
+					rp: 10,
+					showTableToggleBtn: true,
+					width: 700,
+					height: 255
+					}
+					);   
+			
+		});
+		
+		function sortAlpha(com)
+		{ 
+			jQuery('#flex1').flexOptions({newp:1, params:[{name:'letter_pressed', value: com},{name:'qtype',value:jQuery('select[name=qtype]').val()}]});
+			jQuery("#flex1").flexReload(); 
+		}
+		
+		function test(com,grid)
+		{
+			if (com=='Delete')
+			{
+			   if(jQuery('.trSelected',grid).length>0)
+			   {
+			   		if(confirm('Delete ' + jQuery('.trSelected',grid).length + ' items?')){
+						var items = jQuery('.trSelected',grid);
+						var itemlist ='';
+						for(i=0;i<items.length;i++){
+							itemlist+= items[i].id.substr(3)+",";
+						}
+					
+						jQuery.ajax({
+							type: "POST",
+							dataType: "json",
+							url: "delete.php",
+							data: "items="+itemlist,
+							success: function(data)
+							{
+								alert("Query: "+data.query+" - Total affected rows: "+data.total);
+								jQuery("#flex1").flexReload();
+						   	}
+				 		});
+					}
+				} 
+				else
+				{
+					return false;
+				} 
+			}
+			else if (com=='Add')
+			{
+				alert('Add New Item Action');
+			}            
+		} 
+	
+	</com:TClientScript>
+
+	<table width="100%" border="0">
+        <tr>
+            <td align="center">
+            <com:TLabel ID="showSql" />
+            <com:TPanel ID="cariPanel" GroupingText="Pencarian Data" DefaultButton="cariBtn">
+                <table width="100%"  border="0" align="left">								  
+                  <tr>
+                    <td><span>&#8226;</span>&nbsp;&nbsp;Jenis Pasien</td>
+                    <td>:</td>
+                    <td width="980">
+              <com:TRadioButtonList
+                              ID="jnsPas"
+                              RepeatDirection="Horizontal" 	
+                              AutoPostBack="true"
+                              CausesValidation="false"
+                              OnSelectedIndexChanged="cariClicked"
+                              CssClass="radiobtn"								  
+                              >
+                                <com:TListItem Text="Rawat Jalan" Value="1" />
+                                <com:TListItem Text="Rawat Inap" Value="2" />
+                                <com:TListItem Text="Semua" Value="3" />
+                                
+                            </com:TRadioButtonList>
+                            
+                            <com:TRequiredFieldValidator 
+                              ControlToValidate="jnsPas"											 
+                              ErrorMessage="*"
+                              Display="Dynamic"
+                              ValidationGroup="valCari" 
+                              FocusOnError="true" 
+                              CssClass="valRequired"
+                              ControlCssClass="valctrl"/>
+                        </td>
+                  </tr>
+                  <tr>							  
+                    <td width="206"><span>&#8226;</span>&nbsp;&nbsp;No. Rekam Medis</td>
+                    <td width="10">:</td>
+    <td ><com:TTextBox ID="cariCM" 
+                            MaxLength="7"										
+                            Width="100px"
+                            AutoPostBack="true"
+                            OnTextChanged="cariClicked"
+                            CausesValidation="true"
+                            ValidationGroup="valCari">
+                             
+                            </com:TTextBox>
+                    </td>							   			
+                  </tr>							  						 
+                  <tr>							  
+                    <td><span>&#8226;</span>&nbsp;&nbsp;Nama Pasien</td>
+                    <td>:</td>
+                    <td><com:TTextBox ID="cariNama" 
+                            MaxLength="30" 
+                            Width="180px" 		
+                            AutoPostBack="true"
+                            OnTextChanged="cariClicked"
+                            CausesValidation="true"
+                            ValidationGroup="valCari">
+                            
+                            </com:TTextBox>
+                            &nbsp;
+                            <com:TCheckBox 
+                                ID="Advance" 
+                                Text="Elemen Kata" 
+                                Value="1"
+                                OnCheckedChanged="cariClicked" 
+                                CausesValidation="true"
+                            ValidationGroup="valCari">
+                            
+                            </com:TCheckBox></td>
+                  </tr>
+                  <tr>							  
+                    <td><span>&#8226;</span>&nbsp;&nbsp;Tanggal Lahir</td>
+                    <td>:</td>
+                    <td>
+                        <com:TDatePicker 
+                            ID="tglLahir" 
+                            MaxLength="10" 
+                            Width="75px" 
+                            OnTextChanged="cariClicked"
+                            CausesValidation="true"
+                            ValidationGroup="valCari">
+                            </com:TDatePicker> tgl-bln-thn
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><span>&#8226;</span>&nbsp;&nbsp;Alamat</td>
+                    <td>:</td>
+                    <td><com:TTextBox ID="cariAlamat" 
+                            MaxLength="50"										
+                            Width="180px" 
+                            AutoPostBack="true"
+                            OnTextChanged="cariClicked"
+                            CausesValidation="true"
+                            ValidationGroup="valCari">
+                            
+                            </com:TTextBox>
+                            </td>
+                    </tr>
+                    <tr>
+                    <td><span>&#8226;</span>&nbsp;&nbsp;Kabupaten / Kota</td>
+                    <td>:</td>
+                    <td><com:TDropDownList CssClass="input_text"
+                        ID="DDKab"
+                        Width="180px"
+                        PromptText ="--Silakan Pilih--"
+                        PromptValue =""
+                        AutoPostBack="true"
+                        DataTextField="nama"
+                        DataValueField="id"									
+                        OnSelectedIndexChanged="cariClicked"
+                        CausesValidation="true"
+                        ValidationGroup="valCari">
+                        
+                            </com:TDropDownList>    
+                            </td>
+                    </tr>
+                    <tr>
+                        <td><span>&#8226;</span>&nbsp;&nbsp;No. Telepon</td>
+                        <td>:</td>
+                        <td><com:TTextBox ID="cariTlp" 
+                                MaxLength="50"										
+                                Width="180px" 
+                                AutoPostBack="true"
+                                OnTextChanged="cariClicked" 
+                                CausesValidation="true"
+                            ValidationGroup="valCari">
+                            
+                            </com:TTextBox>
+                            </td>
+                    </tr>
+                    <tr>
+                        <td><span>&#8226;</span>&nbsp;&nbsp;No. HP</td>
+                        <td>:</td>
+                        <td><com:TTextBox ID="cariHp" 
+                                MaxLength="50"										
+                                Width="180px" 
+                                AutoPostBack="true"
+                                OnTextChanged="cariClicked" 
+                                CausesValidation="true"
+                                ValidationGroup="valCari">
+                                
+                            </com:TTextBox>
+                                </td>
+                    </tr>
+                    <tr>
+                        <td><span>&#8226;</span>&nbsp;&nbsp;Nama Penanggung Jawab</td>
+                        <td>:</td>
+                        <td><com:TTextBox ID="cariPj" 
+                                MaxLength="50"										
+                                Width="180px" 
+                                AutoPostBack="true"
+                                OnTextChanged="cariClicked" 
+                                CausesValidation="true"
+                                ValidationGroup="valCari">
+                                
+                            </com:TTextBox>
+                                </td>
+                    </tr>
+                  <tr>
+                    <td><span>&#8226;</span>&nbsp;&nbsp;Kelompok Penjamin</td>
+                    <td>:</td>
+                    <td><com:TDropDownList ID="DDUrut"
+                        Width="180px"
+                        PromptText ="--Silakan Pilih--"
+                        PromptValue =""
+                        AutoPostBack="true"
+                        DataTextField="nama"
+                        DataValueField="id"									
+                        OnSelectedIndexChanged="selectionChangedKelompok"
+                        CausesValidation="true"
+                        ValidationGroup="valCari"
+                        CssClass="input_text">
+                        </com:TDropDownList>    
+                            </td>
+                    </tr>
+                    <tr>
+                    <td><span>&#8226;</span>&nbsp;&nbsp;Perusahaan Asuransi</td>
+                    <td>:</td>
+                    <td>
+                        <com:TDropDownList 
+                            ID="DDPerusAsuransi"
+                            PromptText ="--Silakan Pilih--"
+                            PromptValue ="empty"
+                            DataTextField="nama"
+                            DataValueField="id"
+                            AutoPostBack="true"
+                            OnSelectedIndexChanged="cariClicked"
+                            Width="180px"
+                            CssClass="input_text"/>   
+                            </td>
+                    </tr>
+                    
+                    <tr>
+                        <td><span>&#8226;</span>&nbsp;&nbsp;Range No. Rekam Medis</td>
+                        <td>:</td>
+                        <td>
+                            <com:TTextBox ID="cmRange1" 
+                                MaxLength="7"										
+                                Width="70px"
+                                AutoPostBack="false"
+                                OnTextChanged="cariClicked"
+                                CausesValidation="true"
+                                ValidationGroup="valCari"/>
+                            &nbsp; s.d. &nbsp;
+                            <com:TTextBox ID="cmRange2" 
+                                MaxLength="7"										
+                                Width="70px"
+                                AutoPostBack="true"
+                                OnTextChanged="cariClicked"
+                                CausesValidation="false"
+                                ValidationGroup="valCari"/>
+                         </td>
+                    </tr>
+                    
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>                                        
+                        <com:TButton 
+                            ID="cariBtn"
+                            Text="Cari" 
+                            OnClick="cariClicked" 
+                            CssClass="button_01" 
+                            CausesValidation="true"
+                            ValidationGroup="valCari">
+                         </com:TButton>
+                         
+                         <com:TButton 
+                            ID="cetakBtn"
+                            Text="Cetak" 
+                            OnClick="cetakClicked" 
+                            CssClass="button_01" 
+                            CausesValidation="true"
+                            ValidationGroup="valCetak">
+                         </com:TButton> 
+                         
+                    </td>
+                    </tr>
+                </table>
+                </com:TPanel>
+                
+            </td>
+        </tr>
+    </table>
+</td>
+  </tr>
+<tr height="15px">
+<td></td>
+</tr>
+<tr height="15px">
+<td>&nbsp;&nbsp;Jumlah Data Hasil Pencarian : <com:TLabel ID="jmlData"/> pasien </td>
+</tr>
+  <tr>
+    <td align="center">
+    
+    	<table id="flex1" style="display:none"></table>
+        
+    </td>
+  </tr>
+  <tr>
+    <td><hr align="center" width="100%" size="2" noshade color="#CECECE"/></td>
+  </tr>
+  <tr>
+    <td><table width="10" border="0" align="center" cellpadding="0" cellspacing="2">
+        <tr>
+          <td>
+          <!---
+          <com:TControl Visible="<%= $this->User->IsAdmin %>">
+            <com:TButton Text="Baru" OnClick="baruClicked" CssClass="button_01"  />
+          </com:TControl> --->
+          </td>                      
+          <td><com:TButton Text="Keluar" OnClick="keluarClicked" CausesValidation="false" CssClass="button_01"  /></td>
+        </tr>
+    </table></td>
+  </tr>
+</table>
+
+</com:TContent>

@@ -1,0 +1,69 @@
+<%@ MasterClass="Application.layouts.MainLayout" %>
+<com:TContent ID="jdMain">
+	Administrasi Gudang Farmasi
+    
+    <a href="<%= $this->Service->constructUrl('Simak') %>" onclick="maskContent()">
+    <span class="close-btn">
+        <span class="ui-icon ui-icon-circle-close"></span>
+    </span>
+    </a>
+    
+</com:TContent>	
+
+<com:TContent ID="Main">
+
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>			  
+                <td>
+				<com:TLabel ID="showSql" />
+				<table width="100%" align="center" border="0">
+			  		<tr>
+						<td align="center"><com:TPanel GroupingText="Pilih Formulir" >
+							<table width="100%"  border="0" align="left">
+							  <tr>
+								<td width="127"><span>&#8226;</span>&nbsp;&nbsp;Group Formulir</td>
+								<td width="5">:</td>
+								<td >
+								<com:TDropDownList ID="DDGroup" 
+												   PromptText ="--Silakan Pilih--"
+								    			   PromptValue =""	
+												   AutoPostBack="true" 
+												   OnSelectedIndexChanged="chGroupForm">									
+									<com:TListItem Text="PBF" Value="0" />
+									<com:TListItem Text="Produsen" Value="1" />
+									<com:TListItem Text="Jenis Barang" Value="2" />
+                  <!---
+									<com:TListItem Text="Sumber Master" Value="3" />
+									<com:TListItem Text="Sumber Sekunder" Value="4" />
+                  --->
+									<com:TListItem Text="Sediaan/Satuan" Value="5" />
+									<com:TListItem Text="Golongan" Value="6" />
+									<com:TListItem Text="Klasifikasi" Value="7" />
+									<com:TListItem Text="Derivat" Value="8" />									
+								</com:TDropDownList></td>
+							  </tr>							  
+							  <tr>							    
+							    <td>&nbsp;</td>	
+                                <td>&nbsp;</td>	
+                                <td>&nbsp;</td>							    
+							    </tr>
+							</table>
+							</com:TPanel>
+						</td>
+			  		</tr>
+				</table>
+			</td>
+              </tr>
+              <tr>
+                <td><hr /></td>
+              </tr>
+              <tr>
+                <td><table width="10" border="0" align="center" cellpadding="0" cellspacing="2">
+                    <tr>                     
+                       <td><com:TButton Text="Keluar" OnClick="keluarClicked" CausesValidation="false" CssClass="button_01" TabIndex="7" Attributes.onclick = "maskContent();" /></td>
+                    </tr>
+                </table></td>
+              </tr>
+          </table>
+          
+</com:TContent>

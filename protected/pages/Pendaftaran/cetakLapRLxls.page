@@ -1,0 +1,35 @@
+<%@ MasterClass="Application.layouts.MainLayout" %>
+<com:TContent ID="jdMain">
+	Cetak Daftar Laporan RL
+	
+    <a href="<%= $this->Service->constructUrl('Simak') %>" onclick="maskContent()">
+    <span class="close-btn">
+        <span class="ui-icon ui-icon-circle-close"></span>
+    </span>
+    </a>
+    
+</com:TContent> 
+
+<com:TContent ID="Main">
+
+	<div align="center" style="font-size:12px; padding:30px;">
+  	<strong><com:TLabel ID="text"/></strong>
+  </div>
+  <hr style="clear:both;"/>      
+	<table width="100%" border="0" align="center" cellpadding="0" cellspacing="2" align="center">
+                                      
+                      <td align="center">
+                      	 <com:TButton Text="Cetak" 
+                           OnClick="cetakClicked"
+                           ID="cetakBtn"
+                           CssClass="button_01"  />
+                         &nbsp;
+                         <com:TButton Text="Kembali" 
+                               OnClick="kembaliClicked"
+                               ID="kembaliBtn"
+                               CssClass="button_01"  />
+                      </td>
+                    </tr>
+                </table>
+  
+</com:TContent> 

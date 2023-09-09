@@ -1,0 +1,185 @@
+<%@ MasterClass="Application.layouts.MainLayout" %>
+<com:TContent ID="jdMain">
+	Daftar Perusahaan Besar Farmasi
+    
+    <a href="<%= $this->Service->constructUrl('Simak') %>" onclick="maskContent()">
+    <span class="close-btn">
+        <span class="ui-icon ui-icon-circle-close"></span>
+    </span>
+    </a>
+    
+</com:TContent>	
+
+
+<com:TContent ID="Main">
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+		  
+              <tr>			  
+                <td>
+				<com:TLabel ID="showSql" />
+				<table width="100%" align="center" border="0">
+			  		<tr>
+						<td align="center"><com:TPanel GroupingText="Pencarian Data Perusahaan Besar Farmasi" Width="100%" DefaultButton="cariBtn">
+							<table width="100%"  border="0" align="left">
+							  <tr>
+								<td width="200"><span>&#8226;</span>&nbsp;&nbsp;ID PBF</td>
+								<td width="5">:</td>
+								<td ><com:TTextBox ID="ID" 
+										MaxLength="7"										
+										Width="100px" 
+										ToolTip="Cari berdasarkan ID Nama PBF !!" 
+										TabIndex="1"/></td>
+							  </tr>
+							  <tr>
+								<td><span>&#8226;</span>&nbsp;&nbsp;Nama</td>
+								<td>:</td>
+								<td>
+									<com:TTextBox ID="cariNama" 
+										MaxLength="30" 
+										Width="180px" 										
+										ToolTip="Cari berdasarkan Nama!!" 
+										TabIndex="2"
+									/>
+										&nbsp;
+									<com:TCheckBox 
+										ID="Advance" 
+										Text="Elemen Kata" 
+										Value="1" 
+									/>
+								</td>
+							  </tr>
+							   <tr>
+								<td><span>&#8226;</span>&nbsp;&nbsp;Alamat</td>
+								<td>:</td>
+								<td>
+									<com:TTextBox ID="cariAlamat" 
+										MaxLength="30" 
+										Width="180px" 										
+										ToolTip="Cari berdasarkan Alamat!!" 
+										TabIndex="3"
+									/>&nbsp;
+									<com:TCheckBox 
+										ID="Advance2" 
+										Text="Elemen Kata" 
+										Value="1" /> 
+								</td>
+							  </tr>
+							   <tr>
+								<td><span>&#8226;</span>&nbsp;&nbsp;NPWP</td>
+								<td>:</td>
+								<td>
+									<com:TTextBox ID="cariNpwp" 
+										MaxLength="30" 
+										Width="180px" 										
+										ToolTip="Cari berdasarkan NPWP!!" 
+										TabIndex="4"
+									/>
+								</td>
+							  </tr>
+							   <tr>
+								<td><span>&#8226;</span>&nbsp;&nbsp;NPKP</td>
+								<td>:</td>
+								<td>
+									<com:TTextBox ID="cariNpkp" 
+										MaxLength="30" 
+										Width="180px" 										
+										ToolTip="Cari berdasarkan NPKP!!" 
+										TabIndex="5"
+									/>&nbsp;&nbsp;&nbsp;
+								 <com:TButton ID="cariBtn" Attributes.onclick = "maskContent();" Text="Cari" OnClick="cariClicked" CssClass="button_01" TabIndex="6" />
+								</td>
+							  </tr>
+							</table>
+							</com:TPanel>
+						</td>
+			  		</tr>
+				</table>
+			</td>
+              </tr>
+			  <tr height="15px"><td>&nbsp;</td></tr>
+			  <tr height="15px"><td>&nbsp; Jumlah Data : <com:TLabel ID="jmlData" /></td></tr>
+              <tr>
+                <td><table width="100%"  border="0" align="center" cellpadding="0" cellspacing="1">                      
+                      <tr>
+                        <td align="center">
+						<com:TDataGrid ID="UserGrid"
+								DataKeyField="id"
+								AutoGenerateColumns="false"	
+								AllowPaging="true"
+								AllowCustomPaging="true"
+								AllowSorting="true"
+								Width="100%"					
+								PageSize="10"
+								PagerStyle.Mode="Numeric"			
+								PagerStyle.Font.Name="Arial"
+								PagerStyle.Font.Size="12"
+								PagerStyle.HorizontalAlign="Right"			
+								GridLines="None"
+								CellSpacing="1"
+								CellPadding="2"
+								
+								HeaderStyle.CssClass="headerstyle"
+								ItemStyle.CssClass="itemstyle"
+								AlternatingItemStyle.CssClass="itemstyle2"
+								OnItemCreated="itemCreated"
+								OnDeleteCommand="deleteButtonClicked"								
+								OnPageIndexChanged="changePage"
+								OnPagerCreated="pagerCreated"			
+								OnSortCommand="sortGrid">								
+							</div>	
+								
+								<com:THyperLinkColumn   
+									SortExpression="id"     
+									HeaderText="ID PBF"									
+									DataTextField="id"
+									ItemStyle.HorizontalAlign="Center"
+									ItemStyle.Width="100px"		
+									DataNavigateUrlField="id">
+									<prop:DataNavigateUrlFormatString>#
+									  $this->Service->constructUrl('Farmasi.AdminFar.PbfObatEdit',array('ID'=>{0},'mode'=>'01'))
+									</prop:DataNavigateUrlFormatString>
+								</com:THyperLinkColumn>	 
+								
+								<com:TBoundColumn
+									SortExpression="nama"
+									HeaderText="Nama PBF"
+									ItemStyle.Width="300px"
+									DataField="nama" />	
+								
+								<com:TBoundColumn
+									SortExpression="alamat"
+									HeaderText="Alamat"
+									ItemStyle.Width="300px"
+									DataField="alamat" />		
+									               
+								<com:TButtonColumn												
+									HeaderText="Mode"
+									Text="Delete"
+									ID="Hapus" ItemStyle.Width="50px"
+									ItemStyle.HorizontalAlign="Center"
+									ButtonType="PushButton"									
+									CommandName="delete" />	
+									
+							</com:TDataGrid>
+						</td>                       
+                      </tr>
+                    </table></td>
+              </tr>
+              <tr>
+                <td><hr /></td>
+              </tr>
+              <tr>
+                <td><table width="10" border="0" align="center" cellpadding="0" cellspacing="2">
+                    <tr>
+                      <td>
+                      <!---
+					  <com:TControl Visible="<%= $this->User->IsAdmin %>"> --->
+					  	<com:TButton Text="Baru" Attributes.onclick = "maskContent();" OnClick="baruClicked" CssClass="button_01" TabIndex="6" />
+					  <!---</com:TControl> --->
+					  </td>                      
+                      <td><com:TButton Text="Keluar" Attributes.onclick = "maskContent();" OnClick="keluarClicked" CausesValidation="false" CssClass="button_01" TabIndex="7" /></td>
+                    </tr>
+                </table></td>
+              </tr>
+          </table>
+</com:TContent>

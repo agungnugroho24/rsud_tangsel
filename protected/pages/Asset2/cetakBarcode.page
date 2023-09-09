@@ -1,0 +1,259 @@
+<%@ MasterClass="Application.layouts.AssetLayout" %>
+<com:TContent ID="Main">
+<tr>
+<table width="100%"  border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td height="40"><table width="10" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td><table width="10" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+          </table></td>
+          <td><table width="200" border="0" cellspacing="2" cellpadding="0">
+              <tr>
+                <td class="text_01">Data Master Aset </td>
+              </tr>
+          </table></td>
+          <td>&nbsp;</td>
+        </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="100%"  border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td width="1%"><table width="10" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+          </table></td>
+          <td width="99%" height="350" valign="top" class="table_03"><table width="100%"  border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td width="1%"><table width="18" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                      <td>&nbsp;</td>
+                    </tr>
+                </table></td>
+                <td width="99%"><table width="100%"  border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                      <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                      <td class="text_02">Cetak Barcode</td>
+                    </tr>
+                    <tr>
+                      <td>&nbsp;<com:TLabel ID="showSql" /></td>
+                    </tr>
+                    <tr>
+                      <td>
+                      	
+                        <table width="100%"  border="0" cellspacing="2" cellpadding="0">
+                          <com:TPanel>
+                            <tr>
+                              <td width="13%"><span>&#8226;</span>&nbsp;&nbsp;Tujuan</td>
+                              <td width="1%">:</td>
+                              <td width="86%">
+                              	<com:TDropDownList 
+                                    ID="DDTujuan"
+                                    PromptText ="--Silakan Pilih--"
+                                    PromptValue =""											
+                                    DataTextField="nama"
+                                    DataValueField="id" 	
+                                    ToolTip="Pilih tujuan" 
+                                    Width="150px" 
+                                    AutoPostBack="true" 
+                                    CausesValidation="false"
+                                    OnSelectedIndexChanged="DDTujuanChanged"
+                                />
+                      			<com:TRequiredFieldValidator
+                                    Display="Dynamic"
+                                    ControlToValidate="DDTujuan"
+                                    Text="Tujuan pendistribusian belum dipilih" 
+                                    InitialValue="--Silakan Pilih--" 
+                                    ValidationGroup="val"
+                                />
+                              </td>
+                            </tr>
+                            <tr>
+                              <td><span>&#8226;</span>&nbsp;&nbsp;No. Distribusi</td>
+                              <td>:</td>
+                              <td>
+                              	<com:TDropDownList 
+                                    ID="DDtrans"
+                                    PromptText ="--Silakan Pilih--"
+                                    PromptValue =""											
+                                    DataTextField="no_trans"	
+                                    ToolTip="Pilih no. distribusi" 
+                                    Width="150px" 
+                                    Enabled="false"
+                                    AutoPostBack="true" 
+                                    CausesValidation="false"
+                                    OnSelectedIndexChanged="DDtransChanged"
+                                />
+                                 <com:TRequiredFieldValidator
+                                    Display="Dynamic"
+                                    ControlToValidate="DDtrans"
+                                    Text="No. Distribusi belum dipilih" 
+                                    InitialValue="--Silakan Pilih--" 
+                                    ValidationGroup="val"
+                                />
+                                <com:TLabel ID="errMsg" ForeColor="#FF0000"/>
+                              </td>
+                            </tr>
+                          </com:TPanel>
+                          
+                          <com:TPanel ID="tambahCtrl" Visible="false" DefaultButton="tambahBtn">
+                          <tr valign="top">
+                            <td colspan="3" valign="top"><hr /></td>
+                          </tr>
+                          </com:TPanel>
+                              
+							  <tr>
+							    <td colspan="3" valign="top"><hr /></td>
+							    </tr>
+							  
+							  <tr>
+							    <td colspan="3" valign="top">
+                                
+                                <table width="95%"  border="0" align="center" cellpadding="0" cellspacing="1">                                  <tr>
+                                    <td align="center">
+                                    <com:TDataGrid ID="dtgSomeData"
+                                            DataKeyField="id_barang"
+                                            AutoGenerateColumns="false"	
+                                            AllowPaging="true"
+                                            AllowCustomPaging="true"
+                                            AllowSorting="true"
+                                            Width="680px"					
+                                            PageSize="10"
+                                            PagerStyle.Mode="Numeric"			
+                                            PagerStyle.Font.Name="Arial"
+                                            PagerStyle.Font.Size="12"
+                                            PagerStyle.HorizontalAlign="Right"			
+                                            GridLines="None"
+                                            CellSpacing="1"
+                                            CellPadding="2"
+                                            BackColor="#000000"
+                                            HeaderStyle.CssClass="headerstyle"
+                                            ItemStyle.CssClass="itemstyle"
+                                            AlternatingItemStyle.CssClass="itemstyle2"
+                                            OnItemCreated="dtgSomeData_ItemCreated"							
+                                            OnPageIndexChanged="dtgSomeData_PageIndexChanged"
+                                            OnSortCommand="dtgSomeData_SortCommand">								
+                                        </div>								
+                                            
+                                          <com:TTemplateColumn 
+                                                 HeaderText="Kode" 	
+                                                 SortExpression="id_brg"					 
+                                                 ItemStyle.Width="100px" 
+                                                 ItemStyle.HorizontalAlign="Center">									
+                                                <prop:ItemTemplate>
+                                                    <%= $this->Parent->DataItem['id_brg'] %>                                                </prop:ItemTemplate>
+                                           </com:TTemplateColumn> 
+                                           
+                                           <com:TTemplateColumn 
+                                                 HeaderText="Nama Barang" 	
+                                                 SortExpression="nm_barang"					 
+                                                 ItemStyle.Width="250px" 
+                                                 ItemStyle.HorizontalAlign="Center">									
+                                                <prop:ItemTemplate>
+                                                    <%= $this->Parent->DataItem['nm_barang'] %>                                                </prop:ItemTemplate>
+                                            </com:TTemplateColumn> 
+                                            
+                                            <com:TTemplateColumn 
+                                                 HeaderText="Jumlah" 	
+                                                 SortExpression="jml"					 
+                                                 ItemStyle.Width="100px" 
+                                                 ItemStyle.HorizontalAlign="Center">									
+                                                <prop:ItemTemplate>
+                                                    <%= $this->Parent->DataItem['jml'] %>                                                </prop:ItemTemplate>
+                                            </com:TTemplateColumn> 
+                                            
+                                            <com:TBoundColumn 
+                                                SortExpression="nm_ruang"
+                                                HeaderText="Tujuan"
+                                                ItemStyle.Width="100px"
+                                                DataField="nm_ruang"
+                                                ItemStyle.HorizontalAlign="Center" 
+                                                Visible = "false"/>
+                                        	
+                                             <com:TBoundColumn 
+                                                SortExpression="nm_pengirim"
+                                                HeaderText="Pengirim"
+                                                ItemStyle.Width="100px"
+                                                DataField="nm_pengirim"
+                                                ItemStyle.HorizontalAlign="Center" 
+                                                Visible = "false"/>
+                                            
+                                            <com:TBoundColumn 
+                                                SortExpression="nm_penerima"
+                                                HeaderText="Penerima"
+                                                ItemStyle.Width="100px"
+                                                DataField="nm_penerima"
+                                                ItemStyle.HorizontalAlign="Center"
+                                                Visible = "false"  />
+                                        </com:TDataGrid>                                    </td>                       
+                                  </tr>
+                                </table>                                </td>
+							  </tr>
+                      	</table>
+                       
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                      <td><table width="95%"  border="0" cellspacing="0" cellpadding="0">
+                          <tr>
+                            <td class="table_05"></td>
+                          </tr>
+                      </table></td>
+                    </tr>
+                    <tr>
+                      <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                      <td><table width="100" border="0" align="center" cellpadding="0" cellspacing="4" class="table_04">
+                          <tr>
+                            <td><table width="10" border="0" cellspacing="2" cellpadding="0">
+                                <tr>
+                                   <td>
+                                   		<com:TButton 
+                                        	ID="cetakBtn" 
+                                            Text="Cetak" 
+                                            OnClick="cetakClicked" 
+                                            CssClass="button_01" 
+                                            Enabled="false" />
+                                   </td>
+								  <td>
+                                  	<com:TButton 
+                                    	Text="Batal"
+                                  		OnClick="batalClicked"
+                                        CssClass="button_01"  />
+                                  </td>
+								  <td>
+                                  	<com:TButton 
+                                    	Text="Keluar" 
+                                        OnClick="keluarClicked" 
+                                        CausesValidation="false" 
+                                        CssClass="button_01"  />
+                                  </td>
+                                </tr>
+                            </table></td>
+                          </tr>
+                      </table></td>
+                    </tr>
+                    <tr>
+                      <td>&nbsp;</td>
+                    </tr>
+                </table></td>
+              </tr>
+          </table></td>
+        </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td height="10"></td>
+  </tr>
+</table>
+</com:TContent>

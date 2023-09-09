@@ -1,0 +1,199 @@
+<%@ MasterClass="Application.layouts.AssetLayout" %>
+<com:TContent ID="Main">
+<tr>
+<table width="100%"  border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td height="40"><table width="10" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td><table width="10" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+          </table></td>
+          <td><table width="200" border="0" cellspacing="2" cellpadding="0">
+              <tr>
+                <td class="text_01">Data Master Aset </td>
+              </tr>
+          </table></td>
+          <td>&nbsp;</td>
+        </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="100%"  border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td width="1%"><table width="10" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+          </table></td>
+          <td width="99%" height="350" valign="top" class="table_03"><table width="100%"  border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td width="1%"><table width="18" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                      <td>&nbsp;</td>
+                    </tr>
+                </table></td>
+                <td width="99%"><table width="100%"  border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                      <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                      <td class="text_02">Data Aset Distributor</td>
+                    </tr>
+                    <tr>
+                      <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                      <td>
+                      	<table width="650"  border="0" cellspacing="2" cellpadding="0">
+                            <tr valign="top">
+                              <td width="201">&#8226; Nama Distributor </td>
+                              <td width="12">:</td>
+                              <td width="429"><com:TTextBox 
+                                            ID="nm"
+                                            CssClass="inputtex" 
+                                            Width="200px" 
+                                            MaxLength="30" 
+                                            ToolTip="Nama distributor"
+                                            ValidationGroup="val" />
+                                  <br/>
+                                  <com:TRequiredFieldValidator 
+                                            ControlToValidate="almt"											 
+                                            ErrorMessage="Anda harus mengisi nama distributor"
+                                            Display="Dynamic" 
+                                            ValidationGroup="val"/>                          </td>
+                            </tr>
+                            <tr valign="top">
+                              <td>&#8226; Lokasi/Alamat Distributor </td>
+                              <td>:</td>
+                              <td><com:TTextBox 
+                                            ID="almt"
+                                            CssClass="inputtex" 
+                                            Width="280px" 
+                                            MaxLength="100" 
+                                            ToolTip="Lokasi/Alamat distributor"
+                                            ValidationGroup="val" />
+                                  <br/>
+                                  <com:TRequiredFieldValidator 
+                                            ControlToValidate="almt"											 
+                                            ErrorMessage="Anda harus mengisi lokasi/alamat distributor"
+                                            Display="Dynamic" 
+                                            ValidationGroup="val"/>                          </td>
+                            </tr>
+                            <tr valign="top">
+                              <td>&#8226; Telepon</td>
+                              <td>:</td>
+                              <td><com:TTextBox 
+                                            ID="noTlp" 
+                                            CssClass="inputtext" 
+                                            Width="200px"/>
+                                  <br/>
+                                  <com:TRequiredFieldValidator 
+                                            ControlToValidate="noTlp"							  
+                                            ErrorMessage="Anda harus mengisikan nomor telepon"
+                                            Display="Dynamic" 
+                                            FocusOnError="true" 
+                                            ValidationGroup="val"/>
+                                  <com:TRegularExpressionValidator
+                                            ErrorMessage="Pengisian nomor telepon tidak sesuai"
+                                            ControlToValidate="noTlp"
+                                            Display="Dynamic"
+                                            RegularExpression="[\d]{5,15}"
+                                            FocusOnError="true"
+                                            ValidationGroup="val"
+                                        />                          </td>
+                            </tr>
+                            <tr valign="top">
+                              <td>&#8226; Fax </td>
+                              <td>:</td>
+                              <td><com:TTextBox 
+                                            ID="noFax" 
+                                            CssClass="inputtext" 
+                                            Width="200px"/>
+                                  <br/>
+                                  <com:TRequiredFieldValidator 
+                                            ControlToValidate="noFax"							  
+                                            ErrorMessage="Anda harus mengisikan nomor fax"
+                                            Display="Dynamic" 
+                                            FocusOnError="true" 
+                                            ValidationGroup="val"/>
+                                  <com:TRegularExpressionValidator
+                                            ErrorMessage="Pengisian nomor fax tidak sesuai"
+                                            ControlToValidate="noFax"
+                                            Display="Dynamic"
+                                            RegularExpression="[\d]{5,15}"
+                                            FocusOnError="true"
+                                            ValidationGroup="val"
+                                        />                          </td>
+                            </tr>
+                            <tr valign="top">
+                              <td>&#8226; Nomor Pokok Wajib Pajak </td>
+                              <td>:</td>
+                              <td><com:TTextBox 
+                                            ID="noNpwp" 
+                                            CssClass="inputtext" 
+                                            Width="300px"
+                                        />
+                                  <br/>
+                                  <com:TRequiredFieldValidator 
+                                            ControlToValidate="noNpwp"							  
+                                            ErrorMessage="Anda harus mengisikan NPWP"
+                                            Display="Dynamic" 
+                                            FocusOnError="true"
+                                            ValidationGroup="val"
+                                        />                          </td>
+                            </tr>
+                            <tr valign="top">
+                              <td>&#8226; Keterangan</td>
+                              <td>:</td>
+                              <td><com:TTextBox 
+                                            ID="ket" 
+                                            Width="200px" 
+                                            MaxLength="200"
+                                            TextMode="MultiLine" />
+                              </td>
+                            </tr>
+                          </table>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                      <td><table width="95%"  border="0" cellspacing="0" cellpadding="0">
+                          <tr>
+                            <td class="table_05"></td>
+                          </tr>
+                      </table></td>
+                    </tr>
+                    <tr>
+                      <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                      <td><table width="100" border="0" align="center" cellpadding="0" cellspacing="4" class="table_04">
+                          <tr>
+                            <td><table width="10" border="0" cellspacing="2" cellpadding="0">
+                                <tr>
+                                   <td><com:TButton Text="Simpan" OnClick="simpanClicked" CssClass="button_01" TabIndex="27" ValidationGroup="val"/></td>
+								  <td><com:TButton Text="Batal" OnClick="batalClicked" buttonType="Reset" CssClass="button_01"/></td>
+								  <td><!--<com:TButton Text="Keluar" OnClick="keluarClicked" CausesValidation="false" CssClass="button_01" TabIndex="29" />--></td>
+                                </tr>
+                            </table></td>
+                          </tr>
+                      </table></td>
+                    </tr>
+                    <tr>
+                      <td>&nbsp;</td>
+                    </tr>
+                </table></td>
+              </tr>
+          </table></td>
+        </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td height="10"></td>
+  </tr>
+</table>
+</com:TContent>

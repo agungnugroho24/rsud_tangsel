@@ -1,0 +1,169 @@
+<%@ MasterClass="Application.layouts.MainLayout" %>
+<com:TContent ID="jdMain">
+	Daftar Tarif Operasi
+    
+    <a href="<%= $this->Service->constructUrl('Simak') %>" onclick="maskContent()">
+    <span class="close-btn">
+        <span class="ui-icon ui-icon-circle-close"></span>
+    </span>
+    </a>
+    
+</com:TContent>	
+
+
+<com:TContent ID="Main">
+
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+		  
+              <tr>			  
+                <td>
+				<com:TActiveLabel ID="showSql" />
+				<table width="100%" align="center" border="0">
+			  		<tr>
+						<td align="center">
+                        	<com:TActivePanel ID="firstPanel" DefaultButton="cariBtn" >
+							<table width="100%"  border="0" align="left">
+							  <tr>
+							    <td width="23%"><span>&#8226;</span>&nbsp;&nbsp;Nama Operasi </td>
+							    <td width="1%">:</td>
+							    <td width="76%">
+                                	<com:TActiveDropDownList ID="DDoperasi"
+                                        PromptText ="--Silakan Pilih--"
+                                        PromptValue ="" 											
+                                        DataTextField="nama"
+                                        DataValueField="id" 									
+                                        AutoPostBack="true"								    
+                                        CausesValidation="false"
+                                        OnSelectedIndexChanged="DDoperasiChanged"
+                                        OnCallback="tarifPanelRender">
+                                		<prop:ClientSide
+                                            OnLoading="maskContent();"
+                                            OnComplete="unmaskContent(); "
+                                        />
+                                    </com:TActiveDropDownList>
+                                    </td>
+							    </tr>
+							  <tr>
+                                <td><span>&#8226;</span>&nbsp;&nbsp;Kelas </td>
+							    <td>:</td>
+							    <td>
+                                        <com:TActiveDropDownList ID="DDkelas"
+                                            PromptText ="--Silakan Pilih--"
+                                            PromptValue ="" 											
+                                            DataTextField="nama"
+                                            DataValueField="id" 									
+                                            AutoPostBack="true"								    
+                                            CausesValidation="false"
+                                            OnSelectedIndexChanged="DDkelasChanged"
+                                            OnCallback="tarifPanelRender">
+                                      	<prop:ClientSide
+                                            OnLoading="maskContent();"
+                                            OnComplete="unmaskContent(); "
+                                        />
+                                      </com:TActiveDropDownList>
+                                      <com:TActiveButton
+                                      	ID="cariBtn" 
+                                      	Text="Cari" 
+                                        OnClick="cariClicked" 
+                                        CssClass="button_01"
+                                        Visible="false"/>                                  </td>
+							    </tr>
+							</table>
+							</com:TActivePanel>
+						</td>
+			  		</tr>
+				</table>
+			</td>
+              </tr>
+			  
+              <tr>
+                <td>
+                	<div id="loading" align="center" style="display:none" > <br/>
+                        Loading Data... <br/>
+                        <img src="<%=$this->Page->Theme->BaseUrl.'/images/loading.gif'%>" /> <br/>
+                      </div>
+                    <div id="messages">
+                	<com:TActivePanel ID="tarifPanel" DefaultButton="simpanBtn">
+                    	<table width="100%"  border="0" align="center">
+                        	<tr>
+                            	<td colspan="3"><hr/></td>
+                            </tr>
+                            
+                        	<com:TRepeater 
+                                ID="Repeater"
+                                OnItemDataBound="repeaterDataBound">                        
+                                <prop:ItemTemplate>
+                                        <tr>
+                                          <td width="23%"><span>&#8226;</span>&nbsp;&nbsp;<com:TActiveLabel ID="txtLabel"/> </td>
+                                          <td width="1%">:</td>
+                                          <td width="76%">
+                                          	<com:TActiveTextBox 
+                                            	ID="txtTarif"
+                                                MaxLength="9"/>
+                                          	<com:TRequiredFieldValidator
+                                                ControlToValidate="txtTarif" 
+                                                FocusOnError="true"
+                                                ValidationGroup="val"
+                                                Display="Dynamic" 
+                                                Text="*"/>   
+                                            <com:TRegularExpressionValidator
+                                                ValidationGroup="val"
+                                                ControlToValidate="txtTarif"
+                                                RegularExpression="(^[0]$)|(^[1-9]+\d*$)"
+                                                Text="Tarif tidak sesuai" />    
+                                            <com:THiddenField
+                                                ID="nmField" 
+                                                Value="<%#$this->Data['nm_field']%>" />
+                                            
+                                          </td>
+                                        </tr>
+                                 </prop:ItemTemplate>
+                            </com:TRepeater> 
+                            
+                        </table>
+                    </com:TActivePanel>
+                    </div> 
+                    
+              	</td>
+              </tr>
+              <tr>
+                <td><hr /></td>
+              </tr>
+              <tr>
+                <td>
+                	<com:TActivePanel ID="btnPanel">
+                	<table width="10" border="0" align="center" cellpadding="0" cellspacing="2">
+                        <tr>
+                          <td>
+                            <com:TActiveButton Text="Edit" ID="editBtn" OnClick="editClicked" OnCallback="editCallBack" CssClass="button_01">
+                            	<prop:ClientSide
+                                    OnLoading="maskContent();"
+		    						OnComplete="unmaskContent(); "
+                                />
+                            </com:TActiveButton>
+                          </td>
+                          <td>
+                            <com:TActiveButton Text="Simpan"  ID="simpanBtn" OnClick="simpanClicked" OnCallback="editCallBack" CssClass="button_01" CausesValidation="true" ValidationGroup="val" >
+                            	<prop:ClientSide
+                                    OnLoading="maskContent();"
+		    						OnComplete="unmaskContent(); "
+                                />
+                            </com:TActiveButton>
+                          </td> 
+                          <td>
+                            <com:TActiveButton Text="Batal" ID="batalBtn" OnClick="batalClicked" OnCallback="editCallBack" CssClass="button_01">
+                            	<prop:ClientSide
+                                    OnLoading="maskContent();"
+		    						OnComplete="unmaskContent(); "
+                                />
+                            </com:TActiveButton>
+                          </td>                     
+                          <td><com:TButton Text="Keluar" Visible="True" Attributes.onclick = "maskContent();" OnClick="keluarClicked" CausesValidation="false" CssClass="button_01" /></td>
+                        </tr>
+                	</table>
+                    </com:TActivePanel>
+              	</td>
+              </tr>
+          </table>
+          
+</com:TContent>

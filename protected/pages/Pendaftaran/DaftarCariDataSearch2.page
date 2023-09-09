@@ -1,0 +1,12 @@
+<%@ MasterClass="Application.layouts.MainLayout" %>
+<com:TContent ID="jdMain">
+	History Data Pasien
+</com:TContent>
+
+<com:TContent ID="Main">
+
+</com:TContent>
+	
+		
+							
+	

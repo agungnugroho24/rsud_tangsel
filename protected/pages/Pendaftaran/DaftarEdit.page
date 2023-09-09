@@ -1,0 +1,1124 @@
+<%@ MasterClass="Application.layouts.MainLayout" %>
+<com:TContent ID="jdMain">
+	Edit Data Pasien
+    
+    <a href="<%= $this->Service->constructUrl('Simak') %>" onclick="maskContent()">
+    <span class="close-btn">
+        <span class="ui-icon ui-icon-circle-close"></span>
+    </span>
+    </a>
+    
+</com:TContent>
+
+<com:TContent ID="Main">
+    <com:TActivePanel ID="panel" DefaultButton="simpanBtn">	
+    <com:TActiveLabel ID="msg"/>
+    
+    <table width="100%" border="0" align="center" cellpadding="1" cellspacing="0" >
+    <com:TControl Visible="false">
+    <tr>
+    <td width="20%"><span>&#8226;</span> Status Pendaftaran</td>
+    <td width="1%">:</td>
+    <td width="79%">
+        <com:TActiveRadioButtonList
+          ID="RBstDaftar"
+          RepeatDirection="Horizontal" 	
+          SelectedValue="0"		
+          AutoPostBack="true"
+          CausesValidation="false"
+          OnSelectedIndexChanged="RBstDaftarChanged"
+          OnCallback="RBstDaftarCallBack"							  
+          >
+            <com:TListItem Text="Pasien Baru" Value="0" />
+            <com:TListItem Text="Pasien Lama" Value="1" />
+        </com:TActiveRadioButtonList>
+        <com:TRequiredFieldValidator 
+          ControlToValidate="RBstDaftar"											 
+          ErrorMessage="*"
+          Display="Dynamic"
+            FocusOnError="true" 
+          CssClass="valRequired"
+          ControlCssClass="valctrl"
+          ValidationGroup="val" />
+    </td>
+    </tr>
+    </com:TControl>
+    
+    <tr>
+    <td width="20%"><span>&#8226;</span> No. Rekam Medis</td>
+    <td width="1%">:</td>
+	<td width="79%">
+	<com:TActiveTextBox CssClass="input_text"
+                    ID="cm"
+                    MaxLength="7"
+                    ToolTip="No. Rekam Medis"
+                    Width="55px"
+                    AutoPostBack="true"
+                    OnTextChanged="cekCM"/>
+                <com:TRequiredFieldValidator
+                    ControlToValidate="cm"
+                    ValidationGroup="val"
+                    ErrorMessage="*"
+                    Display="Dynamic"
+                    FocusOnError="true" 
+                    CssClass="valRequired"
+                    ControlCssClass="valctrl" />	
+                <com:TRegularExpressionValidator
+                    ControlToValidate="cm"
+                    ValidationGroup="val"
+                    Display="Dynamic"
+                    FocusOnError="true" 
+                    CssClass="valRequired"
+                    ControlCssClass="valctrl"
+                    RegularExpression="[\d]{6,6}"
+                    ErrorMessage="No. Rekam Medis Harus Angka 6 digit" />&nbsp
+                
+            
+        <!--ReadOnly="true"
+        <com:TCheckBox ID="ignore" value="1" Text="Abaikan"/>-->
+                            <com:TActiveLabel ID="errMsg" />
+    
+    <!--	
+    <com:TActiveLabel ID="cm2" Font.Bold="true" ForeColor="#0000FF" />
+    CausesValidation="true"
+    -->
+    </td>
+    </tr>
+    <tr>
+    <td><span>&#8226;</span> Nama Lengkap</td>
+    <td>:</td>
+    <td><com:TActiveTextBox CssClass="input_text"
+                      ID="nama"
+                      Width="190px"
+                      MaxLength="30"
+                      ToolTip="Masukan nama pasien..."
+                      ValidationGroup="nama" />
+        <com:TRequiredFieldValidator
+                      ControlToValidate="nama"
+                     ValidationGroup="val"
+                      ErrorMessage="*"
+                      Display="Dynamic"
+            FocusOnError="true" 
+          CssClass="valRequired"
+          ControlCssClass="valctrl" />
+        <com:TRegularExpressionValidator
+                    ControlToValidate="nama"
+                    ValidationGroup="val"
+                    Display="Dynamic"
+                    FocusOnError="true" 
+                      CssClass="valRequired"
+                      ControlCssClass="valctrl"
+                    RegularExpression="(^[a-zA-Z\s.\-]+$)"
+                    ErrorMessage="Nama pasien harus huruf alphabet & minimal 2 huruf maksimal 30 huruf!" />
+    
+    
+    &nbsp;&nbsp;&nbsp;
+    <com:TActiveDropDownList ID="embel"
+                       PromptText ="--Silakan Pilih--"
+                       PromptValue="empty"
+                        AutoPostBack="true"
+                         DataTextField="nama"
+            				 DataValueField="id"
+                        CausesValidation="false" >
+                </com:TActiveDropDownList>
+    
+    <com:TRequiredFieldValidator
+            ControlToValidate="embel"
+            ValidationGroup="val"
+            ErrorMessage="*"
+            Display="Dynamic"
+            FocusOnError="true" 
+            CssClass="valRequired"
+            ControlCssClass="valctrl"
+            InitialValue="empty"/>
+            
+    </td>
+    </tr>
+	
+	<tr>
+    <td><span>&#8226;</span> Nama Ibu Kandung</td>
+    <td>:</td>
+    <td>
+        <com:TActiveTextBox 
+              ID="nmIbu"
+              Width="190px"
+              MaxLength="50" 
+              CssClass="input_text"/>						
+        
+        <com:TRequiredFieldValidator
+            ControlToValidate="nmIbu"
+            ValidationGroup="val"
+            ErrorMessage="*"
+            Display="Dynamic"
+            FocusOnError="true" 
+            CssClass="valRequired"
+            ControlCssClass="valctrl"
+            Enabled="false"/>
+            
+    </td>
+    </tr>
+	
+	
+			  
+    <tr>
+    <td><span>&#8226;</span> Tempat Lahir</td>
+    <td>:</td>
+    <td>
+        <com:TActiveTextBox CssClass="input_text"
+                      ID="tmp_lahir"
+                      MaxLength="20"
+                      ToolTip="Masukan tempat lahir pasien..."
+                      ValidationGroup="tmp_lahir" />						
+        
+        <com:TRequiredFieldValidator
+            ControlToValidate="tmp_lahir"
+            ValidationGroup="val"
+            ErrorMessage="*"
+            Display="Dynamic"
+            FocusOnError="true" 
+            CssClass="valRequired"
+            ControlCssClass="valctrl"/>
+            
+    </td>
+    </tr>
+    <tr>
+    <td><span>&#8226;</span> Tanggal Lahir</td>
+    <td>:</td>
+    <td>
+        <com:TActiveTextBox CssClass="input_text"
+                      ID="tgl_lahir"
+                      MaxLength="10"
+                    AutoPostBack="true"
+                    CausesValidation="false"
+                    OnTextChanged="checkUmur"
+                      ToolTip="Masukan tanggal lahir pasien..."
+                      ValidationGroup="tgl_lahir" />
+                                           
+        <com:TRequiredFieldValidator
+            ControlToValidate="tgl_lahir"
+            ValidationGroup="val"
+            ErrorMessage="*"
+            Display="Dynamic"
+            FocusOnError="true" 
+            CssClass="valRequired"
+            ControlCssClass="valctrl"/>
+        
+        tgl-bln-thn &nbsp;                   
+        </td>
+    </tr>
+    <tr>
+    <td><span>&#8226;</span> Kelompok Penjamin</td>
+    <td>:</td>
+    <td>
+        <com:TActiveDropDownList CssClass="input_text"
+             ID="DDKelompok"
+             PromptText ="--Silakan Pilih--"
+             PromptValue ="empty"
+             AutoPostBack="true"
+             DataTextField="nama"
+             DataValueField="id"
+             OnSelectedIndexChanged="selectionChangedKelompok"
+             OnCallback="DDKelompokCallback"
+    
+             ToolTip="Pilih kelompok pasien!" />                         
+        
+        <com:TRequiredFieldValidator
+            ControlToValidate="DDKelompok"
+            ValidationGroup="val"
+            ErrorMessage="*"
+            Display="Dynamic"
+            FocusOnError="true" 
+            CssClass="valRequired"
+            ControlCssClass="valctrl"
+            InitialValue="empty"/>
+    </td>
+    </tr>
+    
+    <tr>
+    <td><span>&#8226;</span> Perusahaan Asuransi</td>
+    <td>:</td>
+    <td>
+        <com:TActiveDropDownList 
+             ID="DDPerusAsuransi"
+             CssClass="input_text"
+             PromptText ="--Silakan Pilih--"
+             PromptValue ="empty"
+             DataTextField="nama"
+             DataValueField="id"
+             AutoPostBack="false"/>                         
+        
+            <com:TRequiredFieldValidator
+            	ID="valPerusAsuransi"
+                ControlToValidate="DDPerusAsuransi"
+                ValidationGroup="val"
+                ErrorMessage="*"
+                Display="Dynamic"
+                FocusOnError="true" 
+                CssClass="valRequired"
+                ControlCssClass="valctrl"
+                InitialValue="empty"/>
+    </td>
+    </tr>
+    
+    <tr>
+    <td><span>&#8226;</span> No. Asuransi</td>
+    <td>:</td>
+    <td>
+       <com:TActiveTextBox 
+       		CssClass="input_text"
+            ID="noAsuransi"
+            MaxLength="30"/>						
+        
+        <com:TRequiredFieldValidator
+        	ID="valNoAsuransi"
+            ControlToValidate="noAsuransi"
+            ValidationGroup="val"
+            ErrorMessage="*"
+            Display="Dynamic"
+            FocusOnError="true" 
+            CssClass="valRequired"
+            ControlCssClass="valctrl"/>
+    </td>
+    </tr>
+    
+    <tr>
+    <td colspan="3">
+        <com:TActivePanel ID="namaKarPanel">
+           <table width="100%" cellpadding="0" cellspacing="0" >
+           <tr>
+            <td width="20%"><span>&#8226;</span> Keluarga dari</td>
+            <td width="1%">:</td>
+            <td width="79%">
+                <com:TActiveDropDownList 
+                        ID="DDNamaKar"													
+                        PromptText ="--Silakan Pilih--"
+                        PromptValue ="empty"											
+                        CssClass="input_text"
+                        DataTextField="nama"
+                        DataValueField="id" 	
+                        ToolTip="Pilih Karyawan.." 
+                        Width="200px"
+                        AutoPostBack="false"
+                        CausesValidation="false"
+                        />    
+                    <com:TRequiredFieldValidator
+                    	ID="valKeluarga"
+                        ControlToValidate="DDNamaKar"
+                        ValidationGroup="val"
+                        ErrorMessage="*"
+                        Display="Dynamic"
+                        FocusOnError="true" 
+                        CssClass="valRequired"
+                        ControlCssClass="valctrl" 
+                        InitialValue="empty"/>
+            </td>
+          </tr>
+          </table>
+        </com:TActivePanel>
+    </td>
+    </tr>
+    
+    <tr>
+    <td><span>&#8226;</span> Umur</td>
+    <td>:</td>
+    <td><table width="10" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td width="100px"><com:TActiveTextBox CssClass="input_text"
+                            ID="umur"
+                            Width="20px"
+                            MaxLength="2"
+                            ToolTip="Masukan umur pasien..." />
+                            
+                            <com:TRequiredFieldValidator
+            ControlToValidate="umur"
+            ValidationGroup="val"
+            ErrorMessage="*"
+            Display="Dynamic"
+            FocusOnError="true" 
+            CssClass="valRequired"
+            ControlCssClass="valctrl"/>
+            
+                            </td>
+           <td>&nbsp;Tahun&nbsp;</td>
+           <td width="20px"><com:TActiveTextBox CssClass="input_text"
+                            ID="bln"
+                            Width="20px"
+                            MaxLength="2"
+                            ToolTip="Masukan umur pasien..." />
+                            
+                            <com:TRequiredFieldValidator
+            ControlToValidate="bln"
+            ValidationGroup="val"
+            ErrorMessage="*"
+            Display="Dynamic"
+            FocusOnError="true" 
+            CssClass="valRequired"
+            ControlCssClass="valctrl"/>
+            
+                            </td>
+           <td>&nbsp;Bulan&nbsp;</td>
+           <td width="20px"><com:TActiveTextBox CssClass="input_text"
+                            ID="hari"
+                            Width="20px"
+                        AutoPostBack="true"
+                        CausesValidation="false"
+                        OnTextChanged="checkUmur"
+                            MaxLength="3"
+                            ToolTip="Masukan umur pasien..." />
+                           
+                           <com:TRequiredFieldValidator
+            ControlToValidate="hari"
+            ValidationGroup="val"
+            ErrorMessage="*"
+            Display="Dynamic"
+            FocusOnError="true" 
+            CssClass="valRequired"
+            ControlCssClass="valctrl"/>
+             
+                            </td>
+           <td>&nbsp;Hari&nbsp;</td>
+           <td>&nbsp;<com:TActiveLabel ID="test" /></td>
+        </tr>
+    </table></td>
+    </tr>
+    <tr>
+    <td><span>&#8226;</span> Agama</td>
+    <td>:</td>
+    <td><com:TActiveDropDownList CssClass="input_text"
+                           ID="DDAgama"
+                            AutoPostBack="true"
+                            CausesValidation="false"
+                           DataTextField="nama"
+                           DataValueField="id"
+                           PromptText ="--Silakan Pilih--"
+                           PromptValue ="empty"
+                           ToolTip="Pilih Agama pasien tersebut!"
+                           />
+                           
+                           <com:TRequiredFieldValidator
+            ControlToValidate="DDAgama"
+            ValidationGroup="val"
+            ErrorMessage="*"
+            Display="Dynamic"
+            FocusOnError="true" 
+            CssClass="valRequired"
+            ControlCssClass="valctrl"
+            InitialValue="empty"
+            Enabled="false"/>
+            
+                           </td>
+    </tr>
+    <tr>
+    <td><span>&#8226;</span> Jenis Kelamin</td>
+    <td>:</td>
+    <td>
+      <com:TActiveRadioButtonList ID="jkel" RepeatDirection="Horizontal">
+        <com:TListItem Text="Laki-Laki" />
+    
+        <com:TListItem Text="Perempuan" />
+      </com:TActiveRadioButtonList>	
+      
+      <com:TRequiredFieldValidator 
+                          ControlToValidate="jkel"											 
+                          ErrorMessage=""
+                          Display="Dynamic"
+                          ValidationGroup="val" 
+                          FocusOnError="true" 
+                          CssClass="valRequired"
+                          ControlCssClass="valctrl"/>
+                                             
+     </td>
+    </tr>
+    <tr>
+    <td><span>&#8226;</span> Alamat</td>
+    <td>:</td>
+    <td>
+        <com:TActiveTextBox CssClass="input_text"
+                      ID="alamat"
+                      MaxLength="65"
+                      Width="300px"
+                      ToolTip="Masukan alamat pasien..."
+                      ValidationGroup="alamat"
+                      AutoPostBack="true"
+                      CausesValidation="false"
+                      OnTextChanged="checkAll"
+                    />                  
+        <com:TRequiredFieldValidator
+            ControlToValidate="alamat"
+            ValidationGroup="val"
+            ErrorMessage="*"
+            Display="Dynamic"
+            FocusOnError="true" 
+            CssClass="valRequired"
+            ControlCssClass="valctrl"/>
+            
+        No.                           
+        <com:TActiveTextBox CssClass="input_text"
+                      ID="no"
+                      MaxLength="65"
+                      Width="50px"
+                      ToolTip="Nomor alamat tempat tinggal pasien..."
+                      ValidationGroup="alamat"
+                      AutoPostBack="true"
+                      CausesValidation="false"
+                      OnTextChanged="checkAll"
+                    />
+                     <com:TRequiredFieldValidator
+            ControlToValidate="no"
+            ValidationGroup="val"
+            ErrorMessage="*"
+            Display="Dynamic"
+            FocusOnError="true" 
+            CssClass="valRequired"
+            ControlCssClass="valctrl"
+            Enabled="false"/>
+                                        
+                      </td>
+    </tr>
+    <tr>
+    <td>&nbsp;</td>
+    <td>:</td>
+    <td>
+        RT &nbsp;
+        <com:TActiveTextBox CssClass="input_text"
+            ID="rt"
+            Width="40px"
+            MaxLength="4"
+            ToolTip="Masukan no RT pasien..." />
+            
+        RW &nbsp;
+        <com:TActiveTextBox CssClass="input_text"
+            ID="rw"
+            Width="40px"
+            MaxLength="4"
+            ToolTip="Masukan no RW pasien..." />
+    </td>
+    </tr>
+    
+    <tr>
+    <td><span>&#8226;</span> Telepon</td>
+    <td>:</td>
+    <td>
+        <com:TActiveTextBox CssClass="input_text"
+                      ID="telp"
+                      MaxLength="20"
+                      Width="100px"
+                    />
+        <com:TRequiredFieldValidator
+            ControlToValidate="telp"
+            ValidationGroup="val"
+            ErrorMessage="*"
+            Display="Dynamic"
+            FocusOnError="true" 
+            CssClass="valRequired"
+            ControlCssClass="valctrl"
+            Enabled="false"/>
+    </td>                  	
+    </tr>
+    <td><span>&#8226;</span> Handphone</td>
+    <td>:</td>
+    <td>
+        <com:TActiveTextBox CssClass="input_text"
+                      ID="hp"
+                      MaxLength="20"
+                      Width="100px"
+                    />                        
+        <com:TRequiredFieldValidator
+            ControlToValidate="hp"
+            ValidationGroup="val"
+            ErrorMessage="*"
+            Display="Dynamic"
+            FocusOnError="true" 
+            CssClass="valRequired"
+            ControlCssClass="valctrl"
+            Enabled="false"/>
+    </td>                  	
+    </tr>
+    
+    <tr>
+    <td><span>&#8226;</span> Provinsi</td>
+    <td>:</td>
+    <td>
+    	<com:TActiveDropDownList
+            ID="DDProv"
+            PromptText ="--Silakan Pilih--"
+            PromptValue ="empty"	
+            DataValueField="id"
+            DataTextField="nama"
+            AutoPostBack="true"
+            CausesValidation="false"
+            OnSelectedIndexChanged="DDProvChanged"
+            Width="200px">
+         </com:TActiveDropDownList>                           		
+         <com:TRequiredFieldValidator 
+            ControlToValidate="DDProv"
+            InitialValue="empty"
+            Display="Dynamic"
+            FocusOnError="true"
+            ValidationGroup="val"
+            CssClass="valRequired"
+            ControlCssClass="valctrl"
+             ErrorMessage="*"
+             Enabled="false"/>                       	
+    </td>
+    </tr>     
+    
+    <tr>
+    <td><span>&#8226;</span> Kabupaten / Kota</td>
+    <td>:</td>
+    <td>
+    <com:TActiveDropDownList CssClass="input_text"
+         ID="DDKab"
+         AutoPostBack="true"
+         CausesValidation="false"
+         PromptText ="--Silakan Pilih--"
+         PromptValue ="empty"
+         DataTextField="nama"
+         DataValueField="id"
+         Width="200px"
+         OnSelectedIndexChanged="DDKabChanged"
+         ValidationGroup="DDKab" />                
+     <com:TRequiredFieldValidator
+            ControlToValidate="DDKab"
+            ValidationGroup="val"
+            ErrorMessage="*"
+            Display="Dynamic"
+            FocusOnError="true" 
+            CssClass="valRequired"
+            ControlCssClass="valctrl"
+            InitialValue="empty"
+            Enabled="false"/>
+    
+    <span class="ui-state-default ui-corner-all" style="width:16px; height:16px;  display:inline-block; text-align:center; vertical-align:middle">
+        <com:TActiveLinkButton 
+            OnClick="kabBaruBtnClicked"
+            ToolTip="Tambah Kabupaten"
+            Text="" 
+            CssClass="ui-icon ui-icon-circle-plus" 
+            Style="display:inline-block; outline-style:none;  ">
+            <prop:ClientSide 
+                OnLoading="maskContent();"
+                OnComplete="unmaskContent(); "/>
+        </com:TActiveLinkButton>
+    </span>  
+            
+    <com:TControl Visible="false" Enabled="false">
+    <com:TActiveTextBox ID="kabLain" CssClass="inputtext" Width="140px" Enabled="false"/> 
+    
+    <com:TRequiredFieldValidator
+    	ID="valKabLain"
+            ControlToValidate="kabLain"
+            ValidationGroup="val"
+            ErrorMessage="*"
+            Display="Dynamic"
+            FocusOnError="true" 
+            CssClass="valRequired"
+            ControlCssClass="valctrl"/>           
+    </com:TControl>               	
+    </td>
+    </tr>    
+    
+    <tr>            
+        <td><span>&#8226;</span>&nbsp;&nbsp;Kecamatan</td>
+        <td>:</td>
+        <td>
+            <com:TActiveDropDownList
+                ID="DDKec"
+                PromptText ="--Silakan Pilih--"
+                PromptValue ="empty"	
+                DataValueField="id"
+                DataTextField="nama"
+                AutoPostBack="true"
+                CausesValidation="false"
+                Width="200px"
+                OnSelectedIndexChanged="DDKecChanged"/>
+            <com:TRequiredFieldValidator
+                ID="kecValidator" 
+                ControlToValidate="DDKec"
+                InitialValue="empty"
+                Display="Dynamic"
+                FocusOnError="true"
+                ValidationGroup="valReg"
+                CssClass="valRequired"
+                ControlCssClass="valctrl"
+                ErrorMessage="*"
+                Enabled="false"
+                />
+            
+            <span class="ui-state-default ui-corner-all" style="width:16px; height:16px;  display:inline-block; text-align:center; vertical-align:middle">
+                <com:TActiveLinkButton 
+                    OnClick="kecBaruBtnClicked"
+                    ToolTip="Tambah Kecamatan"
+                    Text="" 
+                    CssClass="ui-icon ui-icon-circle-plus" 
+                    Style="display:inline-block; outline-style:none;  ">
+                    <prop:ClientSide 
+                        OnLoading="maskContent();"
+                        OnComplete="unmaskContent(); "/>
+                </com:TActiveLinkButton>
+            </span>  
+                     
+            <com:TControl Visible="false" Enabled="false">               
+        	<com:TActiveTextBox 
+            	CssClass="input_text"
+                ID="KecLuar"
+                Width="140px"
+                MaxLength="30"/>
+            </com:TControl>          
+        </td>
+      </tr>	
+    
+    <tr>
+                        
+        <td><span>&#8226;</span>&nbsp;&nbsp;Kelurahan</td>
+        <td>:</td>
+        <td>
+            <com:TActiveDropDownList
+                ID="DDKel"
+                PromptText ="--Silakan Pilih--"
+                PromptValue ="empty"	
+                DataValueField="id"
+                DataTextField="nama"
+                AutoPostBack="false"
+                CausesValidation="false"
+                Width="200px">
+             </com:TActiveDropDownList>                           		
+             <com:TRequiredFieldValidator 
+                ControlToValidate="DDKel"
+                InitialValue="empty"
+                Display="Dynamic"
+                FocusOnError="true"
+                ValidationGroup="val"
+                CssClass="valRequired"
+                ControlCssClass="valctrl"
+                Enabled="false"
+                 ErrorMessage="*"/> 
+        	
+            <span class="ui-state-default ui-corner-all" style="  display:inline-block; text-align:center; vertical-align:middle">
+                <com:TActiveLinkButton 
+                    OnClick="kelBaruBtnClicked"
+                    ToolTip="Tambah Kelurahan"
+                    Text="" 
+                    CssClass="ui-icon ui-icon-circle-plus" 
+                    Style="display:inline-block; outline-style:none;  ">
+                    <prop:ClientSide 
+                        OnLoading="maskContent();"
+                        OnComplete="unmaskContent(); "/>
+                </com:TActiveLinkButton>
+            </span> 
+        </td>
+      </tr>		
+      
+    
+    <tr>
+    <td><span>&#8226;</span> Suku Bangsa</td>
+    <td>:</td>
+    <td><com:TActiveTextBox CssClass="input_text"
+                      ID="suku"
+                      Width="78px"
+                      MaxLength="10"
+                      ToolTip="Masukan suku/bangsa pasien..."
+                      ValidationGroup="suku"/>
+    </td>
+    </tr>
+    <tr>
+    <td><span>&#8226;</span> Status</td>
+    <td>:</td>
+    <td>
+      <com:TActiveRadioButtonList 
+            ID="status" 
+            RepeatDirection="Horizontal">
+                <com:TListItem Text="Kawin " />
+                <com:TListItem Text="Belum Kawin" />
+                <com:TListItem Text="Duda"  />
+                <com:TListItem Text="Janda" />
+        </com:TActiveRadioButtonList>  	
+        
+        <com:TRequiredFieldValidator 
+                          ControlToValidate="status"											 
+                          ErrorMessage=""
+                          Display="Dynamic"
+                          ValidationGroup="val" 
+                          FocusOnError="true" 
+                          CssClass="valRequired"
+                          ControlCssClass="valctrl"
+                          Enabled="false"/>
+                                 
+     </td>
+    </tr>
+    <tr>
+    <td><span>&#8226;</span> Golongan Darah</td>
+    <td>:</td>
+    <td>
+      <com:TActiveRadioButtonList 
+        ID="golDar" 
+        RepeatDirection="Horizontal">
+                <com:TListItem Value="1" Text="A " />
+                <com:TListItem Value="2" Text="B" />
+                <com:TListItem Value="3" Text="AB"  />
+                <com:TListItem Value="4" Text="O" />
+      </com:TActiveRadioButtonList>		
+      
+      <com:TRequiredFieldValidator 
+                          ControlToValidate="golDar"											 
+                          ErrorMessage=""
+                          Display="Dynamic"
+                          ValidationGroup="val" 
+                          FocusOnError="true" 
+                          CssClass="valRequired"
+                          ControlCssClass="valctrl"
+                          Enabled="false"/>
+                                         
+     </td>
+    </tr>
+    <tr>
+    <td><span>&#8226;</span> Kewarganegaraan</td>
+    <td>:</td>
+    <td><com:TActiveTextBox CssClass="input_text"
+                      ID="wni"
+                      Width="33px"
+                      Text="WNI"
+                      MaxLength="15"
+                      ToolTip="Masukan kewarganegaraan pasien..."
+                      ValidationGroup="warga_negara"/></td>
+    </tr>
+    <tr>
+    <td><span>&#8226;</span> Pekerjaan</td>
+    <td>:</td>
+    <td><com:TActiveDropDownList CssClass="input_text"
+                           ID="DDKerja"
+                           DataTextField="nama"
+                        AutoPostBack="true"
+                        CausesValidation="false"
+                           DataValueField="id"
+                           PromptText ="--Silakan Pilih--"
+                           PromptValue =""
+                           ToolTip="Pilih Pekerjaan dari pasien!"
+                            /></td>
+    </tr>
+    <tr>
+    <td><span>&#8226;</span> Pendidikan</td>
+    <td>:</td>
+    <td><com:TActiveDropDownList CssClass="input_text"
+                           ID="DDPdk"
+                           DataTextField="nama"
+                            AutoPostBack="true"
+                            CausesValidation="false"
+                           DataValueField="id"
+                           PromptText ="--Silakan Pilih--"
+                           PromptValue =""
+                           ToolTip="Pilih Pendidikan dari pasien!"
+                            /></td>
+    </tr>
+    <tr>
+    <td valign="top"><span>&#8226;</span> Catatan</td>
+    <td valign="top">:</td>
+    <td><com:TActiveTextBox CssClass="input_text"
+                      ID="catatan"
+                      Width="300px"
+                      TextMode="MultiLine"
+                      ToolTip="Masukan catatan tentang pasien tersebut.."  />
+    </td>
+    </tr>
+    
+    <tr>
+    <td colspan="3"><hr align="center" width="100%" size="2" noshade color="#CECECE"/></td>
+    </tr>
+    
+    <tr>
+    <td colspan="3"><strong>Data Keluarga</strong></td>
+    </tr>
+    
+    <tr>
+    <td valign="top"><span>&#8226;</span> Nama Istri</td>
+    <td valign="top">:</td>
+    <td>
+        <com:TActiveTextBox 
+              ID="nmIstri"
+              Width="190px"
+              MaxLength="30" 
+              CssClass="input_text"/>
+    </td>
+    </tr>
+    <tr>
+    <td valign="top"><span>&#8226;</span> Nama Suami</td>
+    <td valign="top">:</td>
+    <td>
+        <com:TActiveTextBox 
+              ID="nmSuami"
+              Width="190px"
+              MaxLength="30" 
+              CssClass="input_text"/>
+    </td>
+    </tr>
+    <tr>
+    <td valign="top"><span>&#8226;</span> Nama Ayah</td>
+    <td valign="top">:</td>
+    <td>
+        <com:TActiveTextBox 
+              ID="nmAyah"
+              Width="190px"
+              MaxLength="50" 
+              CssClass="input_text"/>
+    </td>
+    </tr>
+    
+    <tr>
+    <td colspan="3"><hr align="center" width="100%" size="2" noshade color="#CECECE"/></td>
+    </tr>
+    
+    <tr>
+    <td colspan="3"><strong>Data Penanggung Jawab</strong></td>
+    </tr>
+    
+    <tr>
+    <td><span>&#8226;</span> Nama Penanggung Jawab</td>
+    <td>:</td>
+    <td>
+        <com:TActiveTextBox 
+          ID="nmPj"
+          MaxLength="50"
+          Width="190px"
+          CssClass="input_text"/>
+         <com:TRequiredFieldValidator
+            ControlToValidate="nmPj"
+            ValidationGroup="val"
+            ErrorMessage="*"
+            Display="Dynamic"
+            FocusOnError="true" 
+            CssClass="valRequired"
+            ControlCssClass="valctrl"
+            Enabled="false"/>  
+    </td>                  	
+    </tr>
+    
+    <tr>
+    <td><span>&#8226;</span> Hubungan Terhadap Pasien</td>
+    <td>:</td>
+    <td>
+        <com:TActiveDropDownList 
+            ID="DDHubPen" 
+            AutoPostBack="true"
+            OnSelectedIndexChanged="DDHubPenChanged"
+            CausesValidation="false"
+            PromptText="--Silakan Pilih--"
+            PromptValue="empty">
+            <com:TListItem Text="Suami" Value="0" />
+            <com:TListItem Text="Istri" Value="1" />
+            <com:TListItem Text="Ayah" Value="2" />
+            <com:TListItem Text="Ibu" Value="3" />
+            <com:TListItem Text="Anak" Value="4" />
+            <com:TListItem Text="Saudara" Value="5" />
+            <com:TListItem Text="Lainnya" Value="6" />
+        </com:TActiveDropDownList>
+        
+         <com:TRequiredFieldValidator
+            ControlToValidate="DDHubPen"
+            ValidationGroup="val"
+            ErrorMessage="*"
+            Display="Dynamic"
+            FocusOnError="true" 
+            CssClass="valRequired"
+            ControlCssClass="valctrl"
+            InitialValue="empty"
+            Enabled="false"/>
+            &nbsp;
+        <com:TActiveTextBox 
+          ID="hubPasien"
+          MaxLength="30"
+          Width="180px"
+          CssClass="input_text"/>
+        
+        <com:TRequiredFieldValidator
+            ControlToValidate="hubPasien"
+            ValidationGroup="val"
+            ErrorMessage="*"
+            Display="Dynamic"
+            FocusOnError="true" 
+            CssClass="valRequired"
+            ControlCssClass="valctrl"
+            Enabled="false"/>
+              
+          
+    </td>                  	
+    </tr>
+    
+    <tr>
+    <td valign="top">  <span>&#8226;</span> Alamat Penanggung Jawab</td>
+    <td valign="top">:</td>
+    <td >
+        <com:TActiveTextBox 
+          ID="alamatPj"
+          Width="300px"
+          TextMode="MultiLine"
+          CssClass="input_text" 
+          MaxLength="255"
+          Height="50px"/>  
+          
+       <com:TRequiredFieldValidator
+            ControlToValidate="alamatPj"
+            ValidationGroup="val"
+            ErrorMessage="*"
+            Display="Dynamic"
+            FocusOnError="true" 
+            CssClass="valRequired"
+            ControlCssClass="valctrl"
+            Enabled="false"/>
+             
+        <com:TActiveCheckBox
+            ID="alamatPjChecklist" 
+            Text="sama dengan di atas"
+            OnCheckedChanged="alamatPjClicked"/>  
+    </td>
+    </tr>
+    
+    <tr>
+    <td><span>&#8226;</span> Telepon Penanggung Jawab</td>
+    <td>:</td>
+    <td>
+        <com:TActiveTextBox 
+          ID="tlpPj"
+          MaxLength="20"
+          Width="100px"
+          CssClass="input_text"/>
+          
+        <com:TRequiredFieldValidator
+            ControlToValidate="tlpPj"
+            ValidationGroup="val"
+            ErrorMessage="*"
+            Display="Dynamic"
+            FocusOnError="true" 
+            CssClass="valRequired"
+            ControlCssClass="valctrl"
+            Enabled="false"/>
+              
+       <com:TActiveCheckBox 
+            ID="tlpPjChecklist" 
+            Text="sama dengan di atas"
+            OnCheckedChanged="tlpPjClicked"/>     
+        
+    </td>                  	
+    </tr>
+    <tr>
+    <td><span>&#8226;</span> Handphone Penanggung Jawab</td>
+    <td>:</td>
+    <td>
+        <com:TActiveTextBox 
+          ID="hpPj"
+          MaxLength="20"
+          Width="100px"
+          CssClass="input_text"/> 
+          
+          <com:TRequiredFieldValidator
+            ControlToValidate="hpPj"
+            ValidationGroup="val"
+            ErrorMessage="*"
+            Display="Dynamic"
+            FocusOnError="true" 
+            CssClass="valRequired"
+            ControlCssClass="valctrl"
+            Enabled="false"/>
+            
+        <com:TActiveCheckBox 
+            ID="hpPjChecklist" 
+            Text="sama dengan di atas"
+            OnCheckedChanged="hpPjClicked"/>   
+    </td>                  	
+    </tr>
+    
+    <tr>
+    <td colspan="3"><hr align="center" width="100%" size="2" noshade color="#CECECE"/></td>
+    </tr>
+    
+    <tr>
+    <td colspan="3" align="center">
+        <com:TActiveButton 
+            ID="simpanBtn"
+            Text="Simpan" 
+            OnClick="simpanClicked"
+            CausesValidation="true"
+            ValidationGroup="val" 
+            Attributes.onclick = "maskContent();">
+        </com:TActiveButton>
+        
+		<com:TActiveButton 
+            ID="tesBtn"
+            Text="TES" 
+            OnClick="tes"
+            CausesValidation="false"
+            Visible="false"
+            Attributes.onclick = "
+            	if(!confirm('Simpan data sekarang..?')) return false; else maskContent();">
+        </com:TActiveButton>
+		
+        <com:TActiveButton 
+            Text="Batal" 
+            OnClick="batalClicked" 
+            CausesValidation="false" 
+            Attributes.onclick = "if(!confirm('Batalkan pengisian data..?')) return false; else maskContent();">
+        </com:TActiveButton>
+        
+        <com:TActiveButton 
+            Text="Keluar" 
+            OnClick="keluarClicked" 
+            CausesValidation="false" 
+            Visible="false"
+            Attributes.onclick = "if(!confirm('Keluar sekarang..?'))return false; else maskContent();">
+        </com:TActiveButton>
+    </td>
+    </tr>
+    
+    </table>
+    </com:TActivePanel>
+
+
+	<com:TCallback ID="UpdateCallback" OnCallback="prosesSimpan" ActiveControl.CausesValidation="false"/>
+	<com:TCallback ID="UpdateCallback2" OnCallback="prosesModalKab" ActiveControl.CausesValidation="false"/>
+    <com:TCallback ID="UpdateCallback3" OnCallback="prosesModalKec" ActiveControl.CausesValidation="false"/>
+    <com:TCallback ID="UpdateCallback4" OnCallback="prosesModalKel" ActiveControl.CausesValidation="false"/>
+
+	<script type="text/javascript">
+		//<![CDATA[
+		function konfirmasiCetak(mode){
+			var request= <%= $this->UpdateCallback->ActiveControl->Javascript %>;
+				request.setCallbackParameter({
+					Id:mode
+				});
+				request.dispatch();
+		}
+		
+		function konfirmasiCetak(mode){
+			var request= <%= $this->UpdateCallback->ActiveControl->Javascript %>;
+				request.setCallbackParameter({
+					Id:mode
+				});
+				request.dispatch();
+		}
+		
+		function modalKabCallback(idKabBaru){
+			var request= <%= $this->UpdateCallback2->ActiveControl->Javascript %>;
+				request.setCallbackParameter({
+					Id:idKabBaru
+				});
+				request.dispatch();
+		}
+		
+		function modalKecCallback(idBaru){
+			var request= <%= $this->UpdateCallback3->ActiveControl->Javascript %>;
+				request.setCallbackParameter({
+					Id:idBaru
+				});
+				request.dispatch();
+		}
+		
+		function modalKelCallback(idBaru){
+			var request= <%= $this->UpdateCallback4->ActiveControl->Javascript %>;
+				request.setCallbackParameter({
+					Id:idBaru
+				});
+				request.dispatch();
+		}
+		//]]>
+	</script>
+	
+</com:TContent>

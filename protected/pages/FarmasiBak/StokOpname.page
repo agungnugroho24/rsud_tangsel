@@ -1,0 +1,392 @@
+<%@ MasterClass="Application.layouts.MainLayout" %>
+<com:TContent ID="jdMain">
+	Stock Opname Obat & Alkes
+    
+    <a href="<%= $this->Service->constructUrl('Simak') %>" onclick="maskContent()">
+    <span class="close-btn">
+        <span class="ui-icon ui-icon-circle-close"></span>
+    </span>
+    </a>
+    
+</com:TContent>	
+
+<com:TContent ID="Main"> 
+
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>			  
+                <td>
+				<com:TActiveLabel ID="showSql" Visible="true"/>
+				<com:TActivePanel ID="firstPanel" GroupingText="Kriteria Pencarian"  Width="100%" DefaultButton="prosesBtn">
+				<table width="100%" border="0" cellpadding="2" cellspacing="2">
+				  <tr>
+				    <td width="150">Stok dari</td>
+				    <td width="5" align="center">:</td>
+				    <td >
+						<com:TActiveDropDownList 
+							ID="DDtujuan"
+							PromptText ="--Silakan Pilih--"
+							PromptValue ="empty"											
+							DataTextField="nama"
+							DataValueField="id" 	
+							Width="250px" 
+							AutoPostBack="true" 
+							CausesValidation="true"
+							OnSelectedIndexChanged="DDtujuanChanged">
+                            <prop:ClientSide 
+                                OnLoading="maskContent();"
+                                OnComplete="unmaskContent(); "/>
+                        </com:TActiveDropDownList>                                                </td>
+				    </tr>
+				  <tr>
+					<td>Kode Obat/Alkes</td>
+					<td align="center">:</td>
+					<td>
+						<com:TActiveTextBox 
+							ID="idObat"/>                  	</td>
+				  </tr>
+				  <tr>
+                    <td>Nama Obat/Alkes</td>
+				    <td align="center">:</td>
+				    <td>
+                    	<com:TActiveTextBox ID="nmObat" 
+										MaxLength="30" 
+										Width="180px" 	
+									/>
+&nbsp;
+    <com:TActiveCheckBox 
+										ID="Advance" 
+										Text="Elemen Kata" 
+										Value="1" 
+									/>
+                    
+                    </td>
+				    </tr>
+				  <tr>
+					<td >Periode</td>
+					<td  align="center">:</td>
+					<td >
+						<com:TActiveDropDownList 
+									ID="DDberdasarkan"
+									PromptText ="--Silakan Pilih--"
+									PromptValue ="" 	
+									Width="250px" 
+									AutoPostBack="true" 
+									CausesValidation="true" 
+									OnSelectedIndexChanged="ChangedDDberdasarkan" 
+									OnCallback="panelCallback"> 
+									<com:TListItem Value="1" Text="Harian" />
+									<com:TListItem Value="2" Text="Mingguan" /> 
+									<com:TListItem Value="3" Text="Bulanan" />
+						  </com:TActiveDropDownList>                </td>
+				  </tr>
+				</table>
+				
+				<com:TActivePanel ID="hari" >	
+				<table width="100%" border="0" cellpadding="2" cellspacing="2">
+				  <tr>
+					<td width="150" ><span>&#8226;</span>&nbsp;&nbsp;Harian</td>
+					<td width="5"  align="center">:</td>
+					<td  id="datepicker">
+					 <com:TActiveDatePicker
+							ID="tgl"
+							Width="80px" 
+							DateFormat="dd-MM-yyyy"	
+							ToolTip="Masukan tanggal awal" 
+							MaxLength="10" />
+						<com:TRequiredFieldValidator 
+							ControlToValidate="tgl"											 
+							ErrorMessage="*"
+							Display="Dynamic"
+							CssClass="msgError" 
+							ValidationGroup="valHari"/>
+						<com:TDataTypeValidator
+							ValidationGroup="valHari"
+							ControlToValidate="tgl"
+							DataType="Date"
+							DateFormat="dd-MM-yyyy"
+							Text="Format tanggal dd-mm-yyyy"
+							Display="Dynamic" 
+							CssClass="msgError" 
+							/>
+					</td>
+				  </tr>
+				  </table>
+				  </com:TActivePanel>
+				  
+				  <com:TActivePanel ID="minggu" >	
+				   <table width="100%" border="0" cellpadding="2" cellspacing="2">
+				  <tr>
+					<td width="150" ><span>&#8226;</span>&nbsp;&nbsp;Mingguan</td>
+					<td width="5"  align="center">:</td>
+					<td >
+						<com:TActiveDatePicker ID="tglawal"
+							Width="70px" 
+							DateFormat="dd-MM-yyyy"	
+							ToolTip="Masukan tanggal awal" 
+							MaxLength="10" />
+						<com:TRequiredFieldValidator 
+							ControlToValidate="tglawal"											 
+							ErrorMessage="*"
+							Display="Dynamic"
+							CssClass="msgError" 
+							ValidationGroup="valMinggu"/>
+						<com:TDataTypeValidator
+							ValidationGroup="valMinggu"
+							ControlToValidate="tglawal"
+							DataType="Date"
+							DateFormat="dd-MM-yyyy"
+							Text="Format tanggal dd-mm-yyyy"
+							Display="Dynamic" 
+							CssClass="msgError" 
+							/>
+							  s/d
+						<com:TActiveDatePicker ID="tglakhir" 
+							Width="70px" 
+							DateFormat="dd-MM-yyyy"	
+							ToolTip="Masukan tanggal akhir"
+							MaxLength="10" 
+							ValidationGroup="valMinggu"
+							/>&nbsp;
+						<com:TRequiredFieldValidator 
+							ControlToValidate="tglakhir"											 
+							ErrorMessage="*"
+							Display="Dynamic"
+							CssClass="msgError" 
+							ValidationGroup="valMinggu"/>
+						<com:TDataTypeValidator
+							ValidationGroup="valMinggu"
+							ControlToValidate="tglakhir"
+							DataType="Date"
+							DateFormat="dd-MM-yyyy"
+							Text="Format tanggal dd-mm-yyyy"
+							Display="Dynamic" 
+							CssClass="msgError" 
+							/>
+					</td>
+				  </tr>
+				  </table>
+				  </com:TActivePanel>
+				  
+				  <com:TActivePanel ID="bulan" >	
+				   <table width="100%" border="0" cellpadding="2" cellspacing="2">
+				  <tr>
+					<td width="150" ><span>&#8226;</span>&nbsp;&nbsp;Bulanan</td>
+					<td width="5"  align="center">:</td>
+				  <td >
+					 <com:TActiveDropDownList 
+							ID="DDbulan"
+							Width="130px"
+							PromptText ="--Silakan Pilih--"
+							PromptValue =""
+							AutoPostBack="true" 
+							CausesValidation="false"
+							OnSelectedIndexChanged="ChangedDDbulan" 
+							ValidationGroup="val">
+							<com:TListItem Value="01" Text="Januari" />
+							<com:TListItem Value="02" Text="Februari" />
+							<com:TListItem Value="03" Text="Maret" />
+							<com:TListItem Value="04" Text="April" />
+							<com:TListItem Value="05" Text="Mei" />
+							<com:TListItem Value="06" Text="Juni" />
+							<com:TListItem Value="07" Text="Juli" />
+							<com:TListItem Value="08" Text="Agustus" />
+							<com:TListItem Value="09" Text="September" />
+							<com:TListItem Value="10" Text="Oktober" />
+							<com:TListItem Value="11" Text="November" />
+							<com:TListItem Value="12" Text="Desember" />
+						  	
+                            <prop:ClientSide 
+                                OnLoading="maskContent();"
+                                OnComplete="unmaskContent(); "/>
+                        </com:TActiveDropDownList>
+                          
+                          
+						  &nbsp;								  
+						  <com:TActiveDropDownList 
+							ID="DDtahun" 
+							DataValueField="id"
+							DataTextField="nama"
+							PromptText ="--Silakan Pilih--"
+							PromptValue =""	
+							Width="130px" 
+							AutoPostBack="true" 
+							CausesValidation="false" 
+							OnSelectedIndexChanged="ChangedDDtahun" 
+							ValidationGroup="val">
+                            
+                         <prop:ClientSide 
+                                OnLoading="maskContent();"
+                                OnComplete="unmaskContent(); "/>
+                        </com:TActiveDropDownList>                 
+					</td>
+				  </tr>
+				  </table>
+				  </com:TActivePanel>
+				  
+				  <table width="100%" border="0" cellpadding="2" cellspacing="2">
+				  <tr>
+					<td width="150" >&nbsp;</td>
+					<td width="5"  align="center">&nbsp;</td>
+					<td >
+						<com:TActiveButton
+							ID="prosesBtn" 
+							Text="Proses" 
+							OnClick="prosesClicked" 
+							CausesValidation="true"
+							CssClass="button_01"   >
+                            <prop:ClientSide 
+                                OnLoading="maskContent();"
+                                OnComplete="unmaskContent(); "/>
+						</com:TActiveButton>
+						
+						 <com:TActiveButton
+							ID="cetakBtn" 
+							Text="Cetak" 
+							OnClick="cetakClicked" 
+							CausesValidation="true"
+							CssClass="button_01"  
+							 Attributes.onclick = "if(!confirm('Cetak Lap. Stock Opname ?')) return false;" >
+							<prop:ClientSide 
+                                OnLoading="maskContent();"
+                                OnComplete="unmaskContent(); "/>
+						</com:TActiveButton>
+							
+					</td>
+				  </tr>
+				</table>
+				</com:TActivePanel>
+			</td>
+              </tr>
+			  <tr height="15px"><td></td></tr>
+              <tr>
+                <td>
+                <div id="viewGrid"> 
+				<com:TActivePanel ID="gridPanel" >
+				<table width="100%"  border="0" align="center" cellpadding="0" cellspacing="1">                      
+                      
+                     <tr>
+                        <td width="100%" >
+							<com:TActiveLabel ID="txtPeriode"></com:TActiveLabel>
+							<br/>
+							Jumlah Data : <com:TActiveLabel ID="jmlData" />
+						</td>
+                      </tr>
+                      <tr>
+                        <td align="center"><com:TActiveLabel ID="test"></com:TActiveLabel></td>
+                      </tr>
+                      <tr>
+                        <td align="center">
+						<com:XActiveDataGrid ID="dtgSomeData"
+								DataKeyField="id"
+								AutoGenerateColumns="false"	
+								AllowPaging="true"
+								AllowCustomPaging="true"
+								AllowSorting="true"
+								Width="100%"					
+								PageSize="20"
+								PagerStyle.Mode="Numeric"			
+								PagerStyle.Font.Name="Arial"
+								PagerStyle.Font.Size="12"
+								PagerStyle.HorizontalAlign="Right"			
+								GridLines="None"
+								CellSpacing="1"
+								CellPadding="2"
+								HeaderStyle.CssClass="headerstyle"
+								ItemStyle.CssClass="itemstyle"
+								AlternatingItemStyle.CssClass="itemstyle2"
+								OnItemCreated="itemCreated"
+								OnDeleteCommand="deleteButtonClicked"
+								OnPageIndexChanged="dtgSomeData_PageIndexChanged"
+								OnSortCommand="dtgSomeData_SortCommand">	
+                                                                
+                                <com:XActiveTemplateColumn
+									ID="nmColumn"
+									ItemStyle.HorizontalAlign="Left" 
+									HeaderText="Nama Obat/Alkes"/>
+                            	
+                                <com:XActiveTemplateColumn
+									ID="tujuanColumn"
+									ItemStyle.HorizontalAlign="Center" 
+									HeaderText="Tujuan"/>
+								
+								<com:XActiveTemplateColumn
+									ID="saldoAwalColumn"
+									ItemStyle.HorizontalAlign="Center" 
+									HeaderText="Saldo Awal"/>
+								
+								<com:XActiveTemplateColumn
+									ID="masukColumn"
+									ItemStyle.HorizontalAlign="Center" 
+									HeaderText="Jml Masuk"/>
+								
+								<com:XActiveTemplateColumn
+									ID="keluarColumn"
+									ItemStyle.HorizontalAlign="Center" 
+									HeaderText="Jml Keluar"/>
+								
+								<com:XActiveTemplateColumn
+									ID="saldoColumn"
+									ItemStyle.HorizontalAlign="Center" 
+									HeaderText="Saldo"/>								
+								
+								<com:XActiveTemplateColumn
+									ID="sonColumn"
+									ItemStyle.HorizontalAlign="Center" 
+									HeaderText="Stok Fisik">
+									
+                                        <prop:ItemTemplate>
+                                          <com:TActiveTextBox
+                                            ID="sonTxt"  
+											AutoPostBack="false"
+                                            CausesValidation="false" Width="30px;" Style="text-align:right;" >
+                                          </com:TActiveTextBox>	
+                                          
+                                           <com:TRequiredFieldValidator 
+                                            ControlToValidate="sonTxt"											 
+                                            ErrorMessage="*"
+                                            Display="Dynamic" 
+                                            ValidationGroup="valOpname"/>
+                                            
+                                          <com:TActiveButton
+                                            ID="opnameBtn" 
+                                            Text="Save"
+                                            CausesValidation="true"
+                                            OnClick="Page.opnameBtnClicked"
+                                            CommandParameter="<%# $this->Parent->Data['id'] %>"
+                                            ValidationGroup="valOpname" >
+                                            <prop:ClientSide 
+                                                OnLoading="maskContent();"
+                                                OnComplete="unmaskContent(); "/>
+                                          </com:TActiveButton>	
+										  
+										  <com:THiddenField ID="idSon" Value="<%# $this->Parent->Data['id'] %>" />
+                                        </prop:ItemTemplate>
+										
+								</com:XActiveTemplateColumn>
+								
+							</com:XActiveDataGrid >
+						</td>                       
+                      </tr>
+                      
+                    </table>
+				</com:TActivePanel>
+                </div>
+					</td>
+              </tr>
+              <tr>
+                <td><hr/></td>
+              </tr>
+              <tr>
+                <td><table width="10" border="0" align="center" cellpadding="0" cellspacing="2">
+                    <tr>
+                      <td>                     
+					  	<!--<com:TButton Text="Baru" OnClick="baruClicked" CssClass="button_01"  />-->
+
+					  </td>                      
+                      <td><com:TButton Text="Keluar" OnClick="keluarClicked" CausesValidation="false" CssClass="button_01" Attributes.onclick = "maskContent();"  /></td>
+                    </tr>
+                </table></td>
+              </tr>
+          </table>
+          
+</com:TContent> 

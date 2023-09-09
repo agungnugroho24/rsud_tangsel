@@ -1,0 +1,448 @@
+<%@ MasterClass="Application.layouts.MainLayout" %>
+<com:TContent ID="jdMain">
+	Billing Kamar Tindakan / OK
+    
+    <a href="<%= $this->Service->constructUrl('Simak') %>" onclick="maskContent()">
+    <span class="close-btn">
+        <span class="ui-icon ui-icon-circle-close"></span>
+    </span>
+    </a>
+    
+</com:TContent>	
+
+<com:TContent ID="Main">
+          	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>
+                  <com:TActiveLabel ID="showSql" />	
+                  <com:TActivePanel ID="warningPanel" >	
+                  <table width="100%" border="0" cellspacing="2" cellpadding="0">
+                  	<tr>
+                        <td align="center" ><com:TActiveLabel Text="Tindakan Operasi ini sudah dilakukan sebelumnya" ForeColor="#FF0000" Font.Bold="True"/></td>
+                        </tr>    
+                  </table>
+                  </com:TActivePanel>
+                  	
+                </td>
+              </tr>
+              		  
+              <tr>
+                <td>
+                
+                  <com:TActivePanel ID="firstPanel" >	
+                  <table width="100%" border="0" cellspacing="2" cellpadding="0">
+                  	<tr>
+                        <td width="150"><span>&#8226;</span> No. CM </td>
+                        <td width="5">:</td>
+                        <td >
+                            <com:TActiveTextBox 
+                                ID="cm" 
+                                Width="70px" 
+                                MaxLength="7"
+                                OnTextChanged="checkCM" 
+                                AutoPostBack="true"
+                                CausesValidation="false"
+                                />
+                                &nbsp;
+                                <com:TActiveLabel ID="errMsg" ForeColor="#FF0000" />					</td>
+                      </tr>  
+                      <tr>
+                          <td><span>&#8226;</span> Jenis Rukjukan</td>
+                          <td>:</td>
+                      	  <td><com:TActiveLabel ID="kategTxt" /></td>              </tr>  
+                
+                      <tr>
+                        <td><span>&#8226;</span> Cito</td>
+                        <td>:</td>
+                        <td>
+                        	
+                        	<com:TRadioButtonList
+                                  ID="modeCito2" 
+                                  AutoPostBack="false"
+                                  RepeatDirection="Horizontal" 
+                                  CausesValidation="false" 
+                                  SelectedIndex="0"
+                                  Visible="false"
+                                  Enabled="false">
+                            <com:TListItem Text="Tidak" Value="0" />
+                            <com:TListItem Text="Ya" Value="1" />                                    
+                          </com:TRadioButtonList>
+                          
+                          <com:TActiveCheckBox
+                          	ID="modeCito"
+                            Text="Cito"/>
+                            
+                          <com:TActiveCheckBox
+                          	ID="modePenyulit"
+                            Text="Penyulit"/>
+                            
+                        </td>
+                      </tr>
+                      
+                      <com:TControl Enabled="false" Visible="false">
+                      <tr>
+                        <td><span>&#8226;</span> Kamar Tindakan</td>
+                        <td>:</td>
+                        <td>
+                        	<com:TActiveDropDownList 
+                                ID="DDKamar" 
+                                PromptText ="--Silakan Pilih--"
+                                PromptValue ="empty"											
+                                DataTextField="nama"
+                                DataValueField="id" 
+                                Width="300px"
+                                AutoPostBack="true"
+                                CausesValidation="false"/>  
+                        	<com:TRequiredFieldValidator
+                                ControlToValidate="DDKamar"
+                                ValidationGroup="valFirst"
+                                ErrorMessage="*"
+                                Display="Dynamic"
+                                FocusOnError="true" 
+                                CssClass="valRequired"
+                                ControlCssClass="valctrl"
+                                InitialValue="empty"/>  
+                        </td>
+                      </tr>
+                      
+                      <tr>
+                        <td><span>&#8226;</span> Kamar Tindakan</td>
+                        <td>:</td>
+                        <td>
+                        	<com:TActiveDropDownList 
+                                ID="DDKategori" 
+                                PromptText ="--Silakan Pilih--"
+                                PromptValue ="empty"											
+                                DataTextField="nama"
+                                DataValueField="id" 
+                                Width="300px"
+                                AutoPostBack="true"
+                                CausesValidation="false"
+                                OnSelectedIndexChanged="DDKategoriChanged"/>  
+                        	<com:TRequiredFieldValidator
+                                ControlToValidate="DDKategori"
+                                ValidationGroup="valFirst"
+                                ErrorMessage="*"
+                                Display="Dynamic"
+                                FocusOnError="true" 
+                                CssClass="valRequired"
+                                ControlCssClass="valctrl"
+                                InitialValue="empty"/>  
+                        </td>
+                      </tr>
+                      </com:TControl>
+                      
+                      <tr>
+                        <td><span>&#8226; Jenis Operasi </span></td>
+                        <td>:</td>
+                        <td>
+                            <com:TActiveDropDownList 
+                                ID="DDtindakan" 
+                                PromptText ="--Silakan Pilih--"
+                                PromptValue ="empty"											
+                                DataTextField="nama"
+                                DataValueField="id" 	
+                                ToolTip="Pilih jenis operasi" 
+                                Width="300px"
+                                AutoPostBack="true"
+                                CausesValidation="true"
+                                ValidationGroup="valFirst"
+                                OnSelectedIndexChanged="ChangedTdk"
+                                OnCallback="DDTdkCallBack">
+                                <prop:ClientSide 
+                                    OnLoading="maskContent();"
+                                    OnComplete="unmaskContent(); "/>
+                        	</com:TActiveDropDownList>                      	</td>
+                      </tr>    
+                  </table>
+                  </com:TActivePanel>
+                  	
+                </td>
+              </tr>
+              
+              
+              <tr>	
+                <td>
+                	<div id="saving" style="display:none" align="center" > <br/>
+                    Processing Data... <br/>
+                    <img src="<%=$this->Page->Theme->BaseUrl.'/images/loading.gif'%>" /> <br/>
+                    </div>
+                    
+                    <div id="form_data"> 
+                	<com:TActivePanel ID="secondPanel" >	
+                  <table width="100%" border="0" cellspacing="2" cellpadding="0">
+                  	<tr>
+                  	  <td colspan="3"><hr/></td>
+                  	  </tr>
+                      <tr>
+                        <td width="150" valign="top"><span>&#8226;</span> Nama Operasi </td>
+                        <td width="5" valign="top">:</td>
+                        <td valign="top">
+                        	<com:TActiveTextBox 
+                                ID="nmOperasi" 
+                                Width="300px" />
+                          	<com:TRequiredFieldValidator
+                                ControlToValidate="nmOperasi"
+                                ValidationGroup="val"
+                                ErrorMessage="*"
+                                Display="Dynamic"
+                                FocusOnError="true" 
+                                CssClass="valRequired"
+                                ControlCssClass="valctrl"/>
+                      	</td>
+                      </tr>
+                      
+                      <tr>
+                        <td valign="top"><span>&#8226; Dokter Operator</span></td>
+                        <td valign="top">:</td>
+                        <td valign="top">
+                        	<com:TActiveDropDownList 
+                                ID="DDobgyn" 
+                                PromptText ="--Silakan Pilih--"
+                                PromptValue ="empty"											
+                                DataTextField="nama"
+                                DataValueField="id" 
+                                Width="300px"
+                                AutoPostBack="true"
+                                CausesValidation="false"
+                                OnSelectedIndexChanged="DDobgynChanged"
+                                OnCallback="DDobgynCallback"/>
+                             <com:TRequiredFieldValidator
+                                ControlToValidate="DDobgyn"
+                                ValidationGroup="val"
+                                ErrorMessage="*"
+                                Display="Dynamic"
+                                FocusOnError="true" 
+                                CssClass="valRequired"
+                                ControlCssClass="valctrl"
+                                InitialValue="empty"/>   
+                             
+                             <com:TActivePanel ID="tarifKhususPanel" Style="display:inline;">
+                                 &nbsp;Penambahan Tarif Operator
+                                 <com:TActiveTextBox 
+                                    ID="tarifKhusus"  
+                                    Width="80px" />   
+                                 <com:TRequiredFieldValidator
+                                    ControlToValidate="tarifKhusus"
+                                    ValidationGroup="val"
+                                    ErrorMessage="*"
+                                    Display="Dynamic"
+                                    FocusOnError="true" 
+                                    CssClass="valRequired"
+                                    ControlCssClass="valctrl"/>   
+                             </com:TActivePanel>   
+                      	</td>
+                      </tr>
+                      
+                      <tr>
+                        <td valign="top"><span>&#8226; Dokter Anastesi </span></td>
+                        <td valign="top">:</td>
+                        <td valign="top">
+                            <com:TActiveDropDownList 
+                                ID="DDanastesi" 
+                                PromptText ="--Silakan Pilih--"
+                                PromptValue ="empty"											
+                                DataTextField="nama"
+                                DataValueField="id" 
+                                Width="300px"
+                                AutoPostBack="true"
+                                CausesValidation="false"
+                                OnSelectedIndexChanged="DDanastesiChanged"
+                                OnCallback="DDTdkCallBack"/>
+                             <com:TRequiredFieldValidator
+                                ControlToValidate="DDanastesi"
+                                InitialValue="empty"
+                                ValidationGroup="val"
+                                ErrorMessage="*"
+                                Display="Dynamic"
+                                FocusOnError="true" 
+                                CssClass="valRequired"
+                                ControlCssClass="valctrl"
+								Enabled="False"/> 
+                                
+                            <com:TActiveCheckBox
+                                ID="modePenyulitAnastesi"
+                                Text="Penyulit Anastesi"/>
+                        </td>
+                      </tr>
+                      
+                      <tr>
+                        <td valign="top"><span>&#8226; Asst. Anastesi </span></td>
+                        <td valign="top">:</td>
+                        <td valign="top">
+                            <com:TActiveDropDownList 
+                                ID="DDdokter" 
+                                PromptText ="--Silakan Pilih--"
+                                PromptValue ="empty"											
+                                DataTextField="nama"
+                                DataValueField="id" 
+                                Width="300px"
+                                AutoPostBack="true"
+                                CausesValidation="false" />	
+                        	<com:TRequiredFieldValidator
+                                ControlToValidate="DDdokter"
+                                InitialValue="empty"
+                                ValidationGroup="val"
+                                ErrorMessage="*"
+                                Display="Dynamic"
+                                FocusOnError="true" 
+                                CssClass="valRequired"
+                                ControlCssClass="valctrl"
+								Enabled="False"/>         
+                      	</td>
+                      </tr>
+                      <tr>
+                        <td valign="top"><span>&#8226; Asisten + Instrumen  </span></td>
+                        <td valign="top">:</td>
+                        <td valign="top">
+                            <com:TActiveDropDownList 
+                                ID="DDAsDokUtama" 
+                                PromptText ="--Silakan Pilih--"
+                                PromptValue =""											
+                                DataTextField="nama"
+                                DataValueField="id" 	
+                                ToolTip="Pilih Asisten " 
+                                Width="300px"
+                                AutoPostBack="true"/>				
+                      	</td>
+                      </tr>
+                      
+                      <tr>
+                        <td valign="top"><span>&#8226; Paramedis Lain</span></td>
+                        <td valign="top">:</td>
+                        <td valign="top">
+                            <com:TActiveDropDownList 
+                                ID="DDParamedis" 
+                                PromptText ="--Silakan Pilih--"
+                                PromptValue =""											
+                                DataTextField="nama"
+                                DataValueField="id"  
+                                Width="300px"
+                                AutoPostBack="true"/>				
+                      	</td>
+                      </tr>
+                      
+                      <tr>
+                        <td valign="top"><span>&#8226; Resusitasi</span></td>
+                        <td valign="top">:</td>
+                        <td valign="top">
+                            <com:TActiveDropDownList 
+                                ID="DDResusitasi" 
+                                PromptText ="--Silakan Pilih--"
+                                PromptValue =""											
+                                DataTextField="nama"
+                                DataValueField="id"  
+                                Width="300px"
+                                AutoPostBack="true"/>				
+                      	</td>
+                      </tr>                      
+                      
+                      <tr>
+                        <td valign="top"><span>&#8226; Tarif Kamar</span></td>
+                        <td valign="top">:</td>
+                        <td valign="top"><com:TActiveTextBox 
+                                ID="tarifOK" 
+                                Width="80px"
+                                ReadOnly="true"
+                                Enabled="true" 
+                                /></td>
+                      </tr>
+                      
+                      <com:TControl Enabled="false" Visible="false">
+                      <tr>
+                        <td valign="top"><span>&#8226; CTG</span></td>
+                        <td valign="top">:</td>
+                        <td valign="top"><com:TActiveTextBox 
+                                ID="ctg" 
+                                Width="80px"
+                                Enabled="false"
+                                ReadOnly="true" 
+                                /></td>
+                      </tr>
+                      <tr>
+                        <td valign="top"><span>&#8226; Laboratorium</span></td>
+                        <td valign="top">:</td>
+                        <td valign="top">
+                        	<com:TActiveTextBox 
+                                ID="tarifLab" 
+                                Width="80px" 
+                                Text="0"/>
+                        	<com:TRequiredFieldValidator
+                                Display="Dynamic"
+                                ControlToValidate="tarifLab"
+                                Text="*" 
+                                ValidationGroup="val"
+                                Enabled="false"/>   
+                            <com:TRegularExpressionValidator
+                                ValidationGroup="val"
+                                ControlToValidate="tarifLab"
+                                RegularExpression="(^[0]$)|(^[1-9]+\d*$)"
+                                Text="Tarif Lab tidak sesuai" 
+                                Enabled="false"/> 
+                        </td>
+                      </tr>
+                      </com:TControl>
+                        
+                      <tr>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                      </tr>  
+                  </table>
+                  </com:TActivePanel>
+                  </div>
+              	</td>
+              </tr>
+              
+              
+              <tr>
+                <td><hr/></td>
+              </tr>
+              <tr>
+                <td><table width="10" border="0" align="center" cellpadding="0" cellspacing="2">
+                    <tr>
+                      <td><com:TActiveButton Text="Simpan" 
+					  					ID="simpanBtn" 	
+					  					OnClick="simpanClicked" 
+										CssClass="button_01" 
+										ValidationGroup="val"
+                                        CausesValidation="true"
+                                        Attributes.onclick = "if(!confirm('Simpan data sekarang..?')) return false; else maskContent();">
+                        </com:TActiveButton>
+                      </td>
+                      <td><com:TActiveButton Text="Batal" 
+										CausesValidation="false" 
+										CssClass="button_01"
+										OnClick="batalClicked" 
+										Attributes.onclick = "if(!confirm('Batalkan pengisian data..?')) return false; else maskContent();">
+                        </com:TActiveButton>
+                      </td>
+                      <td><com:TActiveButton Text="Keluar" 
+					  			OnClick="keluarClicked" 
+								CausesValidation="false" 
+                                Visible="false"
+								CssClass="button_01" 
+								 Attributes.onclick = "if(!confirm('Keluar sekarang..?')) return false;">
+                            <prop:ClientSide
+                                        OnLoading="Element.show('saving'); Element.hide('form_data');"/>
+                        </com:TActiveButton>
+                      </td>
+                    </tr>
+                </table></td>
+              </tr>
+          </table>
+     
+     <com:TCallback ID="UpdateCallback" OnCallback="prosesKonfirmasi" ActiveControl.CausesValidation="false"/>
+	<script type="text/javascript">
+		//<![CDATA[
+		function konfirmasi(mode){
+			var request= <%= $this->UpdateCallback->ActiveControl->Javascript %>;
+				request.setCallbackParameter({
+					Id:mode
+				});
+				request.dispatch();
+		}
+		//]]>
+	</script>           
+          
+</com:TContent>

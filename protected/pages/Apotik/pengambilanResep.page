@@ -1,0 +1,601 @@
+<%@ MasterClass="Application.layouts.MainLayout" %>
+<com:TContent ID="jdMain">
+	Pengambilan Resep
+    
+    <a href="<%= $this->Service->constructUrl('Simak') %>" onclick="maskContent()">
+    <span class="close-btn">
+        <span class="ui-icon ui-icon-circle-close"></span>
+    </span>
+    </a>
+    
+</com:TContent>	
+
+<com:TContent ID="Main"> 
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>			  
+                <td>
+                    <com:TLabel ID="showSql" />
+                    <table width="100%" align="center" border="0">
+                        <tr>
+                            <td align="center">
+                                    <table width="100%"  border="0" align="left">		    
+                                        <tr>
+                                          <td width="19%"><span>&#8226;</span>&nbsp;&nbsp;<com:TLabel ID="modeInputTxt" Text="No. CM"/></td>
+                                          <td width="1%">:</td>
+                                          <td width="80%">       
+                                               <com:TPanel ID="noCmPanel" Visible="true">
+                                                  <com:TTextBox CssClass="input_text" 
+                                                            ID="noCM" 													   
+                                                            MaxLength="7"
+                                                            Width="70px" />
+                                                            &nbsp;
+                                                  <com:TRequiredFieldValidator
+                                                        ControlToValidate="noCM"
+                                                        ErrorMessage="Anda harus mengisikan No. CM"
+                                                        Display="Dynamic" 
+                                                        ValidationGroup="cari" />
+                                               </com:TPanel>                                     
+                                          </td>
+                                        </tr>
+                                        <tr>
+                                          <td>&nbsp;</td>
+                                          <td>&nbsp;</td>
+                                          <td>
+                                            <com:TButton Text="Cari" 
+                                                OnClick="cariClicked"
+                                                ID="cariBtn" 
+                                                ValidationGroup="cari"
+                                                CssClass="button_01" />                                 
+                                          </td>
+                                        </tr>
+                              <tr>
+                                <td colspan="3">
+                                    <table width="100%"  border="0" align="left">
+                                      <tr>
+                                        <td colspan="5"><hr/></td>
+                                      </tr>
+                                      <com:Tcontrol ID="DDtransCtrl" Visible="false">
+                                      <tr>
+                                        <td><span>&#8226;</span>&nbsp;&nbsp;No. Resep </td>
+                                        <td>:</td>
+                                        <td colspan="3" align="left"><!-- Dropdown daftar no_trans -->
+                                            <com:TDropDownList 
+                                                    ID="DDtrans" 
+                                                    PromptText ="--Silakan Pilih--"
+                                                    PromptValue =""	
+                                                    Width="130px" 
+                                                    OnSelectedIndexChanged="DDtransChanged" 
+                                                    AutoPostBack="true" 
+                                                    CausesValidation="false" />
+
+                                             <com:TRequiredFieldValidator 
+                                                    ControlToValidate="DDtrans" 											 
+                                                    ErrorMessage="Anda harus memilih No. Resep"
+                                                    Display="Dynamic" 
+                                                    ValidationGroup="cari"/>											
+                                        </td>
+                                      </tr>
+                                      </com:Tcontrol>
+                                      <com:Tcontrol ID="errMsgCtrl" Visible="false">
+                                      <tr>
+                                        <td colspan="5" align="center">
+                                            <com:TLabel 
+                                                    ID="errMsg" 
+                                                    ForeColor="#FF0000" 
+                                                    Text="Data tidak ditemukan atau Pembayaran belum diselesaikan"												
+                                            />
+                                        </td>
+                                      </tr>
+                                      </com:Tcontrol>
+                                      <com:Tcontrol ID="hasilCariCtrl" Visible="false">
+                                      <tr>
+					<td><h2>Informasi Pasien</h2></td>
+                                      </tr>
+                                      <tr>
+                                        <td><span>&#8226;</span>&nbsp;&nbsp;No. CM</td>
+                                        <td>:</td>
+                                        <td width="39%"><com:TLabel ID="noCmTxt2"/></td>
+                                      </tr>
+                                      <tr>
+                                        <td width="17%"><span>&#8226;</span>&nbsp;&nbsp;Nama Pasien</td>
+                                        <td width="1%">:</td>
+                                        <td colspan="2"><com:TLabel ID="nmPasien2"/></td>
+                                      </tr>
+                                      <tr>
+                                        <td><span>&#8226;</span>&nbsp;&nbsp;Dokter</td>
+                                        <td>:</td>
+                                        <td colspan="2"><com:TLabel ID="nmDokter"/></td>
+                                        </tr>
+                                      <tr>
+                                        <td><span>&#8226;</span>&nbsp;&nbsp;Tanggal</td>
+                                        <td>:</td>
+                                        <td colspan="2"><com:TLabel ID="tgl"/></td>
+                                      </tr>
+                                      <tr>
+					<td>&nbsp;</td>
+                                      </tr>
+                                      <com:Tcontrol ID="DDResepTebus" Visible="false">
+                                      <tr>
+                                        <td><h2>Resep Yang Bisa Ditebus</h2></td>
+                                      </tr>
+                                      <tr>
+                                        <td colspan="5">
+                                            <table width="95%"  border="0" align="center" cellpadding="0" cellspacing="1">
+                                              <tr>
+                                                <td align="center">
+                                                    <com:TActiveDataGrid 
+                                                        ID="UserGrid"
+                                                        DataKeyField="id"
+                                                        AutoGenerateColumns="false"	
+                                                        AllowPaging="true"
+                                                        AllowCustomPaging="true"
+                                                        AllowSorting="false"
+                                                        Width="100%"					
+                                                        PageSize="15"
+                                                        PagerStyle.Mode="Numeric"			
+                                                        PagerStyle.Font.Name="Arial"
+                                                        PagerStyle.Font.Size="12"
+                                                        PagerStyle.HorizontalAlign="Right"			
+                                                        GridLines="None"
+                                                        CellSpacing="1"
+                                                        CellPadding="2"
+                                                        HeaderStyle.CssClass="headerstyle"
+                                                        ItemStyle.CssClass="itemstyle"
+                                                        AlternatingItemStyle.CssClass="itemstyle2"
+                                                        OnPageIndexChanged="dtgSomeData_PageIndexChanged"
+                                                        OnSortCommand="dtgSomeData_SortCommand"	
+                                                        OnItemCreated="dtgSomeData_ItemCreated"
+                                                        OnEditCommand="editItem"
+                                                        OnDeleteCommand="pindahButtonClicked"
+                                                        OnUpdateCommand="saveItem"
+                                                        OnCancelCommand="cancelItem">
+                                                    <com:TActiveBoundColumn
+                                                            ID="IDTransColumn"
+                                                            HeaderText="ID Transaksi" 						 
+                                                            HeaderStyle.Width="150px" 
+                                                            ItemStyle.HorizontalAlign="Center" 
+                                                            DataField="id_transaksi"
+                                                            Visible="true"
+                                                    />
+                                                    <com:TActiveBoundColumn
+                                                            ID="NamaObatColumn"
+                                                            HeaderText="Nama Obat" 						 
+                                                            HeaderStyle.Width="150px" 
+                                                            ItemStyle.HorizontalAlign="Center" 
+                                                            DataField="nama_obat"
+                                                    /> 
+                                                    <com:TActiveBoundColumn
+                                                            ID="JumlahObatColumn"
+                                                            HeaderText="Jumlah" 	
+                                                            SortExpression="jumlah"					 
+                                                            ItemStyle.Width="75px" 
+                                                            ItemStyle.HorizontalAlign="Center"
+                                                            DataField="jumlah_obat"
+                                                    />
+                                                    <com:TActiveBoundColumn
+                                                            ID="TipeObatColumn"
+                                                            HeaderText="Tipe Obat" 					 
+                                                            ItemStyle.Width="75px" 
+                                                            ItemStyle.HorizontalAlign="Center" 
+                                                            DataField="tipe_obat"
+                                                    />       
+                                                    <com:TActiveTemplateColumn 
+                                                            ID="KelompokRacikanColumn"
+                                                            HeaderText="Kelompok Racikan" 					 
+                                                            ItemStyle.Width="75px" 
+                                                            ItemStyle.HorizontalAlign="Center" >									
+                                                            <prop:ItemTemplate>
+                                                                    <%= $this->Parent->DataItem['kelompok_racikan']  %>                                                    
+                                                            </prop:ItemTemplate>
+                                                    </com:TActiveTemplateColumn>
+                                                    <com:TActiveBoundColumn
+                                                            ID="JumlahBungkusColumn"
+                                                            HeaderText="Jumlah Bungkus"   
+                                                            SortExpression="jumlah"          
+                                                            ItemStyle.Width="75px" 
+                                                            ItemStyle.HorizontalAlign="Center"
+                                                            DataField="jumlah_bungkus"
+                                                    />
+                                                    <com:TActiveBoundColumn
+                                                            ID="NamaKemasanColumn"
+                                                            HeaderText="Nama Kemasan"   
+                                                            SortExpression="jumlah"          
+                                                            ItemStyle.Width="75px" 
+                                                            ItemStyle.HorizontalAlign="Center"
+                                                            DataField="nama_kemasan"
+                                                    />
+                                                    <com:TActiveBoundColumn 
+                                                            ID="KeteranganColumn"
+                                                            HeaderText="Keterangan" 					 
+                                                            ItemStyle.Width="75px" 
+                                                            ItemStyle.HorizontalAlign="Center"
+                                                            DataField="keterangan"
+                                                    />         
+                                                    <com:TActiveTemplateColumn 
+                                                        HeaderText="Total" 	
+                                                        SortExpression="total"					 
+                                                        ItemStyle.Width="75px" 
+                                                        ItemStyle.HorizontalAlign="Right" >									
+                                                       <prop:ItemTemplate>
+                                                               <%=	$this->Parent->DataItem['total_harga'] %>                                                    
+                                                       </prop:ItemTemplate>
+                                                    </com:TActiveTemplateColumn>
+                                                    <com:TActiveTemplateColumn
+                                                        ID="EditColumnTebus"
+                                                        HeaderText="Edit"
+                                                        ItemStyle.HorizontalAlign="Center">
+                                                        <prop:ItemTemplate>
+                                                        <com:TActiveButton
+                                                            ID="UpdateObatTebus"
+                                                            CommandParameter="<%# $this->Parent->Data['id_transaksi'] %>"
+                                                            CausesValidation="false"
+                                                            OnCommand="Page.gantiObat"
+                                                            Text="Edit">
+                                                            <prop:ClientSide
+                                                                  OnLoading="maskContent();"/>
+                                                            </com:TActiveButton>
+                                                        </prop:ItemTemplate>
+                                                    </com:TActiveTemplateColumn>
+                                                    <com:TButtonColumn												
+                                                        HeaderText="Pindah ke Salinan Resep"
+                                                        Text="Pindahkan"
+                                                        ID="PindahKeSalinan"
+                                                        ItemStyle.HorizontalAlign="Center"
+                                                        ButtonType="PushButton"									
+                                                        CommandName="delete" />
+                                                    </com:TActiveDataGrid>
+                                                </td>                       
+                                            </tr>
+                                            <tr>
+                                                <td align = 'center' colspan='5'>
+                                                    <com:TButton
+                                                        Text="Tebus Resep"
+                                                        OnClick="penebusanResep"
+                                                        Attributes.onclick="javascript:if(!confirm('Apakah yakin mau menebus resep?')) return false;" />
+                                                    <com:TActiveLabel 
+                                                        ID="alertTebus" 
+                                                        ForeColor="#FF0000" />
+                                                </td>
+                                            </tr>
+									</table>										
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                </com:Tcontrol>
+                                <com:Tcontrol ID="DDResepKopi" Visible="false">
+                                <tr>
+                                    <td><h2>Salinan Resep</h2></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5">
+                                      <div id="ctl0_Main_UserGrid2_Container" >
+                                        <table width="95%"  border="0" align="center" cellpadding="0" cellspacing="1">
+                                            <tr>
+                                                <com:TActiveDataGrid ID="UserGrid2"
+                                                        DataKeyField="id"
+                                                        AutoGenerateColumns="false"	
+                                                        AllowPaging="true"
+                                                        AllowCustomPaging="true"
+                                                        AllowSorting="false"
+                                                        Width="100%"					
+                                                        PageSize="15"
+                                                        PagerStyle.Mode="Numeric"			
+                                                        PagerStyle.Font.Name="Arial"
+                                                        PagerStyle.Font.Size="12"
+                                                        PagerStyle.HorizontalAlign="Right"			
+                                                        GridLines="None"
+                                                        CellSpacing="1"
+                                                        CellPadding="2"
+                                                        HeaderStyle.CssClass="headerstyle"
+                                                        ItemStyle.CssClass="itemstyle"
+                                                        AlternatingItemStyle.CssClass="itemstyle2"
+                                                        OnPageIndexChanged="dtgSomeData_PageIndexChanged_Copy"
+                                                        OnSortCommand="dtgSomeData_SortCommand_Copy"	
+                                                        OnItemCreated="dtgSomeData_ItemCreated"
+                                                        OnEditCommand="editItem"
+                                                        OnDeleteCommand="pindahButtonKopiClicked"
+                                                        EmptyTemplate="<div class='info'>Data Tidak Ada!.</div>">	
+                                                        <com:TActiveBoundColumn
+                                                            ID="IDTransColumnKopi"
+                                                            HeaderText="ID Transaksi" 						 
+                                                            HeaderStyle.Width="150px" 
+                                                            ItemStyle.HorizontalAlign="Center" 
+                                                            DataField="id_transaksi"
+                                                            Visible="true"
+                                                        />
+                                                        <com:TActiveTemplateColumn
+                                                                 HeaderText="Nama" 						 
+                                                                 ItemStyle.Width="150px" 
+                                                                 ItemStyle.HorizontalAlign="Center" >									
+                                                        <prop:ItemTemplate>
+                                                                <%=	$this->Parent->DataItem['nama_obat']	  %>                                                    
+                                                        </prop:ItemTemplate>
+                                                        </com:TActiveTemplateColumn>
+                                                        <com:TActiveTemplateColumn 
+                                                                 HeaderText="Jumlah" 	
+                                                                 SortExpression="jumlah"					 
+                                                                 ItemStyle.Width="75px" 
+                                                                 ItemStyle.HorizontalAlign="Center" >									
+                                                                <prop:ItemTemplate>
+                                                                        <%=	$this->Parent->DataItem['jumlah_obat'] %>                                                    
+                                                                </prop:ItemTemplate>
+                                                        </com:TActiveTemplateColumn>
+                                                        <com:TActiveTemplateColumn 
+                                                                 HeaderText="Tipe Obat" 					 
+                                                                 ItemStyle.Width="75px" 
+                                                                 ItemStyle.HorizontalAlign="Center" >									
+                                                                <prop:ItemTemplate>
+                                                                        <%=	$this->Parent->DataItem['tipe_obat'] %>                                                    
+                                                                </prop:ItemTemplate>
+                                                        </com:TActiveTemplateColumn>
+                                                        <com:TActiveTemplateColumn 
+                                                                 HeaderText="Kelompok Racikan" 					 
+                                                                 ItemStyle.Width="75px" 
+                                                                 ItemStyle.HorizontalAlign="Center" >									
+                                                                <prop:ItemTemplate>
+                                                                        <%= $this->Parent->DataItem['kelompok_racikan']  %>                                                    
+                                                                </prop:ItemTemplate>
+                                                        </com:TActiveTemplateColumn>
+                                                        <com:TActiveTemplateColumn 
+                                                                HeaderText="Jumlah Bungkus"   
+                                                                SortExpression="satuan"          
+                                                                ItemStyle.Width="75px" 
+                                                                ItemStyle.HorizontalAlign="Center" >                  
+                                                                <prop:ItemTemplate>
+                                                                     <%=  $this->Parent->DataItem['jumlah_bungkus'] %>                                                    
+                                                                </prop:ItemTemplate>
+                                                        </com:TActiveTemplateColumn>
+                                                        <com:TActiveTemplateColumn 
+                                                                HeaderText="Nama Kemasan"   
+                                                                SortExpression="satuan"          
+                                                                ItemStyle.Width="75px" 
+                                                                ItemStyle.HorizontalAlign="Center" >                  
+                                                                <prop:ItemTemplate>
+                                                                     <%=  $this->Parent->DataItem['nama_kemasan'] %>                                                    
+                                                                </prop:ItemTemplate>
+                                                        </com:TActiveTemplateColumn>                                 
+                                                        <com:TActiveTemplateColumn 
+                                                                HeaderText="Keterangan" 					 
+                                                                ItemStyle.Width="75px" 
+                                                                ItemStyle.HorizontalAlign="Center" >									
+                                                                <prop:ItemTemplate>
+                                                                       <%=	$this->Parent->DataItem['keterangan'] %>                                                    
+                                                               </prop:ItemTemplate>
+                                                       </com:TActiveTemplateColumn> 
+                                                       <!-- Total harga -->
+                                                       <com:TActiveTemplateColumn
+                                                                HeaderText="Total" 	
+                                                                SortExpression="total"					 
+                                                                ItemStyle.Width="75px" 
+                                                                ItemStyle.HorizontalAlign="Right" >									
+                                                                <prop:ItemTemplate>
+                                                                        <%=	$this->Parent->DataItem['total_harga'] %>                                                    
+                                                                </prop:ItemTemplate>
+                                                        </com:TActiveTemplateColumn>				
+                                                        <com:TBoundColumn
+                                                                ID="jmlRetur"
+                                                                SortExpression="jml_retur"
+                                                                HeaderText="Jumlah Retur"
+                                                                ItemStyle.Width="75px"
+                                                                DataField="jml_retur"
+                                                                Visible="false"
+                                                                ItemStyle.HorizontalAlign="Right"/>
+                                                        <com:TActiveTemplateColumn
+                                                            ID="EditColumnSalinan"
+                                                            HeaderText="Edit"
+                                                            ItemStyle.HorizontalAlign="Center">
+                                                            <prop:ItemTemplate>
+                                                            <com:TActiveButton
+                                                                ID="UpdateObatSalinan"
+                                                                CommandParameter="<%# $this->Parent->Data['id_transaksi'] %>"
+                                                                CausesValidation="false"
+                                                                OnCommand="Page.gantiObat"
+                                                                Text="Edit">
+                                                                <prop:ClientSide
+                                                                    OnLoading="maskContent();"/>
+                                                            </com:TActiveButton>
+                                                            </prop:ItemTemplate>
+                                                        </com:TActiveTemplateColumn>
+                                                        <com:TButtonColumn												
+                                                            HeaderText="Pindah ke bag. Penebusan"
+                                                            Text="Pindahkan"
+                                                            ID="PindahKeResep"
+                                                            ItemStyle.HorizontalAlign="Center"
+                                                            ButtonType="PushButton"									
+                                                            CommandName="delete" />
+                                                    </com:TActiveDataGrid></div>
+                                                </tr>
+                                                <tr>
+                                                    <td align = 'center' colspan='5'>
+                                                        <com:TButton
+                                                            ID="salinanResepBtn"
+                                                            Text="Cetak Salinan Resep "
+                                                            OnClick="cetakSalinanResep" 
+                                                            Enabled="false"/>
+                                                    </td>
+                                                </tr>
+									</table>
+								</com:Tcontrol>
+								<com:Tcontrol ID="DDResepGanti" Visible="false">
+									<tr>
+										<td><h2>Obat yang diganti</h2></td>
+									</tr>
+									<tr>
+										<td colspan="5">
+                                                                                        <div id="ctl0_Main_UserGrid3_Container" >
+											<table width="95%"  border="0" align="center" cellpadding="0" cellspacing="1">
+												<tr>
+													<com:TActiveDataGrid ID="UserGrid3"
+														DataKeyField="id"
+														AutoGenerateColumns="false"	
+														AllowPaging="true"
+														AllowCustomPaging="true"
+														AllowSorting="false"
+														Width="100%"					
+														PageSize="15"
+														PagerStyle.Mode="Numeric"			
+														PagerStyle.Font.Name="Arial"
+														PagerStyle.Font.Size="12"
+														PagerStyle.HorizontalAlign="Right"			
+														GridLines="None"
+														CellSpacing="1"
+														CellPadding="2"
+														HeaderStyle.CssClass="headerstyle"
+														ItemStyle.CssClass="itemstyle"
+														AlternatingItemStyle.CssClass="itemstyle2"
+														OnPageIndexChanged="dtgSomeData_PageIndexChanged_Copy2"
+														OnSortCommand="dtgSomeData_SortCommand_Copy"	
+														OnItemCreated="dtgSomeData_ItemCreated"
+														OnDeleteCommand="pindahButtonKopiClicked"
+														EmptyTemplate="<div class='info'>Data Tidak Ada!.</div>">	
+													<com:TActiveBoundColumn
+														ID="IDTransColumnGanti"
+														HeaderText="ID Transaksi" 						 
+														HeaderStyle.Width="150px" 
+														ItemStyle.HorizontalAlign="Center" 
+														DataField="id_transaksi"
+														Visible="true"
+													/>
+													<com:TActiveTemplateColumn
+														HeaderText="Nama" 						 
+														ItemStyle.Width="150px" 
+														ItemStyle.HorizontalAlign="Center" >									
+														<prop:ItemTemplate>
+																<%=	$this->Parent->DataItem['nama_obat']	  %>                                                    
+														</prop:ItemTemplate>
+													</com:TActiveTemplateColumn>
+													<com:TActiveTemplateColumn 
+														HeaderText="Jumlah" 	
+														SortExpression="jumlah"					 
+														ItemStyle.Width="75px" 
+														ItemStyle.HorizontalAlign="Center" >									
+														<prop:ItemTemplate>
+															   <%=	$this->Parent->DataItem['jumlah_obat'] %>                                                    
+														</prop:ItemTemplate>
+													</com:TActiveTemplateColumn>
+													<com:TActiveTemplateColumn 
+														HeaderText="Tipe Obat" 					 
+														ItemStyle.Width="75px" 
+														ItemStyle.HorizontalAlign="Center" >									
+														<prop:ItemTemplate>
+															<%= $this->Parent->DataItem['tipe_obat'] %>                                                    
+														</prop:ItemTemplate>
+													</com:TActiveTemplateColumn>
+													<com:TActiveTemplateColumn 
+														HeaderText="Kelompok Racikan" 					 
+														ItemStyle.Width="75px" 
+														ItemStyle.HorizontalAlign="Center" >									
+														<prop:ItemTemplate>
+															<%= $this->Parent->DataItem['kelompok_racikan']  %>                                                    
+														</prop:ItemTemplate>
+											</com:TActiveTemplateColumn>
+                      <com:TActiveTemplateColumn 
+                            HeaderText="Jumlah Bungkus"   
+                            SortExpression="satuan"          
+                            ItemStyle.Width="75px" 
+                            ItemStyle.HorizontalAlign="Center" >                  
+                            <prop:ItemTemplate>
+                                 <%=  $this->Parent->DataItem['jumlah_bungkus'] %>                                                    
+                            </prop:ItemTemplate>
+                    </com:TActiveTemplateColumn>
+                    <com:TActiveTemplateColumn 
+                            HeaderText="Nama Kemasan"   
+                            SortExpression="satuan"          
+                            ItemStyle.Width="75px" 
+                            ItemStyle.HorizontalAlign="Center" >                  
+                            <prop:ItemTemplate>
+                                 <%=  $this->Parent->DataItem['nama_kemasan'] %>                                                    
+                            </prop:ItemTemplate>
+                    </com:TActiveTemplateColumn>                               
+											<com:TActiveTemplateColumn 
+													HeaderText="Keterangan" 					 
+													ItemStyle.Width="75px" 
+													ItemStyle.HorizontalAlign="Center" >									
+													<prop:ItemTemplate>
+														   <%=	$this->Parent->DataItem['keterangan'] %>                                                    
+												   </prop:ItemTemplate>
+										   </com:TActiveTemplateColumn> 
+										   <com:TActiveTemplateColumn 
+													HeaderText="ID Trans Pengganti" 					 
+													ItemStyle.Width="75px" 
+													ItemStyle.HorizontalAlign="Center" >
+													<prop:ItemTemplate>
+													<%=	$this->Parent->DataItem['id_trans_obat_pengganti']	  %>                                                    
+											</prop:ItemTemplate>
+										   </com:TActiveTemplateColumn>
+										   <com:TActiveTemplateColumn 
+													HeaderText="Obat Pengganti" 					 
+													ItemStyle.Width="75px" 
+													ItemStyle.HorizontalAlign="Center" >
+													<prop:ItemTemplate>
+													<%=	$this->Parent->DataItem['obat_pengganti']	  %>                                                    
+											</prop:ItemTemplate>
+										   </com:TActiveTemplateColumn>
+										   
+									</com:TActiveDataGrid></div>
+							</tr>
+                                        
+											</com:Tcontrol>
+				</tr>
+                                </com:Tcontrol>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3"><hr/> </td>
+            </tr>							
+        </table>
+    </td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+    <td><table border="0" align="center" cellpadding="0" cellspacing="2">
+        <tr>                                        
+            <td align="center">
+                <com:TButton Text="Cetak" 
+                    OnClick="cetakClicked"
+                    ID="cetakBtn" 
+                    CausesValidation="false" 
+                    CssClass="button_01"  
+                    Enabled="false" />
+                
+                <com:TButton Text="Batal" 
+                    OnClick="batalClicked" 
+                    CausesValidation="false" 
+                    CssClass="button_01"
+                    Attributes.onclick = "if(!confirm('Batalkan Retur..?')) return false; else maskContent();"/>	
+		
+                <com:TButton Text="Hapus" 
+                    OnClick="hapusClicked" 
+                    CausesValidation="false" 
+                    CssClass="button_01"
+                    Attributes.onclick = "if(!confirm('Hapus Transaksi Penjualan Obat..?')) return false; else maskContent();"/>
+                      
+                <com:TButton Text="Keluar" 
+                    OnClick="keluarClicked" 
+                    CausesValidation="false" 
+                    Visible="False"
+                    CssClass="button_01" />
+            </td>
+        </tr>
+    </table>
+</td>
+</tr>
+</table>
+<com:TCallback ID="UpdateCallback" OnCallback="reloadpage" ActiveControl.CausesValidation="false"/>
+    <script type="text/javascript">
+            //<![CDATA[
+            function reloadpage(){
+                    var request= <%= $this->UpdateCallback->ActiveControl->Javascript %>;
+                            //request.setCallbackParameter({
+                                    //Id:id
+                            //});
+                            request.dispatch();
+            }
+            //]]>
+    </script>
+</com:TContent> 

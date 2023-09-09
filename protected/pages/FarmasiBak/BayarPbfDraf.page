@@ -1,0 +1,387 @@
+<%@ MasterClass="Application.layouts.MainLayout" %>
+<com:TContent ID="jdMain">
+	Administrasi Pengajuan Pembayaran PBF
+    
+    <a href="<%= $this->Service->constructUrl('Simak') %>" onclick="maskContent()">
+    <span class="close-btn">
+        <span class="ui-icon ui-icon-circle-close"></span>
+    </span>
+    </a>
+    
+</com:TContent>	
+
+
+<com:TContent ID="Main">
+	<com:TActiveLabel ID="test" Visible="false" /><com:TActiveLabel ID="msg" Visible="false" />
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>
+                
+                <com:TActivePanel ID="cariPanel" DefaultButton="prosesBtn">
+                <table width="100%" border="0" align="right" cellpadding="3" cellspacing="3">
+                  <tr>
+                    <td><span>&#8226; </span>Tanggal Jatuh Tempo </td>
+                    <td>:</td>
+                    <td>
+                    	<com:TActiveDatePicker ID="tglawal"
+							Width="70px" 
+							DateFormat="dd-MM-yyyy"	
+							ToolTip="Masukan tanggal awal" 
+							MaxLength="10" />
+						<com:TDataTypeValidator
+							ValidationGroup="val"
+							ControlToValidate="tglawal"
+							DataType="Date"
+							DateFormat="dd-MM-yyyy"
+							Text="Format tanggal dd-mm-yyyy"
+							Display="Dynamic" 
+							CssClass="msgError" 
+							/>
+							  s/d
+						<com:TActiveDatePicker ID="tglakhir" 
+							Width="70px" 
+							DateFormat="dd-MM-yyyy"	
+							ToolTip="Masukan tanggal akhir"
+							MaxLength="10" 
+							ValidationGroup="val"
+							/>
+						<com:TDataTypeValidator
+							ValidationGroup="val"
+							ControlToValidate="tglakhir"
+							DataType="Date"
+							DateFormat="dd-MM-yyyy"
+							Text="Format tanggal dd-mm-yyyy"
+							Display="Dynamic" 
+							CssClass="msgError" 
+							/>
+                    </td>
+                  </tr>
+                  
+                  <tr>
+                    <td><span>&#8226; </span>Tanggal Pembayaran</td>
+                    <td>:</td>
+                    <td>
+                    	<com:TActiveDatePicker
+                            ID="tglBayar"
+                            Width="70px"  
+                            MaxLength="10"
+                            CausesValidation="false"/>
+                        
+                         <com:TRequiredFieldValidator 
+                            ControlToValidate="tglBayar" 											 
+                            ErrorMessage="*"
+                            Display="Dynamic" 
+                            ValidationGroup="val"/>
+                    
+                    	&nbsp;
+                        
+                        <com:TActiveButton 
+							ID="prosesBtn" 
+							Text="Proses" 
+							OnClick="prosesClicked" 
+							CssClass="button_01" 
+							ValidationGroup="val"	
+                            IsDefaultButton="true">
+                            <prop:ClientSide 
+                                                OnLoading="maskContent();"
+                                                OnComplete="unmaskContent(); "/>
+                        </com:TActiveButton>
+                        
+                    </td>
+                  </tr>
+                  <tr>
+                    <td width="23%">&nbsp;</td>
+                    <td width="1%"></td>
+                    <td width="76%">                  </td>  
+                  </table>
+                  
+                  </com:TActivePanel>
+                  
+                                  
+				  
+                  <table width="100%" border="0" align="right" cellpadding="0" cellspacing="2">
+                  <tr>
+                    <td colspan="3"><hr/>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="3">
+                    	<com:TActivePanel ID="fakturPanel" >
+                        	<com:XActiveDataGrid
+                                    	ID="gridCariFaktur"
+                                        DataKeyField="id"
+                                        AutoGenerateColumns="false"	
+                                        AllowPaging="true"
+                                        AllowCustomPaging="true"
+                                        AllowSorting="true"
+                                        Width="100%"	
+                                        PageSize="10"
+										PagerStyle.Mode="Numeric"			
+										PagerStyle.Font.Name="Arial"
+										PagerStyle.Font.Size="12"
+										PagerStyle.HorizontalAlign="Right"			
+										GridLines="None"
+										CellSpacing="1"
+										CellPadding="2"
+										HeaderStyle.CssClass="headerstyle"
+										ItemStyle.CssClass="itemstyle"
+										AlternatingItemStyle.CssClass="itemstyle2"
+										OnItemCreated="gridCariFaktur_ItemCreated"
+                                        OnEditCommand="gridCariFaktur_EditCommand"
+                                        OnUpdateCommand="gridCariFaktur_UpdateCommand"
+                                        OnCancelCommand="gridCariFaktur_CancelCommand"
+                                        OnDeleteCommand="deleteButtonClicked"								
+                                        OnPageIndexChanged="gridCariFaktur_PageIndexChanged"
+                                        OnSortCommand="gridCariFaktur_SortCommand"
+                                        OnItemCommand="gridCariFaktur_itemCommand">
+																		
+									<com:XActiveTemplateColumn  
+                                    	ID="fakturColumn1"
+										HeaderText="No. Faktur" 	
+										SortExpression="no_faktur"					 
+										ItemStyle.Width="30px" 
+										ItemStyle.HorizontalAlign="Center" />
+                                    
+                                    <com:XActiveTemplateColumn  
+                                    	ID="fakturColumn2"
+										HeaderText="Tgl. Faktur" 	
+										SortExpression="tgl_faktur"					 
+										ItemStyle.Width="50px" 
+										ItemStyle.HorizontalAlign="Center" />
+                                    
+                                    <com:XActiveTemplateColumn  
+                                    	ID="fakturColumn3"
+										HeaderText="Tgl. Jatuh Tempo" 	
+										SortExpression="tgl_jth_tempo"					 
+										ItemStyle.Width="50px" 
+										ItemStyle.HorizontalAlign="Center" />
+                                    
+                                    <com:XActiveTemplateColumn  
+                                    	ID="fakturColumn4"
+										HeaderText="Supplier" 	
+										SortExpression="nm_supplier"					 
+										ItemStyle.Width="50px" 
+										ItemStyle.HorizontalAlign="Center" />
+                                    
+                                    <com:XActiveTemplateColumn  
+                                    	ID="fakturColumn5"
+										HeaderText="Total" 	
+										SortExpression="hrg_beli"					 
+										ItemStyle.Width="50px" 
+										ItemStyle.HorizontalAlign="Right" />    
+                                        
+                                    <com:XActiveTemplateColumn 
+                                        ItemStyle.HorizontalAlign="Center" 
+                                        ItemStyle.Width="15%"
+                                        ID="fakturColumn6">
+                                        <prop:HeaderTemplate>Pembayaran Tertunda</prop:HeaderTemplate>
+                                        <prop:ItemTemplate>
+                                          <com:TActiveRadioButtonList
+                                                  ID="modeBayar"
+                                                  RepeatDirection="Horizontal" 
+                                                  AutoPostBack="false" 
+                                                  CausesValidation="false"
+                                                  SelectedValue="0" >
+                                            <com:TListItem Text="Tidak" Value="0" />
+                                            <com:TListItem Text="Ya" Value="1" />
+                                          </com:TActiveRadioButtonList>
+                                        </prop:ItemTemplate>
+                                    </com:XActiveTemplateColumn>
+                                    
+                                    <com:XActiveTemplateColumn 
+                                        ItemStyle.HorizontalAlign="Center" 
+                                        ItemStyle.Width="10%"
+                                        Visible="False">
+                                        <prop:HeaderTemplate>Ajukan</prop:HeaderTemplate>
+                                        <prop:ItemTemplate>
+                                          <com:TActiveCheckBox 
+                                          	ID="modePengajuan"  
+                                            AutoPostBack="true"
+                                            CausesValidation="false"/>
+                                        </prop:ItemTemplate>
+                                    </com:XActiveTemplateColumn>                    
+                                    
+                                    <com:XActiveTemplateColumn 
+                                        ItemStyle.HorizontalAlign="Center" 
+                                        ItemStyle.Width="20%"
+                                        Visible="False">
+                                        <prop:HeaderTemplate>Mode</prop:HeaderTemplate>
+                                        <prop:ItemTemplate>
+                                          <com:TActiveButton 
+                                            ID="pengajuanBtn2" 
+                                            Text="Ajukan" 
+                                            OnCommand="Page.pengajuanBtnClicked" 
+                                            CommandParameter="<%# $this->Parent->Data['no_faktur'] %>" 
+                                            CausesValidation="false"
+                                            Attributes.onclick = "if(!confirm('Ajukan No. Faktur : <%# $this->Parent->Data['no_faktur'] %> ?')) return false;" >
+                                            <prop:ClientSide 
+                                                OnLoading="maskContent();"
+                                                OnComplete="unmaskContent(); "/>
+                                          </com:TActiveButton>	
+                                        </prop:ItemTemplate>
+                                    </com:XActiveTemplateColumn>                    
+                                    
+                                    <com:XActiveButtonColumn 
+                                    	ID="pengajuanBtn"
+                                        Text="Ajukan"
+                                        HeaderText="MODE" 	
+                                        ButtonType="PushButton"									
+                                        ItemStyle.HorizontalAlign="Center"
+                                        ItemStyle.Width="20%" />
+                                        
+							</com:XActiveDataGrid>	
+                        </com:TActivePanel>
+                        
+                        <com:TActivePanel ID="gridPanel" 
+                        	GroupingText="Daftar Faktur Yang Diajukan">
+                        	<com:XActiveDataGrid
+                                    	ID="gridBrg"
+                                        DataKeyField="id"
+                                        AutoGenerateColumns="false"	
+                                        AllowPaging="true"
+                                        AllowCustomPaging="true"
+                                        AllowSorting="true"
+                                        Width="100%"	
+                                        PageSize="10"
+										PagerStyle.Mode="Numeric"			
+										PagerStyle.Font.Name="Arial"
+										PagerStyle.Font.Size="12"
+										PagerStyle.HorizontalAlign="Right"			
+										GridLines="None"
+										CellSpacing="1"
+										CellPadding="2"
+										HeaderStyle.CssClass="headerstyle"
+										ItemStyle.CssClass="itemstyle"
+										AlternatingItemStyle.CssClass="itemstyle2"
+										OnItemCreated="gridBrg_ItemCreated"
+                                        OnEditCommand="gridBrg_EditCommand"
+                                        OnUpdateCommand="gridBrg_UpdateCommand"
+                                        OnCancelCommand="gridBrg_CancelCommand"
+                                        OnDeleteCommand="deleteButtonClicked"								
+                                        OnPageIndexChanged="gridBrg_PageIndexChanged"
+                                        OnSortCommand="gridBrg_SortCommand">
+																		
+									<com:XActiveTemplateColumn  
+                                    	ID="column1"
+										HeaderText="No. Faktur" 	
+										SortExpression="no_faktur"					 
+										ItemStyle.Width="30px" 
+										ItemStyle.HorizontalAlign="Center" />
+                                    
+                                    <com:XActiveTemplateColumn  
+                                    	ID="column2"
+										HeaderText="Tgl. Faktur" 	
+										SortExpression="tgl_faktur"					 
+										ItemStyle.Width="50px" 
+										ItemStyle.HorizontalAlign="Center" />
+                                    
+                                    <com:XActiveTemplateColumn  
+                                    	ID="column3"
+										HeaderText="Tgl. Jatuh Tempo" 	
+										SortExpression="tgl_jth_tempo"					 
+										ItemStyle.Width="50px" 
+										ItemStyle.HorizontalAlign="Center" />
+                                    
+                                    <com:XActiveTemplateColumn  
+                                    	ID="column4"
+										HeaderText="Supplier" 	
+										SortExpression="nm_supplier"					 
+										ItemStyle.Width="50px" 
+										ItemStyle.HorizontalAlign="Center" />
+                                    
+                                    <com:XActiveTemplateColumn  
+                                    	ID="column5"
+										HeaderText="Total" 	
+										SortExpression="hrg_beli"					 
+										ItemStyle.Width="50px" 
+										ItemStyle.HorizontalAlign="Right" />    
+                                    
+                                    <com:XActiveTemplateColumn  
+                                    	ID="column6"
+										HeaderText="Pembayaran Tertunda" 	
+										SortExpression="st_tunda"					 
+										ItemStyle.Width="25px" 
+										ItemStyle.HorizontalAlign="Center" />    
+                            		
+                                    <com:XActiveTemplateColumn 
+                                        ItemStyle.HorizontalAlign="Center" 
+                                        ItemStyle.Width="20%">
+                                        <prop:HeaderTemplate>Mode</prop:HeaderTemplate>
+                                        <prop:ItemTemplate>
+                                          <com:TActiveButton 
+                                            ID="gridHapusBrg" 
+                                            Text="Hapus" 
+                                            OnCommand="Page.gridHapusBrgClicked" 
+                                            CommandParameter="<%# $this->Parent->Data['no_faktur'] %>" 
+                                            CausesValidation="false"
+                                            Attributes.onclick = "if(!confirm('Hapus No. Faktur : <%# $this->Parent->Data['no_faktur'] %> ?')) return false;" >
+                                            <prop:ClientSide 
+                                            OnLoading="maskContent();"
+                                            OnComplete="unmaskContent(); "/>
+                                          </com:TActiveButton>	
+                                        </prop:ItemTemplate>
+                                    </com:XActiveTemplateColumn>                    
+							</com:XActiveDataGrid>	
+                        </com:TActivePanel>
+						</td>
+                    </tr>
+                    
+                </table>
+                
+                </td>
+              </tr>
+              <tr>
+                <td><hr /></td>
+              </tr>
+              <tr>
+                <td><table width="10" border="0" align="center" cellpadding="0" cellspacing="2">
+                    <tr>
+					<!--
+					  <td>
+					  	<com:TActiveButton 
+							Text="Preview"  
+							ID="prevBtn" 
+							OnClick="prevClicked" 
+							CssClass="button_01"
+                         Attributes.onclick = "if(!confirm('Preview data sekarang..?')) return false;">
+                           <prop:ClientSide
+                                    OnLoading="Element.show('loading'); Element.hide('messages');"/>
+                        </com:TActiveButton>              
+					  </td>
+					  --->
+                      <td>
+					  	<com:TActiveButton 
+							Text="Cetak" 
+							ID="cetakBtn" 
+							OnClick="cetakClicked" 
+							CssClass="button_01"
+                         Attributes.onclick = "if(!confirm('Cetak data sekarang..?')) return false;">
+                           <prop:ClientSide
+                                    OnLoading="maskContent();"/>
+                        </com:TActiveButton>              
+					  </td>
+                      <td>
+                      	<com:TActiveButton Text="Batal" 
+										OnClick="batalClicked"
+										CausesValidation="false" 
+										CssClass="button_01">
+                      					<prop:ClientSide 
+                                            OnLoading="maskContent();"
+                                            OnComplete="unmaskContent(); "/>
+                                    </com:TActiveButton>
+					  </td>
+                      <td>
+                      	<com:TActiveButton Text="Keluar" 
+					  			OnClick="keluarClicked" 
+								CausesValidation="false" 
+								CssClass="button_01">
+                                <prop:ClientSide
+                                    OnLoading="maskContent();"/>
+                        </com:TActiveButton>
+					  </td>
+                    </tr>
+                </table></td>
+              </tr>
+          </table>
+          
+</com:TContent>

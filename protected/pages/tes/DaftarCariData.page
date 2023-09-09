@@ -1,0 +1,454 @@
+<%@ MasterClass="Application.layouts.MainLayout" %>
+
+<com:TContent ID="Main">
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td height="18"></td>
+  </tr>
+  <tr>
+    <td><table width="10"  border="0" align="center" cellpadding="0" cellspacing="0">
+      <tr>
+        <td width="1%"><table width="100%"  border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="1%"><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndAppTopLft.png'%>" width="15" height="15" /></td>
+            <td width="99%" background="<%=$this->Page->Theme->BaseUrl.'/images/bkg3.png'%>">&nbsp;</td>
+            <td width="1%"><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndAppTopRgt.png'%>" width="15" height="15" /></td>
+          </tr>
+        </table></td>
+        </tr>
+      <tr>
+        <td valign="top" background="<%=$this->Page->Theme->BaseUrl.'/images/bkg3.png'%>"><table width="10" border="0" cellpadding="0" cellspacing="0">
+          <tr>
+            <td><table width="15" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+            </table></td>
+            <td><table width="750" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td class="text_08">History Data Pasien </td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td><table width="10" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndTopLft.png'%>" width="15" height="15" /></td>
+          <td><table width="720" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td><table width="720" border="0" align="right" cellpadding="0" cellspacing="0">
+                    <tr>
+                      <td width="245" class="text_07">&nbsp;Daftar Data Pencarian Pasien </td><td width="535" background="<%=$this->Page->Theme->BaseUrl.'/images/rndBkgTop.png'%>"></td>
+                      </tr>
+                </table></td>
+              </tr>
+          </table></td>
+          <td><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndTopRgt.png'%>" width="15" height="15" /></td>
+        </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="10" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td background="<%=$this->Page->Theme->BaseUrl.'/images/rndBkgLft.png'%>"><table width="15" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+          </table></td>
+          <td><table width="720" border="0" cellspacing="0" cellpadding="0">
+		  <tr height="15px">
+		  	<td></td>
+		  </tr>
+              <tr>			  
+                <td>
+				<com:TLabel ID="showSql" />
+				<table width="700" align="center" border="0">
+			  		<tr>
+						<td align="center"><com:TPanel ID="cariPanel" GroupingText="Pencarian Data" Width="680px" DefaultButton="cariBtn">
+							<table width="85%"  border="0" align="left">								  
+							  <tr>
+							    <td><span>&#8226;</span>&nbsp;&nbsp;Jenis Pasien</td>
+							    <td>:</td>
+							    <td>
+                                	<com:TActiveRadioButtonList
+                                          ID="jnsPas"
+                                          RepeatDirection="Horizontal" 	
+                                          AutoPostBack="true"
+                                          CausesValidation="false"
+                                          OnSelectedIndexChanged="cariClicked"
+                                          CssClass="radiobtn"			  
+                                          >
+                                            <com:TListItem Text="Rawat Jalan" Value="1" />
+                                            <com:TListItem Text="Rawat Inap" Value="2" />
+                                            
+                                        </com:TActiveRadioButtonList>
+                                        
+                                        <com:TRequiredFieldValidator 
+                                          ControlToValidate="jnsPas"											 
+                                          ErrorMessage="*"
+                                          Display="Dynamic"
+                                          ValidationGroup="valCari" 
+                                          FocusOnError="true" 
+                                          CssClass="valRequired"
+                                          ControlCssClass="valctrl"/>
+                                    </td>
+							    </tr>
+							  <tr>							  
+								<td width="30%"><span>&#8226;</span>&nbsp;&nbsp;No. Rekam Medis</td>
+								<td width="5%">:</td>
+								<td width="65%"><com:TTextBox ID="cariCM" 
+										MaxLength="7"										
+										Width="100px"
+										AutoPostBack="true"
+										OnTextChanged="cariClicked"
+                                        CausesValidation="true"
+                                        ValidationGroup="valCari">
+                                         
+                                        </com:TTextBox>
+							  	</td>							   			
+							  </tr>							  						 
+							  <tr>							  
+								<td><span>&#8226;</span>&nbsp;&nbsp;Nama Pasien</td>
+								<td>:</td>
+								<td><com:TTextBox ID="cariNama" 
+										MaxLength="30" 
+										Width="180px" 		
+										AutoPostBack="true"
+										OnTextChanged="cariClicked"
+										CausesValidation="true"
+                                        ValidationGroup="valCari">
+                                        
+                                        </com:TTextBox>
+                                        &nbsp;
+                                        <com:TCheckBox 
+                                        	ID="Advance" 
+                                            Text="Elemen Kata" 
+                                            Value="1"
+                                            OnCheckedChanged="cariClicked" 
+                                            CausesValidation="true"
+                                        ValidationGroup="valCari">
+                                        
+                                        </com:TCheckBox></td>
+							  </tr>
+							  <tr>
+							    <td><span>&#8226;</span>&nbsp;&nbsp;Alamat</td>
+							    <td>:</td>
+							    <td><com:TTextBox ID="cariAlamat" 
+										MaxLength="50"										
+										Width="180px" 
+										AutoPostBack="true"
+										OnTextChanged="cariClicked"
+                                        CausesValidation="true"
+                                        ValidationGroup="valCari">
+                                        
+                                        </com:TTextBox>
+                                        </td>
+							    </tr>
+                                <tr>
+							    <td><span>&#8226;</span>&nbsp;&nbsp;Kabupaten / Kota</td>
+							    <td>:</td>
+							    <td><com:TDropDownList 
+                                	ID="DDKab"
+                                    Width="180px"
+									PromptText ="--Silakan Pilih--"
+								    PromptValue =""
+ 		  						    AutoPostBack="true"
+									DataTextField="nama"
+									DataValueField="id"									
+									OnSelectedIndexChanged="cariClicked"
+                                    CausesValidation="true"
+                                    ValidationGroup="valCari">
+                                    
+                                        </com:TDropDownList>    
+                                        </td>
+							    </tr>
+								<tr>
+                                    <td><span>&#8226;</span>&nbsp;&nbsp;No. Telepon</td>
+                                    <td>:</td>
+                                    <td><com:TTextBox ID="cariTlp" 
+                                            MaxLength="50"										
+                                            Width="180px" 
+                                            AutoPostBack="true"
+                                            OnTextChanged="cariClicked" 
+                                            CausesValidation="true"
+                                        ValidationGroup="valCari">
+                                        
+                                        </com:TTextBox>
+                                        </td>
+							    </tr>
+                                <tr>
+                                    <td><span>&#8226;</span>&nbsp;&nbsp;No. HP</td>
+                                    <td>:</td>
+                                    <td><com:TTextBox ID="cariHp" 
+                                            MaxLength="50"										
+                                            Width="180px" 
+                                            AutoPostBack="true"
+                                            OnTextChanged="cariClicked" 
+                                            CausesValidation="true"
+                                        	ValidationGroup="valCari">
+                                            
+                                        </com:TTextBox>
+                                            </td>
+							    </tr>
+                                <tr>
+                                    <td><span>&#8226;</span>&nbsp;&nbsp;Nama Penanggung Jawab</td>
+                                    <td>:</td>
+                                    <td><com:TTextBox ID="cariPj" 
+                                            MaxLength="50"										
+                                            Width="180px" 
+                                            AutoPostBack="true"
+                                            OnTextChanged="cariClicked" 
+                                            CausesValidation="true"
+                                       	 	ValidationGroup="valCari">
+                                            
+                                        </com:TTextBox>
+                                            </td>
+							    </tr>
+							  <tr>
+							    <td><span>&#8226;</span>&nbsp;&nbsp;Penjamin</td>
+							    <td>:</td>
+							    <td><com:TDropDownList ID="DDUrut"
+                                	Width="180px"
+									PromptText ="--Silakan Pilih--"
+								    PromptValue =""
+ 		  						    AutoPostBack="true"
+									DataTextField="nama"
+									DataValueField="id"									
+									OnSelectedIndexChanged="cariClicked"
+                                    CausesValidation="true"
+                                        ValidationGroup="valCari">
+                                    
+                                        </com:TDropDownList>    
+                                        </td>
+							    </tr>
+							  <tr>
+							    <td>&nbsp;</td>
+							    <td>&nbsp;</td>
+							    <td>                                        
+                                	<com:TButton 
+                                    	ID="cariBtn"
+                                        Text="Cari" 
+                                        OnClick="cariClicked" 
+                                        CssClass="button_01" 
+                                        CausesValidation="true"
+                                        ValidationGroup="valCari">
+                                         
+                                     </com:TButton>
+                                     
+                                       <a href="<%= $this->Service->constructUrl('Pendaftaran.DataPasDetail',
+                                        			array('cm'=>'000000','tipeRawat'=>'1'))%>" 
+                                      class="lightwindow page-options" 
+                                      title="History Pasien "
+                                      params="lightwindow_width=900,lightwindow_height=550,lightwindow_type=external" >
+                                      <strong>000000</strong></a>
+                                </td>
+							    </tr>
+							</table>
+							</com:TPanel>
+						</td>
+			  		</tr>
+				</table>
+			</td>
+              </tr>
+	      <tr height="15px">
+	      <td></td>
+	      </tr>
+	      <tr height="15px">
+	      	<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Jumlah Data Hasil Pencarian : <com:TLabel ID="jmlData"/> pasien </td>
+	      </tr>
+              <tr>
+                <td align="center">
+                	<com:TPanel ID="gridPanel" >
+						<com:XActiveDataGrid ID="dtgSomeData"
+								DataKeyField="cm"
+								AutoGenerateColumns="false"	
+								AllowPaging="true"
+								AllowCustomPaging="true"
+								AllowSorting="true"
+								Width="680px"					
+								PageSize="15"
+								PagerStyle.Mode="Numeric"			
+								PagerStyle.Font.Name="Arial"
+								PagerStyle.Font.Size="12"
+								PagerStyle.HorizontalAlign="Right"			
+								GridLines="None"
+								CellSpacing="1"
+								CellPadding="2"
+								BackColor="#000000"
+								HeaderStyle.CssClass="headerstyle"
+								ItemStyle.CssClass="itemstyle"
+								AlternatingItemStyle.CssClass="itemstyle2"
+								OnItemCreated="itemCreated"
+								OnDeleteCommand="deleteButtonClicked"
+								OnPageIndexChanged="dtgSomeData_PageIndexChanged"
+								OnSortCommand="dtgSomeData_SortCommand"								
+                                EmptyTemplate="<div class='info'>Tidak ada data !.</div>">
+								
+                            <com:XActiveTemplateColumn 
+                            	ID="cmColumn"
+                                SortExpression="cm" 
+                                ItemStyle.Width="80px"
+                                ItemStyle.HorizontalAlign="Center" >
+                                <prop:HeaderTemplate>ID Pasien</prop:HeaderTemplate>
+                                <prop:ItemTemplate>
+                                   
+                                   <com:TActiveLabel ID="lightConstructor"/>   
+                                   
+                                   <com:TActiveLinkButton 
+                                    ID="orderBtn" 
+                                    Text="Order" 
+                                    CssClass="menu_btn"
+                                    OnCommand="Page.orderClicked" 
+                                    CommandParameter="<%#$this->Data['id_meja']%>"
+                                    CausesValidation="false"
+                                    Visible="false">
+                                    <prop:ClientSide
+                                        OnLoading="Element.show('loading'); Element.hide('messages');"
+                                        OnComplete="Element.hide('loading'); Element.show('messages');"/>
+                                  </com:TActiveLinkButton>
+                                  
+                                  <script type="text/javascript">
+									if (!$("<%# $this->Parent->Data['cm'] %>").onclick) {myLightWindow.createWindow("<%# $this->Parent->Data['cm'] %>"); exampleCreated = true;}
+								  </script>
+            
+                                   <a href="<%= $this->Service->constructUrl('Pendaftaran.DataPasDetail',
+                                        			array('cm'=>$this->Parent->Data['cm'],'tipeRawat'=>$this->Parent->Data['tipe_rawat']))%>" 
+                                      class="lightwindow page-options" 
+                                      title="History Pasien <%# $this->Parent->Data['cm'] %>" 
+                                      id="<%# $this->Parent->Data['cm'] %>"
+                                      params="lightwindow_width=900,lightwindow_height=550,lightwindow_type=external" >
+                                      <strong><%# $this->Parent->Data['cm'] %></strong></a>
+                                   
+                                </prop:ItemTemplate>
+                            </com:XActiveTemplateColumn>
+                                 
+                                 
+                                    
+                            <com:XActiveHyperLinkColumn   
+                                SortExpression="cm"     
+                                HeaderText="ID Pasien"									
+                                DataTextField="cm"
+                                ItemStyle.HorizontalAlign="Center"
+                                ItemStyle.Width="55px"		
+                                DataNavigateUrlField="cm" 
+                                Visible="False">
+                                <prop:DataNavigateUrlFormatString>#
+                                  $this->Service->constructUrl('Pendaftaran.DaftarEdit',array('cm'=>{0},'mode'=>'08'))
+                                </prop:DataNavigateUrlFormatString>
+                            </com:XActiveHyperLinkColumn>	 
+                            
+                            <com:XActiveBoundColumn
+                                SortExpression="nama"
+                                HeaderText="Nama"
+                                ItemStyle.HorizontalAlign="Center"
+                                ItemStyle.Width="120px"
+                                DataField="nama" />
+                            
+                            <com:XActiveTemplateColumn HeaderText="Jenis Kelamin" SortExpression="jkel" ItemStyle.HorizontalAlign="Center" >									
+                                <prop:ItemTemplate>									
+                                <%= $this->Parent->Data['jkel']==='0'? 'Laki-laki':'Perempuan' %>					
+                                </prop:ItemTemplate>
+                            </com:XActiveTemplateColumn>
+                            
+                            <com:XActiveBoundColumn
+                                SortExpression="alamat"
+                                HeaderText="Alamat"
+                                ItemStyle.HorizontalAlign="Center"									
+                                ItemStyle.Width="150px"
+                                DataField="alamat" />
+                            
+                            <com:XActiveTemplateColumn
+                            	ID="telpColumn" 
+                                SortExpression="telp"
+                                HeaderText="Telpon / HP"
+                                ItemStyle.HorizontalAlign="Center"									
+                                ItemStyle.Width="150px"/>							           
+                            
+                            <com:XActiveTemplateColumn
+                            	ID="jaminanColumn"
+                            	HeaderText="Penjamin" 
+                                SortExpression="nm_penjamin" 
+                                ItemStyle.HorizontalAlign="Center" />
+                            
+                            <com:XActiveTemplateColumn
+                                ID="kabColumn"
+                                SortExpression="kabupaten"
+                                HeaderText="Kabupaten/Kota"
+                                ItemStyle.HorizontalAlign="Center"									
+                                ItemStyle.Width="100px"/>	
+                            
+                            <com:XActiveButtonColumn												
+                                HeaderText="Mode"
+                                Text="Delete"
+                                ID="Hapus"
+                                ItemStyle.HorizontalAlign="Center"
+                                ButtonType="PushButton"									
+                                CommandName="delete" />	
+                            </com:XActiveDataGrid>
+			  		</com:TPanel>
+                </td>
+              </tr>
+              <tr>
+                <td><hr align="center" width="96%" size="2" noshade color="#CECECE"/></td>
+              </tr>
+              <tr>
+                <td><table width="10" border="0" align="center" cellpadding="0" cellspacing="2">
+                    <tr>
+                      <td>
+                      <!---
+					  <com:TControl Visible="<%= $this->User->IsAdmin %>">
+					  	<com:TButton Text="Baru" OnClick="baruClicked" CssClass="button_01"  />
+					  </com:TControl> --->
+					  </td>                      
+                      <td><com:TButton Text="Keluar" OnClick="keluarClicked" CausesValidation="false" CssClass="button_01"  /></td>
+                    </tr>
+                </table></td>
+              </tr>
+          </table></td>
+          <td background="<%=$this->Page->Theme->BaseUrl.'/images/rndBkgRgt.png'%>"><table width="15" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+          </table></td>
+        </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="10" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndBtmLft.png'%>" width="15" height="15" /></td>
+          <td background="<%=$this->Page->Theme->BaseUrl.'/images/rndBkgBtm.png'%>"><table width="720" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+          </table></td>
+          <td><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndBtmRgt.png'%>" width="15" height="15" /></td>
+        </tr>
+    </table></td>
+  </tr>
+</table></td>
+            <td><table width="15" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+            </table></td>
+          </tr>
+        </table></td>
+      </tr>
+      <tr>
+        <td><table width="100%"  border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="1%"><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndAppBtmLft.png'%>" width="15" height="15" /></td>
+            <td width="99%" background="<%=$this->Page->Theme->BaseUrl.'/images/bkg3.png'%>">&nbsp;</td>
+            <td width="1%"><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndAppBtmRgt.png'%>" width="15" height="15" /></td>
+          </tr>
+        </table></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+</com:TContent>

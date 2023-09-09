@@ -1,0 +1,328 @@
+<%@ MasterClass="Application.layouts.AssetLayout" %>
+<com:TContent ID="Main">
+<tr>
+<table width="100%"  border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td height="40"><table width="10" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td><table width="10" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+          </table></td>
+          <td><table width="200" border="0" cellspacing="2" cellpadding="0">
+              <tr>
+                <td class="text_01">Data Master Aset </td>
+              </tr>
+          </table></td>
+          <td>&nbsp;</td>
+        </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="100%"  border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td width="1%"><table width="10" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+          </table></td>
+          <td width="99%" height="350" valign="top" class="table_03"><table width="100%"  border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td width="1%"><table width="18" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                      <td>&nbsp;</td>
+                    </tr>
+                </table></td>
+                <td width="99%"><table width="100%"  border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                      <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                      <td class="text_02">Data Aset Medis</td>
+                    </tr>
+                    <tr>
+                      <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                      <td>
+                      	<com:TPanel DefaultButton="simpanBtn">
+                        <table width="100%"  border="0" cellspacing="2" cellpadding="0">
+                          <tr>
+                            <td valign="top">&#8226; Jenis </td>
+                            <td valign="top">:</td>
+                            <td valign="top">
+                            	<com:TRadioButtonList
+                                      ID="modeJenis" 
+                                      RepeatDirection="Horizontal" 
+                                      AutoPostBack="true" 
+                                      CausesValidation="false" 
+                                      OnSelectedIndexChanged="modeJenisChanged">
+                                    <com:TListItem Text="Habis Pakai" Value="1" />
+                                    <com:TListItem Text="Tidak Habis Pakai" Value="2" />
+                                </com:TRadioButtonList>	
+                                <com:TRequiredFieldValidator 
+										ControlToValidate="modeJenis"											 
+										ErrorMessage="Anda harus memilih jenis barang"
+										Display="Dynamic" 
+										ValidationGroup="val"/>                            </td>
+                          </tr>
+                          
+                          <com:TControl ID="hbsPakaiCtrl" Visible="false">
+                          <tr>
+                            <td valign="top">&#8226; Sub Jenis Habis Pakai</td>
+                            <td valign="top">:</td>
+                            <td valign="top">
+                            	<com:TDropDownList 
+										ID="DDsubHabisPakai"
+										PromptText ="--Silakan Pilih--"
+										PromptValue =""											
+										DataTextField="nama"
+										DataValueField="id" 	
+										ToolTip="Pilih sub jenis barang habis pakai" 
+										Width="300px" />
+									<br/>
+									<com:TRequiredFieldValidator
+										Display="Dynamic"
+										ControlToValidate="DDsubHabisPakai"
+										Text="Sub jenis barang habis pakai belum dipilih" 
+										InitialValue="--Silakan Pilih--" 
+										ValidationGroup="val"
+									/>                            </td>
+                          </tr>
+                          </com:TControl>
+                          <com:TControl ID="TdkHbsPakaiCtrl" Visible="false">
+                          <tr>
+                            <td valign="top">&#8226; Sub Jenis Tidak Habis Pakai</td>
+                            <td valign="top">:</td>
+                            <td valign="top">
+                            	<com:TRadioButtonList
+                                      ID="modeTdkHabisPakai" 
+                                      RepeatDirection="Horizontal" 
+                                      AutoPostBack="true" 
+                                      CausesValidation="false" 
+                                      OnSelectedIndexChanged="modeTdkHabisPakaiChanged">
+                                    <com:TListItem Text="Bergerak" Value="1" />
+                                    <com:TListItem Text="Tidak Bergerak" Value="2" />
+                                </com:TRadioButtonList>	
+                                <com:TRequiredFieldValidator 
+										ControlToValidate="modeTdkHabisPakai"											 
+										ErrorMessage="Pilih sub jenis barang tidak habis pakai"
+										Display="Dynamic" 
+										ValidationGroup="val"/>                            </td>
+                          </tr>
+                          </com:TControl>
+                          <com:TControl ID="bergerakCtrl" Visible="false">
+                          <tr>
+                            <td valign="top">&#8226; Sub Jenis Bergerak</td>
+                            <td valign="top">:</td>
+                            <td valign="top">
+                            	<com:TDropDownList 
+										ID="DDsubBergerak"
+										PromptText ="--Silakan Pilih--"
+										PromptValue =""											
+										DataTextField="nama"
+										DataValueField="id" 	
+										ToolTip="Pilih sub jenis barang bergerak" 
+										Width="300px" />
+                                <br/>
+                                <com:TRequiredFieldValidator
+										Display="Dynamic"
+										ControlToValidate="DDsubBergerak"
+										Text="Sub jenis barang bergerak belum dipilih" 
+										InitialValue="--Silakan Pilih--" 
+										ValidationGroup="val"
+									/>                            </td>
+                          </tr>
+                          </com:TControl>
+                           <com:TControl ID="tdkBergerakCtrl" Visible="false">
+                          <tr>
+                            <td valign="top">&#8226; Sub Jenis Tidak Bergerak</td>
+                            <td valign="top">:</td>
+                            <td valign="top">
+                            	<com:TRadioButtonList
+                                      ID="modeTdkBergerak" 
+                                      RepeatDirection="Horizontal" 
+                                      AutoPostBack="true" 
+                                      CausesValidation="false" 
+                                      OnSelectedIndexChanged="modeTdkBergerakChanged">
+                                    <com:TListItem Text="Medis" Value="1" />
+                                    <com:TListItem Text="Non Medis" Value="2" />
+                                </com:TRadioButtonList>	
+                                <com:TRequiredFieldValidator 
+										ControlToValidate="modeTdkBergerak"											 
+										ErrorMessage="Pilih sub jenis barang tidak bergerak"
+										Display="Dynamic" 
+										ValidationGroup="val"/>                            </td>
+                          </tr>
+                          </com:TControl>
+                           <com:TControl ID="nonMedisCtrl" Visible="false">
+                          <tr>
+                            <td valign="top">&#8226; Sub Jenis Non Medis</td>
+                            <td valign="top">:</td>
+                            <td valign="top">
+                            	<com:TRadioButtonList
+                                      ID="modeNonMedis" 
+                                      RepeatDirection="Horizontal" >
+                                    <com:TListItem Text="Elektrikal" Value="1" />
+                                    <com:TListItem Text="Non Elektrikal" Value="2" />
+                                </com:TRadioButtonList>	
+                                <com:TRequiredFieldValidator 
+										ControlToValidate="modeNonMedis"											 
+										ErrorMessage="Pilih sub jenis barang non medis"
+										Display="Dynamic" 
+										ValidationGroup="val"/>                            </td>
+                          </tr>
+                          </com:TControl>
+                          <tr>
+                            <td width="240" valign="top">&#8226; Nama Barang </td>
+								<td width="18" valign="top">:</td>
+								<td width="664" valign="top">
+									<com:TTextBox 
+										ID="nmBarang"
+										CssClass="inputtex" 
+										Width="200px" 
+										MaxLength="50" 
+										ToolTip="Nama vendor"
+										ValidationGroup="val" />
+								  	<br/>
+									<com:TRequiredFieldValidator 
+										ControlToValidate="nmBarang"											 
+										ErrorMessage="Anda harus mengisi nama barang"
+										Display="Dynamic" 
+										ValidationGroup="val"/>								</td>
+							  </tr>
+							  <tr valign="top">
+                                <td valign="top">&#8226; Produsen / Vendor </td>
+							    <td valign="top">:</td>
+							    <td valign="top"><com:TDropDownList 
+										ID="DDVen"
+										PromptText ="--Silakan Pilih--"
+										PromptValue =""											
+										DataTextField="nama"
+										DataValueField="id" 	
+										ToolTip="Pilih produsen/vendor barang" 
+										Width="300px" />
+                                    <br/>
+                                    <com:TRequiredFieldValidator
+										Display="Dynamic"
+										ControlToValidate="DDVen"
+										Text="Produsen/vendor barang belum dipilih" 
+										InitialValue="--Silakan Pilih--" 
+										ValidationGroup="val"
+									/>                                </td>
+							    </tr>
+								<tr valign="top">
+                                <td valign="top">&#8226; Distributor </td>
+							    <td valign="top">:</td>
+							    <td valign="top"><com:TDropDownList 
+										ID="DDDist"
+										PromptText ="--Silakan Pilih--"
+										PromptValue =""											
+										DataTextField="nama"
+										DataValueField="id" 	
+										ToolTip="Pilih distributor barang" 
+										Width="300px" />
+                                    <br/>
+                                    <com:TRequiredFieldValidator
+										Display="Dynamic"
+										ControlToValidate="DDDist"
+										Text="Distributor barang belum dipilih" 
+										InitialValue="--Silakan Pilih--" 
+										ValidationGroup="val"
+									/>                                </td>
+							    </tr>
+							    <tr valign="top">
+							      <td valign="top">&#8226; Penyusutan </td>
+							      <td valign="top">:</td>
+							      <td valign="top">
+                                  	<com:TTextBox                                    	 
+										  ID="penyusutan"											  
+                                          CssClass="input_text"
+										  ToolTip="Nilai penyusutan barang" 
+										  Width="25px"
+                                          MaxLength="2" />
+									%
+                                    <com:TRegularExpressionValidator
+										ControlToValidate="penyusutan"
+										RegularExpression="[\d]{1,}"
+										ErrorMessage="Nilai yang dimasukan tidak sesuai"
+										ValidationGroup="val"
+									/>
+                                    
+                                  </td>
+						        </tr>
+							    <tr valign="top">
+							      <td valign="top">&#8226; Foto </td>
+							      <td valign="top">:</td>
+							      <td valign="top">
+                                    <com:TPanel ID="fotoCtrl">
+                                    <com:TImage ID="fotoBrg" Width="300px" CssClass="frameFoto"/>
+						  			<br/>
+                                    </com:TPanel>
+								  	<com:TFileUpload ID="aplod"  />
+									<com:TLabel ID="Result" ForeColor="#FF0000" />
+                                  </td>
+						        </tr>
+							    <tr valign="top">
+								<td valign="top">&#8226; Keterangan</td>
+								<td valign="top">:</td>
+								<td valign="top">
+								  <com:TTextBox 
+										ID="ket" 
+										Width="200px" 
+										MaxLength="200"
+										TextMode="MultiLine" />
+                                 </td>
+                          </tr>
+                      	</table>
+                        </com:TPanel>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                      <td><table width="95%"  border="0" cellspacing="0" cellpadding="0">
+                          <tr>
+                            <td class="table_05"></td>
+                          </tr>
+                      </table></td>
+                    </tr>
+                    <tr>
+                      <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                      <td><table width="100" border="0" align="center" cellpadding="0" cellspacing="4" class="table_04">
+                          <tr>
+                            <td><table width="10" border="0" cellspacing="2" cellpadding="0">
+                                <tr>
+                                   <td>
+                                   		<com:TButton 
+                                        	ID="simpanBtn" 
+                                            Text="Simpan" 
+                                            OnClick="simpanClicked" 
+                                            CssClass="button_01" 
+                                            ValidationGroup="val"/>
+                                   </td>
+								  <td><com:TButton Text="Batal" OnClick="batalClicked" buttonType="Reset" CssClass="button_01"  /></td>
+								  <td><com:TButton Text="Keluar" OnClick="keluarClicked" CausesValidation="false" CssClass="button_01"  /></td>
+                                </tr>
+                            </table></td>
+                          </tr>
+                      </table></td>
+                    </tr>
+                    <tr>
+                      <td>&nbsp;</td>
+                    </tr>
+                </table></td>
+              </tr>
+          </table></td>
+        </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td height="10"></td>
+  </tr>
+</table>
+</com:TContent>

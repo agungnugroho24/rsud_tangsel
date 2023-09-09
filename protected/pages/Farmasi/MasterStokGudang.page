@@ -1,0 +1,544 @@
+<%@ MasterClass="Application.layouts.MainLayout" %>
+<com:TContent ID="jdMain">
+	Info Stok Obat dan Alkes	
+    
+    <a href="<%= $this->Service->constructUrl('Simak') %>" onclick="maskContent()">
+    <span class="close-btn">
+        <span class="ui-icon ui-icon-circle-close"></span>
+    </span>
+    </a>
+    
+</com:TContent>	
+
+<com:TContent ID="Main"> 
+
+	
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>			  
+                <td>
+				<com:TLabel ID="showSql" />
+				<table width="100%" align="center" border="0">
+			  		<tr>
+						<td align="center"><com:TPanel GroupingText="Laporan Persediaan" DefaultButton="cariBtn" >
+							<table width="100%"  border="0" align="left">
+							  <tr>
+                                <td><span>&#8226;</span>&nbsp;&nbsp;Tujuan</td>
+                                <td>:</td>
+                                <td width="1064">
+                                <com:TDropDownList 
+										ID="DDTujuan"
+										PromptText ="--Silakan Pilih--"
+										PromptValue =""																					
+										DataTextField="nama"
+										DataValueField="id" 	
+										ToolTip="Pilih tujuan" 
+										TabIndex="2" 
+										Width="150px" 
+										AutoPostBack="true" 
+										CausesValidation="false" 
+										OnSelectedIndexChanged="DDTujuanChanged"
+										/>                                </td>
+						      </tr>
+							  <tr>
+							    <td><span>&#8226;</span>&nbsp;&nbsp;Jenis Barang </td>
+							    <td>:</td>
+							    <td><com:TDropDownList 
+										ID="DDJenisBrg"
+										PromptText ="--Silakan Pilih--"
+										PromptValue =""											
+										DataTextField="nama"
+										DataValueField="id" 	
+										ToolTip="Pilih Jenis Barang!" 
+										TabIndex="13" 							
+										Width="200px" 
+										AutoPostBack="true" 
+										CausesValidation="false" 
+										OnSelectedIndexChanged="DDJenisBrgChanged" /></td>
+							    </tr>
+							  <tr>
+							    <td><span>&#8226;</span>&nbsp;&nbsp;Tipe</td>
+							    <td>:</td>
+							    <td><com:TRadioButtonList ID="RBtipeObat" 
+										OnSelectedIndexChanged="chTipe" 
+										AutoPostBack="true"  
+										RepeatDirection="Horizontal">				
+											<com:TListItem Value="0" Text="Generik" />
+											<com:TListItem Value="1" Text="Non Generik" />
+									</com:TRadioButtonList></td>
+							    </tr>
+							  <tr>
+								<td width="127"><span>&#8226;</span>&nbsp;&nbsp;Kode Barang </td>
+								<td width="10">:</td>
+								<td ><com:TTextBox ID="ID" 
+										MaxLength="7"										
+										Width="100px" 
+										ToolTip="Cari berdasarkan ID Obat !!" 
+										TabIndex="1"/></td>
+							  </tr>
+							  <tr>
+                                <td><span>&#8226;</span>&nbsp;&nbsp;Nama Barang </td>
+                                <td>:</td>
+                                <td>
+                                  <com:TTextBox ID="cariNama" 
+										MaxLength="30" 
+										Width="180px" 										
+										ToolTip="Cari berdasarkan Nama Obat!!" 
+										TabIndex="2"
+									/>
+&nbsp;
+    <com:TCheckBox 
+										ID="Advance" 
+										Text="Elemen Kata" 
+										Value="1" 
+									/>                                </td>
+							    </tr>
+							  <tr>
+                                <td><span>&#8226;</span>&nbsp;&nbsp;Golongan</td>
+                                <td>:</td>
+                                <td>
+                                  <com:TDropDownList 
+										ID="DDGol"
+										PromptText ="--Silakan Pilih--"
+										PromptValue =""											
+										DataTextField="nama"
+										DataValueField="id" 	
+										ToolTip="Pilih Obat" 
+										TabIndex="2" 
+										Width="300px"
+										AutoPostBack="true" 
+										CausesValidation="false"
+										OnSelectedIndexChanged="selectionChangedGol"/>                                </td>
+							    </tr>
+							  <tr>
+                                <td><span>&#8226;</span>&nbsp;&nbsp;Klasifikasi</td>
+                                <td>:</td>
+                                <td>
+                                  <com:TDropDownList 
+										ID="DDKlas"
+										PromptText ="--Silakan Pilih--"
+										PromptValue =""											
+										DataTextField="jenis"
+										DataValueField="id" 	
+										ToolTip="Pilih Klasifikasi Obat" 
+										TabIndex="2" 
+										Enabled="false" 
+										Width="300px" 
+										AutoPostBack="true" 
+										CausesValidation="false"
+										OnSelectedIndexChanged="selectionChangedKlas"/>                                </td>
+							    </tr>
+							  <tr>
+                                <td><span>&#8226;</span>&nbsp;&nbsp;Derivat</td>
+                                <td>:</td>
+                                <td>
+                                  <com:TDropDownList 
+										ID="DDDerivat"
+										PromptText ="--Silakan Pilih--"
+										PromptValue =""											
+										DataTextField="nama"
+										DataValueField="id" 	
+										ToolTip="Pilih Derivat Obat" 
+										TabIndex="2" 
+										Enabled="false"
+										AutoPostBack="true" 
+										CausesValidation="false"
+										Width="300px"/>                                </td>
+							    </tr>
+							  <tr>
+                                <td><span>&#8226;</span>&nbsp;&nbsp;PBF</td>
+                                <td>:</td>
+                                <td>
+                                  <com:TDropDownList 
+										ID="DDPbf"
+										PromptText ="--Silakan Pilih--"
+										PromptValue =""											
+										DataTextField="nama"
+										DataValueField="id" 	
+										ToolTip="Pilih PBF" 
+										TabIndex="2" 
+										Width="300px" 
+										AutoPostBack="true"										 
+										OnSelectedIndexChanged="DDPbfChanged"/>                                </td>
+							    </tr>
+							  <tr>
+                                <td><span>&#8226;</span>&nbsp;&nbsp;Produsen</td>
+                                <td>:</td>
+                                <td>
+                                  <com:TDropDownList 
+										ID="DDProd"
+										PromptText ="--Silakan Pilih--"
+										PromptValue =""											
+										DataTextField="nama"
+										DataValueField="id" 	
+										ToolTip="Pilih Produsen Obat" 
+										TabIndex="2" 
+										Width="300px"/>                                </td>
+							    </tr>
+							  <tr>
+                                <td><span>&#8226;</span>&nbsp;&nbsp;Satuan</td>
+                                <td>:</td>
+                                <td>
+                                  <com:TDropDownList 
+										ID="DDSat"
+										PromptText ="--Silakan Pilih--"
+										PromptValue =""											
+										DataTextField="nama"
+										DataValueField="kode" 	
+										ToolTip="Pilih Satuan Obat" 
+										TabIndex="2" 
+										Width="300px"/>                                </td>
+							    </tr>
+                  <!--
+							  <tr>
+                                <td><span>&#8226;</span>&nbsp;&nbsp;Sumber Master </td>
+                                <td>:</td>
+                                <td>
+                                  <com:TDropDownList 
+										ID="DDSumMaster"																			
+										DataTextField="nama"
+										DataValueField="id" 	
+										ToolTip="Pilih Obat" 
+										TabIndex="2" 
+										Width="150px"
+										AutoPostBack="true" 
+										CausesValidation="false"
+										OnSelectedIndexChanged="DDSumMasterChanged"/>                                </td>
+							    </tr>
+							  <tr>
+                                <td><span>&#8226;</span>&nbsp;&nbsp;Sumber Sekunder </td>
+                                <td>:</td>
+                                <td>
+                                  <com:TDropDownList 
+										ID="DDSumSekunder"
+										PromptText ="--Silakan Pilih--"
+										PromptValue =""											
+										DataTextField="nama"
+										DataValueField="id" 	
+										ToolTip="Pilih Obat" 
+										TabIndex="2" 
+										Width="150px" 
+										Enabled="false"
+										AutoPostBack="true" 
+										CausesValidation="false"
+										OnSelectedIndexChanged="DDSumSekunderChanged"/>                                </td>
+							    </tr>
+                  -->
+							  <tr>
+							    <td>&nbsp;</td>
+							    <td>&nbsp;</td>
+							    <td>
+									<com:TButton ID="cariBtn" Text="Cari" OnClick="cariClicked" CssClass="button_01" TabIndex="6" />	
+                                    <com:TButton ID="cetakBtn" Enabled="false" Text="cetak" OnClick="cetakClicked" CssClass="button_01" TabIndex="6" />	
+                                    <br/>
+                                    <com:TCheckBox 
+										ID="semuaStok" 
+										Text="Tampilan jumlah di semua sumber stok" 
+                                        Style="font-size:10px;"
+									/>
+                                    							</td>
+							    </tr>
+							</table>
+							</com:TPanel>
+						</td>
+			  		</tr>
+				</table>
+			</td>
+              </tr>
+			  <tr >
+			  	<td>
+					&nbsp;&nbsp; Jumlah Data : <com:TLabel ID="jmlData" />
+                    <com:TCheckBox 
+                        ID="groupingIdharga" 
+                        Text="Grouping berdasarkan ID Harga & Expired (Edit Mode)"
+                        AutoPostBack="true"
+                        CausesValidation="false"
+                        OnCheckedChanged="bindGrid"
+                        Visible="<%= $this->User->IsAdmin %>"
+                        Style="float:right;"/>
+			  	</td>
+			  </tr>
+              <tr>
+                <td><table width="100%"  border="0" align="center" cellpadding="0" cellspacing="1">                      
+                      <tr>
+                        <td align="center">
+						<com:TDataGrid ID="dtgSomeData"
+								DataKeyField="id_harga"
+								AutoGenerateColumns="false"	
+								AllowPaging="true"
+								AllowCustomPaging="true"
+								AllowSorting="true"
+								Width="100%"					
+								PageSize="20"
+								PagerStyle.Mode="Numeric"			
+								PagerStyle.Font.Name="Arial"
+								PagerStyle.Font.Size="12"
+								PagerStyle.HorizontalAlign="Right"			
+								GridLines="None"
+								CellSpacing="1"
+								CellPadding="2"
+								HeaderStyle.CssClass="headerstyle"
+								ItemStyle.CssClass="itemstyle"
+								AlternatingItemStyle.CssClass="itemstyle2"
+								OnItemCreated="itemCreated"
+								OnEditCommand="editItem"
+								OnUpdateCommand="saveItem"
+								OnCancelCommand="cancelItem"
+								OnPageIndexChanged="dtgSomeData_PageIndexChanged"
+								OnSortCommand="dtgSomeData_SortCommand"	>								
+							</div>	
+								
+								<com:TTemplateColumn HeaderText="ID Obat" 
+													 SortExpression="kode"
+													 ID="kode" 													 
+													 ItemStyle.Width="60px" 
+													 ItemStyle.HorizontalAlign="Center" >									
+									<prop:ItemTemplate>
+										<%=	$this->Parent->DataItem['kode'] %>
+									</prop:ItemTemplate>
+								</com:TTemplateColumn> 
+								
+								<com:TTemplateColumn HeaderText="Nama Obat" 
+													 SortExpression="nama"
+													 ID="nama" 													 
+													 ItemStyle.Width="200px" 
+													 ItemStyle.HorizontalAlign="Center" >									
+									<prop:ItemTemplate>
+										<%=	$this->Parent->DataItem['nama'] %>
+									</prop:ItemTemplate>
+								</com:TTemplateColumn>		
+																							
+								<com:TTemplateColumn HeaderText="Satuan" 
+													 SortExpression="sat"
+													 ID="sat" 													 
+													 ItemStyle.Width="150px" 
+													 ItemStyle.HorizontalAlign="Center" >									
+									<prop:ItemTemplate>
+										<%#	SatuanObatRecord::finder()->findByPk($this->Parent->DataItem['sat'])->nama %>
+									</prop:ItemTemplate>
+								</com:TTemplateColumn>			
+								
+                <com:TTemplateColumn 
+									ID="hargaNett"
+									SortExpression="hrg_netto"
+									HeaderText="Harga Nett"
+									ItemStyle.Width="100px"
+                  ItemStyle.HorizontalAlign="Right">
+                  <prop:ItemTemplate>
+										<com:TActiveLabel ID="hargaNettTxt"/>
+									</prop:ItemTemplate>
+                  </com:TTemplateColumn>
+                                
+                                <com:TBoundColumn 
+									ID="harga"
+									SortExpression="hrg"
+									HeaderText="Harga PPn"
+									ItemStyle.Width="100px"
+									DataField="hrg"
+                                    DataFormatString="%000.02f"
+                                    ItemStyle.HorizontalAlign="Right" />
+                                
+                                <com:TTemplateColumn 
+									ID="hargaJualUmum"
+									HeaderText="Hrg.Jual (Umum)" 
+                                    ItemStyle.HorizontalAlign="Right"/>        
+								
+                                <com:TTemplateColumn 
+									ID="hargaJualAsuransi"
+									HeaderText="Hrg.Jual (Asuransi)" 
+                                    ItemStyle.HorizontalAlign="Right"/>      
+                                
+                                <com:TTemplateColumn 
+									ID="hargaJualJamper"
+									HeaderText="Hrg.Jual (Jamper)" 
+                                    ItemStyle.HorizontalAlign="Right"/>
+                                    
+                                <com:TTemplateColumn HeaderText="Jumlah Global" 
+													 SortExpression="jml_stok_total"
+													 ID="jml" 													 
+													 ItemStyle.Width="100px" 
+													 ItemStyle.HorizontalAlign="Center" >									
+									<prop:ItemTemplate>
+										<%=	$this->Parent->DataItem['jml_stok_total'] %>
+									</prop:ItemTemplate>
+								</com:TTemplateColumn>	
+								
+                                <com:TBoundColumn 
+                                	ID="gudang"
+									SortExpression="stok_gudang"
+									HeaderText="Gudang Farmasi"
+									ItemStyle.Width="50px"
+									DataField="stok_gudang"
+                                    ItemStyle.HorizontalAlign="Center" />
+
+				 <com:TBoundColumn  
+                                	ID="apotik"
+									SortExpression="stok_apotik"
+									HeaderText="Apotik"
+									ItemStyle.Width="50px"
+									DataField="stok_apotik"
+                                    ItemStyle.HorizontalAlign="Center" />
+
+  
+                                
+                               <com:TBoundColumn  
+                                	ID="kandungan"
+									SortExpression="stok_poliklinik1"
+									HeaderText="Poli 1"
+									ItemStyle.Width="50px"
+									DataField="stok_poliklinik1"
+                                    ItemStyle.HorizontalAlign="Center" />
+
+ 				<com:TBoundColumn  
+                                	ID="fisio"
+									SortExpression="stok_poliklinik2"
+									HeaderText="Poli 2"
+									ItemStyle.Width="50px"
+									DataField="stok_poliklinik2"
+                                    ItemStyle.HorizontalAlign="Center" />
+
+				 <com:TBoundColumn  
+                                	ID="icu"
+									SortExpression="stok_poliklinik3"
+									HeaderText="Poli 3"
+									ItemStyle.Width="50px"
+									DataField="stok_poliklinik3"
+                                    ItemStyle.HorizontalAlign="Center" />
+                                
+                                <com:TBoundColumn  
+                                	ID="anak"
+									SortExpression="stok_poliklinik4"
+									HeaderText="Poli 4"
+									ItemStyle.Width="50px"
+									DataField="stok_poliklinik4"
+                                    ItemStyle.HorizontalAlign="Center" />
+
+				<com:TBoundColumn  
+                                	ID="poli5"
+									SortExpression="stok_poliklinik5"
+									HeaderText="Poli 5"
+									ItemStyle.Width="50px"
+									DataField="stok_poliklinik5"
+                                    ItemStyle.HorizontalAlign="Center" />	
+
+                                <com:TBoundColumn  
+                                	ID="ugd"
+									SortExpression="stok_ugd"
+									HeaderText="UGD"
+									ItemStyle.Width="50px"
+									DataField="stok_ugd"
+                                    ItemStyle.HorizontalAlign="Center" />
+                                
+                                <com:TBoundColumn  
+                                	ID="ok"
+									SortExpression="stok_ok"
+									HeaderText="OK"
+									ItemStyle.Width="50px"
+									DataField="stok_ok"
+                                    ItemStyle.HorizontalAlign="Center" />
+                                
+                                <com:TBoundColumn  
+                                	ID="vk"
+									SortExpression="stok_vk"
+									HeaderText="VK"
+									ItemStyle.Width="50px"
+									DataField="stok_vk"
+                                    ItemStyle.HorizontalAlign="Center" />
+                                
+                                
+                                
+                                
+                                
+                                <com:TBoundColumn  
+                                	ID="bayi"
+									SortExpression="stok_ruang_bayi"
+									HeaderText="R. Bayi"
+									ItemStyle.Width="50px"
+									DataField="stok_ruang_bayi"
+                                    ItemStyle.HorizontalAlign="Center" />
+                                
+                               
+                                
+                                <com:TBoundColumn  
+                                	ID="nurse_a"
+									SortExpression="stok_nurse_a"
+									HeaderText="Nurse St.A"
+									ItemStyle.Width="50px"
+									DataField="stok_nurse_a"
+                                    ItemStyle.HorizontalAlign="Center" />
+                                
+                                <com:TBoundColumn  
+                                	ID="nurse_b"
+									SortExpression="stok_nurse_b"
+									HeaderText="Nurse St.B"
+									ItemStyle.Width="50px"
+									DataField="stok_nurse_b"
+                                    ItemStyle.HorizontalAlign="Center" />
+                                
+                                                                                              
+                                 <com:TTemplateColumn  
+                                	ID="expired"
+									SortExpression="expired"
+									HeaderText="Expired"
+									ItemStyle.Width="50px"
+                                    Visible="True"
+                                    ItemStyle.HorizontalAlign="Center">
+                                    <prop:ItemTemplate>
+                                      <com:TLabel ID="txtExp"  />
+                                    </prop:ItemTemplate>	
+                                    <prop:EditItemTemplate>
+                                      <com:TActiveHiddenField ID="expAwal"/>	
+                                      <com:TActiveDatePicker
+                                      	ID="txtExpEdit" 
+                                        	Width="80px"
+                                            FromYear="<%= @date('Y') - 10 %>"
+                                            UpToYear="<%= @date('Y') + 50 %>"
+                                            MaxLength="10"/>
+                                    </prop:EditItemTemplate>	
+                                 </com:TTemplateColumn>   
+                                 
+                                 <com:TEditCommandColumn
+									HeaderText="Edit"  
+									HeaderStyle.Width="50px"
+									Visible="<%= $this->User->IsAdmin %>"
+									UpdateText="Save"
+									ItemStyle.HorizontalAlign="Center"
+									ItemStyle.Font.Italic="false"/>			
+                                        
+                                 <com:TButtonColumn												
+									HeaderText="Mode"
+									Text="Delete"
+									ID="Hapus"
+									ItemStyle.HorizontalAlign="Center"
+									ButtonType="PushButton"									
+									CommandName="delete" />	
+                                       
+							</com:TDataGrid>
+              <!---
+              <com:TTemplateColumn HeaderText="Sumber" 
+													 SortExpression="sumber" 
+													 ID="sumber" 
+													 ItemStyle.Width="150px" 
+													 ItemStyle.HorizontalAlign="Center" >									
+									<prop:ItemTemplate>
+										<%#	SumberObatRecord::finder()->findByPk(substr($this->Parent->DataItem['sumber'],0,2))->nama %> 
+										[<%#	SubSumberObatRecord::finder()->findByPk(substr($this->Parent->DataItem['sumber'],2,2))->nama %>]
+									</prop:ItemTemplate>
+								</com:TTemplateColumn>
+              --->
+						</td>                       
+                      </tr>
+                    </table></td>
+              </tr>
+              <tr>
+                <td><hr/></td>
+              </tr>
+              <tr>
+                <td><table width="10" border="0" align="center" cellpadding="0" cellspacing="2">
+                    <tr>                                        
+                      <td><com:TButton Text="Keluar" OnClick="keluarClicked" CausesValidation="false" CssClass="button_01" TabIndex="7" Attributes.onclick = "maskContent();" /></td>
+                    </tr>
+                </table></td>
+              </tr>
+          </table>
+          
+</com:TContent> 

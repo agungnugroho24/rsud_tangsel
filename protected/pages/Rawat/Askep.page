@@ -1,0 +1,374 @@
+<%@ MasterClass="Application.layouts.MainLayout" %>
+<com:TContent ID="jdMain">
+	Rekam Asuhan Keperawatan Rawat Inap
+    
+    <a href="<%= $this->Service->constructUrl('Simak') %>" onclick="maskContent()">
+    <span class="close-btn">
+        <span class="ui-icon ui-icon-circle-close"></span>
+    </span>
+    </a>
+    
+</com:TContent>	
+
+
+<com:TContent ID="Main">
+	
+    <com:TActivePanel ID="mainPanel" > <!-- AWAL MAIN PANEL -->
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td><table width="100%" border="0" align="right" cellpadding="0" cellspacing="2">
+          <tr>
+            <td width="153"><span>&#8226;</span> No. CM </td>
+            <td width="12">:</td>
+            <td >
+                <com:TActiveTextBox 
+                    ID="cm" 
+                    Width="70px"
+                    MaxLength="7" 
+                    OnTextChanged="checkCM" 
+                    OnCallback="cmCallBack"
+                    AutoPostBack="true"
+                    />&nbsp;<com:TActiveLabel ID="errMsg" ForeColor="#FF0000" />
+            </td>
+          </tr>
+          </table>
+          </td>
+          </tr>
+          <tr>
+          <td>
+          <com:TActivePanel ID="dataPanel" DefaultButton="tambahBtn">
+          <table width="100%" border="0" align="right" cellpadding="0" cellspacing="2">
+          <tr>
+            <td width="153"><span>&#8226;</span> Nama</td>
+            <td width="12">:</td>
+            <td >
+                <com:TActiveTextBox 
+                    ID="nama" 
+                    Width="150px"
+                    ReadOnly="true"   />
+            </td>
+          </tr>
+          <tr>
+            <td><span>&#8226; Umur</span></td>
+            <td>:</td>
+            <td>
+            	 <com:TActiveTextBox 
+                    ID="umur" 
+                    Width="40px"
+                    ReadOnly="true"   /> tahun
+            </td>
+          </tr>
+          <tr>
+            <td><span>&#8226; Jenis Kelamin</span></td>
+            <td>:</td>
+            <td>
+            	 <com:TActiveTextBox 
+                    ID="jkel" 
+                    Width="150px"
+                    ReadOnly="true"   />
+            </td>
+          </tr>
+          
+          <com:TControl Enabled="false" Visible="false">
+          <tr>
+            <td><span>&#8226; Dokter </span></td>
+            <td>:</td>
+            <td>
+                <com:TActiveDropDownList 
+                    ID="DDdokter" 
+                    PromptText ="--Silakan Pilih--"
+                    PromptValue ="empty"											
+                    DataTextField="nama"
+                    DataValueField="id" 	
+                    ToolTip="Pilih Dokter.." 
+                    Width="300px"
+                    AutoPostBack="false"
+                    CausesValidation="false"	/>
+              <com:TRequiredFieldValidator
+                    ControlToValidate="DDdokter"
+                    ValidationGroup="valTambah"
+                    ErrorMessage="*"
+                    Display="Dynamic"
+                    FocusOnError="true" 
+                    CssClass="valRequired"
+                    ControlCssClass="valctrl"
+                    InitialValue="empty"/>
+            </td>
+          </tr>
+          </com:TControl>
+          
+          <tr>
+            <td><span>&#8226; Asuhan Keperawatan </span></td>
+            <td>:</td>
+            <td>
+                <com:TActiveDropDownList 
+                    ID="DDAskep" 
+                    PromptText ="--Silakan Pilih--"
+                    PromptValue ="empty"											
+                    DataTextField="nama"
+                    DataValueField="id"
+                    Width="300px"
+                    AutoPostBack="false"
+                    CausesValidation="false"	/>
+              <com:TRequiredFieldValidator
+                    ControlToValidate="DDAskep"
+                    ValidationGroup="valTambah"
+                    ErrorMessage="*"
+                    Display="Dynamic"
+                    FocusOnError="true" 
+                    CssClass="valRequired"
+                    ControlCssClass="valctrl"
+                    InitialValue="empty"/>
+            </td>
+          </tr>
+          
+          
+          <tr>
+            <td valign="top"><span>&#8226;</span> Catatan </td>
+            <td valign="top">:</td>
+            <td><com:TActiveTextBox TextMode="MultiLine" Width="300px"
+                              ID="catatan"/>&nbsp;&nbsp;<com:TActiveLabel ID="msg" ForeColor="#FF0000" /></td>
+          </tr>
+          <tr>
+            <td valign="top"></td>
+            <td valign="top"></td>
+            <td>
+            	<com:TActiveButton 
+                        Text="Tambah" 
+                        OnClick="tambahClicked" 
+                        OnCallback="tambahCallBack"
+                        ID="tambahBtn" 
+                        CssClass="button_01"
+                        CausesValidation="true"
+                        ValidationGroup="valTambah" >
+                           <prop:ClientSide 
+                        OnLoading="maskContent();"
+                        OnComplete="unmaskContent();"/>
+                  </com:TActiveButton>
+            </td>
+          </tr>          	
+        </table>
+        </com:TActivePanel>
+        
+        
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td>
+        <com:TActivePanel ID="gridPanel">
+        	<hr width="100%"/>
+        	<com:XActiveDataGrid ID="UserGrid"
+                DataKeyField="id"
+                AutoGenerateColumns="false"	
+                AllowPaging="true"
+                AllowCustomPaging="true"
+                AllowSorting="true"
+                Width="100%"					
+                PageSize="100"
+                PagerStyle.Mode="Numeric"			
+                PagerStyle.Font.Name="Arial"
+                PagerStyle.Font.Size="12"
+                PagerStyle.HorizontalAlign="Right"			
+                GridLines="None"
+                CellSpacing="1"
+                CellPadding="2"						
+                HeaderStyle.CssClass="headerstyle"
+                ItemStyle.CssClass="itemstyle"
+                AlternatingItemStyle.CssClass="itemstyle2"								
+                OnDeleteCommand="deleteClicked"								
+                OnPageIndexChanged="changePage"
+                OnPagerCreated="pagerCreated">	
+        	
+            	<com:XActiveBoundColumn
+                    SortExpression="nama"
+                    HeaderText="Nama Dokter"
+                    ItemStyle.Width="350px"
+                    DataField="nama" 
+                    Visible="False"/>
+                
+                <com:XActiveBoundColumn
+                    SortExpression="nama_tdk"
+                    HeaderText="Asuhan Keperawatan"
+                    ItemStyle.Width="350px"
+                    DataField="nama_tdk" />    
+				
+                <com:XActiveBoundColumn
+                    SortExpression="catatan"
+                    HeaderText="Catatan"
+                    DataField="catatan" />
+             	
+                <com:XActiveButtonColumn												
+                    HeaderText="Mode"
+                    Text="Delete"
+                    ID="Hapus"
+                    ItemStyle.HorizontalAlign="Center"									
+                    ButtonType="PushButton"									
+                    CommandName="delete" 
+                    ItemStyle.Width="100px"/>
+                                                
+            </com:XActiveDataGrid>
+            
+        </com:TActivePanel>
+        </td>
+        </tr>
+        </table>
+        
+        
+        </td>
+      </tr>
+      <tr><td><hr/></td></tr>
+      <tr>
+      	<td align="center">
+        	<com:TActiveButton Text="Simpan" 
+                            ID="simpanBtn" 	
+                            OnClick="simpanClicked" 
+                            CssClass="button_01" 
+                            Enabled="false" 
+                            CausesValidation="false"
+                            Attributes.onclick = "if(!confirm('Simpan data sekarang..?')) return false; else maskContent();"/>
+            <com:TActiveButton Text="Batal" 					  					
+                            ButtonType="Reset" 
+                            CausesValidation="false" 
+                            CssClass="button_01"
+                            OnClick="batalClicked" 
+                            Attributes.onclick = "if(!confirm('Batalkan pengisian data..?')) return false; else maskContent();"/></td>
+            <com:TActiveButton Text="Keluar" 
+                    OnClick="keluarClicked" 
+                    CausesValidation="false" 
+                    CssClass="button_01" 
+                    Visible="false" />
+        </td>
+      </tr>
+      </table>
+      </com:TActivePanel> <!-- AKHIR MAIN PANEL -->
+      
+      
+        <!-- ---------------------- Awal Konfirmasi Bila ada transaksi yg sama dalam 1 hari ----------------------  -->
+        <com:TActivePanel ID="konfPanel" GroupingText="Konfirmasi"  DefaultButton="tidakBtn" >
+        <table width="100%"  border="0" align="left">
+          <tr>
+            <td colspan="3" align="center" style="color:#FF0000; font-size:14px;">Asuhan Keperawatan <strong><com:TActiveLabel ID="nmTdk"/></strong> <!--oleh <strong><com:TActiveLabel ID="nmDokter"/></strong>--> telah dilakukan sebanyak <strong><com:TActiveLabel ID="jmlVisite"/></strong> kali untuk hari ini.
+            </td>
+          </tr>
+          <tr>
+            <td colspan="3" align="center" style="color:#FF0000; font-size:14px;">
+              Apakah akan menambah transaksi yang sama ?
+            </td>
+          </tr>
+          <tr>
+            <td colspan="3" align="center">
+                <com:TActiveButton Text="   Ya   " 
+                   OnClick="yaBtnClicked"
+                   ID="yaBtn" 
+                   CssClass="button_01" >
+                    <prop:ClientSide 
+                        OnLoading="maskContent();"
+                        OnComplete="unmaskContent();"/>
+                </com:TActiveButton>   
+                &nbsp;
+                <com:TActiveButton Text=" Tidak " 
+                   OnClick="tidakBtnClicked"
+                   ID="tidakBtn" 
+                   CssClass="button_01" >
+                    <prop:ClientSide 
+                        OnLoading="maskContent();"
+                        OnComplete="unmaskContent();"/>
+                </com:TActiveButton>
+                   
+                                       </td>
+          </tr>
+          <tr>
+            <td colspan="3" align="center">
+                <hr/>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="3" align="center">
+                Daftar Tindakan Asuhan Keperawatan
+                  <com:TActiveLabel ID="konfJnsPas"/>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="3" align="center">
+               <com:TActiveLabel ID="konfTgl"/>
+            </td>
+          </tr>
+          <tr>
+            <td width="17%"><span>&#8226;</span>&nbsp;&nbsp;No. CM</td>
+            <td width="1%">:</td>
+            <td width="82%">
+                <com:TActiveLabel ID="konfNoCm"/>
+            </td>
+          </tr>
+          <tr>
+            <td><span>&#8226;</span>&nbsp;&nbsp;Nama Pasien </td>
+            <td>:</td>
+            <td>
+                <com:TActiveLabel ID="konfNmPas" />
+            </td>
+          </tr>
+           <tr>
+            <td colspan="3" align="center">
+                <!-- ---------------------- datagrid daftar transaksi yang sudah diproses ----------------------  -->
+                <com:XActiveDataGrid
+                    ID="UserGrid2"
+                    DataKeyField="id"
+                    AutoGenerateColumns="false"	
+                    AllowPaging="false"
+                    AllowCustomPaging="false"
+                    AllowSorting="false"
+                    Width="100%"					
+                    PageSize="30"
+                    PagerStyle.Mode="Numeric"			
+                    PagerStyle.Font.Name="Arial"
+                    PagerStyle.Font.Size="12"
+                    PagerStyle.HorizontalAlign="Right"			
+                    GridLines="None"
+                    CellSpacing="1"
+                    CellPadding="2"						
+                    HeaderStyle.CssClass="headerstyle"
+                    ItemStyle.CssClass="itemstyle"
+                    AlternatingItemStyle.CssClass="itemstyle2"	
+                    OnPagerCreated="pagerCreated"			
+                    OnSortCommand="sortGrid">
+                    
+                    <com:XActiveBoundColumn
+                        SortExpression="wkt"
+                        HeaderText="Waktu Transaksi"
+                        ItemStyle.Width="100px"
+                        DataField="wkt"
+                        ItemStyle.Horizontalalign="Center" />
+                        
+                    <com:XActiveBoundColumn
+                        SortExpression="nama"
+                        HeaderText="Nama Dokter"
+                        ItemStyle.Width="350px"
+                        DataField="nama"
+                        ItemStyle.Horizontalalign="Center"
+                        Visible="False" />
+                  
+                  	<com:TBoundColumn
+                        SortExpression="nm_tdk"
+                        HeaderText="Asuhan Keperawatan"
+                        ItemStyle.Width="200px"
+                        DataField="nm_tdk"
+                        ItemStyle.Horizontalalign="Center" />
+                        
+                  </com:XActiveDataGrid>                     </td>
+          </tr>
+        </table>
+        </com:TActivePanel>
+
+	<com:TCallback ID="UpdateCallback" OnCallback="dialogClicked" ActiveControl.CausesValidation="false"/>
+	<script type="text/javascript">
+		//<![CDATA[
+		function okClicked(){
+			var request= <%= $this->UpdateCallback->ActiveControl->Javascript %>;
+				//request.setCallbackParameter({
+					//Id:personId
+				//});
+				request.dispatch();
+		}
+		//]]>
+	</script>
+      
+</com:TContent>

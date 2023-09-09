@@ -1,0 +1,462 @@
+<%@ MasterClass="Application.layouts.AssetLayout" %>
+<com:TContent ID="Main">
+<tr>
+<table width="100%"  border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td height="40"><table width="10" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td><table width="10" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+          </table></td>
+          <td><table width="200" border="0" cellspacing="2" cellpadding="0">
+              <tr>
+                <td class="text_01">Data Master Aset </td>
+              </tr>
+          </table></td>
+          <td>&nbsp;</td>
+        </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="100%"  border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td width="1%"><table width="10" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+          </table></td>
+          <td width="99%" height="350" valign="top" class="table_03"><table width="100%"  border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td width="1%"><table width="18" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                      <td>&nbsp;</td>
+                    </tr>
+                </table></td>
+                <td width="99%"><table width="100%"  border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                      <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                      <td class="text_02">Data Aset Medis</td>
+                    </tr>
+                    <tr>
+                      <td>&nbsp;<com:TLabel ID="showSql" /></td>
+                    </tr>
+                    <tr>
+                      <td>
+                      	<com:TPanel DefaultButton="cariBtn">
+                        <table width="100%"  border="0" cellspacing="2" cellpadding="0">
+                          <tr>
+                            <td valign="top">&#8226; Jenis </td>
+                            <td valign="top">:</td>
+                            <td valign="top">
+                            	<com:TRadioButtonList
+                                      ID="modeJenis" 
+                                      RepeatDirection="Horizontal" 
+                                      AutoPostBack="true" 
+                                      CausesValidation="false" 
+                                      OnSelectedIndexChanged="modeJenisChanged">
+                                    <com:TListItem Text="Habis Pakai" Value="1" />
+                                    <com:TListItem Text="Tidak Habis Pakai" Value="2" />
+                                </com:TRadioButtonList>                               </td>
+                          </tr>
+                          
+                          <com:TControl ID="hbsPakaiCtrl" Visible="false">
+                          <tr>
+                            <td valign="top">&#8226; Sub Jenis Habis Pakai</td>
+                            <td valign="top">:</td>
+                            <td valign="top">
+                            	<com:TDropDownList 
+										ID="DDsubHabisPakai"
+										PromptText ="--Silakan Pilih--"
+										PromptValue =""											
+										DataTextField="nama"
+										DataValueField="id" 	
+										ToolTip="Pilih sub jenis barang habis pakai" 
+										Width="300px" 
+                                        AutoPostBack="true" 
+                                        OnSelectedIndexChanged="DDsubHabisPakaiChanged" />                            </td>
+                          </tr>
+                          </com:TControl>
+                          <com:TControl ID="TdkHbsPakaiCtrl" Visible="false">
+                          <tr>
+                            <td valign="top">&#8226; Sub Jenis Tidak Habis Pakai</td>
+                            <td valign="top">:</td>
+                            <td valign="top">
+                            	<com:TRadioButtonList
+                                      ID="modeTdkHabisPakai" 
+                                      RepeatDirection="Horizontal" 
+                                      AutoPostBack="true" 
+                                      CausesValidation="false" 
+                                      OnSelectedIndexChanged="modeTdkHabisPakaiChanged">
+                                    <com:TListItem Text="Bergerak" Value="1" />
+                                    <com:TListItem Text="Tidak Bergerak" Value="2" />
+                                </com:TRadioButtonList>                             </td>
+                          </tr>
+                          </com:TControl>
+                          <com:TControl ID="bergerakCtrl" Visible="false">
+                          <tr>
+                            <td valign="top">&#8226; Sub Jenis Bergerak</td>
+                            <td valign="top">:</td>
+                            <td valign="top">
+                            	<com:TDropDownList 
+										ID="DDsubBergerak"
+										PromptText ="--Silakan Pilih--"
+										PromptValue =""											
+										DataTextField="nama"
+										DataValueField="id" 	
+										ToolTip="Pilih sub jenis barang bergerak" 
+										Width="300px"
+                                        AutoPostBack="true" 
+                                        OnSelectedIndexChanged="DDsubBergerakChanged" />                             </td>
+                          </tr>
+                          </com:TControl>
+                           <com:TControl ID="tdkBergerakCtrl" Visible="false">
+                          <tr>
+                            <td valign="top">&#8226; Sub Jenis Tidak Bergerak</td>
+                            <td valign="top">:</td>
+                            <td valign="top">
+                            	<com:TRadioButtonList
+                                      ID="modeTdkBergerak" 
+                                      RepeatDirection="Horizontal" 
+                                      AutoPostBack="true" 
+                                      CausesValidation="false" 
+                                      OnSelectedIndexChanged="modeTdkBergerakChanged">
+                                    <com:TListItem Text="Medis" Value="1" />
+                                    <com:TListItem Text="Non Medis" Value="2" />
+                                </com:TRadioButtonList>                               </td>
+                          </tr>
+                          </com:TControl>
+                           <com:TControl ID="nonMedisCtrl" Visible="false">
+                          <tr>
+                            <td valign="top">&#8226; Sub Jenis Non Medis</td>
+                            <td valign="top">:</td>
+                            <td valign="top">
+                            	<com:TRadioButtonList
+                                      ID="modeNonMedis" 
+                                      RepeatDirection="Horizontal" 
+                                      AutoPostBack="true" 
+                                      OnSelectedIndexChanged="modeNonMedisChanged" >
+                                    <com:TListItem Text="Elektrikal" Value="1" />
+                                    <com:TListItem Text="Non Elektrikal" Value="2" />
+                                </com:TRadioButtonList>                            </td>
+                          </tr>
+                          </com:TControl>
+                          
+                          <tr>
+                            <td valign="top">&#8226; ID Barang</td>
+                            <td valign="top">:</td>
+                            <td valign="top"><com:TTextBox 
+									ID="ID"
+									CssClass="inputtex"  
+									Width="100px"/>
+                            </td>
+                          </tr>
+                          
+                          <tr>
+                            <td width="240" valign="top">&#8226; Nama Barang </td>
+								<td width="18" valign="top">:</td>
+								<td width="664" valign="top">
+									<com:TTextBox 
+										ID="nmBarang"
+										CssClass="inputtex" 
+										Width="200px" 
+										MaxLength="50" 
+										ToolTip="Nama vendor"
+										ValidationGroup="val" />
+                                	&nbsp;
+                              		<com:TCheckBox 
+										ID="Advance" 
+										Text="Elemen Kata" 
+										Value="1" 
+									/>                                </td>
+							  </tr>
+							  <tr valign="top">
+                                <td valign="top">&#8226; Produsen / Vendor </td>
+							    <td valign="top">:</td>
+							    <td valign="top"><com:TDropDownList 
+										ID="DDVen"
+										PromptText ="--Silakan Pilih--"
+										PromptValue =""											
+										DataTextField="nama"
+										DataValueField="id" 	
+										ToolTip="Pilih produsen/vendor barang" 
+										Width="300px" />                                  </td>
+							    </tr>
+							  <tr valign="top">
+                                <td valign="top">&#8226; Distributor </td>
+							    <td valign="top">:</td>
+							    <td valign="top"><com:TDropDownList 
+										ID="DDDist"
+										PromptText ="--Silakan Pilih--"
+										PromptValue =""											
+										DataTextField="nama"
+										DataValueField="id" 	
+										ToolTip="Pilih distributor barang" 
+										Width="300px" />                                   </td>
+							    </tr>
+							  <tr>
+                                <td valign="top">&nbsp;</td>
+							    <td valign="top">&nbsp;</td>
+							    <td valign="top">
+                                	<com:TButton
+                                    	ID = "cariBtn"
+                                        Text="Cari" 
+                                        OnClick="cariClicked" 
+                                        CssClass="button_01" 
+                                        />                                </td>
+							  </tr>
+							  <tr>
+							    <td colspan="3" valign="top"><hr /></td>
+							    </tr>
+							  <tr>
+							    <td colspan="3" valign="top">
+                                	Jumlah Data Hasil Pencarian: <com:TLabel ID="jmlData"/>                                </td>
+							  </tr>
+							  <tr>
+							    <td colspan="3" valign="top">
+                                
+                                <table width="95%"  border="0" align="center" cellpadding="0" cellspacing="1">                                  <tr>
+                                    <td align="center">
+                                    <com:TDataGrid ID="dtgSomeData"
+                                            DataKeyField="id"
+                                            AutoGenerateColumns="false"	
+                                            AllowPaging="true"
+                                            AllowCustomPaging="true"
+                                            AllowSorting="true"
+                                            Width="680px"					
+                                            PageSize="20"
+                                            PagerStyle.Mode="Numeric"			
+                                            PagerStyle.Font.Name="Arial"
+                                            PagerStyle.Font.Size="12"
+                                            PagerStyle.HorizontalAlign="Right"			
+                                            GridLines="None"
+                                            CellSpacing="1"
+                                            CellPadding="2"
+                                            BackColor="#000000"
+                                            HeaderStyle.CssClass="headerstyle"
+                                            ItemStyle.CssClass="itemstyle"
+                                            AlternatingItemStyle.CssClass="itemstyle2"
+                                            OnItemCreated="dtgSomeData_ItemCreated"
+                                            OnEditCommand="dtgSomeData_EditCommand"
+                                            OnUpdateCommand="dtgSomeData_UpdateCommand"
+                                            OnCancelCommand="dtgSomeData_CancelCommand"
+                                            OnDeleteCommand="deleteButtonClicked"								
+                                            OnPageIndexChanged="dtgSomeData_PageIndexChanged"
+                                            OnSortCommand="dtgSomeData_SortCommand">								
+                                        </div>								
+                                            
+                                            <com:THyperLinkColumn   
+                                                SortExpression="id"     
+                                                HeaderText="ID"									
+                                                DataTextField="id"
+                                                ItemStyle.HorizontalAlign="Center"
+                                                ItemStyle.Width="80px"		
+                                                DataNavigateUrlField="id">
+                                                <prop:DataNavigateUrlFormatString>#
+                                                  $this->Service->constructUrl('Asset.masterBarangEdit',array('ID'=>{0},'mode'=>'01'))                                                </prop:DataNavigateUrlFormatString>
+                                            </com:THyperLinkColumn>	 
+                                            
+                                            <com:TBoundColumn
+                                                SortExpression="nm_brg"
+                                                HeaderText="Nama"
+                                                ItemStyle.Width="300px"
+                                                DataField="nm_brg" />
+                                            
+                                            <com:TTemplateColumn 
+                                                 HeaderText="Kelompok" 	
+                                                 SortExpression="st_kel_habis_pakai"					 
+                                                 ItemStyle.Width="100px" 
+                                                 ItemStyle.HorizontalAlign="Center">									
+                                                <prop:ItemTemplate>
+                                                    <%%	
+                                                        if($this->Parent->DataItem['st_kel_habis_pakai']=='1')
+                                                        {
+                                                         	echo 'Habis Pakai';
+                                                        }
+                                                        elseif($this->Parent->DataItem['st_kel_habis_pakai']=='2')
+                                                        {
+                                                          	echo 'Tidak Habis Pakai';
+                                                        }
+                                                    %>
+                                                </prop:ItemTemplate>
+                                            </com:TTemplateColumn>
+                                            
+                                             <com:TTemplateColumn 
+                                                 HeaderText="Sub Kel. Habis Pakai" 	
+                                                 SortExpression="st_sub_kel_habis_pakai"					 
+                                                 ItemStyle.Width="100px" 
+                                                 ItemStyle.HorizontalAlign="Center">									
+                                                <prop:ItemTemplate>
+                                                    <%%	
+                                                        if($this->Parent->DataItem['st_sub_kel_habis_pakai']!='0')
+                                                        {
+                                                         	echo $this->Parent->DataItem['nm_kel_hbs_pakai'];
+                                                        }
+                                                        else
+                                                        {
+                                                          	echo '-';
+                                                        }
+                                                    %>
+                                                </prop:ItemTemplate>
+                                            </com:TTemplateColumn>
+                                            
+                                            <com:TTemplateColumn 
+                                                 HeaderText="Kel. Barang Bergerak" 	
+                                                 SortExpression="st_bergerak"					 
+                                                 ItemStyle.Width="100px" 
+                                                 ItemStyle.HorizontalAlign="Center">									
+                                                <prop:ItemTemplate>
+                                                    <%%	
+                                                        if($this->Parent->DataItem['st_bergerak']=='1')
+                                                        {
+                                                         	echo 'Bergerak';
+                                                        }
+                                                        elseif($this->Parent->DataItem['st_bergerak']=='2')
+                                                        {
+                                                          	echo 'Tidak Bergerak';
+                                                        }
+                                                        elseif($this->Parent->DataItem['st_bergerak']=='0')
+                                                        {
+                                                          	echo '-';
+                                                        }
+                                                    %>
+                                                </prop:ItemTemplate>
+                                            </com:TTemplateColumn>
+                                            
+                                            <com:TTemplateColumn 
+                                                 HeaderText="Sub Kel. Barang Bergerak" 	
+                                                 SortExpression="st_sub_bergerak"					 
+                                                 ItemStyle.Width="100px" 
+                                                 ItemStyle.HorizontalAlign="Center">									
+                                                <prop:ItemTemplate>
+                                                    <%%	
+                                                        if($this->Parent->DataItem['st_sub_bergerak']!='0')
+                                                        {
+                                                         	echo $this->Parent->DataItem['nm_kel_bergerak'];
+                                                        }
+                                                        else
+                                                        {
+                                                          	echo '-';
+                                                        }
+                                                    %>
+                                                </prop:ItemTemplate>
+                                            </com:TTemplateColumn>
+                                            
+                                            <com:TTemplateColumn 
+                                                 HeaderText="Kel. Medis / Non Medis" 	
+                                                 SortExpression="st_bergerak"					 
+                                                 ItemStyle.Width="100px" 
+                                                 ItemStyle.HorizontalAlign="Center">									
+                                                <prop:ItemTemplate>
+                                                    <%%	
+                                                        if($this->Parent->DataItem['st_medis']=='1')
+                                                        {
+                                                         	echo 'Medis';
+                                                        }
+                                                        elseif($this->Parent->DataItem['st_medis']=='2')
+                                                        {
+                                                          	echo 'Non Medis';
+                                                        }
+                                                        elseif($this->Parent->DataItem['st_medis']=='0')
+                                                        {
+                                                          	echo '-';
+                                                        }
+                                                    %>
+                                                </prop:ItemTemplate>
+                                            </com:TTemplateColumn>
+                                            
+                                            <com:TTemplateColumn 
+                                                 HeaderText="Kel. Elektrik / Non Elektrik" 	
+                                                 SortExpression="st_elektrik"					 
+                                                 ItemStyle.Width="100px" 
+                                                 ItemStyle.HorizontalAlign="Center">									
+                                                <prop:ItemTemplate>
+                                                    <%%	
+                                                        if($this->Parent->DataItem['st_elektrik']=='1')
+                                                        {
+                                                         	echo 'Elektrikal';
+                                                        }
+                                                        elseif($this->Parent->DataItem['st_elektrik']=='2')
+                                                        {
+                                                          	echo 'Non Elektrikal';
+                                                        }
+                                                        elseif($this->Parent->DataItem['st_elektrik']=='0')
+                                                        {
+                                                          	echo '-';
+                                                        }
+                                                    %>
+                                                </prop:ItemTemplate>
+                                            </com:TTemplateColumn>
+                                            
+                                            <com:TTemplateColumn 
+                                                HeaderText="Foto" 
+                                                ItemStyle.HorizontalAlign="Center" >									
+                                              <prop:ItemTemplate>
+                                                <img src="<%#$this->Service->constructUrl('Asset.fotoBarangView',array('ID'=>$this->Parent->Data['id']))%>" alt="" width="80px" />                                              </prop:ItemTemplate>
+                                            </com:TTemplateColumn>
+                                                                            
+                                            <com:TButtonColumn												
+                                                HeaderText="Mode"
+                                                Text="Delete"
+                                                ID="Hapus"
+                                                ItemStyle.HorizontalAlign="Center"
+                                                ButtonType="PushButton"									
+                                                CommandName="delete" />	
+                                        </com:TDataGrid>                                    </td>                       
+                                  </tr>
+                                </table>                                </td>
+							  </tr>
+                      	</table>
+                        </com:TPanel>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                      <td><table width="95%"  border="0" cellspacing="0" cellpadding="0">
+                          <tr>
+                            <td class="table_05"></td>
+                          </tr>
+                      </table></td>
+                    </tr>
+                    <tr>
+                      <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                      <td><table width="100" border="0" align="center" cellpadding="0" cellspacing="4" class="table_04">
+                          <tr>
+                            <td><table width="10" border="0" cellspacing="2" cellpadding="0">
+                                <tr>
+                                   <td>
+                                   		<com:TButton 
+                                        	ID="simpanBtn" 
+                                            Text="Simpan" 
+                                            OnClick="simpanClicked" 
+                                            CssClass="button_01" 
+                                            ValidationGroup="val" Visible="false"/>
+                                   </td>
+								  <td><com:TButton Text="Baru" OnClick="baruClicked" CssClass="button_01"  /></td>
+								  <td><com:TButton Text="Keluar" OnClick="keluarClicked" CausesValidation="false" CssClass="button_01"  /></td>
+                                </tr>
+                            </table></td>
+                          </tr>
+                      </table></td>
+                    </tr>
+                    <tr>
+                      <td>&nbsp;</td>
+                    </tr>
+                </table></td>
+              </tr>
+          </table></td>
+        </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td height="10"></td>
+  </tr>
+</table>
+</com:TContent>

@@ -1,0 +1,140 @@
+<%@ MasterClass="Application.layouts.MainLayout" %>
+<com:TContent ID="jdMain">
+	Daftar Tarif Adm Kamar - Edit
+    
+    <a href="<%= $this->Service->constructUrl('Simak') %>" onclick="maskContent()">
+    <span class="close-btn">
+        <span class="ui-icon ui-icon-circle-close"></span>
+    </span>
+    </a>
+    
+</com:TContent>	
+<com:TContent ID="Main">
+
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+              <tr>
+                <td><table width="100%" border="0" align="right" cellpadding="0" cellspacing="2">
+                  <tr>
+                    <td><span>&#8226; </span>Kelas Kamar</td>
+                    <td>:</td>
+                    <td>
+						<com:TActiveDropDownList CssClass="input_text"
+                             ID="DDKamar"
+                             PromptText ="--Silakan Pilih--"
+                             PromptValue =""
+                             AutoPostBack="true"
+                             DataTextField="nama"
+                             DataValueField="id"
+                             OnSelectedIndexChanged="selectionChangedKamar"
+                             ValidationGroup="val" />   
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><span>&#8226; </span>Biaya Adm</td>
+                    <td>:</td>
+                    <td>
+						<com:TTextBox 
+							ID="adm" 
+							Width="200px" 
+							TabIndex="2" 
+							ValidationGroup="val"
+						/>
+						<com:TRequiredFieldValidator 
+							ControlToValidate="adm"											 
+						  	ErrorMessage="Anda harus mengisikan Biaya Adm"
+						  	Display="Dynamic" 
+							ValidationGroup="val"
+						/>
+                        <com:TRegularExpressionValidator
+                            ControlToValidate="adm"
+                            ValidationGroup="adm"
+                            Display="Dynamic"
+                            FocusOnError="true"
+                            RegularExpression="[\d]{12,12}"
+                            ErrorMessage="Harus Angka" />					
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><span>&#8226; </span>Jasa Pengirim</td>
+                    <td>:</td>
+                    <td>
+						<com:TTextBox 
+							ID="jsp" 
+							Width="200px" 
+							TabIndex="2" 
+							ValidationGroup="val"
+						/>
+						<com:TRequiredFieldValidator 
+							ControlToValidate="jsp"
+						  	ErrorMessage="Anda harus mengisikan Jasa Pengirim"
+						  	Display="Dynamic" 
+							ValidationGroup="val"
+						/>	
+                        <com:TRegularExpressionValidator
+                            ControlToValidate="jsp"
+                            ValidationGroup="jsp"
+                            Display="Dynamic"
+                            FocusOnError="true"
+                            RegularExpression="[\d]{12,12}"
+                            ErrorMessage="Harus Angka" />				
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><span>&#8226; </span>Utilitas Kamar</td>
+                    <td>:</td>
+                    <td>
+						<com:TTextBox 
+							ID="utk" 
+							Width="200px" 
+							TabIndex="2" 
+							ValidationGroup="val"
+						/>
+						<com:TRequiredFieldValidator 
+							ControlToValidate="utk"											 
+						  	ErrorMessage="Anda harus mengisikan Utilitas Kamar"
+						  	Display="Dynamic" 
+							ValidationGroup="val"
+						/>	
+                        <com:TRegularExpressionValidator
+                            ControlToValidate="utk"
+                            ValidationGroup="utk"
+                            Display="Dynamic"
+                            FocusOnError="true"
+                            RegularExpression="[\d]{12,12}"
+                            ErrorMessage="Harus Angka" />				
+                    </td>
+                  </tr>
+                </table></td>
+              </tr>
+              <tr>
+                <td><hr /></td>
+              </tr>
+              <tr>
+                <td><table width="10" border="0" align="center" cellpadding="0" cellspacing="2">
+                    <tr>
+                      <td><com:TButton Text="Simpan" Attributes.onclick = "maskContent();" 
+					  					OnClick="simpanClicked" 
+										CssClass="button_01" 
+										TabIndex="6" 
+										ValidationGroup="val"/></td>
+                      <td><!--<com:TButton Text="Batal" 					  					
+										ButtonType="Reset" 
+										OnClick="batalClicked"
+										CausesValidation="false" 
+										CssClass="button_01" 
+										TabIndex="7" />--></td>
+                      <td><com:TButton Text="Keluar" Visible="True" Attributes.onclick = "maskContent();" 
+					  			OnClick="keluarClicked" 
+								CausesValidation="false" 
+								CssClass="button_01" 
+								TabIndex="8" />
+					  </td>
+                    </tr>
+                </table></td>
+              </tr>
+          </table>
+          
+</com:TContent>

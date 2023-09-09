@@ -1,0 +1,285 @@
+<%@ MasterClass="Application.layouts.MainLayout" %>
+<com:TContent ID="jdMain">
+	Daftar Tarif Radiologi Rujukan - Baru
+    
+    <a href="<%= $this->Service->constructUrl('Simak') %>" onclick="maskContent()">
+    <span class="close-btn">
+        <span class="ui-icon ui-icon-circle-close"></span>
+    </span>
+    </a>
+    
+</com:TContent>	
+<com:TContent ID="Main">
+
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;<com:TActiveLabel ID="test"/></td>
+              </tr>
+              <tr>
+                <td><table width="100%" border="0" align="right" cellpadding="0" cellspacing="2">
+                  <tr>
+                    <td><span>&#8226;</span> Rad Rujukan</td>
+                    <td>:</td>
+                    <td>
+                    	<com:TDropDownList 
+                                ID="DDradRujuk"
+                                PromptText ="--Silakan Pilih--"
+                                PromptValue ="empty"											
+                                DataTextField="nama"
+                                DataValueField="id"
+                                Width="300px"
+                                AutoPostBack="false"
+                                CausesValidation="false"/>
+                            <com:TRequiredFieldValidator
+                                Display="Dynamic"
+                                ControlToValidate="DDradRujuk"
+                                ErrorMessage="*"
+                                InitialValue="empty" 
+                                ValidationGroup="val"
+                                 FocusOnError="true" 
+                                    CssClass="valRequired"
+                                    ControlCssClass="valctrl"
+                            />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td width="200"><span>&#8226;</span> Kelompok Rad </td>
+                    <td width="5">:</td>
+                    <td ><com:TDropDownList 
+													ID="DDRadKel"
+													PromptText ="--Silakan Pilih--"
+													PromptValue ="empty"											
+													DataTextField="nama"
+													DataValueField="kode" 	
+													ToolTip="Pilih Kelompok Radiologi" 
+													TabIndex="1" 
+													Width="300px"
+													AutoPostBack="true"
+													OnSelectedIndexChanged="DDRadKelChanged"
+													CausesValidation="false"/>
+												<com:TRequiredFieldValidator
+													Display="Dynamic"
+													ControlToValidate="DDRadKel"
+                                                    ErrorMessage="*"
+													InitialValue="empty" 
+													ValidationGroup="val"
+                                                     FocusOnError="true" 
+                                    CssClass="valRequired"
+                                    ControlCssClass="valctrl"
+												/>					</td>
+                  </tr>
+                  <tr>
+                    <td><span>&#8226; </span>Kategori Rad </td>
+                    <td>:</td>
+                    <td>
+                      <com:TDropDownList 
+								ID="DDRadKateg"
+								PromptText ="--Silakan Pilih--"
+								PromptValue ="empty"											
+								DataTextField="jenis"
+								DataValueField="kode" 	
+								ToolTip="Pilih Kategori Radiologi" 
+								TabIndex="2" 
+								Width="300px"
+								AutoPostBack="true"
+								OnSelectedIndexChanged="DDRadKategChanged"/>
+						<com:TRequiredFieldValidator
+								Display="Dynamic"
+								ControlToValidate="DDRadKateg"
+								 ErrorMessage="*"
+													InitialValue="empty" 
+													ValidationGroup="val"
+                                                     FocusOnError="true" 
+                                    CssClass="valRequired"
+                                    ControlCssClass="valctrl"	/>                    </td>
+                  </tr>
+                  <tr>
+                    <td><span>&#8226; </span>Jenis Tindakan </td>
+                    <td>:</td>
+                    <td>
+                      <com:TDropDownList 
+							ID="DDJenisFoto"
+							PromptText ="--Silakan Pilih--"
+							PromptValue ="empty"											
+							DataTextField="nama"
+							DataValueField="kode" 	
+							ToolTip="Pilih Jenis Foto" 
+							TabIndex="3" 
+							Width="300px"
+							AutoPostBack="true"
+							Enabled="false"
+							OnSelectedIndexChanged="DDJenisFotoChanged"/>
+                      <com:TRequiredFieldValidator
+							Display="Dynamic"
+							ControlToValidate="DDJenisFoto"
+							 ErrorMessage="*"
+													InitialValue="empty" 
+													ValidationGroup="val"
+                                                     FocusOnError="true" 
+                                    CssClass="valRequired"
+                                    ControlCssClass="valctrl"
+						/>  
+                        
+                                          </td>
+                  </tr>
+                  <tr>
+                    <td><span>&#8226; </span>Tarif Rawat Jalan </td>
+                    <td>:</td>
+                    <td><com:TTextBox CssClass="input_text" 
+												  ID="Tarif1" 												   
+												  MaxLength="10" 
+												  TabIndex="4"												   
+												  ToolTip="Tarif Rawat Jalan" 
+												  Width="55px"
+												  ReadOnly="true"											 
+												  CausesValidation="false"
+												  ValidationGroup="val1"
+												  />
+							<com:TRegularExpressionValidator
+											ControlToValidate="Tarif1"
+											FocusOnError="true"
+											RegularExpression="[\d]{1,}"
+											ErrorMessage="Tarif yang dimasukan tidak sesuai"
+											ValidationGroup="val1"
+										/>					</td>
+                  </tr>
+				  
+				  <tr>
+                    <td><span>&#8226; </span>Tarif Rawat Inap Kelas VIP </td>
+                    <td>:</td>
+                    <td><com:TTextBox CssClass="input_text" 
+												  ID="Tarif2" 												   
+												  MaxLength="10" 
+												  TabIndex="4"												   
+												  ToolTip="Tarif Rawat Inap Kelas VIP" 
+												  Width="55px"
+												  ReadOnly="true"											 
+												  CausesValidation="false"
+												  ValidationGroup="val1"
+												  />
+							<com:TRegularExpressionValidator
+											ControlToValidate="Tarif2"
+											FocusOnError="true"
+											RegularExpression="[\d]{1,}"
+											ErrorMessage="Tarif yang dimasukan tidak sesuai"
+											ValidationGroup="val1"
+										/>					</td>
+                  </tr>
+				  
+				  <tr>
+                    <td><span>&#8226; </span>Tarif Rawat Inap Kelas IA </td>
+                    <td>:</td>
+                    <td><com:TTextBox CssClass="input_text" 
+												  ID="Tarif3" 												   
+												  MaxLength="10" 
+												  TabIndex="4"												   
+												  ToolTip="Tarif Rawat Inap Kelas IA" 
+												  Width="55px"
+												  ReadOnly="true"											 
+												  CausesValidation="false"
+												  ValidationGroup="val1"
+												  />
+							<com:TRegularExpressionValidator
+											ControlToValidate="Tarif3"
+											FocusOnError="true"
+											RegularExpression="[\d]{1,}"
+											ErrorMessage="Tarif yang dimasukan tidak sesuai"
+											ValidationGroup="val1"
+										/>					</td>
+                  </tr>
+				  
+				  <tr>
+                    <td><span>&#8226; </span>Tarif Rawat Inap Kelas IB </td>
+                    <td>:</td>
+                    <td><com:TTextBox CssClass="input_text" 
+												  ID="Tarif4" 												   
+												  MaxLength="10" 
+												  TabIndex="4"												   
+												  ToolTip="Tarif Rawat Inap Kelas IB" 
+												  Width="55px"
+												  ReadOnly="true"											 
+												  CausesValidation="false"
+												  ValidationGroup="val1"
+												  />
+							<com:TRegularExpressionValidator
+											ControlToValidate="Tarif4"
+											FocusOnError="true"
+											RegularExpression="[\d]{1,}"
+											ErrorMessage="Tarif yang dimasukan tidak sesuai"
+											ValidationGroup="val1"
+										/>					</td>
+                  </tr>
+				  <tr>
+				    <td><span>&#8226; </span>Tarif Rawat Inap Kelas II </td>
+				    <td>:</td>
+				    <td>
+                    	<com:TTextBox CssClass="input_text" 
+												  ID="Tarif5" 												   
+												  MaxLength="10" 
+												  TabIndex="4"												   
+												  ToolTip="Tarif Rawat Inap Kelas II" 
+												  Width="55px"
+												  ReadOnly="true"											 
+												  CausesValidation="false"
+												  ValidationGroup="val1"
+												  />
+							<com:TRegularExpressionValidator
+											ControlToValidate="Tarif5"
+											FocusOnError="true"
+											RegularExpression="[\d]{1,}"
+											ErrorMessage="Tarif yang dimasukan tidak sesuai"
+											ValidationGroup="val1"
+										/>                    </td>
+				    </tr>
+				  <tr>
+				    <td><span>&#8226; </span>Tarif Rawat Inap Kelas III </td>
+				    <td>:</td>
+				    <td>
+                    	<com:TTextBox CssClass="input_text" 
+												  ID="Tarif6" 												   
+												  MaxLength="10" 
+												  TabIndex="4"												   
+												  ToolTip="Tarif Rawat Inap Kelas III" 
+												  Width="55px"
+												  ReadOnly="true"											 
+												  CausesValidation="false"
+												  ValidationGroup="val1"
+												  />
+							<com:TRegularExpressionValidator
+											ControlToValidate="Tarif6"
+											FocusOnError="true"
+											RegularExpression="[\d]{1,}"
+											ErrorMessage="Tarif yang dimasukan tidak sesuai"
+											ValidationGroup="val1"
+										/>                    </td>
+				    </tr>
+				  
+                </table></td>
+              </tr>
+              <tr>
+                <td><hr /></td>
+              </tr>
+              <tr>
+                <td><table width="10" border="0" align="center" cellpadding="0" cellspacing="2">
+                    <tr>
+                      <td><com:TButton Text="Simpan" Attributes.onclick = "maskContent();" 
+					  					OnClick="simpanClicked" 
+										CssClass="button_01" 
+										TabIndex="7" ValidationGroup="val" /></td>
+                      <td><!-- <com:TButton Text="Batal" 					  					
+										ButtonType="Reset" 
+										OnClick="batalClicked"
+										CausesValidation="false" 
+										CssClass="button_01" 
+										TabIndex="5" /> --></td>
+                      <td><com:TButton Text="Keluar" Attributes.onclick = "maskContent();" 
+					  			OnClick="keluarClicked" 
+								CausesValidation="false" 
+								CssClass="button_01" 
+								TabIndex="8" />
+					  </td>
+                    </tr>
+                </table></td>
+              </tr>
+          </table>
+</com:TContent>

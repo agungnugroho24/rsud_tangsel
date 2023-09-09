@@ -1,0 +1,1174 @@
+<%@ MasterClass="Application.layouts.MainLayout" %>
+
+<com:TContent ID="Main">
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td height="18"></td>
+  </tr>
+  <tr>
+    <td><table width="10"  border="0" align="center" cellpadding="0" cellspacing="0">
+      <tr>
+        <td width="1%"><table width="100%"  border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="1%"><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndAppTopLft.png'%>" width="15" height="15" /></td>
+            <td width="99%" background="<%=$this->Page->Theme->BaseUrl.'/images/bkg3.png'%>">&nbsp;</td>
+            <td width="1%"><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndAppTopRgt.png'%>" width="15" height="15" /></td>
+          </tr>
+        </table></td>
+        </tr>
+      <tr>
+        <td valign="top" background="<%=$this->Page->Theme->BaseUrl.'/images/bkg3.png'%>"><table width="10" border="0" cellpadding="0" cellspacing="0">
+          <tr>
+            <td><table width="15" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+            </table></td>
+            <td><table width="750" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td class="text_08">Kasir Rawat Jalan </td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td><table width="10" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndTopLft.png'%>" width="15" height="15" /></td>
+          <td><table width="720" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td><table width="720" border="0" align="right" cellpadding="0" cellspacing="0">
+                    <tr>
+                      <td width="174" class="text_07">&nbsp;Pembayaran Rawat Jalan </td>
+					  <td width="546" background="<%=$this->Page->Theme->BaseUrl.'/images/rndBkgTop.png'%>"></td>
+                      </tr>
+                </table></td>
+              </tr>
+          </table></td>
+          <td><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndTopRgt.png'%>" width="15" height="15" /></td>
+        </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="10" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td background="<%=$this->Page->Theme->BaseUrl.'/images/rndBkgLft.png'%>"><table width="15" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+          </table></td>
+          <td><table width="720" border="0" cellspacing="0" cellpadding="0">
+		  <tr height="15px">
+		  	<td></td>
+		  </tr>
+              <tr>			  
+                <td>
+				<com:TActiveLabel ID="showSql" /> <com:TJavascriptLogger Visible="false"/>
+				<table width="700" align="center" border="0">
+			  		<tr>
+						<td align="center">
+                        
+                        <com:TActivePanel GroupingText="Pencarian No. Register Pasien" Width="680px" DefaultButton="bayarBtn">
+							<table width="100%"  border="0" align="left">
+                            	<tr>
+							     <td colspan="3">
+                                 	<com:TActivePanel ID="firstPanel">
+                                    <table width="100%"  border="0" align="left">
+                                    	<com:TControl Visible="false">
+                                        <tr>
+                                            <td width="22%"><span>&#8226;</span>&nbsp;&nbsp;Cito</td>
+                                            <td width="1%">:</td>
+                                            <td width="77%">
+                                                <com:TActiveCheckBox ID="citoCheck" AutoPostBack="true" CausesValidation="false"/>									</td>
+                                          </tr>
+                                          </com:TControl>
+                                           <tr>
+                                            <td width="22%"><span>&#8226;</span>&nbsp;&nbsp;Jenis Pasien</td>
+                                            <td width="1%">:</td>
+                                            <td width="77%">
+                                                <com:TActiveRadioButtonList
+                                                      ID="modeInput" 
+                                                      RepeatDirection="Horizontal" 
+                                                      AutoPostBack="true" 
+                                                      SelectedIndex="0" 
+                                                      CausesValidation="false" 
+                                                      OnSelectedIndexChanged="modeInputChanged"
+                                                      OnCallback="cmCallBack">
+                                                    <com:TListItem Text="Rawat Jalan" Value="0" />
+                                                    <com:TListItem Text="Rawat Inap (Tunai)" Value="1" />
+                                                    <com:TListItem Text="Pasien Luar" Value="2" />
+                                                    <com:TListItem Text="Pasien Luar (Karyawan)" Value="3" />
+                                                </com:TActiveRadioButtonList>								</td>
+                                         </tr>
+                                         
+										 <tr>
+                                            <td colspan="3">
+												<com:TActivePanel ID="jnsTransBebasPanel">
+												<table width="100%" >
+													<tr>
+														<td width="21%"><span>&#8226;</span>&nbsp;&nbsp;Jenis Transaksi</td>
+														<td width="1%">:</td>
+														<td width="78%">
+															<com:TActiveRadioButtonList
+																  ID="jnsTransBebas" 
+																  RepeatDirection="Horizontal" 
+																  AutoPostBack="true" 
+																  CausesValidation="false" 
+																  OnSelectedIndexChanged="jnsTransBebasChanged"
+																  OnCallback="cmCallBack">																
+																<com:TListItem Text="Non Apotik" Value="0" Attributes.style="display:none;" />
+                                                                <com:TListItem Text="Apotik" Value="1" />
+                                                                <com:TListItem Text="Laboratorium" Value="2" />
+                                                                <com:TListItem Text="Radiologi" Value="3" />
+                                                                <com:TListItem Text="Fisio" Value="4" />
+															</com:TActiveRadioButtonList>								</td>
+													</tr>
+												</table>
+												</com:TActivePanel>
+											</td>
+                                          </tr>
+										  
+                                          
+                                           <tr>
+                                             <td><span>&#8226;</span>&nbsp;&nbsp;No. RM </td>
+                                             <td>:</td>
+                                             <td>
+                                                <com:TActiveTextBox 
+                                                      CssClass="input_text" 
+                                                      ID="notrans" 
+                                                      AutoPostBack="true"													   
+                                                      MaxLength="7"
+                                                      OnTextChanged="checkRegister" 
+                                                      OnCallback="cmCallBack"								  
+                                                      ToolTip="No. Register Pasien" 
+                                                      Width="50px" />
+                                                  
+                                                  &nbsp;
+                                                  <com:TActiveButton ID="cariPasBtn" Text="Cari Pasien" >
+                                                        <prop:ClientSide
+                                                       OnLoading="Element.show('loading');"/>
+                                                    </com:TActiveButton> 
+                                                    
+                                                  &nbsp;
+                                                  <com:TActiveLabel ID="errMsg" ForeColor="#FF0000" />								 </td>
+                                           </tr>
+                                    </table> 
+                                    </com:TActivePanel>
+                                 </td>
+                               </tr>
+							   
+							   
+                               <tr>
+							     <td colspan="3">
+                                 	<com:TActivePanel ID="noTransPanel">
+                                        <table width="100%"  border="0" align="left">
+                                           <tr>
+                                             <td width="22%"><span>&#8226;</span>&nbsp;&nbsp;No. Transaksi</td>
+                                             <td width="1%">:</td>
+                                             <td width="77%">
+                                                <com:TActiveDropDownList 
+                                                    ID="DDtrans" 
+                                                    PromptText ="--Silakan Pilih--"
+                                                    PromptValue ="empty"	
+                                                    Width="250px" 
+                                                    DataTextField="nama" 
+                                                    DataValueField="no_trans" 
+                                                    OnSelectedIndexChanged="DDtransChanged"
+                                                    OnCallback="DDtransCallBack" 
+                                                    AutoPostBack="true" 
+                                                    CausesValidation="false" />
+                                                    
+                                                 <com:TRequiredFieldValidator 
+                                                    ControlToValidate="DDtrans" 											 
+                                                    ErrorMessage="Anda harus memilih No. Transaksi"
+                                                    Display="Dynamic" 
+                                                    ValidationGroup="cari"
+                                                    InitialValue="empty"/>
+                                            </td>
+                                           </tr>
+                                        </table>
+                                    </com:TActivePanel>
+                                 </td>
+							     </tr>
+                               
+                               <tr>
+							     <td colspan="3">
+                                 	<com:TActivePanel ID="pasBebasPanel">
+                                        <table width="100%"  border="0" align="left">
+                                           <tr>
+                                             <td width="22%"><span>&#8226;</span>&nbsp;&nbsp;Nama Pasien</td>
+                                             <td width="1%">:</td>
+                                             <td width="77%">
+                                                <com:TActiveTextBox ID="nama" Width="130px" ReadOnly="true" />
+                                                
+                                                <com:TActiveTextBox 
+                                                      CssClass="input_text" 
+                                                      ID="nmPas" 											  
+                                                      ToolTip="Nama Pasien" 
+                                                      Width="150px"
+                                                      AutoPostBack="true"
+                                                      CausesValidation="false"
+                                                      OnTextChanged="nmPasChanged"
+                                                      OnCallback="DDtransCallBack"
+                                                       />
+													   
+												<com:TActiveCheckBox ID="kryCheck"  Text="Tanpa Adm" AutoPostBack="true" CausesValidation="false" OnCheckedChanged="kryChanged"/>
+                                            </td>
+                                           </tr>
+                                           <tr>
+                                             <td width="22%"><span>&#8226;</span>&nbsp;&nbsp;Kelompok Penjamin</td>
+                                             <td width="1%">:</td>
+                                             <td width="77%">
+                                                <com:TActiveTextBox ID="kelPasien" Width="130px" ReadOnly="true" />&nbsp;&nbsp;&nbsp;
+                                                <com:TActiveLabel ID="perusTxt" Text="Perusahaan Asuransi"/> &nbsp; <com:TActiveTextBox ID="perus" Width="130px" ReadOnly="true" />
+                                            </td>
+                                           </tr>
+                                        </table>
+                                    </com:TActivePanel>
+                                 </td>
+							     </tr>
+                                 
+							</table>
+							</com:TActivePanel>
+                        </td>
+                        </tr>
+                        
+                    <tr>
+                <td align="center">
+                <!-- ---------------------- Detail Panel ----------------------  -->
+                <com:TActivePanel 
+                	ID="detailPanel" 
+                    GroupingText="Detail Transaksi" 
+                    Width="680px">
+                <table width="100%"  border="0" align="left">
+                   <tr>
+                    <td colspan="3">
+                    	<com:TActivePanel ID="detailRwtJalanPanel">
+                    	<table width="100%">
+                        	<tr>
+                                <td width="29%"><span>&#8226;</span>&nbsp;&nbsp;Transaksi Rawat Jalan</td>
+                                <td width="1%"></td>
+                                <td width="70%">&nbsp;</td>
+                              </tr>
+                              
+                              <tr>
+                                <td colspan="3" align="center">
+                                    <com:TActiveLabel ID="tdkMsg" Font.Size="12px" ForeColor="#FF0000" />					</td>
+                              </tr>
+                              <tr>
+                                <td colspan="3" align="center"><!-- ---------------------- datagrid u/ tindakan rwtjln ----------------------  -->
+                                    <com:XActiveDataGrid
+                                        ID="admRwtJlnGrid"
+                                        DataKeyField="id"
+                                        AutoGenerateColumns="false"	
+                                        AllowPaging="false"
+                                        AllowCustomPaging="false"
+                                        AllowSorting="false"
+                                        Width="630px"					
+                                        PageSize="30"
+                                        PagerStyle.Mode="Numeric"			
+                                        PagerStyle.Font.Name="Arial"
+                                        PagerStyle.Font.Size="12"
+                                        PagerStyle.HorizontalAlign="Right"			
+                                        GridLines="None"
+                                        CellSpacing="1"
+                                        CellPadding="2"
+                                        BackColor="#000000"								
+                                        HeaderStyle.CssClass="headerstyle"
+                                        ItemStyle.CssClass="itemstyle"
+                                        AlternatingItemStyle.CssClass="itemstyle2"	
+                                        OnPagerCreated="pagerCreated"			
+                                        OnSortCommand="sortGrid"
+                                        OnEditCommand="dtgSomeData_EditCommand"
+                                        OnUpdateCommand="dtgSomeData_UpdateCommand"
+                                        OnCancelCommand="dtgSomeData_CancelCommand">
+                                      
+                                      <com:XActiveTemplateColumn 
+                                            HeaderText="Nama Tindakan" 
+                                            SortExpression="nama" 
+                                            ItemStyle.Width="200px"
+                                            ItemStyle.HorizontalAlign="Center" >									
+                                          <prop:ItemTemplate>									
+                                            <%% 
+                                                echo $this->Parent->Data['nama'];
+                                            %>					
+                                          </prop:ItemTemplate>
+                                        </com:XActiveTemplateColumn>
+                                     
+                                     <com:XActiveTemplateColumn 
+                                            HeaderText="Jumlah Bayar" 
+                                            SortExpression="total" 
+                                            ItemStyle.Width="200px"
+                                            ItemStyle.HorizontalAlign="Right" >									
+                                          <prop:ItemTemplate>									
+                                            <%% 
+                                                echo number_format($this->Parent->Data['total'],'0',',','.');
+                                            %>					
+                                          </prop:ItemTemplate>
+                                        </com:XActiveTemplateColumn>
+                                        
+                                        <com:XActiveBoundColumn 
+                                            ID="discColumn"
+                                            SortExpression="disc"
+                                            HeaderText="Discount"
+                                            ItemStyle.Width="75px"
+                                            DataField="disc"
+                                            ItemStyle.HorizontalAlign="Right" />
+                                                    
+                                        <com:XActiveEditCommandColumn
+                                            HeaderText="Edit"
+                                            HeaderStyle.Width="50px"
+                                            UpdateText="Save"
+                                            ItemStyle.HorizontalAlign="Center"
+                                            ButtonType="LinkButton"
+                                            ItemStyle.Font.Italic="false"
+                                            />	
+                                    </com:XActiveDataGrid>                    </td>
+                              </tr>
+                              <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                              </tr>
+                              
+                        </table>
+                        </com:TActivePanel>
+                    </td>
+                  </tr>
+                  
+                  
+                  <tr>
+                    <td colspan="3">
+                    	<com:TActivePanel ID="detailLabPanel">
+                    	<table width="100%">
+                        	<tr>
+                                <td colspan="3"><span>&#8226;</span>&nbsp;&nbsp;Transaksi Tindakan Laboratorium</td>
+                              </tr>
+                              
+                              <tr>
+                                <td colspan="3" align="center">
+                                    <com:TActiveLabel ID="labMsg" Font.Size="12px" ForeColor="#FF0000" />					</td>
+                              </tr>
+                              <tr>
+                                <td colspan="3" align="center"><!-- ---------------------- datagrid u/ tindakan rwtjln ----------------------  -->
+                                    <com:XActiveDataGrid
+                                        ID="labGrid"
+                                        DataKeyField="id"
+                                        AutoGenerateColumns="false"	
+                                        AllowPaging="false"
+                                        AllowCustomPaging="false"
+                                        AllowSorting="false"
+                                        Width="630px"					
+                                        PageSize="30"
+                                        PagerStyle.Mode="Numeric"			
+                                        PagerStyle.Font.Name="Arial"
+                                        PagerStyle.Font.Size="12"
+                                        PagerStyle.HorizontalAlign="Right"			
+                                        GridLines="None"
+                                        CellSpacing="1"
+                                        CellPadding="2"
+                                        BackColor="#000000"								
+                                        HeaderStyle.CssClass="headerstyle"
+                                        ItemStyle.CssClass="itemstyle"
+                                        AlternatingItemStyle.CssClass="itemstyle2"	
+                                        OnPagerCreated="pagerCreated"			
+                                        OnSortCommand="sortGrid"
+                                        OnEditCommand="dtgSomeData_EditCommand"
+                                        OnUpdateCommand="dtgSomeData_UpdateCommand"
+                                        OnCancelCommand="dtgSomeData_CancelCommand">
+                                      
+                                      <com:XActiveTemplateColumn 
+                                            HeaderText="Nama Tindakan" 
+                                            SortExpression="nm_tdk" 
+                                            ItemStyle.Width="200px"
+                                            ItemStyle.HorizontalAlign="Center" >									
+                                          <prop:ItemTemplate>									
+                                            <%% 
+                                            	if($this->Parent->Data['id_tindakan'] == 'PDT')
+                                                {
+                                                	echo 'Pendaftaran';
+                                                }	
+                                                else
+                                                {
+                                                	echo $this->Parent->Data['nm_tdk'];
+                                                }
+                                                
+                                            %>					
+                                          </prop:ItemTemplate>
+                                        </com:XActiveTemplateColumn>
+                                        
+                                        <com:XActiveTemplateColumn 
+                                            HeaderText="Kelompok Tindakan" 
+                                            SortExpression="kel_tdk" 
+                                            ItemStyle.Width="200px"
+                                            ItemStyle.HorizontalAlign="Center" >									
+                                          <prop:ItemTemplate>									
+                                            <%% 
+                                                echo $this->Parent->Data['kel_tdk'];
+                                            %>					
+                                          </prop:ItemTemplate>
+                                        </com:XActiveTemplateColumn>
+                                        
+                                        <com:XActiveTemplateColumn 
+                                            HeaderText="Kategori Tindakan" 
+                                            SortExpression="kateg_tdk" 
+                                            ItemStyle.Width="200px"
+                                            ItemStyle.HorizontalAlign="Center" >									
+                                          <prop:ItemTemplate>									
+                                            <%% 
+                                                echo $this->Parent->Data['kateg_tdk'];
+                                            %>					
+                                          </prop:ItemTemplate>
+                                        </com:XActiveTemplateColumn>
+                                     
+                                     <com:XActiveTemplateColumn 
+                                            HeaderText="Jumlah Bayar" 
+                                            SortExpression="harga" 
+                                            ItemStyle.Width="200px"
+                                            ItemStyle.HorizontalAlign="Right" >									
+                                          <prop:ItemTemplate>									
+                                            <%% 
+                                                echo number_format($this->Parent->Data['harga'],'0',',','.');
+                                            %>					
+                                          </prop:ItemTemplate>
+                                        </com:XActiveTemplateColumn>
+                                    </com:XActiveDataGrid>                    </td>
+                              </tr>
+                              <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                              </tr>
+                              
+                        </table>
+                        </com:TActivePanel>
+                    </td>
+                  </tr>
+				  
+                  
+                  <tr>
+                    <td colspan="3">
+                    	<com:TActivePanel ID="detailRadPanel">
+                    	<table width="100%">
+                        	<tr>
+                                <td colspan="3"><span>&#8226;</span>&nbsp;&nbsp;Transaksi Tindakan Radiologi</td>
+                              </tr>
+                              
+                              <tr>
+                                <td colspan="3" align="center">
+                                    <com:TActiveLabel ID="radMsg" Font.Size="12px" ForeColor="#FF0000" />					</td>
+                              </tr>
+                              <tr>
+                                <td colspan="3" align="center"><!-- ---------------------- datagrid u/ tindakan rwtjln ----------------------  -->
+                                    <com:XActiveDataGrid
+                                        ID="radGrid"
+                                        DataKeyField="id"
+                                        AutoGenerateColumns="false"	
+                                        AllowPaging="false"
+                                        AllowCustomPaging="false"
+                                        AllowSorting="false"
+                                        Width="630px"					
+                                        PageSize="30"
+                                        PagerStyle.Mode="Numeric"			
+                                        PagerStyle.Font.Name="Arial"
+                                        PagerStyle.Font.Size="12"
+                                        PagerStyle.HorizontalAlign="Right"			
+                                        GridLines="None"
+                                        CellSpacing="1"
+                                        CellPadding="2"
+                                        BackColor="#000000"								
+                                        HeaderStyle.CssClass="headerstyle"
+                                        ItemStyle.CssClass="itemstyle"
+                                        AlternatingItemStyle.CssClass="itemstyle2"	
+                                        OnPagerCreated="pagerCreated"			
+                                        OnSortCommand="sortGrid"
+                                        OnEditCommand="dtgSomeData_EditCommand"
+                                        OnUpdateCommand="dtgSomeData_UpdateCommand"
+                                        OnCancelCommand="dtgSomeData_CancelCommand">
+                                      
+                                      <com:XActiveTemplateColumn 
+                                            HeaderText="Nama Tindakan" 
+                                            SortExpression="nm_tdk" 
+                                            ItemStyle.Width="200px"
+                                            ItemStyle.HorizontalAlign="Center" >									
+                                          <prop:ItemTemplate>									
+                                            <%% 
+                                                if($this->Parent->Data['id_tindakan'] == 'PDT')
+                                                {
+                                                	echo 'Pendaftaran';
+                                                }	
+                                                else
+                                                {
+                                                	echo $this->Parent->Data['nm_tdk'];
+                                                }
+                                            %>					
+                                          </prop:ItemTemplate>
+                                        </com:XActiveTemplateColumn>
+                                        
+                                        <com:XActiveTemplateColumn 
+                                            HeaderText="Kelompok Tindakan" 
+                                            SortExpression="kel_tdk" 
+                                            ItemStyle.Width="200px"
+                                            ItemStyle.HorizontalAlign="Center" >									
+                                          <prop:ItemTemplate>									
+                                            <%% 
+                                                echo $this->Parent->Data['kel_tdk'];
+                                            %>					
+                                          </prop:ItemTemplate>
+                                        </com:XActiveTemplateColumn>
+                                        
+                                        <com:XActiveTemplateColumn 
+                                            HeaderText="Kategori Tindakan" 
+                                            SortExpression="kateg_tdk" 
+                                            ItemStyle.Width="200px"
+                                            ItemStyle.HorizontalAlign="Center" >									
+                                          <prop:ItemTemplate>									
+                                            <%% 
+                                                echo $this->Parent->Data['kateg_tdk'];
+                                            %>					
+                                          </prop:ItemTemplate>
+                                        </com:XActiveTemplateColumn>
+                                     
+                                     <com:XActiveTemplateColumn 
+                                            HeaderText="Ukuran Film" 
+                                            SortExpression="film_size" 
+                                            ItemStyle.Width="200px"
+                                            ItemStyle.HorizontalAlign="Center" >									
+                                          <prop:ItemTemplate>									
+                                            <%% 
+                                            	$ukuran = $this->Parent->Data['film_size'];
+                                                if($ukuran == '0')
+                                                {
+                                                	echo '18 x 24';
+                                                }
+                                                elseif($ukuran == '1')
+                                                {
+                                                	echo '24 x 30';
+                                                }
+                                                elseif($ukuran == '2')
+                                                {
+                                                	echo '30 x 40';
+                                                }
+                                                elseif($ukuran == '3')
+                                                {
+                                                	echo '35 x 35';	
+                                                }
+                                                
+                                            %>					
+                                          </prop:ItemTemplate>
+                                        </com:XActiveTemplateColumn>
+                                        
+                                     <com:XActiveTemplateColumn 
+                                            HeaderText="Jumlah Bayar" 
+                                            SortExpression="harga" 
+                                            ItemStyle.Width="200px"
+                                            ItemStyle.HorizontalAlign="Right" >									
+                                          <prop:ItemTemplate>									
+                                            <%% 
+                                                echo number_format($this->Parent->Data['harga'],'0',',','.');
+                                            %>					
+                                          </prop:ItemTemplate>
+                                        </com:XActiveTemplateColumn>
+                                    </com:XActiveDataGrid>                    </td>
+                              </tr>
+                              <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                              </tr>
+                              
+                        </table>
+                        </com:TActivePanel>
+                    </td>
+                  </tr>
+                  
+                  
+                  <tr>
+                    <td colspan="3">
+                    	<com:TActivePanel ID="detailFisioPanel">
+                    	<table width="100%">
+                        	<tr>
+                                <td width="29%"><span>&#8226;</span>&nbsp;&nbsp;Transaksi Tindakan Fisio</td>
+                                <td width="1%"></td>
+                                <td width="70%">&nbsp;</td>
+                              </tr>
+                              
+                              <tr>
+                                <td colspan="3" align="center">
+                                    <com:TActiveLabel ID="fisioMsg" Font.Size="12px" ForeColor="#FF0000" />					</td>
+                              </tr>
+                              <tr>
+                                <td colspan="3" align="center"><!-- ---------------------- datagrid u/ tindakan rwtjln ----------------------  -->
+                                    <com:XActiveDataGrid
+                                        ID="fisioGrid"
+                                        DataKeyField="id"
+                                        AutoGenerateColumns="false"	
+                                        AllowPaging="false"
+                                        AllowCustomPaging="false"
+                                        AllowSorting="false"
+                                        Width="630px"					
+                                        PageSize="30"
+                                        PagerStyle.Mode="Numeric"			
+                                        PagerStyle.Font.Name="Arial"
+                                        PagerStyle.Font.Size="12"
+                                        PagerStyle.HorizontalAlign="Right"			
+                                        GridLines="None"
+                                        CellSpacing="1"
+                                        CellPadding="2"
+                                        BackColor="#000000"								
+                                        HeaderStyle.CssClass="headerstyle"
+                                        ItemStyle.CssClass="itemstyle"
+                                        AlternatingItemStyle.CssClass="itemstyle2"	
+                                        OnPagerCreated="pagerCreated"			
+                                        OnSortCommand="sortGrid"
+                                        OnEditCommand="dtgSomeData_EditCommand"
+                                        OnUpdateCommand="dtgSomeData_UpdateCommand"
+                                        OnCancelCommand="dtgSomeData_CancelCommand">
+                                      
+                                      <com:XActiveTemplateColumn 
+                                            HeaderText="Nama Tindakan" 
+                                            SortExpression="nm_tdk" 
+                                            ItemStyle.Width="200px"
+                                            ItemStyle.HorizontalAlign="Center" >									
+                                          <prop:ItemTemplate>									
+                                            <%% 
+                                                if($this->Parent->Data['id_tindakan'] == 'PDT')
+                                                {
+                                                	echo 'Pendaftaran';
+                                                }	
+                                                else
+                                                {
+                                                	echo $this->Parent->Data['nm_tdk'];
+                                                }
+                                            %>					
+                                          </prop:ItemTemplate>
+                                        </com:XActiveTemplateColumn>
+                                        
+                                        <com:XActiveTemplateColumn 
+                                            HeaderText="Kelompok Tindakan" 
+                                            SortExpression="kel_tdk" 
+                                            ItemStyle.Width="200px"
+                                            ItemStyle.HorizontalAlign="Center" >									
+                                          <prop:ItemTemplate>									
+                                            <%% 
+                                                echo $this->Parent->Data['kel_tdk'];
+                                            %>					
+                                          </prop:ItemTemplate>
+                                        </com:XActiveTemplateColumn>
+                                        
+                                        <com:XActiveTemplateColumn 
+                                            HeaderText="Kategori Tindakan" 
+                                            SortExpression="kateg_tdk" 
+                                            ItemStyle.Width="200px"
+                                            ItemStyle.HorizontalAlign="Center" >									
+                                          <prop:ItemTemplate>									
+                                            <%% 
+                                                echo $this->Parent->Data['kateg_tdk'];
+                                            %>					
+                                          </prop:ItemTemplate>
+                                        </com:XActiveTemplateColumn>
+                                     
+                                     <com:XActiveTemplateColumn 
+                                            HeaderText="Jumlah Bayar" 
+                                            SortExpression="harga" 
+                                            ItemStyle.Width="200px"
+                                            ItemStyle.HorizontalAlign="Right" >									
+                                          <prop:ItemTemplate>									
+                                            <%% 
+                                                echo number_format($this->Parent->Data['harga'],'0',',','.');
+                                            %>					
+                                          </prop:ItemTemplate>
+                                        </com:XActiveTemplateColumn>
+                                    </com:XActiveDataGrid>                    </td>
+                              </tr>
+                              <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                              </tr>
+                              
+                        </table>
+                        </com:TActivePanel>
+                    </td>
+                  </tr>
+                  
+				  <tr>
+                    <td colspan="3">
+                    	<com:TActivePanel ID="detailApotikPanel">
+                    	<table width="100%">
+                              <tr>
+                                <td><span>&#8226;</span>&nbsp;&nbsp;Transaksi Apotik </td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                              </tr>
+                               <tr>
+                                <td colspan="3" align="center">
+                                    <com:TActiveLabel ID="apotikMsg" Font.Size="12px" ForeColor="#FF0000"/>					</td>
+                              </tr>
+                               <tr>
+                                <td colspan="3" align="center">
+                                    <!-- ---------------------- datagrid daftar u/ transaksi apotik ----------------------  -->
+                                    <com:XActiveDataGrid
+                                        ID="apotikRwtJlnGrid"
+                                        DataKeyField="id"
+                                        AutoGenerateColumns="false"	
+                                        AllowPaging="false"
+                                        AllowCustomPaging="false"
+                                        AllowSorting="false"
+                                        Width="630px"					
+                                        PageSize="30"
+                                        PagerStyle.Mode="Numeric"			
+                                        PagerStyle.Font.Name="Arial"
+                                        PagerStyle.Font.Size="12"
+                                        PagerStyle.HorizontalAlign="Right"			
+                                        GridLines="None"
+                                        CellSpacing="1"
+                                        CellPadding="2"
+                                        BackColor="#000000"								
+                                        HeaderStyle.CssClass="headerstyle"
+                                        ItemStyle.CssClass="itemstyle"
+                                        AlternatingItemStyle.CssClass="itemstyle2"	
+                                        OnPagerCreated="pagerCreated"			
+                                        OnSortCommand="sortGrid">
+                                      <com:XActiveTemplateColumn 
+                                            HeaderText="Tanggal Transaksi" 
+                                            SortExpression="tgl" 
+                                            ItemStyle.Width="100px"
+                                            ItemStyle.HorizontalAlign="Center" >									
+                                          <prop:ItemTemplate>									
+                                            <%% 
+                                                $c=substr($this->Parent->Data['tgl'],0,4);
+                                                $b=substr($this->Parent->Data['tgl'],5,2);
+                                                $a=substr($this->Parent->Data['tgl'],8,2);
+                                                $d = $a . '-' . $b . '-' .$c;
+                                                echo $d;
+                                            %>					
+                                          </prop:ItemTemplate>
+                                        </com:XActiveTemplateColumn>
+                                      
+                                      <com:XActiveTemplateColumn 
+                                            HeaderText="Jenis Racik" 
+                                            SortExpression="st_racik" 
+                                            ItemStyle.Width="100px"
+                                            ItemStyle.HorizontalAlign="Center" >									
+                                              <prop:ItemTemplate>									
+                                                <%% 										
+                                                   $st_imunisasi = $this->Parent->DataItem['st_imunisasi'];
+                                                    $id_kel_imunisasi = $this->Parent->DataItem['id_kel_imunisasi'];
+                                                    if($st_imunisasi=='0')
+                                                    {
+                                                        $st_racik = $this->Parent->DataItem['st_racik'];
+                                                        $id_kel_racik = $this->Parent->DataItem['id_kel_racik'];
+                                                        if($st_racik=='0')
+                                                        {
+                                                            echo 'Non Racikan';
+                                                        }
+                                                        else
+                                                        {
+                                                            echo 'Racikan '.$id_kel_racik;
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        echo 'Imunisasi '.ImunisasiRecord::finder()->findByPk($id_kel_imunisasi)->nama;
+                                                    }
+                                                %>
+                                              </prop:ItemTemplate>
+                                        </com:XActiveTemplateColumn>
+                                        
+                                      <com:XActiveTemplateColumn 
+                                            HeaderText="Nama Obat" 
+                                            SortExpression="nama" 
+                                            ItemStyle.Width="200px"
+                                            ItemStyle.HorizontalAlign="Center" >									
+                                              <prop:ItemTemplate>									
+                                                <%% 
+                                                    $idObat = $this->Parent->DataItem['id_obat'];
+                                                    echo ObatRecord::finder()->findByPk($idObat)->nama;
+                                                %>
+                                              </prop:ItemTemplate>
+                                        </com:XActiveTemplateColumn>
+                                      
+                                      <com:XActiveTemplateColumn 
+                                            HeaderText="Jumlah Bayar" 
+                                            SortExpression="total" 
+                                            ItemStyle.Width="100px"
+                                            ItemStyle.HorizontalAlign="Right" >									
+                                          <prop:ItemTemplate>									
+                                            <%% 
+                                                echo number_format($this->Parent->Data['total'],'0',',','.');
+                                            %>					
+                                          </prop:ItemTemplate>
+                                        </com:XActiveTemplateColumn>
+                                      </com:XActiveDataGrid>
+                              		<br/>
+                                    
+                                    <com:XActiveDataGrid
+                                        ID="apotikBhpRwtJlnGrid"
+                                        DataKeyField="id"
+                                        AutoGenerateColumns="false"	
+                                        AllowPaging="false"
+                                        AllowCustomPaging="false"
+                                        AllowSorting="false"
+                                        Width="630px"					
+                                        PageSize="30"
+                                        PagerStyle.Mode="Numeric"			
+                                        PagerStyle.Font.Name="Arial"
+                                        PagerStyle.Font.Size="12"
+                                        PagerStyle.HorizontalAlign="Right"			
+                                        GridLines="None"
+                                        CellSpacing="1"
+                                        CellPadding="2"
+                                        BackColor="#000000"								
+                                        HeaderStyle.CssClass="headerstyle"
+                                        ItemStyle.CssClass="itemstyle"
+                                        AlternatingItemStyle.CssClass="itemstyle2"	
+                                        OnPagerCreated="pagerCreated"			
+                                        OnSortCommand="sortGrid">
+                                      
+                                      <com:XActiveTemplateColumn 
+                                            HeaderText="Tanggal Transaksi" 
+                                            SortExpression="tgl" 
+                                            ItemStyle.Width="100px"
+                                            ItemStyle.HorizontalAlign="Center" >									
+                                          <prop:ItemTemplate>									
+                                            <%% 
+                                                $c=substr($this->Parent->Data['tgl'],0,4);
+                                                $b=substr($this->Parent->Data['tgl'],5,2);
+                                                $a=substr($this->Parent->Data['tgl'],8,2);
+                                                $d = $a . '-' . $b . '-' .$c;
+                                                echo $d;
+                                            %>					
+                                          </prop:ItemTemplate>
+                                        </com:XActiveTemplateColumn>
+                                        
+                                      <com:XActiveTemplateColumn 
+                                            HeaderText="Nama Tindakan" 
+                                            SortExpression="nama_bhp" 
+                                            ItemStyle.Width="200px"
+                                            ItemStyle.HorizontalAlign="Center" >									
+                                              <prop:ItemTemplate>									
+                                                <%% 
+                                                    $idBhp = $this->Parent->DataItem['id_bhp'];
+                                                    echo ObatBhpRecord::finder()->findByPk($idBhp)->nama;
+                                                %>
+                                              </prop:ItemTemplate>
+                                        </com:XActiveTemplateColumn>
+                                      
+                                      <com:XActiveTemplateColumn 
+                                            HeaderText="Jumlah BHP" 
+                                            SortExpression="bhp" 
+                                            ItemStyle.Width="100px"
+                                            ItemStyle.HorizontalAlign="Right" >									
+                                          <prop:ItemTemplate>									
+                                            <%% 
+                                                echo number_format($this->Parent->Data['bhp'],'0',',','.');
+                                            %>					
+                                          </prop:ItemTemplate>
+                                        </com:XActiveTemplateColumn>
+                                      </com:XActiveDataGrid>	
+                              	</td>
+                              </tr>
+                        </table>
+                        </com:TActivePanel>
+                  	</td>
+                  </tr>
+				  
+				  <tr>
+                    <td colspan="3">
+                    	<com:TActivePanel ID="detailAmbulanPanel">
+                    	<table width="100%">
+                              <tr>
+                                <td width="29%">&nbsp;</td>
+                                <td width="1%">&nbsp;</td>
+                                <td width="70%">&nbsp;</td>
+                              </tr>
+                              <tr>
+                                <td><span>&#8226;</span>&nbsp;&nbsp;Transaksi Ambulan </td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                              </tr>
+                               <tr>
+                                <td colspan="3" align="center">
+                                    <com:TActiveLabel ID="ambulanMsg" Font.Size="12px" ForeColor="#FF0000"/>					</td>
+                              </tr>
+                               <tr>
+                                <td colspan="3" align="center">
+                                    <!-- ---------------------- datagrid daftar u/ transaksi apotik ----------------------  -->
+                                    <com:XActiveDataGrid
+                                        ID="ambulanRwtJlnGrid"
+                                        DataKeyField="id"
+                                        AutoGenerateColumns="false"	
+                                        AllowPaging="false"
+                                        AllowCustomPaging="false"
+                                        AllowSorting="false"
+                                        Width="630px"					
+                                        PageSize="30"
+                                        PagerStyle.Mode="Numeric"			
+                                        PagerStyle.Font.Name="Arial"
+                                        PagerStyle.Font.Size="12"
+                                        PagerStyle.HorizontalAlign="Right"			
+                                        GridLines="None"
+                                        CellSpacing="1"
+                                        CellPadding="2"
+                                        BackColor="#000000"								
+                                        HeaderStyle.CssClass="headerstyle"
+                                        ItemStyle.CssClass="itemstyle"
+                                        AlternatingItemStyle.CssClass="itemstyle2"	
+                                        OnPagerCreated="pagerCreated"			
+                                        OnSortCommand="sortGrid">
+                                      <com:XActiveTemplateColumn 
+                                            HeaderText="Tanggal Transaksi" 
+                                            SortExpression="tgl" 
+                                            ItemStyle.Width="100px"
+                                            ItemStyle.HorizontalAlign="Center" >									
+                                          <prop:ItemTemplate>									
+                                            <%% 
+                                                $c=substr($this->Parent->Data['tgl'],0,4);
+                                                $b=substr($this->Parent->Data['tgl'],5,2);
+                                                $a=substr($this->Parent->Data['tgl'],8,2);
+                                                $d = $a . '-' . $b . '-' .$c;
+                                                echo $d;
+                                            %>					
+                                          </prop:ItemTemplate>
+                                        </com:XActiveTemplateColumn>
+                                      
+                                      <com:XActiveBoundColumn
+                                            SortExpression="tujuan"
+                                            HeaderText="Tujuan"
+                                            ItemStyle.Width="100px"
+                                            DataField="tujuan" />
+                                        
+                                      <com:XActiveBoundColumn
+                                            SortExpression="catatan"
+                                            HeaderText="Catatan"
+                                            ItemStyle.Width="100px"
+                                            DataField="catatan" />
+                                      
+                                      <com:XActiveTemplateColumn 
+                                            HeaderText="Jumlah Bayar" 
+                                            SortExpression="tarif" 
+                                            ItemStyle.Width="100px"
+                                            ItemStyle.HorizontalAlign="Right" >									
+                                          <prop:ItemTemplate>									
+                                            <%% 
+                                                echo number_format($this->Parent->Data['tarif'],'0',',','.');
+                                            %>					
+                                          </prop:ItemTemplate>
+                                        </com:XActiveTemplateColumn>
+                                      </com:XActiveDataGrid>					</td>
+                              </tr>
+                        </table>
+                        </com:TActivePanel>
+                  	</td>
+                  </tr>
+                </table>
+                </com:TActivePanel>
+                
+                </td>
+              </tr>
+              
+              <tr align="center">
+                 <td colspan="3">
+                    <com:TActivePanel ID="tipeBayarKaryawanPanel" GroupingText="Tipe Pembayaran Karyawan" Width="680px">
+                        <table width="100%"  border="0" align="left">
+                           <tr>
+                             <td width="153"><span>&#8226;</span>&nbsp;&nbsp;Tipe Pembayaran</td>
+                             <td width="10">:</td>
+                             <td width="517">
+                             	<com:TActiveRadioButtonList
+                                          ID="modeBayarKaryawan" 
+                                          RepeatDirection="Horizontal" 
+										  AutoPostBack="true" 
+										  SelectedIndex="1" 
+										  CausesValidation="false"
+                                          OnSelectedIndexChanged="modeBayarKaryawanChanged"
+                                          OnCallback="modeBayarKaryawanCallBack">
+                                    <com:TListItem Text="Kredit" Value="0" />
+                                    <com:TListItem Text="Tunai" Value="1" />
+                                  </com:TActiveRadioButtonList>
+                             </td>
+                           </tr>
+                        </table>
+                    </com:TActivePanel>
+                 </td>
+                 </tr>
+                                 
+               <tr align="center">
+							     <td colspan="3">
+                                 	<com:TActivePanel ID="jmlPanel" GroupingText="Pembayaran" Width="680px">
+                                        <table width="100%"  border="0" align="left">
+                                           <tr>
+                                             <td><span>&#8226;</span>&nbsp;&nbsp;Cara Pembayaran</td>
+                                             <td>:</td>
+                                             <td>
+                                             	<com:TActiveRadioButtonList
+                                                      ID="caraBayar" 
+                                                      RepeatDirection="Horizontal" 
+                                                      AutoPostBack="true" 
+                                                      SelectedValue="1" 
+                                                      CausesValidation="false" 
+                                                      OnSelectedIndexChanged="caraBayarChanged">
+                                                    <com:TListItem Text="Tunai" Value="1" />
+                                                    <com:TListItem Text="Debit Card" Value="2" />
+                                                    <com:TListItem Text="Credit Card" Value="3" />
+                                                    <com:TListItem Text="Jamper" Value="4" />
+                                                    <com:TListItem Text="NV (Non Value)" Value="5" />
+                                                </com:TActiveRadioButtonList>                                             </td>
+                                           </tr>
+                                           <tr>
+                                             <td colspan="3">
+                                             	
+                                                <com:TActivePanel ID="noRefPanel">
+                                                	<table width="100%">
+                                                    	<tr>
+                                                             <td width="22%"><span>&#8226;</span>&nbsp;&nbsp;No. Referensi</td>
+                                                          <td width="2%">:</td>
+                                                      <td width="76%">
+                        										<com:TActiveTextBox CssClass="input_text" 
+                                                                  ID="noRef" 													   
+                                                                  MaxLength="15"
+                                                                  Width="150px" />
+                                                                  
+                                                                  <com:TRequiredFieldValidator 
+                                                                    ID="noRefVal"
+                                                                    ControlToValidate="noRef"
+                                                                    ErrorMessage="No. Referensi Harus diisi"
+                                                                    Display="Dynamic" 
+                                                                    ValidationGroup="bayarVal"/>
+                                                             </td>
+                                                        </tr>
+                                                    </table>
+                                                </com:TActivePanel>
+                                             </td>
+                                           </tr>
+                                           <tr>
+                                             <td width="150"><span>&#8226;</span>&nbsp;&nbsp;Jumlah</td>
+                                             <td width="10">:</td>
+                                             <td width="520">
+                                               <com:TActiveLabel ID="jmlShow" />                                            </td>
+                                           </tr>
+                                           <tr>
+                                             <td><span>&#8226;</span>&nbsp;&nbsp;Bayar</td>
+                                             <td>:</td>
+                                             <td>
+                                             	<com:TActiveTextBox CssClass="input_text" 
+												  ID="bayar" 													   
+												  MaxLength="12"											  
+												  ToolTip="jumlah bayar" 
+												  Width="100px" />&nbsp;&nbsp;&nbsp;
+                                                 <com:TActiveButton
+                                                    Text="Bayar" 
+                                                    OnClick="bayarClicked" 
+                                                    OnCallback="bayarCallBack"
+                                                    ID="bayarBtn" 
+                                                    CssClass="button_01"
+                                                    CausesValidation="true"
+                                                    ValidationGroup="bayarVal" 
+                                                    />
+                                                 <com:TButton
+                                                    Text="Detail" 
+                                                    OnClick="detailClicked" 
+                                                    ID="detailBtn" 
+                                                    CssClass="button_01" 
+                                                    Visible="false"
+                                                     />                                             </td>
+                                           </tr>
+                                           <tr>
+                                             <td><span>&#8226;</span>&nbsp;&nbsp;Sisa/Kembalian</td>
+                                             <td>:</td>
+                                             <td>
+                                             	<com:TActiveLabel ID="sisaByr" />&nbsp;<com:TActiveLabel ID="errByr" ForeColor="#FF0000" />                                             </td>
+                                           </tr>
+                                        </table>
+                                    </com:TActivePanel>
+                                 </td>
+							     </tr>
+              <tr>
+			  		<tr>
+			  		  <td align="center">&nbsp;</td>
+			  		  </tr>
+				</table>			</td>
+              </tr>
+			  
+              <tr>
+                <td><table width="10" border="0" align="center" cellpadding="0" cellspacing="2">
+                    <tr>                                        
+                      <td><com:TActiveButton Text="Cetak" 
+					  				   OnClick="cetakClicked"
+									   ID="cetakBtn" 
+									   CausesValidation="false" 
+									   CssClass="button_01" 
+                                        Attributes.onclick = "if(!confirm('Cetak sekarang..?')) return false;">
+					  		<prop:ClientSide
+                                         OnLoading="Element.show('loading');"/>
+                        </com:TActiveButton> 
+                      </td>
+					  <td><com:TActiveButton Text="Batal" 
+					  				   OnClick="batalClicked" 
+									   CausesValidation="false" 
+									   CssClass="button_01" 
+                                       Attributes.onclick = "if(!confirm('Batalkan pengisian data..?')) return false;">
+                                       <prop:ClientSide
+                                         OnLoading="Element.show('loading');"/>
+                        </com:TActiveButton>
+                      </td>				   
+					  <td><com:TActiveButton Text="Keluar" 
+					  				   OnClick="keluarClicked" 
+									   CausesValidation="false" 
+									   CssClass="button_01" 
+                                       Attributes.onclick = "if(!confirm('Keluar sekarang..?')) return false;">
+                    		<prop:ClientSide
+                                         OnLoading="Element.show('loading');"/>
+                        </com:TActiveButton>
+                        </td>
+                    </tr>
+                </table></td>
+              </tr>
+          </table></td>
+          <td background="<%=$this->Page->Theme->BaseUrl.'/images/rndBkgRgt.png'%>"><table width="15" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+          </table></td>
+        </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="10" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndBtmLft.png'%>" width="15" height="15" /></td>
+          <td background="<%=$this->Page->Theme->BaseUrl.'/images/rndBkgBtm.png'%>"><table width="720" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+          </table></td>
+          <td><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndBtmRgt.png'%>" width="15" height="15" /></td>
+        </tr>
+    </table></td>
+  </tr>
+</table></td>
+            <td><table width="15" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+            </table></td>
+          </tr>
+        </table></td>
+      </tr>
+      <tr>
+        <td><table width="100%"  border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="1%"><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndAppBtmLft.png'%>" width="15" height="15" /></td>
+            <td width="99%" background="<%=$this->Page->Theme->BaseUrl.'/images/bkg3.png'%>">&nbsp;</td>
+            <td width="1%"><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndAppBtmRgt.png'%>" width="15" height="15" /></td>
+          </tr>
+        </table></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+</com:TContent>

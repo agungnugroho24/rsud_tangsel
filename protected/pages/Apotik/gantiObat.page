@@ -1,0 +1,118 @@
+<%@ MasterClass="Application.layouts.DialogLayout" %>
+
+<com:TContent ID="isi">
+    <com:TActiveLabel ID="msg"/>
+    <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+    <tr>
+        <td>
+            <table width="100%"  border="0" align="left">	
+              <tr>
+                <td width="150"><span>&#8226;</span>&nbsp;&nbsp;No. Transaksi</td>
+                <td width="5">:</td>
+                <td><com:TActiveLabel ID="txt2"/></td>
+              </tr>		
+              <tr>
+                <td><span>&#8226;</span>&nbsp;&nbsp;Nama Obat</td>
+                <td>:</td>
+                <td>
+                    <com:TAutoComplete
+                        ID="cariNama"
+                        OnSuggest="suggestNames"
+                        OnTextChanged="inputChanged"
+                        OnSuggestionSelected="suggestionSelected1"
+                        ResultPanel.CssClass="acomplete"
+                        Suggestions.DataKeyField="nama" 
+                        CausesValidation="false">
+                        <prop:Suggestions.ItemTemplate>
+                            <li><%# $this->Data['nama'] %></li>
+                        </prop:Suggestions.ItemTemplate>                 
+                    </com:TAutoComplete>
+                    <com:TRequiredFieldValidator
+                            ValidationGroup="Group1"
+                            ControlToValidate="kodeObat"
+                            Text="Data Obat Tidak Ditemukan" />
+					
+                </td>
+                <td>
+                        <com:TActiveTextBox ID="kodeObat" Width="50px" ReadOnly="true" Visible="false" />
+                </td>
+                <td>
+                        <com:TActiveTextBox ID="namaObatHidden" Width="50px" ReadOnly="true" Visible="false" />
+                </td>
+            </tr>	
+            <tr>
+                <td><span>&#8226;</span>&nbsp;&nbsp;Jumlah</td>
+                <td>:</td>
+                <td><com:TActiveTextBox 
+                    ID="jumlahObat"		
+                    CssClass="input_text" 
+                    CausesValidation="false"
+                    AutoPostBack="true"/>
+                </td>
+            </tr>	
+            <tr>
+                <td><span>&#8226;</span>&nbsp;&nbsp;Tipe Obat </td>
+                <td>:</td>
+                <td><com:TActiveLabel ID="tipeObat"/></td>
+            </tr>
+            <tr>
+                <td width="150"><span>&#8226;</span>&nbsp;&nbsp;Kelompok Racikan</td>
+                <td width="5">:</td>
+                <td><com:TActiveLabel ID="txt4"/></td>
+            </tr>
+            <tr>
+                <td><span>&#8226;</span>&nbsp;&nbsp;Keterangan </td>
+                <td>:</td>
+                <td><com:TActiveTextBox 
+                    ID="keterangan"		
+                    Width="200px" 
+                    CssClass="input_text" 
+                    CausesValidation="false"
+                    TextMode="MultiLine"/></td>
+              </tr>
+              <tr>
+                <td colspan="3" align="center">
+                  <com:TActiveButton
+                    ID="tambahBtn"
+                    Text="Update"
+                    CssClass="button_01" 
+                    OnClick="updateClicked"
+                    IsDefaultButton="true"
+                    ValidationGroup="Group1"
+                    Visible="true"
+                    Attributes.OnClick = "if(!confirm('Update Data Sekarang ?')) return false;" >
+                    <prop:ClientSide
+                     OnLoading="maskContent();" 
+                     OnComplete="unmaskContent();"/>
+                </com:TActiveButton>
+                <com:TActiveButton 
+                    Text="Batal" 
+                    OnClick="batalClicked" 
+                    CssClass="button_01" >
+                    <prop:ClientSide
+                     OnLoading="maskContent(); "
+                     OnComplete="unmaskContent();"/>
+                </com:TActiveButton>
+                <com:TActiveButton 
+                    Text="Keluar" 
+                    OnClick="keluarClicked" 
+                    CausesValidation="false" 
+                    CssClass="button_01"
+                    Visible="false"
+                    Attributes.OnClick = "if(!confirm('Keluar sekarang ?')) return false;" >
+                    <prop:ClientSide
+                     OnLoading="maskContent(); "/>
+                </com:TActiveButton>                            
+                </td>
+              </tr>
+			  <tr>
+				<com:TActiveLabel
+					ID="alertStatus"/>
+			  </tr>
+            </table>
+			
+        </td>
+        </tr>
+    </table>
+          
+</com:TContent>

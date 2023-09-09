@@ -1,0 +1,407 @@
+<%@ MasterClass="Application.layouts.MainLayout" %>
+<com:TContent ID="jdMain">
+	Info Stok Aset	
+    
+    <a href="<%= $this->Service->constructUrl('Simak') %>" onclick="maskContent()">
+    <span class="close-btn">
+        <span class="ui-icon ui-icon-circle-close"></span>
+    </span>
+    </a>
+    
+</com:TContent>	
+
+<com:TContent ID="Main"> 
+
+	
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>			  
+                <td>
+				<com:TLabel ID="showSql" />
+				<table width="100%" align="center" border="0">
+			  		<tr>
+						<td align="center"><com:TPanel GroupingText="Laporan Persediaan" DefaultButton="cariBtn" >
+							<table width="100%"  border="0" align="left">
+                              <com:TControl Enabled="false" Visible="false">
+							  <tr>
+                                <td width="127"><span>&#8226;</span>&nbsp;&nbsp;Tujuan</td>
+                                <td width="5">:</td>
+                                <td >
+                                <com:TDropDownList 
+										ID="DDTujuan"
+										PromptText ="--Silakan Pilih--"
+										PromptValue =""																					
+										DataTextField="nama"
+										DataValueField="id" 	
+										ToolTip="Pilih tujuan" 
+										Width="300px" 
+										AutoPostBack="true" 
+										CausesValidation="false" 
+										OnSelectedIndexChanged="DDTujuanChanged"
+										/>                                </td>
+						      </tr>
+							  <tr>
+							    <td><span>&#8226;</span>&nbsp;&nbsp;Jenis Barang </td>
+							    <td>:</td>
+							    <td>
+                                	<com:TDropDownList 
+										ID="DDJenis"
+										PromptText ="--Silakan Pilih--"
+										PromptValue ="empty"											
+										DataTextField="nama"
+										DataValueField="id" 									
+										Width="300px"
+										AutoPostBack="true" 
+										CausesValidation="false"
+										OnSelectedIndexChanged="selectionChangedGol">
+        	                                <com:TListItem Text="Barang Bergerak" Value="1" />
+		                                    <com:TListItem Text="Barang Tidak Bergerak" Value="2" />
+                                        </com:TDropDownList>
+                                </td>
+							    </tr>
+							  <tr>
+							    <td><span>&#8226;</span>&nbsp;&nbsp;Kelompok </td>
+							    <td>:</td>
+							    <td>
+                                	<com:TDropDownList 
+										ID="DDKelompok"
+										PromptText ="--Silakan Pilih--"
+										PromptValue ="empty"											
+										DataTextField="nama"
+										DataValueField="id" 	
+										Width="300px" 
+										AutoPostBack="true" 
+										CausesValidation="false"
+                                        OnSelectedIndexChanged="cariClicked">
+                                        </com:TDropDownList>
+                                </td>
+							    </tr>
+							  <tr>
+							    <td><span>&#8226;</span>&nbsp;&nbsp;Standardisasi </td>
+							    <td>:</td>
+							    <td>
+                                	<com:TDropDownList 
+										ID="DDStandard"
+										PromptText ="--Silakan Pilih--"
+										PromptValue ="empty"											
+										DataTextField="nama"
+										DataValueField="id" 									
+										Width="300px"
+										AutoPostBack="true" 
+										CausesValidation="false"
+										OnSelectedIndexChanged="cariClicked">
+        	                                <com:TListItem Text="Standard" Value="1" />
+		                                    <com:TListItem Text="Non Standard" Value="2" />
+                                        </com:TDropDownList>
+                                </td>
+							    </tr>
+                              </com:TControl>
+                                
+							  <tr>
+                                <td><span>&#8226;</span>&nbsp;&nbsp;Nama Barang </td>
+                                <td>:</td>
+                                <td>
+                                  <com:TTextBox ID="cariNama"
+										Width="300px" 			/>
+&nbsp;
+    <com:TCheckBox 
+										ID="Advance" 
+										Text="Elemen Kata" 
+										Value="1" 
+									/>                                </td>
+							    </tr>
+                              
+                              <com:TControl Enabled="false" Visible="false">  
+                              <tr>
+							    <td><span>&#8226;</span>&nbsp;&nbsp;Tipe</td>
+							    <td>:</td>
+							    <td><com:TRadioButtonList ID="RBtipeBarang" 
+										OnSelectedIndexChanged="chTipe" 
+										AutoPostBack="true"  
+										RepeatDirection="Horizontal">				
+											<com:TListItem Value="0" Text="Generik" />
+											<com:TListItem Value="1" Text="Non Generik" />
+									</com:TRadioButtonList></td>
+							    </tr>
+							  <tr>
+								<td width="127"><span>&#8226;</span>&nbsp;&nbsp;Kode Barang </td>
+								<td width="10">:</td>
+								<td ><com:TTextBox ID="ID" 
+										MaxLength="7"										
+										Width="100px" 
+										ToolTip="Cari berdasarkan ID Barang !!" 
+										TabIndex="1"/></td>
+							  </tr>  
+							  <tr>
+                                <td><span>&#8226;</span>&nbsp;&nbsp;Golongan</td>
+                                <td>:</td>
+                                <td>
+                                  <com:TDropDownList 
+										ID="DDGol"
+										PromptText ="--Silakan Pilih--"
+										PromptValue =""											
+										DataTextField="nama"
+										DataValueField="id" 	
+										ToolTip="Pilih Barang" 
+										TabIndex="2" 
+										Width="300px"
+										AutoPostBack="true" 
+										CausesValidation="false"
+										OnSelectedIndexChanged="selectionChangedGol"/>                                </td>
+							    </tr>
+							  <tr>
+                                <td><span>&#8226;</span>&nbsp;&nbsp;Klasifikasi</td>
+                                <td>:</td>
+                                <td>
+                                  <com:TDropDownList 
+										ID="DDKlas"
+										PromptText ="--Silakan Pilih--"
+										PromptValue =""											
+										DataTextField="jenis"
+										DataValueField="id" 	
+										ToolTip="Pilih Klasifikasi Barang" 
+										TabIndex="2" 
+										Enabled="false" 
+										Width="300px" 
+										AutoPostBack="true" 
+										CausesValidation="false"
+										OnSelectedIndexChanged="selectionChangedKlas"/>                                </td>
+							    </tr>
+							  <tr>
+                                <td><span>&#8226;</span>&nbsp;&nbsp;Derivat</td>
+                                <td>:</td>
+                                <td>
+                                  <com:TDropDownList 
+										ID="DDDerivat"
+										PromptText ="--Silakan Pilih--"
+										PromptValue =""											
+										DataTextField="nama"
+										DataValueField="id" 	
+										ToolTip="Pilih Derivat Barang" 
+										TabIndex="2" 
+										Enabled="false"
+										AutoPostBack="true" 
+										CausesValidation="false"
+										Width="300px"/>                                </td>
+							    </tr>
+							  <tr>
+                                <td><span>&#8226;</span>&nbsp;&nbsp;PBF</td>
+                                <td>:</td>
+                                <td>
+                                  <com:TDropDownList 
+										ID="DDPbf"
+										PromptText ="--Silakan Pilih--"
+										PromptValue =""											
+										DataTextField="nama"
+										DataValueField="id" 	
+										ToolTip="Pilih PBF" 
+										TabIndex="2" 
+										Width="300px" 
+										AutoPostBack="true"										 
+										OnSelectedIndexChanged="DDPbfChanged"/>                                </td>
+							    </tr>
+							  <tr>
+                                <td><span>&#8226;</span>&nbsp;&nbsp;Produsen</td>
+                                <td>:</td>
+                                <td>
+                                  <com:TDropDownList 
+										ID="DDProd"
+										PromptText ="--Silakan Pilih--"
+										PromptValue =""											
+										DataTextField="nama"
+										DataValueField="id" 	
+										ToolTip="Pilih Produsen Barang" 
+										TabIndex="2" 
+										Width="300px"/>                                </td>
+							    </tr>
+							  <tr>
+                                <td><span>&#8226;</span>&nbsp;&nbsp;Satuan</td>
+                                <td>:</td>
+                                <td>
+                                  <com:TDropDownList 
+										ID="DDSat"
+										PromptText ="--Silakan Pilih--"
+										PromptValue =""											
+										DataTextField="nama"
+										DataValueField="kode" 	
+										ToolTip="Pilih Satuan Barang" 
+										TabIndex="2" 
+										Width="300px"/>                                </td>
+							    </tr>
+                              </com:TControl>  
+                  <!--
+							  <tr>
+                                <td><span>&#8226;</span>&nbsp;&nbsp;Sumber Master </td>
+                                <td>:</td>
+                                <td>
+                                  <com:TDropDownList 
+										ID="DDSumMaster"																			
+										DataTextField="nama"
+										DataValueField="id" 	
+										ToolTip="Pilih Barang" 
+										TabIndex="2" 
+										Width="150px"
+										AutoPostBack="true" 
+										CausesValidation="false"
+										OnSelectedIndexChanged="DDSumMasterChanged"/>                                </td>
+							    </tr>
+							  <tr>
+                                <td><span>&#8226;</span>&nbsp;&nbsp;Sumber Sekunder </td>
+                                <td>:</td>
+                                <td>
+                                  <com:TDropDownList 
+										ID="DDSumSekunder"
+										PromptText ="--Silakan Pilih--"
+										PromptValue =""											
+										DataTextField="nama"
+										DataValueField="id" 	
+										ToolTip="Pilih Barang" 
+										TabIndex="2" 
+										Width="150px" 
+										Enabled="false"
+										AutoPostBack="true" 
+										CausesValidation="false"
+										OnSelectedIndexChanged="DDSumSekunderChanged"/>                                </td>
+							    </tr>
+                  -->
+							  <tr>
+							    <td>&nbsp;</td>
+							    <td>&nbsp;</td>
+							    <td>
+									<com:TButton ID="cariBtn" Text="Cari" OnClick="cariClicked" CssClass="button_01" TabIndex="6" />	
+                                    <com:TButton ID="cetakBtn" Enabled="false" Text="cetak" OnClick="cetakClicked" CssClass="button_01" TabIndex="6" />	
+                                    <br/>
+                                    <com:TCheckBox 
+										ID="semuaStok" 
+										Text="Tampilan jumlah di semua sumber stok" 
+                                        Style="font-size:10px;"
+                                        Visible="false"
+									/>
+                                    							</td>
+							    </tr>
+							</table>
+							</com:TPanel>
+						</td>
+			  		</tr>
+				</table>
+			</td>
+              </tr>
+			  <tr >
+			  	<td>
+					&nbsp;&nbsp; Jumlah Data : <com:TLabel ID="jmlData" />
+                    <com:TCheckBox 
+                        ID="groupingIdharga" 
+                        Text="Grouping berdasarkan ID Harga & Expired (Edit Mode)"
+                        AutoPostBack="true"
+                        CausesValidation="false"
+                        OnCheckedChanged="bindGrid"
+                        Visible="False"
+                        Style="float:right;"/>
+			  	</td>
+			  </tr>
+              <tr>
+                <td><table width="100%"  border="0" align="center" cellpadding="0" cellspacing="1">                      
+                      <tr>
+                        <td align="center">
+						<com:TDataGrid ID="dtgSomeData"
+								DataKeyField="id"
+								AutoGenerateColumns="false"	
+								AllowPaging="true"
+								AllowCustomPaging="true"
+								AllowSorting="true"
+								Width="100%"					
+								PageSize="20"
+								PagerStyle.Mode="Numeric"			
+								PagerStyle.Font.Name="Arial"
+								PagerStyle.Font.Size="12"
+								PagerStyle.HorizontalAlign="Right"			
+								GridLines="None"
+								CellSpacing="1"
+								CellPadding="2"
+								HeaderStyle.CssClass="headerstyle"
+								ItemStyle.CssClass="itemstyle"
+								AlternatingItemStyle.CssClass="itemstyle2"
+								OnItemCreated="itemCreated"
+								OnEditCommand="editItem"
+								OnUpdateCommand="saveItem"
+								OnCancelCommand="cancelItem"
+								OnPageIndexChanged="dtgSomeData_PageIndexChanged"
+								OnSortCommand="dtgSomeData_SortCommand"
+                                EmptyTemplate="TIDAK ADA DATA"	>								
+								
+								<com:TTemplateColumn HeaderText="ID Barang" 
+													 SortExpression="kode"
+													 ID="kode" 													 
+													 ItemStyle.Width="60px" 
+													 ItemStyle.HorizontalAlign="Center" 
+                                                     Visible="False">
+									<prop:ItemTemplate>
+										<%=	$this->Parent->DataItem['id'] %>
+									</prop:ItemTemplate>
+								</com:TTemplateColumn> 
+								
+								<com:TTemplateColumn 
+                                	HeaderText="Nama Barang" 
+									SortExpression="nama"
+									ID="nama" 			
+									ItemStyle.HorizontalAlign="Left" >									
+									<prop:ItemTemplate>
+										<%=	$this->Parent->DataItem['nm_barang'] %>
+									</prop:ItemTemplate>
+								</com:TTemplateColumn>	
+                                
+                                <com:TBoundColumn 
+                                	ID="jml"
+									SortExpression="jumlah"
+									HeaderText="Jumlah"
+									ItemStyle.Width="100px"
+									DataField="jumlah"
+                                    ItemStyle.HorizontalAlign="Center" />
+                                 
+                                 <com:TEditCommandColumn
+									HeaderText="Edit"  
+									HeaderStyle.Width="50px"
+									Visible="<%= $this->User->IsAdmin %>"
+									UpdateText="Save"
+									ItemStyle.HorizontalAlign="Center"
+									ItemStyle.Font.Italic="false"/>			
+                                        
+                                 <com:TButtonColumn												
+									HeaderText="Mode"
+									Text="Delete"
+									ID="Hapus"
+                                    ItemStyle.Width="10px"
+									ItemStyle.HorizontalAlign="Center"
+									ButtonType="PushButton"									
+									CommandName="delete"
+                                    Visible="False" />	
+                                       
+							</com:TDataGrid>
+              <!---
+              <com:TTemplateColumn HeaderText="Sumber" 
+													 SortExpression="sumber" 
+													 ID="sumber" 
+													 ItemStyle.Width="150px" 
+													 ItemStyle.HorizontalAlign="Center" >									
+									<prop:ItemTemplate>
+										<%#	SumberBarangRecord::finder()->findByPk(substr($this->Parent->DataItem['sumber'],0,2))->nama %> 
+										[<%#	SubSumberBarangRecord::finder()->findByPk(substr($this->Parent->DataItem['sumber'],2,2))->nama %>]
+									</prop:ItemTemplate>
+								</com:TTemplateColumn>
+              --->
+						</td>                       
+                      </tr>
+                    </table></td>
+              </tr>
+              <tr>
+                <td><hr/></td>
+              </tr>
+              <tr>
+                <td><table width="10" border="0" align="center" cellpadding="0" cellspacing="2">
+                    <tr>                                        
+                      <td><com:TButton Text="Keluar" OnClick="keluarClicked" CausesValidation="false" CssClass="button_01" TabIndex="7" Attributes.onclick = "maskContent();" /></td>
+                    </tr>
+                </table></td>
+              </tr>
+          </table>
+          
+</com:TContent> 

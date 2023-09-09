@@ -1,0 +1,27 @@
+<%@ MasterClass="Application.layouts.MainLayout" %>
+<com:TContent ID="jdMain">
+	tesXActiveTableRow
+</com:TContent>
+
+<com:TContent ID="Main">
+    
+	<com:TTable GridLines="Both"  >
+        <com:XTableRow onClick="click">
+            <com:TTableCell>Click</com:TTableCell>
+        </com:XTableRow>
+        <com:XTableRow onCommand="command" CommandParameter="command_param">
+            <com:TTableCell >Command</com:TTableCell>
+        </com:XTableRow>
+        <com:XActiveTableRow onClick="click">
+            <com:TTableCell >Click (Active)</com:TTableCell>
+        </com:XActiveTableRow>
+        <com:XActiveTableRow onCommand="command" CommandParameter="command_param">
+            <com:TTableCell >Command (Active)</com:TTableCell>
+        </com:XActiveTableRow>
+        <com:XActiveTableRow onCallback="callback" ActiveControl.CallbackParameter="callback_param">
+            <com:TTableCell >CallBack (Active)</com:TTableCell>
+        </com:XActiveTableRow>
+    </com:TTable>
+
+
+</com:TContent>

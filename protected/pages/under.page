@@ -1,0 +1,23 @@
+<%@ MasterClass="Application.layouts.MainLayout" %>
+<com:TContent ID="jdMain">
+	Module Being Developed
+	
+    <a href="<%= $this->Service->constructUrl('Simak') %>" onclick="maskContent()">
+    <span class="close-btn">
+        <span class="ui-icon ui-icon-circle-close"></span>
+    </span>
+    </a>
+    
+</com:TContent> 
+
+<com:TContent ID="Main">
+	
+    <table width="100%" border="0" align="left" cellpadding="2" cellspacing="2">
+      <tr>
+          <td width="211">&nbsp;</td>
+          <td width="8">&nbsp;</td>
+          <td width="980" >&nbsp;</td>
+      </tr>
+    </table>
+    <com:TActiveLabel ID="tes" Style="font-size:14px;"/>
+</com:TContent> 

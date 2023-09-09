@@ -1,0 +1,241 @@
+<%@ MasterClass="Application.layouts.MainLayout" %>
+<com:TContent ID="jdMain">
+	Pembayaran PBF
+    
+    <a href="<%= $this->Service->constructUrl('Simak') %>" onclick="maskContent()">
+    <span class="close-btn">
+        <span class="ui-icon ui-icon-circle-close"></span>
+    </span>
+    </a>
+    
+</com:TContent>	
+
+
+<com:TContent ID="Main">
+	<com:TActiveLabel ID="test" Visible="false" /><com:TActiveLabel ID="msg" />
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>
+                <div id="messages">
+                <com:TActivePanel ID="cariPanel" >
+                <table width="100%" border="0" align="right" cellpadding="0" cellspacing="2">
+                  <tr>
+                    <td width="150"><span>&#8226; </span>No. Pengajuan</td>
+                    <td width="5">:</td>
+                    <td >
+                        <com:TActiveDropDownList 
+							ID="DDtrans" 
+							PromptText ="--Silakan Pilih--"
+							PromptValue ="empty"	
+							Width="200px" 
+							DataTextField="no_trans" 
+							DataValueField="no_trans" 
+							OnSelectedIndexChanged="DDtransChanged"
+							AutoPostBack="true" 
+							CausesValidation="false"  />
+							
+						 <com:TRequiredFieldValidator 
+							ControlToValidate="DDtrans" 											 
+							ErrorMessage="*"
+							Display="Dynamic" 
+							ValidationGroup="val" 
+							FocusOnError="true" 
+							InitialValue="empty"/>         </td>
+                  </tr>
+                  <tr>
+                    <td >&nbsp;</td>
+                    <td ></td>
+                    <td >                  </td>  
+                  </table>
+                  
+                  </com:TActivePanel>
+                  
+                  <br/>
+                  
+				  <com:TActivePanel ID="prosesPanel" > 
+                  <table width="100%" border="0" align="right" cellpadding="0" cellspacing="2">
+                  <tr>
+                    <td colspan="3"><hr/>
+                    </td>
+                  </tr>  
+                  <tr>
+                    <td colspan="3">
+                    	<com:TActivePanel ID="gridPanel">
+                        	<com:XActiveDataGrid
+                                    	ID="gridBrg"
+                                        DataKeyField="id"
+                                        AutoGenerateColumns="false"	
+                                        AllowPaging="true"
+                                        AllowCustomPaging="true"
+                                        AllowSorting="true"
+                                        Width="100%"	
+                                        PageSize="10"
+										PagerStyle.Mode="Numeric"			
+										PagerStyle.Font.Name="Arial"
+										PagerStyle.Font.Size="12"
+										PagerStyle.HorizontalAlign="Right"			
+										GridLines="None"
+										CellSpacing="1"
+										CellPadding="2"
+										HeaderStyle.CssClass="headerstyle"
+										ItemStyle.CssClass="itemstyle"
+										AlternatingItemStyle.CssClass="itemstyle2"
+										OnItemCreated="gridBrg_ItemCreated"
+                                        OnEditCommand="gridBrg_EditCommand"
+                                        OnUpdateCommand="gridBrg_UpdateCommand"
+                                        OnCancelCommand="gridBrg_CancelCommand"
+                                        OnDeleteCommand="deleteButtonClicked"								
+                                        OnPageIndexChanged="gridBrg_PageIndexChanged"
+                                        OnSortCommand="gridBrg_SortCommand">
+																		
+									<com:XActiveTemplateColumn  
+                                    	ID="column1"
+										HeaderText="No. Faktur" 	
+										SortExpression="no_faktur"					 
+										ItemStyle.Width="50px" 
+										ItemStyle.HorizontalAlign="Center" />
+                                    
+                                    <com:XActiveTemplateColumn  
+                                    	ID="column2"
+										HeaderText="Tgl. Faktur" 	
+										SortExpression="tgl_faktur"					 
+										ItemStyle.Width="50px" 
+										ItemStyle.HorizontalAlign="Center" />
+                                    
+                                    <com:XActiveTemplateColumn  
+                                    	ID="column3"
+                                        ItemStyle.Width="50px" 
+										HeaderText="Tgl. Jatuh Tempo" 	
+										SortExpression="tgl_jth_tempo"	
+										ItemStyle.HorizontalAlign="Center" />
+                                    
+                                    <com:XActiveTemplateColumn  
+                                    	ID="column4"
+										HeaderText="Supplier" 	
+										SortExpression="nm_supplier"
+										ItemStyle.HorizontalAlign="Center" />
+                                    
+                                    <com:XActiveTemplateColumn  
+                                    	ID="column5"
+										HeaderText="Total" 	
+										SortExpression="total"	
+										ItemStyle.Width="100px" 
+										ItemStyle.HorizontalAlign="Right" />    
+                                    
+                                    <com:XActiveTemplateColumn  
+                                    	ID="column6"
+										HeaderText="Pembayaran Tertunda" 	
+										SortExpression="st_tunda"					 
+										ItemStyle.Width="25px" 
+										ItemStyle.HorizontalAlign="Center" />        
+							</com:XActiveDataGrid>	
+                        </com:TActivePanel>
+                        
+                        <br/>
+                        
+                        <com:TActivePanel ID="jmlPanel" GroupingText="Pembayaran" >
+                            <table width="100%"  border="0" align="left">
+                               <tr>
+                                 <td width="153"><span>&#8226;</span>&nbsp;&nbsp;Jumlah</td>
+                                 <td width="5">:</td>
+                                 <td>
+                                   <com:TActiveLabel ID="jmlShow" />                                            </td>
+                               </tr>
+                               <tr>
+                                 <td><span>&#8226;</span>&nbsp;&nbsp;Bayar</td>
+                                 <td>:</td>
+                                 <td>
+                                    <com:TActiveTextBox CssClass="input_text" 
+                                      ID="bayar" 													   
+                                      MaxLength="12"											  
+                                      ToolTip="jumlah bayar" 
+                                      Width="100px" />&nbsp;&nbsp;&nbsp;
+                                     <com:TActiveButton
+                                        Text="Bayar" 
+                                        OnClick="bayarClicked" 
+                                        OnCallback="bayarCallBack"
+                                        ID="bayarBtn" 
+                                        CssClass="button_01"
+                                        CausesValidation="true"
+                                        ValidationGroup="bayarVal" 
+                                        />
+                                     <com:TButton
+                                        Text="Detail" 
+                                        OnClick="detailClicked" 
+                                        ID="detailBtn" 
+                                        CssClass="button_01" 
+                                        Visible="false"
+                                         />                                             </td>
+                               </tr>
+                               <tr>
+                                 <td><span>&#8226;</span>&nbsp;&nbsp;Sisa/Kembalian</td>
+                                 <td>:</td>
+                                 <td>
+                                    <com:TActiveLabel ID="sisaByr" />&nbsp;<com:TActiveLabel ID="errByr" ForeColor="#FF0000" />
+                                 </td>
+                               </tr>
+                            </table>
+                        </com:TActivePanel>
+						</td>
+                    </tr>
+                </table>
+                </com:TActivePanel>
+                </div>
+                
+                </td>
+              </tr>
+              <tr>
+                <td><hr/></td>
+              </tr>
+              <tr>
+                <td><table width="10" border="0" align="center" cellpadding="0" cellspacing="2">
+                    <tr>
+					<!--
+					  <td>
+					  	<com:TActiveButton 
+							Text="Preview"  
+							ID="prevBtn" 
+							OnClick="prevClicked" 
+							CssClass="button_01"
+                         Attributes.onclick = "if(!confirm('Preview data sekarang..?')) return false;">
+                           <prop:ClientSide
+                                    OnLoading="Element.show('loading'); Element.hide('messages');"/>
+                        </com:TActiveButton>              
+					  </td>
+					  --->
+                      <td>
+					  	<com:TActiveButton 
+							Text="Cetak" 
+							ID="cetakBtn" 
+							OnClick="cetakClicked" 
+							CssClass="button_01"
+                         Attributes.onclick = "if(!confirm('Cetak data sekarang..?')) return false;">
+                           <prop:ClientSide
+                                    OnLoading="maskContent();"/>
+                        </com:TActiveButton>              
+					  </td>
+                      <td>
+                      	<com:TActiveButton Text="Batal" 
+										OnClick="batalClicked"
+										CausesValidation="false" 
+										CssClass="button_01">
+                      					<prop:ClientSide 
+                                            OnLoading="maskContent();"
+                                            OnComplete="unmaskContent(); "/>
+                                    </com:TActiveButton>
+					  </td>
+                      <td>
+                      	<com:TActiveButton Text="Keluar" 
+					  			OnClick="keluarClicked" 
+								CausesValidation="false" 
+								CssClass="button_01">
+                                <prop:ClientSide
+                                    OnLoading="maskContent();"/>
+                        </com:TActiveButton>
+					  </td>
+                    </tr>
+                </table></td>
+              </tr>
+          </table>
+          
+</com:TContent>

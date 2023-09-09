@@ -1,0 +1,113 @@
+.login_panel{
+	position:fixed; 
+	top:35%; 
+	width:100%; 
+	text-align:center;
+	left:0;
+}
+.username{
+	text-align:center;
+	background:url('../images/login-textbox.png') no-repeat left;
+	width:228px;
+	height:31px;
+	color:#FFFFFF;
+	font-family:Geneva, Arial, Helvetica, sans-serif;
+	font-size:12px;
+	font-weight:normal;
+	border:none;
+	padding-top:5px;
+	margin-top:-5px;
+	outline:none;
+}
+.password{
+	text-align:center;
+	background:url('../images/login-textbox.png') no-repeat left;
+	width:228px;
+	height:31px;
+	color:#FFFFFF;
+	font-family:Geneva, Arial, Helvetica, sans-serif;
+	font-size:12px;
+	font-weight:normal;
+	border:none;
+	padding-top:5px;
+	margin-top:-5px;
+	outline:none;
+}
+
+/*
+.login_panel label  {
+	position: fixed;
+	margin: 8px 9px 9px 0px;
+	color:#FFFFFF;
+	font-family:Geneva, Arial, Helvetica, sans-serif;
+	font-size:10px;
+	font-weight:bold;
+	text-align:center;
+	width:228px;
+}
+*/
+
+.lbl{
+	position:absolute;
+	width:100%;
+	margin: 8px 9px 9px 0px;
+	color:#FFFFFF;
+	font-family:Geneva, Arial, Helvetica, sans-serif;
+	font-size:10px;
+	font-weight:bold;
+	text-align:center;
+}
+
+
+.btn_login{
+	display:block;
+	width:87px;
+	height:33px;
+	background:url('../images/btnLogin.png') no-repeat bottom left;
+	outline:none;
+}
+
+.btn_login:hover{
+	background:url('../images/btnLogin.png') no-repeat top left;
+}
+
+span{
+	display:block; 
+	padding:1px;
+}
+
+
+#container {
+   width:100%;
+   min-height:100%;
+   position:fixed;
+}
+
+#footer{
+   position:fixed;
+   bottom:20px;
+   width:100%;
+}
+
+.text_01 
+{
+    font: 13px Arial,sans-serif;
+	color: #FFFFFF;
+	font-weight: bold;
+}
+.text_06 
+{
+    font: 13px Arial,sans-serif;
+	color: #FFFFFF;
+	font-weight: bold;
+}
+.input_text 
+{
+	font: 12px Arial,sans-serif;
+	color: #444444;
+	height: Auto;
+}
+
+/*-------------------------------------------------------------------------------*/
+/*----------------------------COPYRIGHT-INTERGO-2008-----------------------------*/
+/*-------------------------------------------------------------------------------*/

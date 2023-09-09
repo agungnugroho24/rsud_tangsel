@@ -1,0 +1,368 @@
+<%@ MasterClass="Application.layouts.AssetLayout" %>
+<com:TContent ID="Main">
+<tr>
+<table width="100%"  border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td height="40"><table width="10" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td><table width="10" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+          </table></td>
+          <td><table width="200" border="0" cellspacing="2" cellpadding="0">
+              <tr>
+                <td class="text_01">Data Master Aset </td>
+              </tr>
+          </table></td>
+          <td>&nbsp;</td>
+        </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="100%"  border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td width="1%"><table width="10" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+          </table></td>
+          <td width="99%" height="350" valign="top" class="table_03"><table width="100%"  border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td width="1%"><table width="18" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                      <td>&nbsp;</td>
+                    </tr>
+                </table></td>
+                <td width="99%"><table width="100%"  border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                      <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                      <td class="text_02">Administrasi Distribusi Barang</td>
+                    </tr>
+                    <tr>
+                      <td>&nbsp;<com:TLabel ID="showSql" /></td>
+                    </tr>
+                    <tr>
+                      <td>
+                      	
+                        <table width="100%"  border="0" cellspacing="2" cellpadding="0">
+                          <com:TPanel DefaultButton="prosesBtn">
+                            <tr>
+                              <td><span>&#8226;</span>&nbsp;&nbsp;Tujuan</td>
+                              <td>:</td>
+                              <td><com:TDropDownList 
+												ID="DDTujuan"
+												PromptText ="--Silakan Pilih--"
+												PromptValue =""											
+												DataTextField="nama"
+												DataValueField="id" 	
+												ToolTip="Pilih tujuan" 
+												Width="150px"
+											/>
+                                  <com:TRequiredFieldValidator
+												Display="Dynamic"
+												ControlToValidate="DDTujuan"
+												Text="Tujuan pendistribusian belum dipilih" 
+												InitialValue="--Silakan Pilih--" 
+												ValidationGroup="val"
+											/>                              </td>
+                            </tr>
+                            <tr>
+                              <td><span>&#8226;</span>&nbsp;&nbsp;Petugas</td>
+                              <td>:</td>
+                              <td>
+                              	<com:TDropDownList 
+                                    ID="DDpengirim"
+                                    PromptText ="--Silakan Pilih--"
+                                    PromptValue =""											
+                                    DataTextField="nama"
+                                    DataValueField="id" 	
+                                    ToolTip="Pilih nama pengirim" 
+                                    Width="150px"
+                                />
+                                  <com:TRequiredFieldValidator
+                                    Display="Dynamic"
+                                    ControlToValidate="DDpengirim"
+                                    Text="Nama pengirim belum dipilih" 
+                                    InitialValue="--Silakan Pilih--" 
+                                    ValidationGroup="val"
+                                />                              </td>
+                            </tr>
+                            <tr>
+                              <td><span>&#8226;</span>&nbsp;&nbsp;Penerima </td>
+                              <td>:</td>
+                              <td>
+                              	<com:TDropDownList 
+                                    ID="DDpenerima"
+                                    PromptText ="--Silakan Pilih--"
+                                    PromptValue =""											
+                                    DataTextField="nama"
+                                    DataValueField="id" 	
+                                    ToolTip="Pilih nama penerima" 
+                                    Width="150px"
+                                />
+                                  <com:TRequiredFieldValidator
+                                    Display="Dynamic"
+                                    ControlToValidate="DDpenerima"
+                                    Text="Nama penerima belum dipilih" 
+                                    InitialValue="--Silakan Pilih--" 
+                                    ValidationGroup="val"
+                                />                              </td>
+                            </tr>
+                          
+                          <tr>
+                            <td width="135" valign="top">&nbsp;</td>
+                            <td width="3" valign="top">&nbsp;</td>
+                            <td width="784" valign="top">
+                            	<com:TButton 
+                                    ID="prosesBtn"
+                                    Text="Proses" 
+                                    OnClick="prosesClicked" 
+                                    CssClass="button_01" 
+                                    ValidationGroup="val"							 
+                                    />                             </td>
+                          </tr>
+                          </com:TPanel>
+                          
+                          <com:TPanel ID="tambahCtrl" Visible="false" DefaultButton="tambahBtn">
+                          <tr valign="top">
+                            <td colspan="3" valign="top"><hr /></td>
+                            </tr>
+                         
+                          <tr>
+                            <td valign="top">&#8226; Nama Barang </td>
+                            <td valign="top">:</td>
+                            <td valign="top">
+                            	<com:TDropDownList 
+										ID="DDbarang"
+										PromptText ="--Silakan Pilih--"
+										PromptValue =""											
+										DataTextField="nama"
+										DataValueField="id_brg" 	
+										ToolTip="Pilih barang" 
+										Width="300px" 
+                                        AutoPostBack="true" 
+                                        CausesValidation="false" 
+                                        OnSelectedIndexChanged="DDbarangChanged"  />
+                            	<com:TRequiredFieldValidator
+                                    Display="Dynamic"
+                                    ControlToValidate="DDbarang"
+                                    Text="Barang belum dipilih" 
+                                    InitialValue="--Silakan Pilih--" 
+                                    ValidationGroup="valTambah"
+                                />                            </td>
+                          </tr>
+                          <tr>
+                            <td><span>&#8226;</span>&nbsp;&nbsp;Jumlah Ambil</td>
+                            <td>:</td>
+                            <td><com:TTextBox CssClass="input_text" 
+										  ID="jml"											  
+										  ToolTip="Jumlah barang" 
+										  Width="50px" />
+                                <com:TRequiredFieldValidator
+											Display="Dynamic"
+											ControlToValidate="jml"
+											Text="Jumlah belum diisi" 
+											ValidationGroup="valTambah"
+									/>
+                                <com:TRegularExpressionValidator
+										ControlToValidate="jml"
+										RegularExpression="[\d]{1,}"
+										ErrorMessage="Jumlah yang dimasukan tidak sesuai"
+										ValidationGroup="valTambah"
+									/>
+                                    <br/>
+                          		<com:TCustomValidator
+										ControlToValidate="jml"
+										ErrorMessage="Jumlah yang dimasukan melebihi stok !"
+										OnServerValidate="checkJml" 		
+										Display="Dynamic" 
+										ValidationGroup="valTambah"
+									/> 	
+                            </td>
+                          </tr>
+                          <tr>
+                            <td><span>&#8226;</span>&nbsp;&nbsp;Keterangan</td>
+                            <td>:</td>
+                            <td><com:TTextBox 
+                                        ID="ket" 
+                                        MaxLength="100"
+                                        Width="200px"
+                                        TextMode="MultiLine"
+                                        ToolTip="Keterangan" />
+                            </td>
+                          </tr>
+							  <tr>
+                                <td valign="top">&nbsp;</td>
+							    <td valign="top">&nbsp;</td>
+							    <td valign="top">
+                                	<com:TButton 
+                                        ID="tambahBtn"
+                                        Text="Tambah" 
+                                        OnClick="tambahClicked" 
+                                        CssClass="button_01" 
+                                        ValidationGroup="valTambah"							 
+                                        />                                 </td>
+							  </tr>
+                              </com:TPanel>
+                              
+							  <tr>
+							    <td colspan="3" valign="top"><hr /></td>
+							    </tr>
+							  
+							  <tr>
+							    <td colspan="3" valign="top">
+                                
+                                <table width="95%"  border="0" align="center" cellpadding="0" cellspacing="1">                                  <tr>
+                                    <td align="center">
+                                    <com:TDataGrid ID="dtgSomeData"
+                                            DataKeyField="id_barang"
+                                            AutoGenerateColumns="false"	
+                                            AllowPaging="true"
+                                            AllowCustomPaging="true"
+                                            AllowSorting="true"
+                                            Width="680px"					
+                                            PageSize="10"
+                                            PagerStyle.Mode="Numeric"			
+                                            PagerStyle.Font.Name="Arial"
+                                            PagerStyle.Font.Size="12"
+                                            PagerStyle.HorizontalAlign="Right"			
+                                            GridLines="None"
+                                            CellSpacing="1"
+                                            CellPadding="2"
+                                            BackColor="#000000"
+                                            HeaderStyle.CssClass="headerstyle"
+                                            ItemStyle.CssClass="itemstyle"
+                                            AlternatingItemStyle.CssClass="itemstyle2"
+                                            OnItemCreated="dtgSomeData_ItemCreated"
+                                            OnDeleteCommand="deleteButtonClicked"								
+                                            OnPageIndexChanged="dtgSomeData_PageIndexChanged"
+                                            OnSortCommand="dtgSomeData_SortCommand">								
+                                        </div>								
+                                            
+                                          <com:TTemplateColumn 
+                                                 HeaderText="Kode" 	
+                                                 SortExpression="id_barang"					 
+                                                 ItemStyle.Width="100px" 
+                                                 ItemStyle.HorizontalAlign="Center">									
+                                                <prop:ItemTemplate>
+                                                    <%= $this->Parent->DataItem['id_barang'] %>                                                </prop:ItemTemplate>
+                                           </com:TTemplateColumn> 
+                                           
+                                           <com:TTemplateColumn 
+                                                 HeaderText="Nama Barang" 	
+                                                 SortExpression="nm_barang"					 
+                                                 ItemStyle.Width="250px" 
+                                                 ItemStyle.HorizontalAlign="Center">									
+                                                <prop:ItemTemplate>
+                                                    <%= $this->Parent->DataItem['nm_barang'] %>                                                </prop:ItemTemplate>
+                                            </com:TTemplateColumn> 
+                                            
+                                            <com:TTemplateColumn 
+                                                 HeaderText="Jumlah" 	
+                                                 SortExpression="jml"					 
+                                                 ItemStyle.Width="100px" 
+                                                 ItemStyle.HorizontalAlign="Center">									
+                                                <prop:ItemTemplate>
+                                                    <%= $this->Parent->DataItem['jml'] %>                                                </prop:ItemTemplate>
+                                            </com:TTemplateColumn> 
+                                            
+                                            <com:TBoundColumn 
+                                                SortExpression="nm_ruang"
+                                                HeaderText="Tujuan"
+                                                ItemStyle.Width="100px"
+                                                DataField="nm_ruang"
+                                                ItemStyle.HorizontalAlign="Center" 
+                                                Visible = "false"/>
+                                        	
+                                             <com:TBoundColumn 
+                                                SortExpression="nm_pengirim"
+                                                HeaderText="Pengirim"
+                                                ItemStyle.Width="100px"
+                                                DataField="nm_pengirim"
+                                                ItemStyle.HorizontalAlign="Center" 
+                                                Visible = "false"/>
+                                            
+                                            <com:TBoundColumn 
+                                                SortExpression="nm_penerima"
+                                                HeaderText="Penerima"
+                                                ItemStyle.Width="100px"
+                                                DataField="nm_penerima"
+                                                ItemStyle.HorizontalAlign="Center"
+                                                Visible = "false"  />
+                                                
+                                            <com:TButtonColumn												
+                                                HeaderText="Mode"
+                                                Text="Delete"
+                                                ID="Hapus"
+                                                ItemStyle.HorizontalAlign="Center"
+                                                ButtonType="PushButton"									
+                                                CommandName="delete" />	
+                                        </com:TDataGrid>                                    </td>                       
+                                  </tr>
+                                </table>                                </td>
+							  </tr>
+                      	</table>
+                       
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                      <td><table width="95%"  border="0" cellspacing="0" cellpadding="0">
+                          <tr>
+                            <td class="table_05"></td>
+                          </tr>
+                      </table></td>
+                    </tr>
+                    <tr>
+                      <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                      <td><table width="100" border="0" align="center" cellpadding="0" cellspacing="4" class="table_04">
+                          <tr>
+                            <td><table width="10" border="0" cellspacing="2" cellpadding="0">
+                                <tr>
+                                   <td>
+                                   		<com:TButton 
+                                        	ID="cetakBtn" 
+                                            Text="Cetak" 
+                                            OnClick="cetakClicked" 
+                                            CssClass="button_01" 
+                                            Enabled="false" />
+                                   </td>
+								  <td>
+                                  	<com:TButton 
+                                    	Text="Batal"
+                                  		OnClick="batalClicked"
+                                        CssClass="button_01"  />
+                                  </td>
+								  <td>
+                                  	<com:TButton 
+                                    	Text="Keluar" 
+                                        OnClick="keluarClicked" 
+                                        CausesValidation="false" 
+                                        CssClass="button_01"  />
+                                  </td>
+                                </tr>
+                            </table></td>
+                          </tr>
+                      </table></td>
+                    </tr>
+                    <tr>
+                      <td>&nbsp;</td>
+                    </tr>
+                </table></td>
+              </tr>
+          </table></td>
+        </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td height="10"></td>
+  </tr>
+</table>
+</com:TContent>

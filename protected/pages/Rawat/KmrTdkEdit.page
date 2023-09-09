@@ -1,0 +1,181 @@
+<%@ MasterClass="Application.layouts.MainLayout" %>
+<com:TContent ID="jdMain">
+	Kamar Tindakan Edit
+    
+    <a href="<%= $this->Service->constructUrl('Simak') %>" onclick="maskContent()">
+    <span class="close-btn">
+        <span class="ui-icon ui-icon-circle-close"></span>
+    </span>
+    </a>
+    
+</com:TContent>	
+<com:TContent ID="Main"> 
+
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>			  
+                <td>
+				<com:TActiveLabel ID="showSql" />
+				<table width="100%" align="center" border="0">
+			  		<tr>
+						<td align="center">
+                        	<com:TActivePanel>
+							<table width="100%"  border="0" align="left">							
+							 <!---
+							  <tr>
+								<td width="21%"></td>
+								<td width="1%"></td>
+								<td width="78%">
+                                	<com:TActiveCheckBox 
+                                    	ID="cekBayar"	
+										Text="Sudah Bayar"
+										TextAlign="Right"																				
+                                        CausesValidation="false"
+										ToolTip="Cari yang sudah bayar!!" />
+                              	</td>
+							  </tr>--->
+							  <tr>
+								<td width="21%"><span>&#8226;</span>&nbsp;&nbsp;No. Rekam Medis</td>
+								<td width="1%">:</td>
+								<td width="78%">
+                                	<com:TActiveTextBox 
+                                    	ID="cariCM" 
+										MaxLength="7"										
+										Width="100px" 
+										OnTextChanged="cmChanged"
+										AutoPostBack="true"
+                                        CausesValidation="false"
+										ToolTip="Cri berdasarkan No. Rekam Medis!!" />
+										&nbsp;										
+                                    <com:TActiveLabel ID="msg" ForeColor="#FF0000" />    
+                              	</td>
+							  </tr>
+							  <!---
+							  <tr>
+							    <td><span>&#8226;</span>&nbsp;&nbsp;Poliklinik</td>
+							    <td>:</td>
+							    <td>
+                                	<com:TActiveDropDownList 
+                                    	ID="DDKlinik"
+                                        PromptText ="--Silakan Pilih--"
+                                        PromptValue ="" 		  						    
+                                        DataTextField="nama"
+                                        DataValueField="id"
+                                        Width="150px"
+                                        OnSelectedIndexChanged="DDKlinikChanged"
+                                        AutoPostBack="true"
+                                        CausesValidation="false">
+                                    	 <prop:ClientSide
+                                            OnLoading="Element.show('loading'); Element.hide('messages');"
+                                            OnComplete="Element.hide('loading'); Element.show('messages');"/>
+                                    </com:TActiveDropDownList>
+                                 </td>
+							    </tr>--->
+							</table>
+							</com:TActivePanel>
+						</td>
+			  		</tr>
+				</table>
+			</td>
+              </tr>
+	      <tr height="15px">
+	      	<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <com:TActiveLabel ID="jmlDataPas"/>  </td>
+	      </tr>
+			  
+              <tr>
+                <td>
+                	<com:TActivePanel ID="gridPanel">
+                    <table width="100%"  border="0" align="center" cellpadding="0" cellspacing="1">                      
+                      <tr>
+                        <td><hr/></td>
+                      </tr>  
+                      <tr>
+                        <td>
+                        <div id="messages">
+						<com:XActiveDataGrid ID="dtgSomeData"
+								DataKeyField="id_kasir_rwtjln"
+								AutoGenerateColumns="false"	
+								AllowPaging="true"
+								AllowCustomPaging="true"
+								AllowSorting="true"
+								Width="100%"
+								PagerStyle.Mode="Numeric"		
+                                PagerStyle.HorizontalAlign="Right"			
+								GridLines="None"
+								CellSpacing="1"
+								CellPadding="2"
+								HeaderStyle.CssClass="headerstyle"
+								ItemStyle.CssClass="itemstyle"
+								AlternatingItemStyle.CssClass="itemstyle2"
+								OnItemCreated="itemCreated"
+								OnDeleteCommand="deleteButtonClicked"
+								OnPageIndexChanged="dtgSomeData_PageIndexChanged"
+								OnSortCommand="dtgSomeData_SortCommand"	
+                                OnEditCommand="dtgSomeData_EditCommand"
+								OnUpdateCommand="dtgSomeData_UpdateCommand"
+								OnCancelCommand="dtgSomeData_CancelCommand"							
+                                EmptyTemplate="<div class='info'>Data Tidak Ada!.</div>">
+								
+								
+                                <com:XActiveDropDownListColumn 
+                                    ID="tindakanColumn"
+                                    ItemStyle.HorizontalAlign="Left"
+                                    ItemStyle.Width="200px"
+                                    HeaderText="Nama Tindakan"
+                                    SortExpression="id_tindakan"
+                                    ListDataSource=<%= $this->getTindakanRecords() %>
+                                    ListValueField="id"
+                                    ListTextField="nama"					
+                                    DataTextField="id_tindakan"
+                                    />
+									
+								 <com:XActiveTemplateColumn
+                                    SortExpression="nm_tindakan"
+                                    HeaderText="Nama Tindakan"
+                                    ItemStyle.Width="350px"
+                                    ItemStyle.Horizontalalign="Left">	
+                                    <prop:ItemTemplate>
+                                        <%# $this->Parent->DataItem['nm_tindakan'] %>
+                                    </prop:ItemTemplate>
+                                 </com:XActiveTemplateColumn>
+                                                    
+                                <com:XActiveButtonColumn												
+									HeaderText="Mode"
+									Text="Delete"
+									ID="Hapus"
+									ItemStyle.HorizontalAlign="Center"
+									ButtonType="PushButton"	
+                                    ItemStyle.Width="75px"								
+									CommandName="delete" />			
+							</com:XActiveDataGrid>
+                            </div>
+						</td>                       
+                      </tr>
+                    </table>
+                	</com:TActivePanel>
+                </td>
+              </tr>
+              <tr>
+                <td><hr/></td>
+              </tr>
+              <tr>
+                <td><table width="10" border="0" align="center" cellpadding="0" cellspacing="2">
+                    <tr>
+                      <td>
+                      <!---
+					  <com:TControl Visible="<%= $this->User->IsAdmin %>">
+					  	<com:TButton Text="Baru" OnClick="baruClicked" CssClass="button_01" TabIndex="6" />
+					  </com:TControl> --->
+                      <com:TButton Text="Batal" 
+                                ID="batalBtn"
+                                    CausesValidation="false"
+                                    OnClick="batalClicked" 
+                                    CssClass="button_01"
+                                    Attributes.onclick = "if(!confirm('Batalkan pengisian data..?')) return false; else maskContent();"/>
+					  </td>                      
+                      <td><com:TButton Text="Keluar" OnClick="keluarClicked" CausesValidation="false" Visible="false" CssClass="button_01" TabIndex="7" /></td>
+                    </tr>
+                </table></td>
+              </tr>
+          </table>
+          
+</com:TContent> 

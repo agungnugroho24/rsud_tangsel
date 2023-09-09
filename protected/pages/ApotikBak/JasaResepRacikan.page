@@ -1,0 +1,117 @@
+<%@ MasterClass="Application.layouts.MainLayout" %>
+<com:TContent ID="jdMain">
+	Jasa Resep & Jasa Racikan
+    
+    <a href="<%= $this->Service->constructUrl('Simak') %>" onclick="maskContent()">
+    <span class="close-btn">
+        <span class="ui-icon ui-icon-circle-close"></span>
+    </span>
+    </a>
+    
+</com:TContent>	
+
+
+
+<com:TContent ID="Main"> 
+
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>			  
+                <td>
+					<com:TActiveLabel ID="showSql" />
+				</td>
+              </tr>
+              <com:TControl Visible="false">
+			  <tr ><td>
+			  	Jumlah Data Hasil Pencarian : <com:TActiveLabel ID="jmlData"/> data
+			  </td></tr>
+              </com:TControl>
+              
+              <tr>
+                <td><table width="100%"  border="0" align="center" cellpadding="0" cellspacing="1">                      
+                      <tr>
+                        <td align="center">
+						<com:XActiveDataGrid ID="dtgSomeData"
+								DataKeyField="id"
+								AutoGenerateColumns="false"	
+								AllowPaging="true"
+								AllowCustomPaging="true"
+								AllowSorting="true"
+								Width="100%"					
+								PageSize="10"
+								PagerStyle.Mode="Numeric"			
+								PagerStyle.Font.Name="Arial"
+								PagerStyle.Font.Size="12"
+								PagerStyle.HorizontalAlign="Right"			
+								GridLines="None"
+								CellSpacing="1"
+								CellPadding="2"
+								HeaderStyle.CssClass="headerstyle"
+								ItemStyle.CssClass="itemstyle"
+								AlternatingItemStyle.CssClass="itemstyle2"
+								OnItemCreated="itemCreated"
+								OnEditCommand="editItem"
+								OnUpdateCommand="saveItem"
+								OnCancelCommand="cancelItem"
+								OnPageIndexChanged="dtgSomeData_PageIndexChanged"
+								OnSortCommand="dtgSomeData_SortCommand"							
+                                EmptyTemplate="<div class='info'>Data Tidak Ada!.</div>">
+								
+								<com:XActiveBoundColumn 
+                                	ID="resep"
+									SortExpression="jasa_resep"
+									HeaderText="Jasa Resep"
+									ItemStyle.Width="50px"
+									DataField="jasa_resep"
+                                    ItemStyle.HorizontalAlign="Center" />
+								
+                                <com:XActiveBoundColumn 
+                                	ID="racikan"
+									SortExpression="jasa_racikan"
+									HeaderText="Jasa Racikan"
+									ItemStyle.Width="50px"
+									DataField="jasa_racikan"
+                                    ItemStyle.HorizontalAlign="Center" />
+                                 
+                                 <com:XActiveBoundColumn 
+                                	ID="bungkus"
+									SortExpression="bungkus"
+									HeaderText="Bungkus Racikan"
+									ItemStyle.Width="50px"
+									DataField="bungkus"
+                                    Visible="False"
+                                    ItemStyle.HorizontalAlign="Center" />
+                                 
+                                 <com:XActiveEditCommandColumn
+									HeaderText="Edit"
+									HeaderStyle.Width="50px"
+									Visible="<%= $this->User->IsAdmin %>"
+									UpdateText="Save"
+									ItemStyle.HorizontalAlign="Center"
+									ItemStyle.Font.Italic="false"/>	   	
+							</com:XActiveDataGrid>
+						</td>                       
+                      </tr>
+                    </table></td>
+              </tr>
+              <tr>
+                <td><hr/></td>
+              </tr>
+              
+              <com:TControl Visible="false">
+              <tr>
+                <td><table width="10" border="0" align="center" cellpadding="0" cellspacing="2">
+                    <tr>
+                      <td>                     
+					  <com:TControl Visible="<%= $this->User->IsAdmin %>">
+					  	<com:TButton Text="Baru" OnClick="baruClicked" CssClass="button_01" TabIndex="6" />
+					  </com:TControl>
+					  </td>                      
+                      <td><com:TButton Text="Keluar" OnClick="keluarClicked" CausesValidation="false" Attributes.onclick = "maskContent();" CssClass="button_01" TabIndex="7" /></td>
+                    </tr>
+                </table></td>
+              </tr>
+              </com:TControl>
+              
+          </table>
+          
+</com:TContent>

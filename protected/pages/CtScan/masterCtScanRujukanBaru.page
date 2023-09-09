@@ -1,0 +1,90 @@
+<%@ MasterClass="Application.layouts.MainLayout" %>
+<com:TContent ID="jdMain">
+	Daftar CT Scan Rujukan - Baru
+    
+    <a href="<%= $this->Service->constructUrl('Simak') %>" onclick="maskContent()">
+    <span class="close-btn">
+        <span class="ui-icon ui-icon-circle-close"></span>
+    </span>
+    </a>
+    
+</com:TContent>	
+<com:TContent ID="Main">
+
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+              
+              <tr>
+                <td><table width="100%" border="0" align="right" cellpadding="0" cellspacing="2">
+                  <tr>
+                    <td width="200"><span>&#8226;</span> ID</td>
+                    <td width="5">:</td>
+                    <td ><com:TActiveTextBox CssClass="input_text" 
+												  ID="ID" 												   
+												  MaxLength="2" 
+												  TabIndex="1"												   
+												  ToolTip="ID CT Scan Rujukan" 
+												  Width="55px"	
+												  ValidationGroup="val"	
+												  />
+								<com:TRequiredFieldValidator 
+											  ControlToValidate="ID"											 
+											  ErrorMessage="Anda harus mengisi ID CT Scan Rujukan"
+											  Display="Dynamic"
+											  ValidationGroup="val" />
+									<com:TActiveCustomValidator
+												ControlToValidate="ID"
+												ValidationGroup="val"
+												ErrorMessage="Maaf, ID tersebut sudah ada!"
+												OnServerValidate="checkRM" 
+												FocusOnError="true"												
+												Display="Dynamic" />
+								</td>
+                  </tr>
+                  <tr>
+                    <td><span>&#8226; </span>Nama CT Scan Rujukan</td>
+                    <td>:</td>
+                    <td>
+						<com:TTextBox 
+							ID="nama" 
+							Width="200px" 
+							TabIndex="2" 
+							ValidationGroup="val"
+						/>
+						<com:TRequiredFieldValidator 
+							ControlToValidate="nama"											 
+						  	ErrorMessage="Anda harus mengisikan nama CT Scan Rujukan"
+						  	Display="Dynamic" 
+							ValidationGroup="val"
+						/>
+					</td>
+                  </tr>
+                </table></td>
+              </tr>
+              <tr>
+                <td><hr /></td>
+              </tr>
+              <tr>
+                <td><table width="10" border="0" align="center" cellpadding="0" cellspacing="2">
+                    <tr>
+                      <td><com:TButton Text="Simpan" Attributes.onclick = "maskContent();" 
+					  					OnClick="simpanClicked" 
+										CssClass="button_01" 
+										TabIndex="6" 
+										ValidationGroup="val"/></td>
+                      <td><!--<com:TButton Text="Batal" 					  					
+										ButtonType="Reset" 
+										OnClick="batalClicked"
+										CausesValidation="false" 
+										CssClass="button_01" 
+										TabIndex="7" />--></td>
+                      <td><com:TButton Text="Keluar" Attributes.onclick = "maskContent();" 
+					  			OnClick="keluarClicked" 
+								CausesValidation="false" 
+								CssClass="button_01" 
+								TabIndex="8" />
+					  </td>
+                    </tr>
+                </table></td>
+              </tr>
+          </table>
+</com:TContent>

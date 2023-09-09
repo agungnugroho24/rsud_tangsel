@@ -1,0 +1,103 @@
+<%@ MasterClass="Application.layouts.MainLayout" %>
+<com:TContent ID="jdMain">
+	Daftar Kategori Tindakan Elektromedik - Edit
+    
+    <a href="<%= $this->Service->constructUrl('Simak') %>" onclick="maskContent()">
+    <span class="close-btn">
+        <span class="ui-icon ui-icon-circle-close"></span>
+    </span>
+    </a>
+    
+</com:TContent>	
+<com:TContent ID="Main">
+
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+              
+              <tr>
+                <td><table width="100%" border="0" align="right" cellpadding="0" cellspacing="2">
+                  <com:TControl Visible="false" Enabled="false">
+                  <tr>
+                    <td width="200"><span>&#8226;</span> ID</td>
+                    <td width="5">:</td>
+                    <td ><com:TActiveTextBox CssClass="input_text" 
+												  ID="ID" 												   
+												  MaxLength="2" 
+												  Width="55px"	
+												  ValidationGroup="val"	
+												  />
+								<com:TRequiredFieldValidator 
+											  ControlToValidate="ID"											 
+											  ErrorMessage="Anda harus mengisi ID kelompok Elektromedik"
+											  Display="Dynamic"
+											  ValidationGroup="val" />
+									<com:TActiveCustomValidator
+												ControlToValidate="ID"
+												ValidationGroup="val"
+												ErrorMessage="Maaf, ID tersebut sudah ada!"
+												OnServerValidate="checkRM" 
+												FocusOnError="true"												
+												Display="Dynamic" />
+								</td>
+                  </tr>
+                  </com:TControl>
+                  
+                  <tr>
+                    <td width="200"><span>&#8226; </span>Nama Kelompok</td>
+                    <td width="5">:</td>
+                    <td>
+						<com:TActiveTextBox 
+							ID="nama" 
+							Width="200px" 
+						/>
+                      <com:TRequiredFieldValidator
+                            ControlToValidate="nama"
+                            ValidationGroup="val"
+                            ErrorMessage="*"
+                            Display="Dynamic"
+                            FocusOnError="true" 
+                            CssClass="valRequired"
+                            ControlCssClass="valctrl"/>
+					</td>
+                  </tr>
+                </table></td>
+              </tr>
+              <tr>
+                <td><hr /></td>
+              </tr>
+              <tr>
+                <td><table width="10" border="0" align="center" cellpadding="0" cellspacing="2">
+                    <tr>
+                      <td><com:TActiveButton Text="Simpan" Attributes.onclick = "maskContent();" 
+					  					OnClick="simpanClicked" 
+										CssClass="button_01" 
+										ValidationGroup="val"/></td>
+                      <td><!--<com:TButton Text="Batal" 					  					
+										ButtonType="Reset" 
+										OnClick="batalClicked"
+										CausesValidation="false" 
+										CssClass="button_01" 
+										TabIndex="7" />--></td>
+                      <td><com:TActiveButton Text="Batal" Attributes.onclick = "maskContent();" 
+					  			OnClick="keluarClicked" 
+								CausesValidation="false" 
+								CssClass="button_01"  />
+					  </td>
+                    </tr>
+                </table></td>
+              </tr>
+          </table>
+	
+    <com:TCallback ID="UpdateCallback" OnCallback="prosesKonfirmasi" ActiveControl.CausesValidation="false"/>
+	<script type="text/javascript">
+		//<![CDATA[
+		function konfirmasi(mode){
+			var request= <%= $this->UpdateCallback->ActiveControl->Javascript %>;
+				request.setCallbackParameter({
+					Id:mode
+				});
+				request.dispatch();
+		}
+		//]]>
+	</script>
+    
+</com:TContent>

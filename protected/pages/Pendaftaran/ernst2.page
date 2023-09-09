@@ -1,0 +1,220 @@
+<%@ MasterClass="Application.layouts.MainLayout" %>
+<com:TContent ID="Main">
+<table width="56%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td height="18"></td>
+  </tr>
+  <tr>
+    <td><table width="10"  border="0" align="center" cellpadding="0" cellspacing="0">
+      <tr>
+        <td width="1%"><table width="100%"  border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="1%"><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndAppTopLft.png'%>" width="15" height="15" /></td>
+            <td width="99%" background="<%=$this->Page->Theme->BaseUrl.'/images/bkg3.png'%>">&nbsp;</td>
+            <td width="1%"><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndAppTopRgt.png'%>" width="15" height="15" /></td>
+          </tr>
+        </table></td>
+      </tr>
+      <tr>
+        <td valign="top" background="<%=$this->Page->Theme->BaseUrl.'/images/bkg3.png'%>"><table width="10" border="0" cellpadding="0" cellspacing="0">
+          <tr>
+            <td><table width="15" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+            </table></td>
+            <td><table width="750" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td class="text_08">PEMBUATAN IZIN TDG</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td><table width="10" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndTopLft.png'%>" width="15" height="15" /></td>
+          <td><table width="720" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td><table width="720" border="0" align="right" cellpadding="0" cellspacing="0">
+                    <tr>
+                      <td width="230" height="15" class="text_07">&nbsp;IDENTITAS PERUSAHAAN </td>
+                      <td width="1000" background="<%=$this->Page->Theme->BaseUrl.'/images/rndBkgTop.png'%>"></td>
+                    </tr>
+                </table></td>
+              </tr>
+          </table></td>
+          <td><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndTopRgt.png'%>" width="15" height="15" /></td>
+        </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="10" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td background="<%=$this->Page->Theme->BaseUrl.'/images/rndBkgLft.png'%>"><table width="15" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+          </table></td>
+          <td><table width="720" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+              <tr>
+                <td><table width="98%" border="0" align="right" cellpadding="0" cellspacing="2">
+                  <tr>
+                    <td width="30%"><span>&#8226;</span> Nama Perusahaan/Perorangan </td>
+                    <td width="1%">:</td>
+                    <td><com:TTextBox CssClass="input_text" Width="150px"/>
+                  </tr>
+                  <tr>
+                    <td width="30%"><span>&#8226;</span> Alamat Perusahaan </td>
+                    <td width="1%">:</td>
+                    <td><com:TTextBox CssClass="input_text"/>
+                  </tr>
+                  <tr>
+                    <td><span class="table_01"><span class="bullet_02">&#8226;</span> Kelurahan </span></td>
+                    <td width="1%">:</td>
+                    <td><com:TTextBox CssClass="input_text"/>
+                  </tr>
+                  <tr>
+                    <td><span class="table_01"><span class="bullet_02">&#8226;</span> Kecamatan </span></td>
+                    <td>&nbsp;</td>
+                    <td><com:TDropDownList ID="DDKecamatan1"
+											PromptText ="--Silakan Pilih--"
+											PromptValue =""											
+											DataTextField="nama"
+											DataValueField="id" 										   
+										    ToolTip="Pilih Kecamatan Tempat Tinggal Anda!" 
+										    TabIndex="2" /></td>
+                  </tr>
+                  <tr>
+                    <td><span class="table_01"><span class="bullet_02">&#8226;</span> Kabupaten </span></td>
+                    <td>&nbsp;</td>
+                    <td><com:TDropDownList ID="DDKabupaten1"
+											PromptText ="--Silakan Pilih--"
+											PromptValue =""											
+											DataTextField="nama"
+											DataValueField="id" 										   
+										    ToolTip="Pilih Kecamatan Tempat Tinggal Anda!" 
+										    TabIndex="2" /></td>
+                  </tr>
+                  <tr>
+                    <td><span class="table_01"><span class="bullet_02">&#8226; Provinsi </span></span></td>
+                    <td>&nbsp;</td>
+                    <td><com:TDropDownList ID="DDProvinsi1"
+											PromptText ="--Silakan Pilih--"
+											PromptValue =""											
+											DataTextField="nama"
+											DataValueField="id" 										   
+										    ToolTip="Pilih Kecamatan Tempat Tinggal Anda!" 
+										    TabIndex="2" /></td>
+                  </tr>
+                  <tr>
+                    <td width="30%"><span>&#8226;</span> Nomor Telepon/Fax </td>
+                    <td width="1%">:</td>
+                    <td><com:TTextBox CssClass="input_text"/>
+                  </tr>
+                  <tr>
+                    <td width="30%"><span>&#8226;</span> Jenis Kegiatan </td>
+                    <td width="1%">:</td>
+                    <td><com:TTextBox CssClass="input_text"/>
+                  </tr>
+                  <tr>
+                    <td width="30%"><span>&#8226;</span> Nomor SIUP/TDUP </td>
+                    <td width="1%">:</td>
+                    <td><com:TTextBox CssClass="input_text"/>
+                  </tr>
+                  <tr>
+                    <td width="30%"><span>&#8226;</span> Tanggal SIUP </td>
+                    <td width="1%">:</td>
+                    <td><com:TTextBox CssClass="input_text"/>					
+                    </td>
+                  </tr>
+                  <tr>
+                    <td width="30%"><span>&#8226;</span> Tempat Diterbitkanya SIUP </td>
+                    <td width="1%">:</td>
+                    <td><com:TTextBox CssClass="input_text"/>
+                  </tr>
+                  <tr>
+                    <td width="30%"><span>&#8226;</span> Nomor TDP </td>
+                    <td width="1%">:</td>
+                    <td><com:TTextBox CssClass="input_text"/>		
+                  </tr>
+                  <tr>
+                    <td width="30%"><span>&#8226;</span> Tanggal TDP </td>
+                    <td>:</td>
+                    <td><com:TTextBox CssClass="input_text"/>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td width="30%"><span>&#8226;</span> Tempat Diterbitkanya TDP </td>
+                    <td>:</td>
+                    <td><com:TTextBox CssClass="input_text"/>
+                  </tr>
+                  <tr>
+                    <td width="30%"><span>&#8226;</span> NPWP </td>
+                    <td>&nbsp;</td>
+                    <td><com:TTextBox CssClass="input_text"/>                
+				  </tr>
+                </table></td>
+              </tr>
+              <tr>
+                <td><hr align="center" width="96%" size="2" noshade color="#CECECE"/></td>
+              </tr>
+              <tr>
+                <td><table width="10" border="0" align="center" cellpadding="0" cellspacing="2">
+                    <tr>
+                      <td><com:TButton Text="Simpan" OnClick="simpanClicked" CssClass="button_01" /></td>
+                      <td><com:TButton Text="Batal" OnClick="batalClicked" CssClass="button_01" /></td>
+                      <td><com:TButton Text="Keluar" OnClick="keluarClicked" CssClass="button_01" /></td>
+                    </tr>
+                </table></td>
+              </tr>
+          </table></td>
+          <td background="<%=$this->Page->Theme->BaseUrl.'/images/rndBkgRgt.png'%>"><table width="15" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+          </table></td>
+        </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="10" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndBtmLft.png'%>" width="15" height="15" /></td>
+          <td background="<%=$this->Page->Theme->BaseUrl.'/images/rndBkgBtm.png'%>"><table width="720" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+          </table></td>
+          <td><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndBtmRgt.png'%>" width="15" height="15" /></td>
+        </tr>
+    </table></td>
+  </tr>
+</table></td>
+            <td><table width="15" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+            </table></td>
+          </tr>
+        </table></td>
+      </tr>
+      <tr>
+        <td><table width="100%"  border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="1%"><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndAppBtmLft.png'%>" width="15" height="15" /></td>
+            <td width="99%" background="<%=$this->Page->Theme->BaseUrl.'/images/bkg3.png'%>">&nbsp;</td>
+            <td width="1%"><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndAppBtmRgt.png'%>" width="15" height="15" /></td>
+          </tr>
+        </table></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+</com:TContent>

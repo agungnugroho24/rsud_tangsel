@@ -1,0 +1,736 @@
+<?php
+class LapJasMedDokter extends SimakConf
+{   
+	/**
+	* General Public Variable.
+	* Holds offset and limit data from array
+	* @return array subset of values
+	*/
+		
+	/**
+	* Returns a subset of data.
+	* In MySQL database, this can be replaced by LIMIT clause
+	* in an SQL select statement.
+	* @param integer the starting index of the row
+	* @param integer number of rows to be returned
+	* @return array subset of data
+	*/
+	
+	
+	protected function getDataRows($offset,$rows,$order,$sort,$pil,$cariPoli,$cariDokter,$urutBy,$Company,$cariTgl,$cariTglAwal,$cariTglAkhir,$cariBln,$cariThn)
+	{
+		if($pil == "1")
+		{
+			$sql = "SELECT 
+					  view_lap_jasmed_dokter.no_trans,
+					  view_lap_jasmed_dokter.nama,
+					  view_lap_jasmed_dokter.tindakan,
+					  view_lap_jasmed_dokter.cm,
+					  view_lap_jasmed_dokter.kelompok,
+					  view_lap_jasmed_dokter.jasmed_dok,
+					  view_lap_jasmed_dokter.total,
+					  view_lap_jasmed_dokter.operator,
+					  view_lap_jasmed_dokter.waktu,
+					  view_lap_jasmed_dokter.tgl,
+					  view_lap_jasmed_dokter.id_tindakan,
+					  view_lap_jasmed_dokter.dokter,
+					  view_lap_jasmed_dokter.klinik,
+					  view_lap_jasmed_dokter.no_trans_asal,
+					  view_lap_jasmed_dokter.perusahaan
+					FROM
+					  view_lap_jasmed_dokter ";
+					  
+			  
+			$perus=PasienRecord::finder()->find('cm = ?','view_lap_jasmed_dokter.cm')->perusahaan;
+			if($perus)
+			{
+				$sql .= "INNER JOIN tbm_perusahaan ON (view_lap_jasmed_dokter.perusahaan = tbm_perusahaan.id)
+						WHERE view_lap_jasmed_dokter.nama <> '' ";	
+			}
+			else
+			{
+				$sql .= "WHERE view_lap_jasmed_dokter.nama <> '' ";	
+			}
+			
+			if($cariPoli <> '')			
+				$sql .= "AND view_lap_jasmed_dokter.klinik = '$cariPoli' ";	
+			
+			if($cariDokter <> '')			
+				$sql .= "AND view_lap_jasmed_dokter.dokter = '$cariDokter' ";
+			
+			if($urutBy <> '')			
+				$sql .= "AND view_lap_jasmed_dokter.kelompok = '$urutBy' ";
+			
+			if($Company <> '')			
+				$sql .= "AND view_lap_jasmed_dokter.perusahaan = '$Company' ";		
+			
+			if($cariTgl <> '')			
+				$sql .= "AND view_lap_jasmed_dokter.tgl = '$cariTgl' ";
+			
+			if($cariTglAwal <> '' AND $cariTglAkhir <> '')			
+				$sql .= "AND view_lap_jasmed_dokter.tgl BETWEEN '$cariTglAwal' AND '$cariTglAkhir' ";
+			
+			if($cariBln <> '' AND $cariThn <> '')			
+				$sql .= "AND MONTH (view_lap_jasmed_dokter.tgl)='$cariBln' AND YEAR(view_lap_jasmed_dokter.tgl)='$cariThn' ";	
+			
+				//$sql .= " GROUP BY tbt_kasir_rwtjln.id_tindakan ";	
+			
+			if($order <> '')							
+				$sql .= " ORDER BY " . $order . ' ' . $sort;
+			
+			if($offset <> '')	
+				$sql .= " LIMIT " . $offset . ', ' . $rows;				  
+					  
+		}else{
+			$sql = "SELECT 
+					  view_lap_jasmed_dokter.no_trans,
+					  view_lap_jasmed_dokter.nama,
+					  view_lap_jasmed_dokter.tindakan,
+					  view_lap_jasmed_dokter.cm,
+					  view_lap_jasmed_dokter.kelompok,
+					  view_lap_jasmed_dokter.jasmed_dok,
+					  view_lap_jasmed_dokter.total,
+					  view_lap_jasmed_dokter.operator,
+					  view_lap_jasmed_dokter.waktu,
+					  view_lap_jasmed_dokter.tgl,
+					  view_lap_jasmed_dokter.id_tindakan,
+					  view_lap_jasmed_dokter.dokter,
+					  view_lap_jasmed_dokter.klinik,
+					  view_lap_jasmed_dokter.no_trans_asal,
+					  view_lap_jasmed_dokter.perusahaan
+					FROM
+					  view_lap_jasmed_dokter ";
+					  
+			  
+			$perus=PasienRecord::finder()->find('cm = ?','view_lap_jasmed_dokter.cm')->perusahaan;
+			if($perus)
+			{
+				$sql .= "INNER JOIN tbm_perusahaan ON (view_lap_jasmed_dokter.perusahaan = tbm_perusahaan.id)
+						WHERE view_lap_jasmed_dokter.nama <> '' ";	
+			}
+			else
+			{
+				$sql .= "WHERE view_lap_jasmed_dokter.nama <> '' ";	
+			}
+			
+			if($cariPoli <> '')			
+				$sql .= "AND view_lap_jasmed_dokter.klinik = '$cariPoli' ";	
+			
+			if($cariDokter <> '')			
+				$sql .= "AND view_lap_jasmed_dokter.dokter = '$cariDokter' ";
+			
+			if($urutBy <> '')			
+				$sql .= "AND view_lap_jasmed_dokter.kelompok = '$urutBy' ";
+			
+			if($Company <> '')			
+				$sql .= "AND view_lap_jasmed_dokter.perusahaan = '$Company' ";		
+			
+			if($cariTgl <> '')			
+				$sql .= "AND view_lap_jasmed_dokter.tgl = '$cariTgl' ";
+			
+			if($cariTglAwal <> '' AND $cariTglAkhir <> '')			
+				$sql .= "AND view_lap_jasmed_dokter.tgl BETWEEN '$cariTglAwal' AND '$cariTglAkhir' ";
+			
+			if($cariBln <> '' AND $cariThn <> '')			
+				$sql .= "AND MONTH (view_lap_jasmed_dokter.tgl)='$cariBln' AND YEAR(view_lap_jasmed_dokter.tgl)='$cariThn' ";	
+			
+				//$sql .= " GROUP BY tbt_kasir_rwtjln.id_tindakan ";	
+			
+			if($order <> '')							
+				$sql .= " ORDER BY " . $order . ' ' . $sort;
+		}					
+		
+		$page=$sql;		 
+		//$page=KasirRwtJlnRecord::finder()->findAllBySql($sql);
+		//$page = $sql;
+		$this->showSql->Text=$sql;
+		$this->showSql->Visible=false;//show SQL Expression broer!
+		return $page;
+		
+		/*
+		$criteria = new TActiveRecordCriteria;
+		$criteria->Limit = $rows;
+		$criteria->Offset = $offset;
+		$page=KabRecord::finder()->findAll($criteria);
+		
+		return $page;*/
+	}
+	
+	public function onInit($param)
+	 {		
+		parent::onInit($param);
+		$tmpVar=$this->authApp('2');
+		if($tmpVar == "False")//Bila tidak ada hak utk modul aplikasi pendaftaran
+		
+		
+		if(!$this->IsPostBack)
+		{	
+			$this->DDtahun->DataSource=$this->tahun(1980,2051);
+			$this->DDtahun->dataBind();
+			
+			$this->DDPoli->DataSource=PoliklinikRecord::finder()->findAll();
+			$this->DDPoli->dataBind();
+			
+			$sql="SELECT * FROM tbd_pegawai WHERE kelompok='1'";
+			$arrDataDokter=$this->queryAction($sql,'S');//Select row in tabel bro...
+			$this->DDDokter->DataSource=$arrDataDokter;	
+			$this->DDDokter->dataBind();
+			
+			$this->DDKontrak->Enabled=false;
+			$this->DDUrut->DataSource=KelompokRecord::finder()->findAll();
+			$this->DDUrut->dataBind();
+			$this->DDKontrak->DataSource=PerusahaanRecord::finder()->findAll();
+			$this->DDKontrak->dataBind();
+														
+			$orderBy=$this->getViewState('orderBy');			
+			////$cariByNama=$this->getViewState('cariByNama');			
+			$cariPoli=$this->getViewState('cariPoli');
+			$cariDokter=$this->getViewState('cariDokter');
+			$urutBy=$this->getViewState('urutBy');
+			$Company=$this->getViewState('Company');
+			$cariTgl=$this->getViewState('cariTgl');
+			$cariTglAwal=$this->getViewState('cariTglAwal');
+			$cariTglAkhir=$this->getViewState('cariTglAkhir');
+			$cariBln=$this->getViewState('cariBln');
+			$cariThn=$this->getViewState('cariThn');		
+			
+			$jmlData=count($this->queryAction($this->getDataRows($offset,$limit,$orderBy,'','2',$cariPoli,$cariDokter,$urutBy,$Company,$cariTgl,$cariTglAwal,$cariTglAkhir,$cariBln,$cariThn),'S'));
+			
+			$this->UserGrid->VirtualItemCount=$jmlData;
+						
+			$this->UserGrid->DataSource=$this->queryAction($this->getDataRows($offset,$limit,$orderBy,'','2',$cariPoli,$cariDokter,$urutBy,$Company,$cariTgl,$cariTglAwal,$cariTglAkhir,$cariBln,$cariThn),'S');
+
+			$this->UserGrid->dataBind();	
+			//$this->cariClicked();
+		}		
+    }		
+	
+	/**
+     * Paging Control and Properties to specified pages.
+     * This method responds to the datagrid's event.
+     * @param TDataGrid the event sender
+     * @param TDataGridCommandEventParameter the event parameter
+     */
+	public function changePage($sender,$param)
+	{		
+		$limit=$this->UserGrid->PageSize;
+		
+		
+		$orderBy=$this->getViewState('orderBy');			
+		//$cariByNama=$this->getViewState('cariByNama');		
+		$cariPoli=$this->getViewState('cariPoli');
+		$cariDokter=$this->getViewState('cariDokter');
+		$urutBy=$this->getViewState('urutBy');
+		$Company=$this->getViewState('Company');
+		
+		$cariTgl=$this->getViewState('cariTgl');
+		$cariTglAwal=$this->getViewState('cariTglAwal');
+		$cariTglAkhir=$this->getViewState('cariTglAkhir');
+		$cariBln=$this->getViewState('cariBln');
+		$cariThn=$this->getViewState('cariThn');
+		
+			
+		$this->UserGrid->CurrentPageIndex=$param->NewPageIndex;
+		$offset=$param->NewPageIndex*$this->UserGrid->PageSize;		
+		
+		if($this->getViewState('cariTgl')=='' && $this->getViewState('cariTglAwal')=='' && $this->getViewState('cariTglAkhir')=='' && $this->getViewState('cariBln')=='' && $this->getViewState('cariThn')=='')
+		{
+			$this->UserGrid->DataSource=$this->queryAction($this->getDataRows($offset,$limit,$orderBy,'','1',
+									$cariPoli,$cariDokter,$urutBy,$Company,$this->getViewState('cariTgl'),
+									$this->getViewState('cariTglAwal'),$this->getViewState('cariTglAkhir'),
+									date('m'),date('Y')),'S');
+			
+		}
+		else
+		{
+			$this->UserGrid->DataSource=$this->queryAction($this->getDataRows($offset,$limit,$orderBy,'','1',$cariPoli,$cariDokter,$urutBy,$Company,$cariTgl,$cariTglAwal,$cariTglAkhir,$cariBln,$cariThn),'S');
+		}
+		
+		$this->UserGrid->dataBind();
+	} 
+	
+	public function pagerCreated($sender,$param)
+	{
+		$param->Pager->Controls->insertAt(0,'Page: ');
+	}
+	
+	public function changePagerPosition($sender,$param)
+	{		
+		$position='TopAndBottom';		
+		$this->UserGrid->PagerStyle->Position=$position;
+		$this->UserGrid->PagerStyle->Visible=true;		
+	}
+	
+	public function itemCreated($sender,$param)
+    {
+        $item=$param->Item;
+		if($item->ItemType==='EditItem')
+        {
+            // set column width of textboxes
+           $item->jml->TextBox->Columns=5;
+		   //$item->nama->Enabled=false;
+		   //$item->sat->Enabled=false;
+		   //$item->pbf->Enabled=false;
+		   //$item->sumber->Enabled=false;
+		   //$item->sumberSekunder->Enabled=false;
+        }       
+    }
+	
+	
+
+	public function useNumericPager($sender,$param)
+	{
+	
+		$limit=$this->UserGrid->PageSize;
+		$offset=$param->NewPageIndex*$this->UserGrid->PageSize;
+		
+		$orderBy=$this->getViewState('orderBy');			
+		//$cariByNama=$this->getViewState('cariByNama');
+		$cariPoli=$this->getViewState('cariPoli');
+		$cariDokter=$this->getViewState('cariDokter');
+		$urutBy=$this->getViewState('urutBy');
+		$Company=$this->getViewState('Company');
+		$cariTgl=$this->getViewState('cariTgl');
+		$cariTglAwal=$this->getViewState('cariTglAwal');
+		$cariTglAkhir=$this->getViewState('cariTglAkhir');
+		$cariBln=$this->getViewState('cariBln');
+		$cariThn=$this->getViewState('cariThn');
+		
+		$this->UserGrid->PagerStyle->Mode='Numeric';
+		$this->UserGrid->PagerStyle->NextPageText=$this->NextPageText->Text;
+		$this->UserGrid->PagerStyle->PrevPageText=$this->PrevPageText->Text;
+		$this->UserGrid->PagerStyle->PageButtonCount=$this->PageButtonCount->Text;
+		
+		if($this->getViewState('cariTgl')=='' && $this->getViewState('cariTglAwal')=='' && $this->getViewState('cariTglAkhir')=='' && $this->getViewState('cariBln')=='' && $this->getViewState('cariThn')=='')
+		{
+			$this->UserGrid->DataSource=$this->queryAction($this->getDataRows($offset,$limit,$orderBy,'','1',
+									$cariPoli,$cariDokter,$urutBy,$Company,$this->getViewState('cariTgl'),
+									$this->getViewState('cariTglAwal'),$this->getViewState('cariTglAkhir'),
+									date('m'),date('Y')),'S');
+			
+		}
+		else
+		{
+			$this->UserGrid->DataSource=$this->queryAction($this->getDataRows($offset,$limit,$orderBy,'','1',$cariPoli,$cariDokter,$urutBy,$Company,$cariTgl,$cariTglAwal,$cariTglAkhir,$cariBln,$cariThn),'S');
+		}
+		
+		$this->UserGrid->dataBind();
+	}
+		
+	public function sortGrid($sender,$param)
+	{	
+		//$limit=$this->UserGrid->PageSize;
+		//$offset=$param->NewPageIndex*$this->UserGrid->PageSize;
+		
+		$orderBy = $param->SortExpression;
+		$this->setViewState('orderBy',$orderBy);			
+		//$cariByNama=$this->getViewState('cariByNama');
+		$cariPoli=$this->getViewState('cariPoli');
+		$cariDokter=$this->getViewState('cariDokter');
+		$urutBy=$this->getViewState('urutBy');
+		$Company=$this->getViewState('Company');
+		$cariTgl=$this->getViewState('cariTgl');
+		$cariTglAwal=$this->getViewState('cariTglAwal');
+		$cariTglAkhir=$this->getViewState('cariTglAkhir');
+		$cariBln=$this->getViewState('cariBln');
+		$cariThn=$this->getViewState('cariThn');
+		/*$criteria = new TActiveRecordCriteria;
+		$criteria->OrdersBy[$param->SortExpression] = 'asc';					
+		$criteria->Limit = $limit;
+		$criteria->Offset = $offset;*/
+		
+		if($this->getViewState('cariTgl')=='' && $this->getViewState('cariTglAwal')=='' && $this->getViewState('cariTglAkhir')=='' && $this->getViewState('cariBln')=='' && $this->getViewState('cariThn')=='')
+		{
+			$this->UserGrid->DataSource=$this->queryAction($this->getDataRows($offset,$limit,$orderBy,'','1',
+									$cariPoli,$cariDokter,$urutBy,$Company,$this->getViewState('cariTgl'),
+									$this->getViewState('cariTglAwal'),$this->getViewState('cariTglAkhir'),
+									date('m'),date('Y')),'S');
+			
+		}
+		else
+		{
+			$this->UserGrid->DataSource=$this->queryAction($this->getDataRows($offset,$limit,$orderBy,'','1',$cariPoli,$cariDokter,$urutBy,$Company,$cariTgl,$cariTglAwal,$cariTglAkhir,$cariBln,$cariThn),'S');
+		}
+		
+		$this->UserGrid->dataBind();
+	}
+	
+	
+	
+	public function keluarClicked($sender,$param)
+	{		
+		$this->Response->redirect($this->Service->constructUrl('Simak'));		
+	}
+	
+	public function baruClicked($sender,$param)
+	{		
+		$this->Response->redirect($this->Service->constructUrl('Farmasi.MasterObatBaru'));		
+	}
+	
+	
+	public function cariClicked()
+	{	
+		//$limit=$this->UserGrid->PageSize;
+		//$offset=$param->NewPageIndex*$this->UserGrid->PageSize;
+			
+		$orderBy=$this->getViewState('orderBy');	
+		
+		/*
+		if($this->cariNama->Text){
+			$this->setViewState('cariByNama', $this->cariNama->Text);			
+		}else{
+			$this->clearViewState('cariByNama');	
+		}					
+		*/
+				
+		if($this->DDPoli->SelectedValue) {
+			$this->setViewState('cariPoli',$this->DDPoli->SelectedValue);
+		}else{
+			$this->clearViewState('cariPoli');	
+		}
+		
+		if($this->DDDokter->SelectedValue) {
+			$this->setViewState('cariDokter',$this->DDDokter->SelectedValue);
+		}else{
+			$this->clearViewState('cariDokter');	
+		}
+		
+		if($this->tgl->Text){
+			$this->setViewState('cariTgl',$this->ConvertDate( $this->tgl->Text,2));
+		}else{
+			$this->clearViewState('cariTgl');	
+		}	
+		
+		if($this->tglawal->Text){
+			$this->setViewState('cariTglAwal',$this->ConvertDate( $this->tglawal->Text,2));
+		}else{
+			$this->clearViewState('cariTglAwal');	
+		}	
+		
+		if($this->tglakhir->Text){
+			$this->setViewState('cariTglAkhir',$this->ConvertDate( $this->tglakhir->Text,2));
+		}else{
+			$this->clearViewState('cariTglAkhir');	
+		}	
+		
+		if($this->DDtahun->SelectedValue){
+			$cariThn = $this->getViewState('cariThn');
+		}else{
+			$this->clearViewState('cariThn');
+		}		
+		
+		if($this->DDbulan->SelectedValue){
+			$cariBln = $this->getViewState('cariBln');
+		}else{
+			$this->clearViewState('cariBln');
+		}		
+			
+		
+		if($this->getViewState('cariTgl')=='' && $this->getViewState('cariTglAwal')=='' && $this->getViewState('cariTglAkhir')=='' && $this->getViewState('cariBln')=='' && $this->getViewState('cariThn')=='')
+		{
+			$i=count($this->queryAction($this->getDataRows($offset,$limit,$orderBy,'','1',
+									$this->DDPoli->SelectedValue,$this->DDDokter->SelectedValue,$this->DDUrut->SelectedValue,
+									$this->DDKontrak->SelectedValue,$this->getViewState('cariTgl'),
+									$this->getViewState('cariTglAwal'),$this->getViewState('cariTglAkhir'),
+									date('m'),date('Y')),'S'));
+			$this->jmlData->Text=$i;
+			$this->UserGrid->VirtualItemCount=$i;
+			$this->UserGrid->DataSource=$this->queryAction($this->getDataRows($offset,$limit,$orderBy,'','1',
+									$this->DDPoli->SelectedValue,$this->DDDokter->SelectedValue,$this->DDUrut->SelectedValue,
+									$this->DDKontrak->SelectedValue,$this->getViewState('cariTgl'),
+									$this->getViewState('cariTglAwal'),$this->getViewState('cariTglAkhir'),
+									date('m'),date('Y')),'S');
+			
+		}
+		else
+		{
+			$i=count($this->queryAction($this->getDataRows($offset,$limit,$orderBy,'','1',
+									$this->DDPoli->SelectedValue,$this->DDDokter->SelectedValue,$this->DDUrut->SelectedValue,
+									$this->DDKontrak->SelectedValue,$this->getViewState('cariTgl'),
+									$this->getViewState('cariTglAwal'),$this->getViewState('cariTglAkhir'),
+									$this->getViewState('cariBln'),$this->getViewState('cariThn')),'S'));
+		
+			$this->jmlData->Text=$i;
+			$this->UserGrid->VirtualItemCount=$i;
+			$this->UserGrid->DataSource=$this->queryAction($this->getDataRows($offset,$limit,$orderBy,'','1',
+									$this->DDPoli->SelectedValue,$this->DDDokter->SelectedValue,$this->DDUrut->SelectedValue,
+									$this->DDKontrak->SelectedValue,$this->getViewState('cariTgl'),
+									$this->getViewState('cariTglAwal'),$this->getViewState('cariTglAkhir'),
+									$this->getViewState('cariBln'),$this->getViewState('cariThn')),'S');
+		}
+		
+		
+		$this->UserGrid->dataBind();
+		
+		$this->dataGrid->Visible=true;
+		
+		if($this->getViewState('pilihPeriode')==='1')
+		{
+			$this->txtPeriode->Text='PERIODE : '.$this->ConvertDate($this->ConvertDate($this->tgl->Text,'2'),'3');
+		}
+		elseif($this->getViewState('pilihPeriode')==='2')
+		{
+			$this->txtPeriode->Text='PERIODE : '.$this->ConvertDate($this->ConvertDate($this->tglawal->Text,'2'),'3').' s.d. '.$this->ConvertDate($this->ConvertDate($this->tglakhir->Text,'2'),'3');
+		}
+		elseif($this->getViewState('pilihPeriode')==='3')
+		{
+			if($this->getViewState('cariThn') AND $this->getViewState('cariBln'))
+			{
+				$this->txtPeriode->Text='PERIODE : '.$this->namaBulan($this->DDbulan->SelectedValue).' '.$this->ambilTxt($this->DDtahun);
+			}
+			else
+			{
+				$this->txtPeriode->Text='PERIODE : '.$this->namaBulan(date('m')).' '.date('Y');
+			}
+			
+		}
+		else
+		{
+			$this->txtPeriode->Text='PERIODE : '.$this->namaBulan(date('m')).' '.date('Y');
+		}
+		
+	}
+		
+	
+	public function DDPoliChanged($sender,$param)
+	{				
+		$this->DDDokter->focus();
+		
+		$this->cariClicked();
+	}
+	
+	public function DDDokterChanged($sender,$param)
+	{				
+		$this->DDberdasarkan->focus();
+		
+		$this->cariClicked();
+	}
+	
+	public function selectionChangedUrut($sender,$param)
+	{
+		if($this->DDUrut->SelectedValue=='05')
+		{
+			$this->DDKontrak->Enabled=true;
+			$this->DDKontrak->DataSource=PerusahaanRecord::finder()->findAll();
+			$this->DDKontrak->dataBind();
+			$this->DDKontrak->focus();
+		}
+		else
+		{
+			$this->DDKontrak->DataSource=PerusahaanRecord::finder()->findAll();
+			$this->DDKontrak->dataBind();
+			$this->DDKontrak->Enabled=false;
+		}
+		
+		$this->cariClicked();
+	}
+	
+	public function DDKontrakChanged($sender,$param)
+	{		
+		$this->cariClicked();				
+	}
+	
+	public function ChangedDDberdasarkan($sender,$param)
+	{
+		$pilih=$this->DDberdasarkan->SelectedValue;
+		if ($pilih=='3')
+		{
+			$this->clearViewState('pilihPeriode');
+			$this->setViewState('pilihPeriode',$pilih);
+			$this->DDbulan->SelectedIndex=-1;
+			$this->DDtahun->SelectedIndex=-1;
+			$this->bulan->visible=true;
+			$this->minggu->visible=false;
+			$this->hari->visible=false;
+			$this->tgl->Text='';
+			$this->tglawal->Text='';
+			$this->tglakhir->Text='';
+			//$this->cetakLapBtn->Enabled=false;
+			//$this->clearViewState('idBulan');
+			$this->clearViewState('cariThn');
+			$this->clearViewState('cariBln');
+			$this->DDbulan->focus();
+		}
+		elseif ($pilih=='2')
+		{
+			$this->clearViewState('pilihPeriode');
+			$this->setViewState('pilihPeriode',$pilih);
+			$this->DDbulan->SelectedIndex=-1;
+			$this->DDtahun->SelectedIndex=-1;
+			$this->minggu->visible=true;
+			$this->hari->visible=false;
+			$this->bulan->visible=false;
+			$this->tgl->Text='';
+			$this->tglawal->Text='';
+			$this->tglakhir->Text='';
+			//$this->cetakLapBtn->Enabled=true;
+			//$this->clearViewState('idBulan');
+			$this->clearViewState('cariThn');
+			$this->clearViewState('cariBln');
+			$this->tglawal->focus();
+			
+			$this->DDtahun->Enabled=false;
+			$this->DDtahun->DataSource=$this->tahun(1980,2051);
+			$this->DDtahun->dataBind();
+			
+		}
+		elseif ($pilih=='1')
+		{
+			$this->clearViewState('pilihPeriode');
+			$this->setViewState('pilihPeriode',$pilih);
+			$this->DDbulan->SelectedIndex=-1;
+			$this->DDtahun->SelectedIndex=-1;
+			$this->minggu->visible=false;
+			$this->hari->visible=true;
+			$this->bulan->visible=false;
+			$this->tgl->Text='';
+			$this->tglawal->Text='';
+			$this->tglakhir->Text='';
+			//$this->cetakLapBtn->Enabled=true;
+			//$this->clearViewState('idBulan');
+			$this->clearViewState('cariThn');
+			$this->clearViewState('cariBln');
+			$this->tgl->focus();
+			
+			$this->DDtahun->Enabled=false;
+			$this->DDtahun->DataSource=$this->tahun(1980,2051);
+			$this->DDtahun->dataBind();
+		}
+		else
+		{
+			$this->clearViewState('pilihPeriode');			
+			$this->DDbulan->SelectedIndex=-1;
+			$this->DDtahun->SelectedIndex=-1;
+			$this->tgl->Text='';
+			$this->tglawal->Text='';
+			$this->tglakhir->Text='';
+			//$this->cetakLapBtn->Enabled=false;		
+			////$this->clearViewState('idBulan');
+			$this->clearViewState('cariThn');
+			$this->clearViewState('cariBln');
+			$this->minggu->visible=false;
+			$this->hari->visible=false;
+			$this->bulan->visible=false;
+			
+			$this->DDtahun->Enabled=false;
+			$this->DDtahun->DataSource=$this->tahun(1980,2051);
+			$this->DDtahun->dataBind();
+			
+			$this->cariClicked();
+		}
+	}
+	
+	public function ChangedDDbulan($sender,$param)
+	{
+		$pilih=$this->DDbulan->SelectedValue;
+		if ($pilih=='')
+		{
+			//$this->cetakLapBtn->Enabled=false;
+			////$this->clearViewState('idBulan');
+			$this->clearViewState('cariBln');
+			$this->DDtahun->Enabled=false;
+			$this->DDtahun->DataSource=$this->tahun(1980,2051);
+			$this->DDtahun->dataBind();
+		}			
+		else
+		{
+			$this->DDtahun->Enabled=true;
+			$this->DDtahun->focus();
+			//$this->cetakLapBtn->Enabled=true;
+			//$this->clearViewState('idBulan');
+			$this->clearViewState('cariBln');
+			//$this->setViewState('idBulan',$pilih);
+			
+			$cariBln = $this->DDbulan->SelectedValue;
+			$this->setViewState('cariBln',$cariBln);
+		}
+	}
+	
+	public function ChangedDDtahun($sender,$param)
+	{
+		$pilih=$this->ambilTxt($this->DDtahun);
+		if ($pilih=='')
+		{
+			//$this->cetakLapBtn->Enabled=false;
+			////$this->clearViewState('idBulan');
+			$this->clearViewState('cariThn');
+		}			
+		else
+		{
+			//$this->cetakLapBtn->Enabled=true;
+			//$this->clearViewState('idBulan');
+			$this->clearViewState('cariThn');
+			//$this->setViewState('idBulan',$pilih);
+			
+			$cariThn = $pilih;
+			$this->setViewState('cariThn',$cariThn);
+		}
+		
+		$this->cariClicked();
+	}
+		
+	public function checkTgl($sender,$param)
+	{
+		$pecahTglAwal=explode('-',$this->tglawal->Text);
+		$pecahTglAkhir=explode('-',$this->tglakhir->Text);
+		$tglAwal=$pecahTglAwal['0'];
+		$cariBln=$pecahTglAwal['1'];
+		$thnAwal=$pecahTglAwal['2'];
+		$tglAkhir=$pecahTglAkhir['0'];
+		$cariThn=$pecahTglAkhir['1'];
+		$thnAkhir=$pecahTglAkhir['2'];
+		
+		if($thnAkhir<$thnAwal) 
+		{
+			$hasil='0';
+		}
+		else
+		{
+			if($cariThn<$cariBln) 
+			{
+				$hasil='0';
+			}
+			else
+			{
+				if($tglAkhir<$tglAwal) 
+				{
+					$hasil='0';
+				}
+				else
+				{
+					//jika tgl akhir benar
+					//$id_ijin=$this->getViewState('id');
+					//$this->Response->redirect($this->Service->constructUrl('Lap'.$id_ijin,array('idIjin'=>$id_ijin)));
+					$hasil='1';
+				}
+			}
+		}	
+		
+		$param->IsValid=($hasil==='1');
+	}
+	
+	public function cetakClicked($sender,$param)
+	{	
+		if($this->getViewState('cariTgl')=='' && $this->getViewState('cariTglAwal')=='' && $this->getViewState('cariTglAkhir')=='' && $this->getViewState('cariBln')=='' && $this->getViewState('cariThn')=='')
+		{
+			$this->Response->redirect($this->Service->constructUrl('Tarif.cetakLapJasMedDokter',array('poli'=>$this->DDPoli->SelectedValue,'dokter'=>$this->DDDokter->SelectedValue,'kelompok'=>$this->DDUrut->SelectedValue,
+			'perusahaan'=>$this->DDKontrak->SelectedValue,'tgl'=>$this->getViewState('cariTgl'),'tglawal'=>$this->getViewState('cariTglAwal'),
+			'tglakhir'=>$this->getViewState('cariTglAkhir'),'cariBln'=>date('m'),
+			'cariThn'=>date('Y'),'periode'=>$this->txtPeriode->Text)));
+		}
+		else
+		{
+			$this->Response->redirect($this->Service->constructUrl('Tarif.cetakLapJasMedDokter',array('poli'=>$this->DDPoli->SelectedValue,'dokter'=>$this->DDDokter->SelectedValue,'kelompok'=>$this->DDUrut->SelectedValue,
+			'perusahaan'=>$this->DDKontrak->SelectedValue,'tgl'=>$this->getViewState('cariTgl'),'tglawal'=>$this->getViewState('cariTglAwal'),
+			'tglakhir'=>$this->getViewState('cariTglAkhir'),'cariBln'=>$this->getViewState('cariBln'),
+			'cariThn'=>$this->getViewState('cariThn'),'periode'=>$this->txtPeriode->Text)));
+		}
+		
+	}	
+		
+	protected function refreshMe()
+	{
+		$this->Reload();
+	}
+}
+?>

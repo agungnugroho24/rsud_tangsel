@@ -1,0 +1,156 @@
+<?php
+class cetakLapPenerimaanKasirRwtJln extends SimakConf
+{
+	public function onLoad($param)
+	{	
+		//$nmTable=$this->Request['table'];
+		$nip=$this->Request['nip'];
+		$poli=$this->Request['poli'];
+		$dokter=$this->Request['dokter'];
+		$tgl=$this->Request['tgl'];
+		$tglawal=$this->Request['tglawal'];
+		$tglakhir=$this->Request['tglakhir'];
+		$bln=$this->Request['cariBln'];
+		$thn=$this->Request['cariThn'];
+		$periode=$this->Request['periode'];
+		
+		$sql = "SELECT 
+					   a.no_trans,
+					   a.total AS total,
+					   b.cm AS cm,
+					   c.nama AS nama,
+					   d.nama AS tindakan,
+					   e.nama AS poliklinik,
+					   f.nama AS dokter
+					FROM tbt_kasir_rwtjln a, 
+					  tbt_rawat_jalan b,
+					  tbd_pasien c,
+					  tbm_nama_tindakan d,
+					  tbm_poliklinik e,
+					  tbd_pegawai f
+					WHERE a.no_trans=b.no_trans
+					AND b.cm=c.cm
+					AND a.id_tindakan=d.id
+					AND f.id=b.dokter
+					AND e.id=b.id_klinik ";		
+			
+			if($nip <> '')
+				$sql .= "AND a.operator = '$nip' ";		
+						
+			if($poli <> '')			
+				$sql .= "AND poliklinik = '$poli' ";	
+			
+			if($dokter <> '')			
+				$sql .= "AND dokter = '$dokter' ";
+			
+			if($tgl <> '')			
+				$sql .= "AND a.tgl = '$tgl' ";
+			
+			if($tglawal <> '' AND $tglakhir <> '')			
+				$sql .= "AND a.tgl BETWEEN '$tglawal' AND '$tglakhir' ";
+			
+			if($bln <> '' AND $thn <> '')			
+				$sql .= "AND MONTH (a.tgl)='$bln' AND YEAR(a.tgl)='$thn' ";		
+		
+		$pdf=new reportKasir();
+		$pdf->AliasNbPages(); 
+		$pdf->AddPage();
+		
+		$pdf->Image('protected/pages/Tarif/logo.png',10,8,24);	
+		$pdf->SetFont('Arial','B',12);
+		$pdf->Cell(10,10,'','0',0,'C');
+		$pdf->Cell(0,10,'P E M E R I N T A H   K O T A   B A N D U N G','0',0,'C');
+		$pdf->Ln(7);
+		$pdf->SetFont('Arial','B',13);	
+		$pdf->Cell(10,10,'','0',0,'C');
+		$pdf->Cell(0,10,'RSUD. KOTA BANDUNG','0',0,'C');
+		$pdf->Ln(7);			
+		$pdf->SetFont('Arial','B',9);
+		$pdf->Cell(10,10,'','0',0,'C');
+		$pdf->Cell(0,10,'JL. Rumah Sakit No. 22 Ujungberung Kodepos 40121 Bandung ~ Telp./ Fax (022) 7213943, 7213944','0',0,'C');	
+		$pdf->Ln(3);
+		$pdf->Cell(0,5,'','B',1,'C');
+		$pdf->Ln(3);		
+		$pdf->SetFont('Arial','BU',10);
+		$pdf->Cell(0,5,'LAPORAN PENERIMAAN KASIR','0',0,'C');
+		$pdf->Ln(10);		
+		$pdf->SetFont('Arial','',9);
+		
+		if($nip)
+		{
+			$pdf->Cell(100,5,'Operator : '.UserRecord::finder()->findBy_nip($nip)->real_name,'0',0,'L');
+		}
+		
+		if($dokter)
+		{
+			$pdf->Cell(100,5,'Dokter : '.PegawaiRecord::finder()->findByPk($dokter)->nama,'0',0,'L');
+		}
+		
+		$pdf->Ln(5);	
+		if($poli)
+		{
+			$pdf->Cell(100,5,'Poliklinik : '.PoliklinikRecord::finder()->findByPk($poli)->nama,'0',0,'L');
+		}
+		
+		
+		$pdf->Cell(100,5,$periode,'0',0,'L');
+		$pdf->Ln(7);	
+		
+		//Line break
+		$pdf->SetFont('Arial','B',9);		
+		$pdf->Cell(25,5,'No Transaksi',1,0,'C');
+		$pdf->Cell(15,5,'CM',1,0,'C');		
+		$pdf->Cell(60,5,'Nama',1,0,'C');	
+		$pdf->Cell(65,5,'Tindakan',1,0,'C');	
+		$pdf->Cell(25,5,'Harga',1,0,'C');	
+		$pdf->Ln(5);
+					
+		$arrData=$this->queryAction($sql,'R');//Select row in tabel bro...				
+		
+		foreach($arrData as $row)
+		{
+			
+			$pdf->SetFont('Arial','',8);	
+			//$profit=($row['jumlah']*$row['hrg'])-($row['jumlah']*$row['hrg_ppn']);
+			
+			$pdf->Cell(25,5,$row['no_trans'],1,0,'C');
+			$pdf->Cell(15,5,$row['cm'],1,0,'C');		
+			$pdf->Cell(60,5,$row['nama'],1,0,'C');	
+			$pdf->Cell(65,5,$row['tindakan'],1,0,'C');			
+			$pdf->Cell(25,5,number_format($row['total'],2,',','.'),1,0,'R');	
+			$tot += $row['total'];
+			//$totProfit += $profit;
+			$pdf->Ln(5);
+		}				
+		
+		$pdf->SetFont('Arial','B',8);
+		$pdf->Cell(165,5,'GRAND TOTAL',1,0,'C');		
+		$pdf->Cell(25,5,number_format($tot,2,',','.'),1,0,'R');	
+		//$pdf->Cell(25,5,number_format($totProfit,2,',','.'),1,0,'R');	
+		$pdf->Ln(10);
+		//$pdf->SetFont('Arial','',9);
+		//$pdf->Cell(200,5,'Data Penjualan dari : '.$penjualan,0,0,'L');
+		//$pdf->Ln(5);
+		//$pdf->Cell(200,5,'Disortir berdasarkan : '.$sortir,0,0,'L');
+		
+		$pdf->SetFont('Arial','',9);	
+		$pdf->Cell(300,8,'Bandung, '.date('d') . ' ' . $this->namaBulan(date('m')) . ' ' . date('Y'),0,0,'C');
+		$pdf->Ln(5);
+		$pdf->Cell(300,8,'Kasir,',0,0,'C');	
+		
+		$pdf->Ln(15);
+		
+		$pdf->SetFont('Arial','BU',9);	
+		$pdf->Cell(300,8,'('.$this->User->IsUserName.')',0,0,'C','',$this->Service->constructUrl('Tarif.LapPenerimaanKasirRwtJln'));
+			
+		$pdf->Ln(5);
+		$pdf->SetFont('Arial','',9);	
+		$pdf->Cell(300,8,'NIP. '.$this->User->IsUserNip,0,0,'C');	
+		
+		$pdf->Output();
+		//Purge data on temporary table
+		//$this->queryAction($nmTable,'D');//Droped the table
+	}
+	
+}
+?>

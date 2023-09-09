@@ -1,0 +1,250 @@
+<%@ MasterClass="Application.layouts.MainLayout" %>
+<com:TContent ID="jdMain">
+	Daftar Tarif CT Scan Rujukan
+    
+    <a href="<%= $this->Service->constructUrl('Simak') %>" onclick="maskContent()">
+    <span class="close-btn">
+        <span class="ui-icon ui-icon-circle-close"></span>
+    </span>
+    </a>
+    
+</com:TContent>	
+
+
+<com:TContent ID="Main">
+
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+		  
+              <tr>			  
+                <td>
+				<com:TLabel ID="showSql" />
+				<table width="100%" align="center" border="0">
+			  		<tr>
+						<td align="center"><com:TPanel GroupingText="Pencarian Data Tarif Rad" Width="100%" DefaultButton="cariBtn">
+							<table width="100%"  border="0" align="left">
+							  <tr>
+							    <td><span>&#8226;</span>&nbsp;&nbsp;CT Scan Rujukan </td>
+							    <td>:</td>
+							    <td>
+                                	<com:TDropDownList 
+                                        ID="DDradRujuk"
+                                        PromptText ="--Silakan Pilih--"
+                                        PromptValue ="empty"											
+                                        DataTextField="nama"
+                                        DataValueField="id"
+                                        Width="300px"
+                                        AutoPostBack="true"
+                                        OnSelectedIndexChanged="DDradRujukChanged"
+                                        CausesValidation="false"/>
+                                </td>
+							    </tr>
+							  <tr>
+								<td width="200"><span>&#8226;</span>&nbsp;&nbsp;ID</td>
+								<td width="5">:</td>
+								<td ><com:TTextBox ID="ID" 
+										MaxLength="7"										
+										Width="100px" 
+										ToolTip="Cari berdasarkan ID Tindakan CT Scan !!" 
+										TabIndex="1"/></td>
+							  </tr>
+							  <tr>
+                                <td><span>&#8226;</span>&nbsp;&nbsp;Nama Tindakan Rad </td>
+                                <td>:</td>
+                                <td>
+                                  <com:TTextBox ID="cariNama" 
+										MaxLength="30" 
+										Width="180px" 										
+										ToolTip="Cari berdasarkan Nama!!" 
+										TabIndex="2"
+									/>
+&nbsp;
+    <com:TCheckBox 
+										ID="Advance" 
+										Text="Elemen Kata" 
+										Value="1" 
+									/>                                </td>
+							    </tr>
+							  <tr>
+
+                                <td><span>&#8226; </span>Kelompok Rad  </td>
+                                <td>:</td>
+                                <td>
+                                  <com:TDropDownList 
+									ID="DDRadKel"
+									PromptText ="--Silakan Pilih--"
+									PromptValue =""											
+									DataTextField="nama"
+									DataValueField="kode" 	
+									ToolTip="Pilih Kelompok CT Scan" 
+									TabIndex="2" 
+									Width="300px" 
+									AutoPostBack="true" 
+									CausesValidation="false" 
+									OnSelectedIndexChanged="DDKelChanged"/>
+                                  <com:TRequiredFieldValidator
+										Display="Dynamic"
+										ControlToValidate="DDRadKel"
+										Text="Kategori CT Scan belum dipilih" 
+										InitialValue="--Silakan Pilih--" 
+										ValidationGroup="val"
+									/>                                </td>
+							    </tr>
+							  <tr>
+                                <td><span>&#8226;</span>&nbsp;Kategori Rad </td>
+                                <td>:</td>
+                                <td>
+                                  <com:TDropDownList 
+										ID="DDRadKateg"
+										PromptText ="--Silakan Pilih--"
+										PromptValue =""											
+										DataTextField="jenis"
+										DataValueField="kode" 	
+										ToolTip="Pilih Kategori CT Scan" 
+										TabIndex="2" 
+										Width="300px" 
+										AutoPostBack="true"
+										CausesValidation="true" 
+										OnSelectedIndexChanged="DDKategChanged"/>                                </td>
+							    </tr>
+							  <tr>
+							    <td>&nbsp;</td>
+							    <td>&nbsp;</td>
+							    <td>
+									<com:TButton Text="Cari" Attributes.onclick = "maskContent();" OnClick="cariClicked" CssClass="button_01" TabIndex="6" ID="cariBtn" />								</td>
+							    </tr>
+							</table>
+							</com:TPanel>
+						</td>
+			  		</tr>
+				</table>
+			</td>
+              </tr>
+			  
+              <tr>
+                <td><table width="100%"  border="0" align="center" cellpadding="0" cellspacing="1">                      
+                      <tr>
+                        <td align="center">
+						<com:TDataGrid ID="UserGrid"
+								DataKeyField="id"
+								AutoGenerateColumns="false"	
+								AllowPaging="true"
+								AllowCustomPaging="true"
+								AllowSorting="true"
+								Width="100%"					
+								PageSize="10"
+								PagerStyle.Mode="Numeric"			
+								PagerStyle.Font.Name="Arial"
+								PagerStyle.Font.Size="12"
+								PagerStyle.HorizontalAlign="Right"			
+								GridLines="None"
+								CellSpacing="1"
+								CellPadding="2"
+								
+								HeaderStyle.CssClass="headerstyle"
+								ItemStyle.CssClass="itemstyle"
+								AlternatingItemStyle.CssClass="itemstyle2"
+								OnItemCreated="itemCreated"
+								OnEditCommand="editItem"
+								OnUpdateCommand="saveItem"
+								OnCancelCommand="cancelItem"
+								OnDeleteCommand="deleteButtonClicked"								
+								OnPageIndexChanged="changePage"
+								OnPagerCreated="pagerCreated"			
+								OnSortCommand="sortGrid">								
+							</div>	
+								
+								<com:TTemplateColumn HeaderText="ID" 
+													 SortExpression="id_tdk_ctscan"
+													 ID="id_tdk_ctscan" 													 
+													 ItemStyle.Width="70px" 
+													 ItemStyle.HorizontalAlign="Center" >									
+									<prop:ItemTemplate>
+										<%=	$this->Parent->DataItem['id_tdk_ctscan'] %>
+									</prop:ItemTemplate>
+								</com:TTemplateColumn>	 
+								
+								<com:TTemplateColumn HeaderText="Nama Tindakan" 
+													 SortExpression="nama"
+													 ID="nama" 													 
+													 ItemStyle.Width="200px" 
+													 ItemStyle.HorizontalAlign="Center" >									
+									<prop:ItemTemplate>
+										<%=	$this->Parent->DataItem['nama'] %>
+									</prop:ItemTemplate>
+								</com:TTemplateColumn>
+									
+								<com:TBoundColumn
+									SortExpression="nm_ctscan_rujukan"
+									HeaderText="Rad Rujukan"
+									ItemStyle.Width="120px"
+									DataField="nm_ctscan_rujukan" />
+                                    
+                                <com:TBoundColumn
+									SortExpression="tarif"
+									ID="tarif"
+									HeaderText="Tarif Rawat Jalan"
+									ItemStyle.Width="80px"
+									DataField="tarif" />	
+								
+								<com:TBoundColumn
+									SortExpression="tarif1"
+									ID="tarif1"
+									HeaderText="Tarif Rawat Inap Kelas VIP"
+									ItemStyle.Width="80px"
+									DataField="tarif1" />					
+								
+								<com:TBoundColumn
+									SortExpression="tarif2"
+									ID="tarif2"
+									HeaderText="Tarif Rawat Inap Kelas IA"
+									ItemStyle.Width="80px"
+									DataField="tarif2" />	
+								
+								<com:TBoundColumn
+									SortExpression="tarif3"
+									ID="tarif3"
+									HeaderText="Tarif Rawat Inap Kelas IB"
+									ItemStyle.Width="80px"
+									DataField="tarif3" />
+								
+                                <com:TBoundColumn
+									SortExpression="tarif4"
+									ID="tarif4"
+									HeaderText="Tarif Rawat Inap Kelas II"
+									ItemStyle.Width="80px"
+									DataField="tarif4" />
+                                
+                                <com:TBoundColumn
+									SortExpression="tarif5"
+									ID="tarif5"
+									HeaderText="Tarif Rawat Inap Kelas III"
+									ItemStyle.Width="80px"
+									DataField="tarif5" />
+                                        			               
+								<com:TEditCommandColumn
+									HeaderText="Edit"
+									HeaderStyle.Width="50px"
+									UpdateText="Save"
+									ItemStyle.HorizontalAlign="Center"
+									ItemStyle.Font.Italic="false"
+									/>	
+							</com:TDataGrid>
+						</td>                       
+                      </tr>
+                    </table></td>
+              </tr>
+              <tr>
+                <td><hr /></td>
+              </tr>
+              <tr>
+                <td><table width="10" border="0" align="center" cellpadding="0" cellspacing="2">
+                    <tr>
+                      <td>                     
+					  	<com:TButton Text="Baru" Attributes.onclick = "maskContent();" OnClick="baruClicked" CssClass="button_01" TabIndex="6" />					 
+					  </td>                      
+                      <td><com:TButton Text="Keluar" Attributes.onclick = "maskContent();" OnClick="keluarClicked" CausesValidation="false" CssClass="button_01" TabIndex="7" /></td>
+                    </tr>
+                </table></td>
+              </tr>
+          </table>
+</com:TContent>

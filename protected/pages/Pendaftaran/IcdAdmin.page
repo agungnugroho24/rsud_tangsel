@@ -1,0 +1,304 @@
+<%@ MasterClass="Application.layouts.MainLayout" %>
+<com:TContent ID="jdMain">
+	Administrasi ICD
+    
+    <a href="<%= $this->Service->constructUrl('Simak') %>" onclick="maskContent()">
+    <span class="close-btn">
+        <span class="ui-icon ui-icon-circle-close"></span>
+    </span>
+    </a>
+    
+</com:TContent>	
+
+<com:TContent ID="Main">
+	<com:TActiveLabel ID="showSql" />
+    <com:TActiveLabel ID="tes"  />
+    
+    
+    <com:TActivePanel ID="cariIcdPanel" padding-bottom:10px;" DefaultButton="cariBtn" GroupingText="<strong>Pencarian Data ICD</strong>">
+        <table width="100%"  border="0" align="left">
+              <tr>
+                <td width="23%"><span>&#8226;</span>&nbsp;&nbsp;Kode DTD </td>
+                <td width="1%">:</td>
+                <td width="76%"><com:TActiveTextBox ID="dtd" Width="70px" CssClass="input_text" />&nbsp;<com:TCheckBox ID="AdvanceDtd" Text="Elemen Kata" Value="1" /><com:THiddenField ID="noTrans" /></td>
+          </tr>
+              <tr>
+                <td><span>&#8226;</span>&nbsp;&nbsp;Kode ICD </td>
+                <td>:</td>
+                <td><com:TActiveTextBox ID="kode" Width="70px"  CssClass="input_text" />&nbsp;<com:TCheckBox ID="AdvanceIcdKode" Text="Elemen Kata" Value="1" /></td>
+          </tr>
+              <tr>
+                <td><span>&#8226;</span>&nbsp;&nbsp;Group ICD </td>
+                <td>:</td>
+                <td><com:TActiveTextBox ID="kat" Width="70px" CssClass="input_text" />&nbsp;<com:TCheckBox ID="AdvanceIcdGroup" Text="Elemen Kata" Value="1" /></td>
+          </tr>
+              <tr>
+                <td><span>&#8226;</span>&nbsp;&nbsp;ICD Indonesia </td>
+                <td>:</td>
+                <td><com:TActiveTextBox ID="nmIndo" Width="250px"  CssClass="input_text" />&nbsp;<com:TCheckBox ID="Advance" Text="Elemen Kata" Value="1" /></td>
+          </tr>
+              <tr>
+                <td><span>&#8226;&nbsp;&nbsp;ICD Inggris </span></td>
+                <td>:</td>
+                <td>
+                    <com:TActiveTextBox 
+                        ID="nmEng" 
+                        Width="250px"  
+                        CssClass="input_text" />&nbsp;&nbsp;&nbsp;
+                 
+                     <com:TActiveButton
+                        ID="cariBtn" 
+                        Text="Cari" 
+                        OnClick="cariClicked" 
+                        CssClass="button_01" >
+                         <prop:ClientSide 
+                                OnLoading="maskContent();"
+                                OnComplete="unmaskContent(); "/>
+                    </com:TActiveButton>
+                </td>
+          </tr>	
+          <tr>
+    <td colspan="3">
+    <table width="100%"  border="0" align="center" cellpadding="0" cellspacing="1" >                      
+      <tr>
+        <td align="center">
+        <com:XActiveDataGrid ID="grid"
+                DataKeyField="kode"
+                AutoGenerateColumns="false"	
+                AllowPaging="true"
+                AllowCustomPaging="true"
+                AllowSorting="true"
+                Width="100%"					
+                PageSize="30"
+                PagerStyle.Mode="Numeric"			
+                PagerStyle.Font.Name="Arial"
+                PagerStyle.Font.Size="12"
+                PagerStyle.HorizontalAlign="Right"			
+                GridLines="None"
+                CellSpacing="1"
+                CellPadding="2"
+                BackColor="#CCCCCC"
+                HeaderStyle.CssClass="headerstyle"
+                ItemStyle.CssClass="itemstyle"
+                AlternatingItemStyle.CssClass="itemstyle2"								
+                OnItemCreated="grid_ItemCreated"
+                OnEditCommand="grid_EditCommand"
+                OnUpdateCommand="grid_UpdateCommand"
+                OnCancelCommand="grid_CancelCommand"
+                OnDeleteCommand="deleteButtonClicked"								
+                OnPageIndexChanged="grid_PageIndexChanged"
+                OnSortCommand="grid_SortCommand">	
+                
+                <com:XActiveBoundColumn
+                    SortExpression="kode"
+                    HeaderText="Kode ICD"
+                    HeaderStyle.ForeColor="#FFFFFF"
+                    ItemStyle.Width="55px"
+                    DataField="kode" 
+                    ItemStyle.HorizontalAlign="Center"/>
+                    
+                <com:XActiveBoundColumn
+                    SortExpression="dtd"
+                    HeaderText="Kode DTD"
+                    HeaderStyle.ForeColor="#FFFFFF"
+                    ItemStyle.Width="55px"
+                    DataField="dtd"
+                    ItemStyle.HorizontalAlign="Center" />           
+
+                    <com:XActiveBoundColumn
+                     SortExpression="indonesia"
+                     HeaderText="Definisi Indonesia"
+                     HeaderStyle.ForeColor="#FFFFFF"
+                     ItemStyle.HorizontalAlign="Left"									 								
+                     ItemStyle.Width="225px"
+                     DataField="indonesia" />							           
+                                                      
+                    <com:XActiveBoundColumn
+                     SortExpression="inggris"
+                     HeaderText="Definisi Inggris"
+                     HeaderStyle.ForeColor="#FFFFFF"
+                     ItemStyle.HorizontalAlign="Left"									 						
+                     ItemStyle.Width="225px"
+                     DataField="inggris" />
+                
+                <com:XActiveTemplateColumn 
+                    ID="modeColumn"
+                    ItemStyle.HorizontalAlign="Center" 
+                    ItemStyle.Width="10%"
+                    Visible="<%= $this->User->IsAdmin || $this->User->IsPower %>">
+                    <prop:HeaderTemplate>Mode</prop:HeaderTemplate>
+                    <prop:ItemTemplate>
+                    
+                        <span class="ui-state-default ui-corner-all" 
+                        	style="width:22px; height:22px;  display:inline-block; text-align:center; vertical-align:middle; ">
+                            <com:TActiveLinkButton
+                            	CommandParameter="<%# $this->Parent->Data['kode'] %>" 
+                                OnClick="Page.editRow"
+                                ToolTip="Edit"
+                                Text="" 
+                                CssClass="ui-icon ui-icon-pencil" 
+                                Style="display:inline-block; outline-style:none; margin-top:3px;  ">
+                                <prop:ClientSide 
+                                    OnLoading="maskContent();"/>
+                            </com:TActiveLinkButton>
+                        </span>
+                        
+                        <com:TControl Visible="<%= $this->User->IsAdmin %>">
+                        <span class="ui-state-default ui-corner-all" 
+                        	style="width:22px; height:22px;  display:inline-block; text-align:center; vertical-align:middle; ">
+                            <com:TActiveLinkButton
+                            	CommandParameter="<%# $this->Parent->Data['kode'] %>" 
+                                OnClick="Page.deleteRow"
+                                ToolTip="Delete"
+                                Text="" 
+                                CssClass="ui-icon ui-icon-trash" 
+                                Style="display:inline-block; outline-style:none; margin-top:3px;"
+                                Attributes.onclick="if(!confirm('Hapus ICD dengam Kode : <%# $this->Parent->Data['kode'] %> ?')) return false;">
+                                <prop:ClientSide 
+                                    OnLoading="maskContent();"/>
+                            </com:TActiveLinkButton>
+                        </span>
+                        </com:TControl>
+                        
+                    </prop:ItemTemplate>
+                </com:XActiveTemplateColumn>
+                
+                <com:XActiveTemplateColumn 
+                    ID="btnGrid" 
+                    ItemStyle.HorizontalAlign="Center" 
+                    ItemStyle.Width="75px"
+                    Visible="False">
+                    <prop:HeaderTemplate>mode</prop:HeaderTemplate>
+                    <prop:ItemTemplate>
+                    <com:TActiveButton 
+                            ID="gridEditBrg" 
+                            Text="Tambahkan"
+                            CssClass="pager" 
+                            OnCommand="Page.gridMasukanClicked" 
+                            CommandParameter="<%# $this->Parent->Data['kode'] %>" 
+                            CausesValidation="false">
+                            <prop:ClientSide 
+                                OnLoading="maskContent();"
+                                OnComplete="unmaskContent(); "/>
+                      </com:TActiveButton>	
+                  </prop:ItemTemplate>
+                </com:XActiveTemplateColumn>
+                                            
+            </com:XActiveDataGrid>
+        </td>                       
+      </tr>
+    </table></td>
+</tr>
+        </table>
+    </com:TActivePanel>
+    
+  <span style="clear:both;"/>
+
+<com:TActivePanel ID="icdPanel" padding-bottom:10px;" GroupingText="<strong>ICD yang dipilih</strong>">
+<table width="100%"  border="0" align="center" cellpadding="0" cellspacing="1">  
+    <tr>
+    <td>
+    <table width="100%"  border="0" align="center" cellpadding="0" cellspacing="1" >                      
+      <tr>
+        <td align="center">
+        	<com:XActiveDataGrid 
+                ID="UserGrid"
+                DataKeyField="kode"
+                AutoGenerateColumns="false"	
+                AllowPaging="true"
+                AllowCustomPaging="true"
+                AllowSorting="true"
+                Width="100%"					
+                PageSize="5"
+                PagerStyle.Mode="Numeric"			
+                PagerStyle.Font.Name="Arial"
+                PagerStyle.Font.Size="12"
+                PagerStyle.HorizontalAlign="Right"			
+                GridLines="None"
+                CellSpacing="1"
+                CellPadding="2"							
+                HeaderStyle.CssClass="headerstyle"
+                ItemStyle.CssClass="itemstyle"
+                AlternatingItemStyle.CssClass="itemstyle2"								
+                OnItemCreated="itemCreated"
+                OnDeleteCommand="deleteClicked"								
+                OnPageIndexChanged="changePage"		
+                OnSortCommand="sortGrid">
+                        
+                <com:XActiveBoundColumn
+                    SortExpression="kode"
+                    HeaderText="Kode"
+                    ItemStyle.Width="70px"
+                    ItemStyle.Horizontalalign="Center"
+                    DataField="kode" />				
+                
+                <com:XActiveBoundColumn
+                    SortExpression="nama"
+                    HeaderText="Nama"
+                    ItemStyle.Horizontalalign="Left"
+                    DataField="nama" />
+                                           
+                <com:XActiveButtonColumn												
+                    HeaderText="Mode"
+                    Text="Hapus"
+                    ID="Hapus"
+                    ItemStyle.HorizontalAlign="Center"									
+                    ButtonType="PushButton"									
+                    CommandName="delete" 
+                    ItemStyle.Width="50px"/>
+                        
+            </com:XActiveDataGrid>
+        </td>                       
+      </tr>
+    </table></td>
+</tr>
+
+</table>
+</com:TActivePanel>
+
+<span style="clear:both;"/>
+
+<table width="100%"  border="0" align="center" cellpadding="0" cellspacing="1" >                      
+    <tr>
+        <td><hr/></td>
+    </tr>
+    <tr>
+    <td align="center">
+        <com:TActiveButton
+            ID="simpanBtn"
+            Text="Proses" 
+            OnClick="simpanClicked" 
+            CssClass="button_01" 
+            ValidationGroup="val"
+            Visible="false">
+                <prop:ClientSide 
+                OnLoading="maskContent();"
+                OnComplete="unmaskContent(); "/>
+        </com:TActiveButton>
+        
+        <com:TActiveButton 
+            Text="Baru" 
+            Visible="True" 
+            Attributes.onclick = "maskContent();" 
+            OnClick="tambahClicked" 
+            CausesValidation="false" 
+            CssClass="button_01"  />
+    </td>
+    </tr>
+</table>
+
+<com:TCallback ID="UpdateCallback" OnCallback="prosesKonfirmasi" ActiveControl.CausesValidation="false"/>
+	<script type="text/javascript">
+		//<![CDATA[
+		function konfirmasi(mode){
+			var request= <%= $this->UpdateCallback->ActiveControl->Javascript %>;
+				request.setCallbackParameter({
+					Id:mode
+				});
+				request.dispatch();
+		}
+		//]]>
+	</script>     
+          
+</com:TContent>
+

@@ -1,0 +1,1807 @@
+<%@ MasterClass="Application.layouts.SimpegLayout" %>
+<com:TContent ID="Main">
+<table width="728" border="0" align="center" cellpadding="0" cellspacing="0" class="table_03">
+  <tr>
+    <td><table width="96%"  border="0" align="center" cellpadding="0" cellspacing="0">
+      <tr>
+        <td>
+		<table width="100%" border="0">
+		  <tr>
+			<td>
+				<com:TTabPanel 
+				ID="TPpegawai" 
+				ActiveViewIndex="0" BorderColor="#FFFFFF" >
+					
+					<com:TTabView 
+					ID="TVidentitasPeg" 
+					Caption="Identitas Pegawai" BorderColor="#FFFFFF" >
+					<table width="100%" border="0" cellspacing="2" cellpadding="2">
+					  <tr>
+						<td width="20%"><span class="bullet_02">&#8226;</span>&nbsp;NIP/NRP/NRPTT</td>
+						<td width="1%"><div align="center">:</div></td>
+						<td width="79%">
+							<com:TActiveTextBox 
+								ID="nip1" 
+								CssClass="inputtext" 
+								Width="30px" 
+								MaxLength="3" 
+								TabIndex="1"								 
+								/>
+							.
+							<com:TActiveTextBox 
+								ID="nip2" 
+								CssClass="inputtext" 
+								Width="30px"  								
+								MaxLength="3" 
+								TabIndex="2"/>
+							.	
+							<com:TActiveTextBox 
+								ID="nip3" 
+								CssClass="inputtext" 
+								Width="30px" 
+								AutoPostBack="true" 
+								MaxLength="3" 
+								ValidationGroup="cekNip"								
+								TabIndex="3"/>
+								
+							<com:TActiveCustomValidator
+								ControlToValidate="nip3"
+								ValidationGroup="cekNip"
+								ErrorMessage="Maaf, NIP tersebut sudah ada!"
+								OnServerValidate="cekNipGabung" 
+								Display="Dynamic" />
+							
+							<com:TActiveCustomValidator
+								ControlToValidate="nip3"
+								ValidationGroup="cekNip"
+								ErrorMessage="Maaf, pengisian NIP tidak lengkap !"
+								OnServerValidate="cekNipKurang" 
+								Display="Dynamic" />
+							
+								
+						</td>
+					  </tr>
+					  <tr>
+						<td><span class="bullet_02">&#8226;</span>&nbsp;Nama </td>
+						<td><div align="center">:</div></td>
+						<td>
+							<com:TTextBox 
+								ID="nmPeg" 
+								CssClass="inputtext" 
+								Width="250px" 								
+								TabIndex="4"/>
+							 <com:TRequiredFieldValidator 
+					        	ControlToValidate="nmPeg"							  
+						      	ErrorMessage="Nama pegawai belum diisi"
+						      	Display="Dynamic" 
+							  	FocusOnError="true"
+							 />	
+						</td>
+					  </tr>
+					  <tr>
+						<td><span class="bullet_02">&#8226;</span>&nbsp;Jenis Kelamin</td>
+						<td><div align="center">:</div></td>
+						<td>
+							<com:TRadioButtonList 
+								ID="jkPeg" 
+								RepeatDirection="Horizontal" 
+								TabIndex="5">
+								<com:TListItem Value="value 1" Text="Laki-Laki" />
+								<com:TListItem Value="value 2" Text="Perempuan" />
+							</com:TRadioButtonList>	
+							<com:TRequiredFieldValidator
+								Display="Dynamic"
+								ControlToValidate="jkPeg"
+								Text="Jenis Kelamin belum dipilih" 
+							/>							
+							</td>
+					  </tr>
+					  <tr>
+					   <td><span class="bullet_02">&#8226;</span>&nbsp;Tempat Lahir </td>
+						<td><div align="center">:</div></td>
+						<td>
+							<com:TTextBox 
+								ID="tmpLhrPeg" 
+								CssClass="inputtext" 
+								Width="250px" 								
+								TabIndex="6"/>
+							<com:TRequiredFieldValidator 
+					        	ControlToValidate="tmpLhrPeg"							  
+						      	ErrorMessage="Tempat Lahir belum diisi"
+						      	Display="Dynamic" 
+							  	FocusOnError="true"
+							 />
+						</td>
+					  </tr>
+					  <tr>
+					    <td><span class="bullet_02">&#8226;</span> Tanggal Lahir</td>
+					    <td><div align="center">:</div></td>
+					    <td>
+							<com:TDatePicker 
+								ID="DPtglLhrPeg" 
+								Width="70px" 
+								FromYear="1940" 
+								DateFormat="dd-MM-yyyy"
+								ToolTip="Masukan tanggal lahir" 
+								MaxLength="10"
+								TabIndex="7"/>
+								&nbsp; tgl-bln-thn
+							
+							<com:TDataTypeValidator
+								ControlToValidate="DPtglLhrPeg"
+								DataType="Date"
+								DateFormat="dd-MM-yyyy"
+								ErrorMessage="Anda harus memasukan tanggal yang benar seperti ini(Tgl-Bln-Tahun)."
+								Display="Dynamic" 
+								FocusOnError="true"/>
+								
+							<com:TRequiredFieldValidator 
+					        	ControlToValidate="DPtglLhrPeg"							  
+						      	ErrorMessage="Tanggal Lahir belum diisi"
+						      	Display="Dynamic" 
+							  	FocusOnError="true"
+							 />
+							
+							</td>
+					    </tr>
+					  <tr>
+						<td><span class="bullet_02">&#8226;</span>&nbsp;Agama </td>
+						<td><div align="center">:</div></td>
+						<td width="79%" valign="middle">
+							<com:TRadioButtonList 
+								ID="agamaPeg" 
+								RepeatDirection="Horizontal"
+								TabIndex="8">
+								<com:TListItem Value="value 1" Text="Islam" />
+								<com:TListItem Value="value 2" Text="Protestan" />
+								<com:TListItem Value="value 3" Text="Katolik" />
+								<com:TListItem Value="value 4" Text="Hindu" />
+								<com:TListItem Value="value 5" Text="Budha" />
+							</com:TRadioButtonList>
+							<com:TRequiredFieldValidator
+								Display="Dynamic"
+								ControlToValidate="agamaPeg"
+								Text="Agama belum dipilih" 
+							/>		
+							</td>
+					  </tr>
+					  <tr>
+					    <td><span class="bullet_02">&#8226;</span>&nbsp;Status Perkawinan </td>
+					    <td><div align="center">:</div></td>
+					    <td>
+							<com:TRadioButtonList 
+								ID="statKwnPeg" 
+								RepeatDirection="Horizontal" 
+								OnSelectedIndexChanged="statKwnPegChanged" 
+								AutoPostBack="true" 
+								CausesValidation="false"
+								TabIndex="9">
+								<com:TListItem Value="value 1" Text="Kawin" />
+								<com:TListItem Value="value 2" Text="Belum Kawin" />
+								<com:TListItem Value="value 3" Text="Janda" />
+								<com:TListItem Value="value 4" Text="Duda" />
+							</com:TRadioButtonList>
+							<com:TRequiredFieldValidator
+								Display="Dynamic"
+								ControlToValidate="statKwnPeg"
+								Text="Status perkawinan belum dipilih" 
+							/>	
+							</td>
+					  </tr>
+					  <tr>
+					    <td colspan="3">&nbsp;</td>
+					    </tr>
+					  <tr>
+					    <td colspan="3"><strong>Susunan Keluarga (Diisi apabila sudah berkeluarga)</strong></td>
+					   </tr>
+					</table>
+				<com:TPanel GroupingText="A. Suami / Istri" Width="100%" >
+					<table width="100%"  border="0">
+					  <tr>
+					    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="bullet_02">&#8226;</span>&nbsp;Pilih Pasangan </td>
+					    <td>
+							<com:TRadioButtonList 
+								ID="plihPasangan" 
+								RepeatDirection="Horizontal" 
+								Enabled="false"
+								TabIndex="10">																	
+									<com:TListItem Value="value 1" Text="Suami" />									
+									<com:TListItem Value="value 2" Text="Istri" />
+								</com:TRadioButtonList>
+								<com:TRequiredFieldValidator
+									Display="Dynamic"
+									ControlToValidate="plihPasangan"
+									Text="Pasangan belum dipilih" 
+								/>		
+						</td>
+					    </tr>
+					  <tr>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="bullet_02">&#8226;</span>&nbsp;Nama</td>
+						<td>
+							<com:TTextBox 
+								ID="nmSuamiIstriPeg" 
+								CssClass="inputtext" 
+								Width="250px" 
+								Enabled="false"
+								TabIndex="11"/>
+							<com:TRequiredFieldValidator 
+					        	ControlToValidate="nmSuamiIstriPeg"							  
+						      	ErrorMessage="Nama belum diisi"
+						      	Display="Dynamic" 
+							  	FocusOnError="true"
+							 />	
+							</td>
+					  </tr>
+					  <tr>
+					    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="bullet_02">&#8226;</span>&nbsp;Tempat Lahir</td>
+					    <td>
+							<com:TTextBox 
+								ID="tmpLhrSuamiIstriPeg" 
+								CssClass="inputtext" 
+								Width="250px" 		
+								Enabled="false"					
+								TabIndex="12"/>
+							<com:TRequiredFieldValidator 
+					        	ControlToValidate="tmpLhrSuamiIstriPeg"							  
+						      	ErrorMessage="Tempat lahir belum diisi"
+						      	Display="Dynamic" 
+							  	FocusOnError="true"
+							 />	
+							</td>
+					    </tr>
+					  <tr>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="bullet_02">&#8226;</span>&nbsp;Tanggal Lahir</td>
+						<td>
+							<com:TDatePicker 
+								ID="DPtglLhrSuamiIstriPeg" 
+								Width="70px" 
+								FromYear="1940" 
+								DateFormat="dd-MM-yyyy"
+								ToolTip="Masukan tanggal lahir"
+								MaxLength="10"
+								Enabled="false" 						
+								TabIndex="13"/>
+							&nbsp; tgl-bln-thn
+							
+							<com:TDataTypeValidator
+								ControlToValidate="DPtglLhrSuamiIstriPeg"
+								DataType="Date"
+								DateFormat="dd-MM-yyyy"
+								ErrorMessage="Anda harus memasukan tanggal yang benar seperti ini(Tgl-Bln-Tahun)."
+								Display="Dynamic" 
+								FocusOnError="true"/>
+							
+							<com:TRequiredFieldValidator 
+					        	ControlToValidate="DPtglLhrSuamiIstriPeg"	
+						      	ErrorMessage="Tanggal Lahir belum diisi"
+						      	Display="Dynamic" 
+							  	FocusOnError="true"
+							 />
+							</td>
+					  </tr>
+					  <tr>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="bullet_02">&#8226;</span>&nbsp;Tanggal Perkawinan</td>
+						<td>
+							<com:TDatePicker 
+								ID="DPtglKawin" 
+								Width="70px" 
+								FromYear="1940" 
+								DateFormat="dd-MM-yyyy"
+								ToolTip="Masukan tanggal perkawinan" 
+								Enabled="false"	
+								MaxLength="10"				
+								TabIndex="14"/>	
+								&nbsp; tgl-bln-thn	
+								
+							<com:TDataTypeValidator
+								ControlToValidate="DPtglKawin"
+								DataType="Date"
+								DateFormat="dd-MM-yyyy"
+								ErrorMessage="Anda harus memasukan tanggal yang benar seperti ini(Tgl-Bln-Tahun)."
+								Display="Dynamic" 
+								FocusOnError="true"/>
+								
+							<com:TRequiredFieldValidator 
+					        	ControlToValidate="DPtglKawin"	
+						      	ErrorMessage="Tanggal Perkawinan belum diisi"
+						      	Display="Dynamic" 
+							  	FocusOnError="true"
+							 />
+						</td>
+					  </tr>
+					  <tr>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="bullet_02">&#8226;</span>&nbsp;No. Seri Kartu Istri / Kartu Suami</td>
+						<td width="68%">
+							<com:TTextBox 
+								ID="noSrKrtu" 
+								CssClass="inputtext" 
+								Enabled="false"
+								Width="250px" 								
+								TabIndex="15"/>
+							<com:TRequiredFieldValidator 
+					        	ControlToValidate="noSrKrtu"							  
+						      	ErrorMessage="No. Seri Kartu Istri / Kartu Suami belum diisi"
+						      	Display="Dynamic" 
+							  	FocusOnError="true"
+							 />	
+						</td>
+					  </tr>
+					  </table>
+					</com:TPanel>
+					<br />	
+					<com:TPanel GroupingText="B. Anak" Width="100%" >
+						<table width="100%"  border="0">
+						  <tr>
+							<td width="21%"><span class="bullet_02">&#8226;</span> Nama </td>
+							<td width="1%"><div align="center">:</div></td>
+							<td width="78%">
+								<com:TTextBox 
+									ID="nmAnak" 
+									CssClass="inputtext" 
+									Width="250px" 
+									Enabled="false"								
+									TabIndex="16"/>
+								<com:TRequiredFieldValidator 
+									ControlToValidate="nmAnak"							  
+									ErrorMessage="Nama Anak belum diisi"
+									Display="Dynamic" 
+									FocusOnError="true" 
+									ValidationGroup="valAnak"
+							 />			
+							</td>
+						  </tr>
+						  <tr>
+							<td><span class="bullet_02">&#8226;</span> Tanggal Lahir </td>
+							<td><div align="center">:</div></td>
+							<td>
+								<com:TDatePicker 
+									ID="DPtglLhrAnak" 
+									Width="70px" 
+									FromYear="1940" 
+									DateFormat="dd-MM-yyyy"
+									ToolTip="Masukan tanggal lahir" 	
+									Enabled="false"	
+									MaxLength="10"						
+									TabIndex="17"/>
+								&nbsp; tgl-bln-thn
+								<com:TDataTypeValidator
+									ControlToValidate="DPtglLhrAnak"
+									DataType="Date"
+									DateFormat="dd-MM-yyyy"
+									ErrorMessage="Anda harus memasukan tanggal yang benar seperti ini(Tgl-Bln-Tahun)."
+									Display="Dynamic" 
+									FocusOnError="true" ValidationGroup="valAnak"/>	
+									
+								<com:TRequiredFieldValidator 
+									ControlToValidate="DPtglLhrAnak"							  
+									ErrorMessage="Tanggal lahir Anak belum diisi"
+									Display="Dynamic" 
+									FocusOnError="true" 
+									ValidationGroup="valAnak"
+							 	/>									
+							
+							</td>
+						  </tr>
+						  <tr>
+							<td><span class="bullet_02">&#8226;</span> Jenis Kelamin </td>
+							<td><div align="center">:</div></td>
+							<td>
+								<com:TRadioButtonList 
+									ID="jkAnak" 
+									RepeatDirection="Horizontal" 
+									Enabled="false"
+									TabIndex="18" >
+																		
+									<com:TListItem Value="value 1" Text="Laki-Laki"  />
+									<com:TListItem Value="value 2" Text="Perempuan" />
+								</com:TRadioButtonList>	
+								<com:TRequiredFieldValidator
+									Display="Dynamic"
+									ControlToValidate="jkAnak"
+									Text="Jenis kelamin anak belum dipilih" 
+									ValidationGroup="valAnak"
+								/>	
+							</td>
+						  </tr>
+						  <tr>
+							<td colspan="3">
+								<com:TButton 
+									ID="tbhAnak" 
+									Text="Tambah" 
+									OnClick="tbhAnakClick" 
+									Enabled="false"  
+									ValidationGroup="valAnak"
+									TabIndex="19"/>
+							  </td>
+						  </tr>
+					  </table>
+					</com:TPanel>
+					<table width="100%">
+						<tr>
+							<td bgcolor="#CCCCCC">
+								<com:TDataGrid
+									ID="DGanak"
+									EnableViewState="true" 
+									AutoGenerateColumns="false" 
+									DataKeyField="id"
+									CellPadding="2" 
+									Width="100%"
+									HeaderStyle.BackColor="white"
+									HeaderStyle.ForeColor="white"
+									ItemStyle.BackColor="#BFCFFF"					
+									ItemStyle.Font.Italic="false"
+									AlternatingItemStyle.BackColor="#E6ECFF" 								
+									OnDeleteCommand="delAnak" >					
+									
+									<com:TBoundColumn						
+										HeaderText="Nama"
+										ItemStyle.Width="200px"
+										ItemStyle.HorizontalAlign="Center";
+										DataField="nama" />
+									
+									<com:TBoundColumn						
+										HeaderText="Tangal Lahir"
+										ItemStyle.Width="100px"
+										ItemStyle.HorizontalAlign="Center";
+										DataField="tgl_lahir" />	
+									
+									<com:TBoundColumn						
+										HeaderText="Jenis Kelamin"
+										ItemStyle.Width="100px"
+										ItemStyle.HorizontalAlign="Center";
+										DataField="jns_kelamin" />
+										
+									<com:TButtonColumn												
+										HeaderText="Mode"
+										Text="Delete"						
+										ItemStyle.HorizontalAlign="Center"
+										ButtonType="PushButton"
+										CausesValidation="false" 															
+										CommandName="delete" 
+										ItemStyle.Width="30px"/>	
+								</com:TDataGrid>							</td>
+						</tr>
+						<tr>
+							<td>&nbsp;</td>
+						</tr>	
+					</table>
+					
+					<table width="100%" border="0" cellspacing="2" cellpadding="2">
+					  <tr>
+						<td width="43%"><span class="bullet_02">&#8226;</span>&nbsp;TMT Menjadi Pegawai</td>
+						<td width="57%">
+							<com:TDatePicker 
+								ID="DPtglTmtPeg" 
+								Width="70px" 
+								FromYear="1940" 
+								DateFormat="dd-MM-yyyy"
+								ToolTip="Masukan tanggal lahir"
+								MaxLength="10"						
+								TabIndex="20"/>
+							&nbsp; tgl-bln-thn						
+							
+							<com:TDataTypeValidator
+									ControlToValidate="DPtglTmtPeg"
+									DataType="Date"
+									DateFormat="dd-MM-yyyy"
+									ErrorMessage="Anda harus memasukan tanggal yang benar seperti ini(Tgl-Bln-Tahun)."
+									Display="Dynamic" 
+									FocusOnError="true"/>	
+							
+							<com:TRequiredFieldValidator 
+					        	ControlToValidate="DPtglTmtPeg"	
+						      	ErrorMessage="TMT Menjadi Pegawai belum diisi"
+						      	Display="Dynamic" 
+							  	FocusOnError="true"
+							 />						</td>
+					  </tr>
+					  <tr>
+						<td><span class="bullet_02">&#8226;</span>&nbsp;Pendidikan pada waktu pengangkatan pertama  </td>
+						<td>
+							<com:TTextBox 
+								ID="pendidikan" 
+								CssClass="inputtext" 
+								Width="250px" 								
+								TabIndex="21"/>
+							<com:TRequiredFieldValidator 
+					        	ControlToValidate="pendidikan"							  
+						      	ErrorMessage="Pendidikan pada waktu pengangkatan pertama belum diisi"
+						      	Display="Dynamic" 
+							  	FocusOnError="true"
+							 />						</td>
+					  </tr>
+					  <tr>
+						<td><span class="bullet_02">&#8226;</span>&nbsp;Status Kepegawaian</td>
+						<td>
+							<com:TTextBox 
+								ID="statKepeg" 
+								CssClass="inputtext" 
+								Width="250px" 								
+								TabIndex="22"/>
+							<com:TRequiredFieldValidator 
+					        	ControlToValidate="statKepeg"							  
+						      	ErrorMessage="Status Kepegawaian belum diisi"
+						      	Display="Dynamic" 
+							  	FocusOnError="true"
+							 />						</td>
+					  </tr>
+					  <tr>
+					   <td><span class="bullet_02">&#8226;</span>&nbsp;Jenis Kepegawaian </td>
+						<td>
+							<com:TTextBox 
+								ID="jnsKepeg" 
+								CssClass="inputtext" 
+								Width="250px" 								
+								TabIndex="23"/>
+							<com:TRequiredFieldValidator 
+					        	ControlToValidate="jnsKepeg"							  
+						      	ErrorMessage="Jenis Kepegawaian belum diisi"
+						      	Display="Dynamic" 
+							  	FocusOnError="true"
+							 />						</td>
+					  </tr>
+					  <tr>
+					    <td><span class="bullet_02">&#8226;</span>&nbsp;No. Seri Karpeg</td>
+					    <td>
+							<com:TTextBox 
+								ID="noSrKarpeg" 
+								CssClass="inputtext" 
+								Width="250px" 								
+								TabIndex="24"/>
+							<com:TRequiredFieldValidator 
+					        	ControlToValidate="noSrKarpeg"							  
+						      	ErrorMessage="No. Seri Karpeg belum diisi"
+						      	Display="Dynamic" 
+							  	FocusOnError="true"
+							 />							</td>
+					    </tr>
+					  <tr>
+						<td><span class="bullet_02">&#8226;</span>&nbsp;Golongan terakhir </td>
+						<td width="57%" valign="middle">
+							<com:TTextBox 
+								ID="golTerakhir" 
+								CssClass="inputtext" 
+								Width="250px" 								
+								TabIndex="25"/>
+							<com:TRequiredFieldValidator 
+					        	ControlToValidate="golTerakhir"							  
+						      	ErrorMessage="No. Seri Karpeg belum diisi"
+						      	Display="Dynamic" 
+							  	FocusOnError="true"
+							 />							</td>
+					  </tr>
+					  <tr>
+					    <td><span class="bullet_02">&#8226;</span>&nbsp;Ujian Dinas </td>
+					    <td><com:TDatePicker 
+								ID="DPtglUjDinas" 
+								Width="70px" 
+								FromYear="1940" 
+								DateFormat="dd-MM-yyyy"
+								ToolTip="Masukan tanggal lahir" 
+								MaxLength="10"								
+								TabIndex="26"/>
+							&nbsp; tgl-bln-thn	
+															
+							<com:TDataTypeValidator
+								ControlToValidate="DPtglUjDinas"
+								DataType="Date"
+								DateFormat="dd-MM-yyyy"
+								ErrorMessage="Anda harus memasukan tanggal yang benar seperti ini(Tgl-Bln-Tahun)."
+								Display="Dynamic" 
+								FocusOnError="true"/>
+							<com:TRequiredFieldValidator 
+					        	ControlToValidate="DPtglUjDinas"	
+						      	ErrorMessage="TMT belum diisi"
+						      	Display="Dynamic" 
+							  	FocusOnError="true"
+							 /></td>
+					    </tr>
+					  <tr>
+					    <td><span class="bullet_02">&#8226;</span>&nbsp;TMT </td>
+					    <td>
+							<com:TDatePicker 
+								ID="DPtglTmt" 
+								Width="70px" 
+								FromYear="1940" 
+								DateFormat="dd-MM-yyyy"
+								ToolTip="Masukan tanggal lahir" 
+								MaxLength="10"								
+								TabIndex="26"/>
+							&nbsp; tgl-bln-thn	
+															
+							<com:TDataTypeValidator
+								ControlToValidate="DPtglTmt"
+								DataType="Date"
+								DateFormat="dd-MM-yyyy"
+								ErrorMessage="Anda harus memasukan tanggal yang benar seperti ini(Tgl-Bln-Tahun)."
+								Display="Dynamic" 
+								FocusOnError="true"/>
+							<com:TRequiredFieldValidator 
+					        	ControlToValidate="DPtglTmt"	
+						      	ErrorMessage="TMT belum diisi"
+						      	Display="Dynamic" 
+							  	FocusOnError="true"
+							 />						</td>
+					  </tr>
+					</table>	
+					</com:TTabView>
+					
+					<com:TTabView 
+					ID="TVriwayatPekerjaan" 
+					Caption="Riwayat Pekerjaan" BorderColor="#FFFFFF" >
+						<table width="100%" border="0" cellspacing="2" cellpadding="2">
+						  <tr>
+							<td width="35%"><span class="bullet_02">&#8226;</span>&nbsp;No. SK Penempatan</td>
+							<td width="65%">
+								<com:TTextBox 
+									ID="noSKpenempatan" 
+									CssClass="inputtext" 
+									Width="250px" 								
+									TabIndex="27"/>	
+								<com:TRequiredFieldValidator 
+									ControlToValidate="noSKpenempatan"	
+									ErrorMessage="No. SK Penempatan belum diisi"
+									Display="Dynamic" 
+									FocusOnError="true"
+							 	/>
+							</td>
+						  </tr>
+						  <tr>
+							<td><span class="bullet_02">&#8226;</span>&nbsp;Tgl. Melaksanakan tugas di unit kerja </td>
+							<td>
+								<com:TDatePicker 
+									ID="DPtglTgs" 
+									Width="70px" 
+									FromYear="1940" 
+									DateFormat="dd-MM-yyyy"
+									ToolTip="Masukan tanggal melaksanakan tugas di unit kerja " 
+									MaxLength="10"								
+									TabIndex="28"/>
+								&nbsp; tgl-bln-thn
+								
+								<com:TDataTypeValidator
+									ControlToValidate="DPtglTgs"
+									DataType="Date"
+									DateFormat="dd-MM-yyyy"
+									ErrorMessage="Anda harus memasukan tanggal yang benar seperti ini(Tgl-Bln-Tahun)."
+									Display="Dynamic" 
+									FocusOnError="true"/>	
+								
+								<com:TRequiredFieldValidator 
+									ControlToValidate="DPtglTgs"	
+									ErrorMessage="Tgl. Melaksanakan tugas belum diisi"
+									Display="Dynamic" 
+									FocusOnError="true"
+							 	/>
+								</td>
+						  </tr>
+						  <tr>
+							<td><span class="bullet_02">&#8226;</span>&nbsp;Nama unit kerja</td>
+							<td>
+								<com:TTextBox 
+									ID="nmUnitKerja" 
+									CssClass="inputtext" 
+									Width="250px" 								
+									TabIndex="29"/>
+								<com:TRequiredFieldValidator 
+									ControlToValidate="nmUnitKerja"	
+									ErrorMessage="Nama unit kerja belum diisi"
+									Display="Dynamic" 
+									FocusOnError="true"
+							 	/>
+							</td>
+						  </tr>
+						  <tr>
+						   <td><span class="bullet_02">&#8226;</span>&nbsp;Nama satuan tugas </td>
+							<td>
+								<com:TTextBox 
+									ID="nmSatgas" 
+									CssClass="inputtext" 
+									Width="250px" 								
+									TabIndex="30"/>
+								<com:TRequiredFieldValidator 
+									ControlToValidate="nmSatgas"	
+									ErrorMessage="Nama satuan tugas belum diisi"
+									Display="Dynamic" 
+									FocusOnError="true"
+							 	/>
+								</td>
+						  </tr>
+						  <tr>
+							<td><span class="bullet_02">&#8226;</span>&nbsp;Kabupaten / Kota</td>
+							<td>
+								<com:TDropDownList 
+									ID="DDKabKota"
+									PromptText ="--Silakan Pilih--"
+									PromptValue =""											
+									DataTextField="nama"
+									DataValueField="id" 	
+									ToolTip="Pilih Kabupaten/Kota" 
+									TabIndex="31" 
+									Width="200px"/>
+								<com:TRequiredFieldValidator
+									Display="Dynamic"
+									ControlToValidate="DDKabKota"
+									Text="Kabupaten/Kota belum dipilih" 
+								/>		
+								</td>
+						  </tr>
+						  <tr>
+							<td><span class="bullet_02">&#8226;</span>&nbsp;Propinsi </td>
+							<td width="65%" valign="middle">
+							<com:TDropDownList 
+								ID="DDprop"
+								Width="130px"
+								TabIndex="32">								
+								<com:TListItem Value="1" Text="Jawa Barat" />
+					  		</com:TDropDownList>
+						</td>
+						  </tr>
+						</table>
+					</com:TTabView>
+					
+					<com:TTabView 
+					ID="TVriwayatPangkatJabatan" 
+					Caption="Riwayat Kepangkatan & Jabatan" BorderColor="#FFFFFF" >
+						
+						<com:TPanel GroupingText="Riwayat Kepangkatan" Width="100%" Font.Bold="True" >
+							<table width="100%"  border="0">
+							  <tr>
+								<td width="30%"><span class="bullet_02">&#8226;</span> Nama Pangkat </td>
+								<td width="1%"><div align="center">:</div></td>
+								<td width="69%">
+									<com:TTextBox 
+										ID="nmPangkat" 
+										CssClass="inputtext" 
+										Width="250px" 								
+										TabIndex="33"/>								
+									<com:TRequiredFieldValidator 
+										ControlToValidate="nmPangkat"	
+										ErrorMessage="Nama Pangkat belum diisi"
+										Display="Dynamic" 
+										FocusOnError="true" 
+										ValidationGroup="valPangkat"
+							 		/>
+								</td>
+							  </tr>
+							  <tr>
+								<td><span class="bullet_02">&#8226;</span> Golongan </td>
+								<td><div align="center">:</div></td>
+								<td>
+									<com:TTextBox 
+										ID="gol" 
+										CssClass="inputtext" 
+										Width="250px"
+										TabIndex="34" 								
+									/>
+									<com:TRequiredFieldValidator 
+										ControlToValidate="gol"	
+										ErrorMessage="Golongan belum diisi"
+										Display="Dynamic" 
+										FocusOnError="true" 
+										ValidationGroup="valPangkat"
+							 		/>
+								</td>
+							  </tr>
+							  <tr>
+                                <td><span class="bullet_02">&#8226;</span> SK TMT </td>
+							    <td><div align="center">:</div></td>
+							    <td>
+									<com:TTextBox 
+										ID="skTMT" 
+										CssClass="inputtext" 
+										Width="250px" 								
+										TabIndex="35"
+									/>
+									<com:TRequiredFieldValidator 
+										ControlToValidate="skTMT"	
+										ErrorMessage="SK TMT belum diisi"
+										Display="Dynamic" 
+										FocusOnError="true" 
+										ValidationGroup="valPangkat"
+							 		/>
+								</td>
+						      </tr>
+							  <tr>
+							    <td><span class="bullet_02">&#8226;</span> Pejabat yang mengeluarkan SK </td>
+							    <td><div align="center">:</div></td>
+							    <td>
+									<com:TTextBox 
+										ID="nmPejabat" 
+										CssClass="inputtext" 
+										Width="250px"
+										TabIndex="36" 								
+									/>
+									<com:TRequiredFieldValidator 
+										ControlToValidate="nmPejabat"	
+										ErrorMessage="Nama Pejabat yang mengeluarkan SK belum diisi"
+										Display="Dynamic" 
+										FocusOnError="true" 
+										ValidationGroup="valPangkat"
+							 		/>
+								</td>
+						      </tr>
+							  <tr>
+								<td colspan="3">
+									<com:TButton 
+										ID="tbhPangkat" 
+										Text="Tambah" 
+										OnClick="tbhPangkatClick" 
+										ValidationGroup="valPangkat" 
+										TabIndex="37"
+										/>
+								</td>
+							  </tr>
+						  </table>
+						</com:TPanel>
+						<table width="100%">
+							<tr>
+								<td bgcolor="#CCCCCC">
+									<com:TDataGrid
+										ID="DGpangkat"
+										EnableViewState="true" 
+										AutoGenerateColumns="false" 
+										DataKeyField="id"
+										CellPadding="2" 
+										Width="100%"
+										HeaderStyle.BackColor="white"
+										HeaderStyle.ForeColor="white"
+										ItemStyle.BackColor="#BFCFFF"					
+										ItemStyle.Font.Italic="false"
+										AlternatingItemStyle.BackColor="#E6ECFF" 								
+										OnDeleteCommand="delPangkat" >					
+										
+										<com:TBoundColumn						
+											HeaderText="Nama Pangkat"
+											ItemStyle.Width="200px"
+											ItemStyle.HorizontalAlign="Center";
+											DataField="nama" />
+										
+										<com:TBoundColumn						
+											HeaderText="Golongan"
+											ItemStyle.Width="100px"
+											ItemStyle.HorizontalAlign="Center";
+											DataField="gol" />	
+										
+										<com:TBoundColumn						
+											HeaderText="SK TMT"
+											ItemStyle.Width="100px"
+											ItemStyle.HorizontalAlign="Center";
+											DataField="sk" />
+											
+										<com:TBoundColumn						
+											HeaderText="Pejabat yang mengeluarkan SK"
+											ItemStyle.Width="100px"
+											ItemStyle.HorizontalAlign="Center";
+											DataField="pjbt" />
+											
+										<com:TButtonColumn												
+											HeaderText="Mode"
+											Text="Delete"						
+											ItemStyle.HorizontalAlign="Center"
+											ButtonType="PushButton"
+											CausesValidation="false" 															
+											CommandName="delete" 
+											ItemStyle.Width="30px"/>	
+									</com:TDataGrid>							</td>
+							</tr>
+							<tr>
+								<td>&nbsp;</td>
+							</tr>	
+						</table>
+						
+						<com:TPanel GroupingText="Riwayat Jabatan Reguler" Width="100%" Font.Bold="True" >
+							<table width="100%"  border="0">
+							  <tr>
+								<td width="27%"><span class="bullet_02">&#8226;</span> Nama Jabatan </td>
+								<td width="1%"><div align="center">:</div></td>
+								<td width="72%">
+									<com:TTextBox 
+										ID="nmJabatan" 
+										CssClass="inputtext" 
+										Width="250px" 								
+										TabIndex="38"/>
+									<com:TRequiredFieldValidator 
+										ControlToValidate="nmJabatan"	
+										ErrorMessage="Nama jabatan belum diisi"
+										Display="Dynamic" 
+										FocusOnError="true" 
+										ValidationGroup="valJabatan"
+							 		/>	
+								</td>
+							  </tr>
+							  <tr>
+								<td><span class="bullet_02">&#8226;</span> Dari Tgl/Bln/Thn </td>
+								<td><div align="center">:</div></td>
+								<td>
+									<com:TDatePicker 
+										ID="DPtglAwalJbtn" 
+										Width="70px" 
+										FromYear="1940" 
+										DateFormat="dd-MM-yyyy"
+										ToolTip="Masukan tanggal lahir" 	
+										MaxLength="10"
+										TabIndex="39"							
+										/>
+									&nbsp; tgl-bln-thn
+									<com:TRequiredFieldValidator 
+										ControlToValidate="DPtglAwalJbtn"	
+										ErrorMessage="Tanggal mulai belum diisi"
+										Display="Dynamic" 
+										FocusOnError="true" 
+										ValidationGroup="valJabatan"
+							 		/>
+									<com:TDataTypeValidator
+										ControlToValidate="DPtglAwalJbtn"
+										DataType="Date"
+										DateFormat="dd-MM-yyyy"
+										ErrorMessage="Anda harus memasukan tanggal yang benar seperti ini(Tgl-Bln-Tahun)."
+										Display="Dynamic" 
+										FocusOnError="true"
+										ValidationGroup="valJabatan"/>
+									</td>
+							  </tr>
+							  <tr>
+                                <td><span class="bullet_02">&#8226;</span> Sampai dengan Tgl/Bln/Thn </td>
+							    <td><div align="center">:</div></td>
+							    <td>
+									<com:TDatePicker 
+										ID="DPtglAkhirJbtn" 
+										Width="70px" 
+										FromYear="1940" 
+										DateFormat="dd-MM-yyyy"
+										ToolTip="Masukan tanggal lahir" 
+										MaxLength="10"
+										TabIndex="40"								
+										/>
+							      &nbsp; tgl-bln-thn 
+								  <com:TRequiredFieldValidator 
+										ControlToValidate="DPtglAkhirJbtn"	
+										ErrorMessage="Tanggal akhir belum diisi"
+										Display="Dynamic" 
+										FocusOnError="true" 
+										ValidationGroup="valJabatan"
+							 		/>
+									<com:TDataTypeValidator
+										ControlToValidate="DPtglAkhirJbtn"
+										DataType="Date"
+										DateFormat="dd-MM-yyyy"
+										ErrorMessage="Anda harus memasukan tanggal yang benar seperti ini(Tgl-Bln-Tahun)."
+										Display="Dynamic" 
+										FocusOnError="true"
+										ValidationGroup="valJabatan"/>
+								  </td>
+						      </tr>
+							  <tr>
+							    <td><span class="bullet_02">&#8226;</span> S/F </td>
+							    <td><div align="center">:</div></td>
+							    <td>
+									<com:TTextBox 
+										ID="sf" 
+										CssClass="inputtext" 
+										Width="250px" 
+										TabIndex="41"								
+									/>
+									<com:TRequiredFieldValidator 
+										ControlToValidate="sf"	
+										ErrorMessage="S/F belum diisi"
+										Display="Dynamic" 
+										FocusOnError="true" 
+										ValidationGroup="valJabatan"
+							 		/>
+								</td>
+						      </tr>
+							  <tr>
+								<td><span class="bullet_02">&#8226;</span> Eselon </td>
+								<td><div align="center">:</div></td>
+								<td>
+									<com:TTextBox 
+										ID="eselon" 
+										CssClass="inputtext" 
+										Width="250px"
+										TabIndex="42" 								
+									/>
+									<com:TRequiredFieldValidator 
+										ControlToValidate="eselon"	
+										ErrorMessage="Eselon belum diisi"
+										Display="Dynamic" 
+										FocusOnError="true" 
+										ValidationGroup="valJabatan"
+							 		/>						
+								</td>
+							  </tr>
+							  <tr>
+								<td colspan="3">
+									<com:TButton 
+										ID="tbhJabatan" 
+										Text="Tambah" 
+										OnClick="tbhJabatanClick" 
+										ValidationGroup="valJabatan"
+										TabIndex="43"
+									/>						</td>
+							  </tr>
+						  </table>
+						</com:TPanel>
+						<table width="100%">
+							<tr>
+								<td bgcolor="#CCCCCC">
+									<com:TDataGrid
+										ID="DGjabatan"
+										EnableViewState="true" 
+										AutoGenerateColumns="false" 
+										DataKeyField="id"
+										CellPadding="2" 
+										Width="100%"
+										HeaderStyle.BackColor="white"
+										HeaderStyle.ForeColor="white"
+										ItemStyle.BackColor="#BFCFFF"					
+										ItemStyle.Font.Italic="false"
+										AlternatingItemStyle.BackColor="#E6ECFF" 								
+										OnDeleteCommand="delJabatan" >					
+										
+										<com:TBoundColumn						
+											HeaderText="Nama Jabatan"
+											ItemStyle.Width="200px"
+											ItemStyle.HorizontalAlign="Center";
+											DataField="nama" />
+										
+										<com:TBoundColumn						
+											HeaderText="Dari Tangal"
+											ItemStyle.Width="100px"
+											ItemStyle.HorizontalAlign="Center";
+											DataField="tgl_mulai" />	
+										
+										<com:TBoundColumn						
+											HeaderText="Sampai dengan Tanggal"
+											ItemStyle.Width="100px"
+											ItemStyle.HorizontalAlign="Center";
+											DataField="tgl_akhir" />
+										
+										<com:TBoundColumn						
+											HeaderText="S/F"
+											ItemStyle.Width="100px"
+											ItemStyle.HorizontalAlign="Center";
+											DataField="sf" />
+											
+										<com:TBoundColumn						
+											HeaderText="ESELON"
+											ItemStyle.Width="100px"
+											ItemStyle.HorizontalAlign="Center";
+											DataField="eselon" />
+											
+										<com:TButtonColumn												
+											HeaderText="Mode"
+											Text="Delete"						
+											ItemStyle.HorizontalAlign="Center"
+											ButtonType="PushButton"
+											CausesValidation="false" 															
+											CommandName="delete" 
+											ItemStyle.Width="30px"/>	
+									</com:TDataGrid>
+								</td>
+							</tr>
+							<tr>
+								<td>&nbsp;</td>
+							</tr>	
+						</table>
+					</com:TTabView>
+					
+					
+					<com:TTabView 
+					ID="TVriwayatPendidikanPelatihan" 
+					Caption="Riwayat Pendidikan & Pelatihan" BorderColor="#FFFFFF" >
+						<com:TPanel GroupingText="Riwayat Pendidikan" Width="100%" Font.Bold="True" >
+							<table width="100%"  border="0">
+							  <tr>
+								<td width="27%"><span class="bullet_02">&#8226;</span> Nama Pendidikan </td>
+								<td width="1%"><div align="center">:</div></td>
+								<td width="72%">
+									<com:TTextBox 
+										ID="nmPendidikan" 
+										CssClass="inputtext" 
+										Width="250px"
+										TabIndex="44" 								
+									/>
+									<com:TRequiredFieldValidator 
+										ControlToValidate="nmPendidikan"	
+										ErrorMessage="Nama Pendidikan belum diisi"
+										Display="Dynamic" 
+										FocusOnError="true" 
+										ValidationGroup="valPendidikan"
+							 		/>		
+									</td>
+							  </tr>
+							  <tr>
+								<td><span class="bullet_02">&#8226;</span> Tahun Kelulusan </td>
+								<td><div align="center">:</div></td>
+								<td>
+									<com:TTextBox 
+										ID="thnLulus" 
+										CssClass="inputtext" 
+										Width="35px" 
+										MaxLength="4" 
+										TabIndex="45"								
+									/>
+									<com:TRequiredFieldValidator 
+										ControlToValidate="thnLulus"	
+										ErrorMessage="Tahun Kelulusan belum diisi"
+										Display="Dynamic" 
+										FocusOnError="true" 
+										ValidationGroup="valPendidikan"
+							 		/>
+									<com:TRegularExpressionValidator
+										ErrorMessage="Pengisian tahun kelulusan tidak sesuai"
+										ControlToValidate="thnLulus"
+										Display="Dynamic"
+										RegularExpression="[\w]{4,4}"
+										FocusOnError="true"
+										ValidationGroup="valPendidikan"
+									/>	
+								</td>
+							  </tr>
+							  <tr>
+                                <td><span class="bullet_02">&#8226;</span> Jurusan/Bidang </td>
+							    <td><div align="center">:</div></td>
+							    <td>
+									<com:TTextBox 
+										ID="jur" 
+										CssClass="inputtext" 
+										Width="250px"
+										TabIndex="46" 								
+									/>
+									<com:TRequiredFieldValidator 
+										ControlToValidate="jur"	
+										ErrorMessage="Jurusan/Bidang belum diisi"
+										Display="Dynamic" 
+										FocusOnError="true" 
+										ValidationGroup="valPendidikan"
+							 		/>
+								</td>
+						      </tr>
+							  <tr>
+							    <td><span class="bullet_02">&#8226;</span> Instansi Penyelenggara </td>
+							    <td><div align="center">:</div></td>
+							    <td>
+									<com:TTextBox 
+										ID="instanPenyelenggara" 
+										CssClass="inputtext" 
+										Width="250px"
+										TabIndex="47" 								
+									/>
+									<com:TRequiredFieldValidator 
+										ControlToValidate="instanPenyelenggara"	
+										ErrorMessage="instansi Penyelenggara belum diisi"
+										Display="Dynamic" 
+										FocusOnError="true" 
+										ValidationGroup="valPendidikan"
+							 		/>
+									</td>
+						      </tr>
+							  <tr>
+								<td colspan="3">
+									<com:TButton 
+										ID="tbhPendidikan" 
+										Text="Tambah" 
+										OnClick="tbhPendidikanClick" 
+										ValidationGroup="valPendidikan"
+										TabIndex="48"
+									/>						</td>
+							  </tr>
+						  </table>
+						</com:TPanel>
+						<table width="100%">
+							<tr>
+								<td bgcolor="#CCCCCC">
+									<com:TDataGrid
+										ID="DGpendidikan"
+										EnableViewState="true" 
+										AutoGenerateColumns="false" 
+										DataKeyField="id"
+										CellPadding="2" 
+										Width="100%"
+										HeaderStyle.BackColor="white"
+										HeaderStyle.ForeColor="white"
+										ItemStyle.BackColor="#BFCFFF"					
+										ItemStyle.Font.Italic="false"
+										AlternatingItemStyle.BackColor="#E6ECFF" 								
+										OnDeleteCommand="delPendidikan" >					
+										
+										<com:TBoundColumn						
+											HeaderText="Nama Pendidikan"
+											ItemStyle.Width="200px"
+											ItemStyle.HorizontalAlign="Center";
+											DataField="nama" />
+										
+										<com:TBoundColumn						
+											HeaderText="Tahun Lulus"
+											ItemStyle.Width="100px"
+											ItemStyle.HorizontalAlign="Center";
+											DataField="thn_lulus" />	
+										
+										<com:TBoundColumn						
+											HeaderText="Jurusan / Bidang"
+											ItemStyle.Width="100px"
+											ItemStyle.HorizontalAlign="Center";
+											DataField="jurusan" />
+										
+										<com:TBoundColumn						
+											HeaderText="Instansi Penyelenggara"
+											ItemStyle.Width="100px"
+											ItemStyle.HorizontalAlign="Center";
+											DataField="instansi" />
+											
+										
+										<com:TButtonColumn												
+											HeaderText="Mode"
+											Text="Delete"						
+											ItemStyle.HorizontalAlign="Center"
+											ButtonType="PushButton"
+											CausesValidation="false" 															
+											CommandName="delete" 
+											ItemStyle.Width="30px"/>	
+									</com:TDataGrid>
+								</td>
+							</tr>
+							<tr>
+								<td>&nbsp;</td>
+							</tr>	
+						</table>
+						
+						<com:TPanel GroupingText="Riwayat Pelatihan Penjenjangan" Width="100%" Font.Bold="True" >
+							<table width="100%"  border="0">
+							  <tr>
+								<td width="27%"><span class="bullet_02">&#8226;</span> Nama Pelatihan </td>
+								<td width="1%"><div align="center">:</div></td>
+								<td width="72%">
+									<com:TTextBox 
+										ID="nmPelatihan" 
+										CssClass="inputtext" 
+										Width="250px" 	
+										TabIndex="49"							
+									/>
+									<com:TRequiredFieldValidator 
+										ControlToValidate="nmPelatihan"	
+										ErrorMessage="Nama Pelatihan belum diisi"
+										Display="Dynamic" 
+										FocusOnError="true" 
+										ValidationGroup="valLatihJenjang"
+							 		/>
+									</td>
+							  </tr>
+							  <tr>
+								<td><span class="bullet_02">&#8226;</span> Tahun </td>
+								<td><div align="center">:</div></td>
+								<td>
+									<com:TTextBox 
+										ID="thnPelatihan" 
+										CssClass="inputtext" 
+										Width="35px" 
+										MaxLength="4"
+										TabIndex="50"				
+									/>
+									<com:TRequiredFieldValidator 
+										ControlToValidate="thnPelatihan"	
+										ErrorMessage="Tahun Pelatihan belum diisi"
+										Display="Dynamic" 
+										FocusOnError="true" 
+										ValidationGroup="valLatihJenjang"
+							 		/>
+									<com:TRegularExpressionValidator
+										ErrorMessage="Pengisian Tahun Pelatihan tidak sesuai"
+										ControlToValidate="thnPelatihan"
+										Display="Dynamic"
+										RegularExpression="[\w]{4,4}"
+										FocusOnError="true"
+										ValidationGroup="valLatihJenjang"
+									/>	
+								</td>
+							  </tr>
+							  <tr>
+                                <td><span class="bullet_02">&#8226;</span> Lamanya </td>
+							    <td><div align="center">:</div></td>
+							    <td>
+									<com:TTextBox 
+										ID="lamaPelatihan" 
+										CssClass="inputtext" 
+										Width="25px" 
+										TabIndex="51"								
+									/>
+									&nbsp; jam
+									<com:TRequiredFieldValidator 
+										ControlToValidate="lamaPelatihan"	
+										ErrorMessage="Lama Pelatihan belum diisi"
+										Display="Dynamic" 
+										FocusOnError="true" 
+										ValidationGroup="valLatihJenjang"
+							 		/>
+									<com:TRegularExpressionValidator
+										ErrorMessage="Pengisian lama pelatihan tidak sesuai"
+										ControlToValidate="lamaPelatihan"
+										Display="Dynamic"
+										RegularExpression="[\w]{1,20}"
+										FocusOnError="true"
+										ValidationGroup="valLatihJenjang"
+									/>	
+								</td>
+						      </tr>
+							  <tr>
+							    <td><span class="bullet_02">&#8226;</span> Penyelenggara </td>
+							    <td><div align="center">:</div></td>
+							    <td>
+									<com:TTextBox 
+										ID="penyelenggaraPelatihan" 
+										CssClass="inputtext" 
+										Width="250px" 	
+										TabIndex="52"							
+									/>
+									<com:TRequiredFieldValidator 
+										ControlToValidate="penyelenggaraPelatihan"	
+										ErrorMessage="Penyelenggara Pelatihan belum diisi"
+										Display="Dynamic" 
+										FocusOnError="true" 
+										ValidationGroup="valLatihJenjang"
+							 		/>
+								</td>
+						      </tr>
+							  <tr>
+								<td colspan="3">
+									<com:TButton 
+										ID="tbhPelatihan" 
+										Text="Tambah" 
+										OnClick="tbhPelatihanClick" 
+										ValidationGroup="valLatihJenjang"
+										TabIndex="53"
+									/>						</td>
+							  </tr>
+						  </table>
+						</com:TPanel>
+						<table width="100%">
+							<tr>
+								<td bgcolor="#CCCCCC">
+									<com:TDataGrid
+										ID="DGpelatihan"
+										EnableViewState="true" 
+										AutoGenerateColumns="false" 
+										DataKeyField="id"
+										CellPadding="2" 
+										Width="100%"
+										HeaderStyle.BackColor="white"
+										HeaderStyle.ForeColor="white"
+										ItemStyle.BackColor="#BFCFFF"					
+										ItemStyle.Font.Italic="false"
+										AlternatingItemStyle.BackColor="#E6ECFF" 								
+										OnDeleteCommand="delPelatihan" >					
+										
+										<com:TBoundColumn						
+											HeaderText="Nama Pelatihan"
+											ItemStyle.Width="200px"
+											ItemStyle.HorizontalAlign="Center";
+											DataField="nama" />
+										
+										<com:TBoundColumn						
+											HeaderText="Tahun"
+											ItemStyle.Width="100px"
+											ItemStyle.HorizontalAlign="Center";
+											DataField="thn" />	
+										
+										<com:TBoundColumn						
+											HeaderText="Lamanya (jam)"
+											ItemStyle.Width="100px"
+											ItemStyle.HorizontalAlign="Center";
+											DataField="lama" />
+										
+										<com:TBoundColumn						
+											HeaderText="Penyelenggara"
+											ItemStyle.Width="100px"
+											ItemStyle.HorizontalAlign="Center";
+											DataField="instansi" />
+											
+										
+										<com:TButtonColumn												
+											HeaderText="Mode"
+											Text="Delete"						
+											ItemStyle.HorizontalAlign="Center"
+											ButtonType="PushButton"
+											CausesValidation="false" 															
+											CommandName="delete" 
+											ItemStyle.Width="30px"/>	
+									</com:TDataGrid>
+								</td>
+							</tr>
+							<tr>
+								<td>&nbsp;</td>
+							</tr>	
+						</table>
+						
+						
+						<com:TPanel GroupingText="Riwayat Pelatihan Teknis/Fungsional" Width="100%" Font.Bold="True" >
+							<table width="100%"  border="0">
+							  <tr>
+								<td width="27%"><span class="bullet_02">&#8226;</span> Nama Pelatihan </td>
+								<td width="1%"><div align="center">:</div></td>
+								<td width="72%">
+									<com:TTextBox 
+										ID="nmPelatihanTek" 
+										CssClass="inputtext" 
+										Width="250px" 
+										TabIndex="54"								
+									/>
+									<com:TRequiredFieldValidator 
+										ControlToValidate="nmPelatihanTek"	
+										ErrorMessage="Nama Pelatihan belum diisi"
+										Display="Dynamic" 
+										FocusOnError="true" 
+										ValidationGroup="valLatihTek"
+							 		/>
+									</td>
+							  </tr>
+							  <tr>
+								<td><span class="bullet_02">&#8226;</span> Tahun </td>
+								<td><div align="center">:</div></td>
+								<td>
+									<com:TTextBox 
+										ID="thnPelatihanTek" 
+										CssClass="inputtext" 
+										Width="35px"  
+										MaxLength="4"
+										TabIndex="55"								
+									/>
+									<com:TRequiredFieldValidator 
+										ControlToValidate="thnPelatihanTek"	
+										ErrorMessage="Tahun Pelatihan belum diisi"
+										Display="Dynamic" 
+										FocusOnError="true" 
+										ValidationGroup="valLatihTek"
+							 		/>
+									<com:TRegularExpressionValidator
+										ErrorMessage="Pengisian tahun pelatihan tidak sesuai"
+										ControlToValidate="thnPelatihanTek"
+										Display="Dynamic"
+										RegularExpression="[\w]{4,4}"
+										FocusOnError="true"
+										ValidationGroup="valLatihTek"
+									/>	
+								</td>
+							  </tr>
+							  <tr>
+                                <td><span class="bullet_02">&#8226;</span> Lamanya </td>
+							    <td><div align="center">:</div></td>
+							    <td>
+									<com:TTextBox 
+										ID="lamaPelatihanTek" 
+										CssClass="inputtext" 
+										Width="25px"
+										TabIndex="56" 								
+									/>
+									&nbsp; jam
+									<com:TRequiredFieldValidator 
+										ControlToValidate="lamaPelatihanTek"	
+										ErrorMessage="Lama Pelatihan belum diisi"
+										Display="Dynamic" 
+										FocusOnError="true" 
+										ValidationGroup="valLatihTek"
+							 		/>
+									<com:TRegularExpressionValidator
+										ErrorMessage="Pengisian lama pelatihan tidak sesuai"
+										ControlToValidate="lamaPelatihanTek"
+										Display="Dynamic"
+										RegularExpression="[\w]{1,20}"
+										FocusOnError="true"
+										ValidationGroup="valLatihTek"
+									/>	
+								</td>
+						      </tr>
+							  <tr>
+							    <td><span class="bullet_02">&#8226;</span> Penyelenggara </td>
+							    <td><div align="center">:</div></td>
+							    <td>
+									<com:TTextBox 
+										ID="penyelenggaraPelatihanTek" 
+										CssClass="inputtext" 
+										Width="250px" 	
+										TabIndex="57"							
+									/>
+									<com:TRequiredFieldValidator 
+										ControlToValidate="penyelenggaraPelatihanTek"	
+										ErrorMessage="Penyelenggara Pelatihan belum diisi"
+										Display="Dynamic" 
+										FocusOnError="true" 
+										ValidationGroup="valLatihTek"
+							 		/>
+									</td>
+						      </tr>
+							  <tr>
+								<td colspan="3">
+									<com:TButton 
+										ID="tbhPelatihanTek" 
+										Text="Tambah" 
+										OnClick="tbhPelatihanTekClick" 
+										ValidationGroup="valLatihTek"
+										TabIndex="58"
+									/>						</td>
+							  </tr>
+						  </table>
+						</com:TPanel>
+						<table width="100%">
+							<tr>
+								<td bgcolor="#CCCCCC">
+									<com:TDataGrid
+										ID="DGpelatihanTek"
+										EnableViewState="true" 
+										AutoGenerateColumns="false" 
+										DataKeyField="id"
+										CellPadding="2" 
+										Width="100%"
+										HeaderStyle.BackColor="white"
+										HeaderStyle.ForeColor="white"
+										ItemStyle.BackColor="#BFCFFF"					
+										ItemStyle.Font.Italic="false"
+										AlternatingItemStyle.BackColor="#E6ECFF" 								
+										OnDeleteCommand="delPelatihanTek" >					
+										
+										<com:TBoundColumn						
+											HeaderText="Nama Pelatihan"
+											ItemStyle.Width="200px"
+											ItemStyle.HorizontalAlign="Center";
+											DataField="nama" />
+										
+										<com:TBoundColumn						
+											HeaderText="Tahun"
+											ItemStyle.Width="100px"
+											ItemStyle.HorizontalAlign="Center";
+											DataField="thn" />	
+										
+										<com:TBoundColumn						
+											HeaderText="Lamanya (jam)"
+											ItemStyle.Width="100px"
+											ItemStyle.HorizontalAlign="Center";
+											DataField="lama" />
+										
+										<com:TBoundColumn						
+											HeaderText="Penyelenggara"
+											ItemStyle.Width="100px"
+											ItemStyle.HorizontalAlign="Center";
+											DataField="instansi" />
+											
+										
+										<com:TButtonColumn												
+											HeaderText="Mode"
+											Text="Delete"						
+											ItemStyle.HorizontalAlign="Center"
+											ButtonType="PushButton"
+											CausesValidation="false" 															
+											CommandName="delete" 
+											ItemStyle.Width="30px"/>	
+									</com:TDataGrid>
+								</td>
+							</tr>
+							<tr>
+								<td>&nbsp;</td>
+							</tr>	
+						</table>
+					</com:TTabView>
+				
+				
+				<com:TTabView 
+					ID="TVriwayatPenghargaan" 
+					Caption="Riwayat Penghargaan" BorderColor="#FFFFFF" >
+						<com:TPanel GroupingText="Riwayat Pendidikan" Width="100%" Font.Bold="True" >
+							<table width="100%"  border="0">
+							  <tr>
+								<td width="27%"><span class="bullet_02">&#8226;</span> Nama Penghargaan </td>
+								<td width="1%"><div align="center">:</div></td>
+								<td width="72%">
+									<com:TTextBox 
+										ID="nmPenghargaan" 
+										CssClass="inputtext" 
+										Width="250px" 	
+										TabIndex="59"			
+									/>	
+									<com:TRequiredFieldValidator 
+										ControlToValidate="nmPenghargaan"	
+										ErrorMessage="Nama Penghargaan belum diisi"
+										Display="Dynamic" 
+										FocusOnError="true" 
+										ValidationGroup="valPenghargaan"
+							 		/>
+									</td>
+							  </tr>
+							  <tr>
+								<td><span class="bullet_02">&#8226;</span> Tanggal Penghargaan </td>
+								<td><div align="center">:</div></td>
+								<td>
+									<com:TDatePicker 
+									ID="DPtglPenghargaan" 
+									Width="70px" 
+									FromYear="1940" 
+									DateFormat="dd-MM-yyyy"
+									ToolTip="Masukan tanggal lahir" 	
+									MaxLength="10"
+									TabIndex="60"							
+									/>
+									&nbsp; tgl-bln-thn
+									<com:TRequiredFieldValidator 
+										ControlToValidate="DPtglPenghargaan"	
+										ErrorMessage="Tanggal Penghargaan belum diisi"
+										Display="Dynamic" 
+										FocusOnError="true" 
+										ValidationGroup="valPenghargaan"
+							 		/>
+									<com:TDataTypeValidator
+										ControlToValidate="DPtglPenghargaan"
+										DataType="Date"
+										DateFormat="dd-MM-yyyy"
+										ErrorMessage="Anda harus memasukan tanggal yang benar seperti ini(Tgl-Bln-Tahun)."
+										Display="Dynamic" 
+										FocusOnError="true"
+										ValidationGroup="valPenghargaan" />
+										
+								</td>
+							  </tr>
+							  <tr>
+                                <td><span class="bullet_02">&#8226;</span> Nomor Penghargaan </td>
+							    <td><div align="center">:</div></td>
+							    <td>
+									<com:TTextBox 
+										ID="noPenghargaan" 
+										CssClass="inputtext" 
+										Width="250px" 		
+										TabIndex="61"						
+									/>
+									<com:TRequiredFieldValidator 
+										ControlToValidate="noPenghargaan"	
+										ErrorMessage="Nomor Penghargaan belum diisi"
+										Display="Dynamic" 
+										FocusOnError="true" 
+										ValidationGroup="valPenghargaan"
+							 		/>
+								</td>
+						      </tr>
+							  <tr>
+							    <td><span class="bullet_02">&#8226;</span> Instansi yang mengeluarkan </td>
+							    <td><div align="center">:</div></td>
+							    <td>
+									<com:TTextBox 
+										ID="instanPenghargaan" 
+										CssClass="inputtext" 
+										Width="250px" 	
+										TabIndex="62"							
+									/>
+									<com:TRequiredFieldValidator 
+										ControlToValidate="instanPenghargaan"	
+										ErrorMessage="Instansi yang mengeluarkan Penghargaan belum diisi"
+										Display="Dynamic" 
+										FocusOnError="true" 
+										ValidationGroup="valPenghargaan"
+							 		/>
+									</td>
+						      </tr>
+							  <tr>
+								<td colspan="3">
+									<com:TButton 
+										ID="tbhPenghargaan" 
+										Text="Tambah" 
+										OnClick="tbhPenghargaanClick" 
+										ValidationGroup="valPenghargaan"
+										TabIndex="64" />
+									</td>
+							  </tr>
+						  </table>
+						</com:TPanel>
+						
+						<table width="100%">
+							<tr>
+								<td bgcolor="#CCCCCC">
+									<com:TDataGrid
+										ID="DGpenghargaan"
+										EnableViewState="true" 
+										AutoGenerateColumns="false" 
+										DataKeyField="id"
+										CellPadding="2" 
+										Width="100%"
+										HeaderStyle.BackColor="white"
+										HeaderStyle.ForeColor="white"
+										ItemStyle.BackColor="#BFCFFF"					
+										ItemStyle.Font.Italic="false"
+										AlternatingItemStyle.BackColor="#E6ECFF" 								
+										OnDeleteCommand="delPenghargaan" >					
+										
+										<com:TBoundColumn						
+											HeaderText="Nama Penghargaan"
+											ItemStyle.Width="200px"
+											ItemStyle.HorizontalAlign="Center";
+											DataField="nama" />
+										
+										<com:TBoundColumn						
+											HeaderText="Tahun Penghargaan"
+											ItemStyle.Width="100px"
+											ItemStyle.HorizontalAlign="Center";
+											DataField="tgl" />	
+										
+										<com:TBoundColumn						
+											HeaderText="Nomor Penghargaan"
+											ItemStyle.Width="100px"
+											ItemStyle.HorizontalAlign="Center";
+											DataField="no" />
+										
+										<com:TBoundColumn						
+											HeaderText="Instansi yang mengeluarkan"
+											ItemStyle.Width="100px"
+											ItemStyle.HorizontalAlign="Center";
+											DataField="instansi" />
+											
+										
+										<com:TButtonColumn												
+											HeaderText="Mode"
+											Text="Delete"						
+											ItemStyle.HorizontalAlign="Center"
+											ButtonType="PushButton"
+											CausesValidation="false" 															
+											CommandName="delete" 
+											ItemStyle.Width="30px"/>	
+									</com:TDataGrid>
+								</td>
+							</tr>
+							<tr>
+								<td>&nbsp;</td>
+							</tr>	
+						</table>
+					</com:TTabView>
+				</com:TTabPanel>
+			</td>
+		  </tr>
+		</table>
+		</td>
+      </tr>
+      <tr>
+        <td>
+		<table width="100%" border="0">
+		  <tr>
+			<td>			</td>
+		  </tr>
+		</table>
+
+		<table width="100%"  border="0" align="center" cellpadding="0" cellspacing="0">
+          <tr>
+            <td height="2" bgcolor="#999999"></td>
+          </tr>
+          <tr>
+            <td height="7"></td>
+          </tr>
+          <tr>
+            <td><table width="10" border="0" align="center" cellpadding="0" cellspacing="5" bgcolor="#CCCCCC">
+              <tr>
+                <td>
+					<com:TButton 
+						Text="Simpan" 
+						OnClick="simpanClicked" 
+						TabIndex="65"
+						/>
+				</td>
+                <td>
+					<com:TButton 
+						Text="Batal" 
+						OnClick="batalClicked" 
+						TabIndex="66"
+						/>
+				</td>
+                <td>
+					<com:TButton 
+						Text="Keluar" 
+						OnClick="keluarClicked" 
+						CausesValidation="false" 
+						TabIndex="67" 
+						/>
+				</td>
+              </tr>
+            </table></td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+          </tr>
+        </table></td>
+      </tr>
+    </table></td>
+  </tr>
+</table>
+</com:TContent> 

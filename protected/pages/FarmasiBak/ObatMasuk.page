@@ -1,0 +1,508 @@
+<%@ MasterClass="Application.layouts.MainLayout" %>
+<com:TContent ID="jdMain">
+	Administrasi Penerimaan Barang
+    
+    <a href="<%= $this->Service->constructUrl('Simak') %>" onclick="maskContent()">
+    <span class="close-btn">
+        <span class="ui-icon ui-icon-circle-close"></span>
+    </span>
+    </a>
+    
+</com:TContent>	
+
+<com:TContent ID="Main"> 
+	<com:TActiveLabel ID="test" Visible="true" />
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>
+                <div id="messages">
+                <table width="100%" border="0" align="right" cellpadding="0" cellspacing="2">
+                  <tr>
+                    <td ><span>&#8226; </span>Mode Penerimaan</td>
+                    <td >:</td>
+                    <td >
+                    	<com:TActiveRadioButtonList ID="modeTerima" 
+                            AutoPostBack="false" 
+                            CausesValidation="false" 
+                            RepeatDirection="Horizontal"
+                            SelectedValue="0">				
+                                <com:TListItem Value="0" Text="Penerimaan Baru" />
+                                <com:TListItem Value="1" Text="Penerimaan Tunda" />
+                        </com:TActiveRadioButtonList>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td width="175"><span>&#8226; </span>No. P.O </td>
+                    <td width="5">:</td>
+                    <td >
+						<com:TActiveTextBox 
+							ID="noPO" 
+							Width="200px"
+						    MaxLength="30" 
+							AutoPostBack="true" 
+							CausesValidation="false"
+							OnTextChanged="checkPo"							
+							ValidationGroup="val" 
+						/>
+                     	<com:TRequiredFieldValidator
+                            ControlToValidate="noPO"
+                            ValidationGroup="val"
+                            ErrorMessage="*"
+                            Display="Dynamic"
+                            FocusOnError="true" 
+                            CssClass="valRequired"
+                            ControlCssClass="valctrl" /></td>
+                  </tr>
+                  <tr>
+                    <td ><span>&#8226; </span>Jumlah Faktur </td>
+                    <td >:</td>
+                    <td >
+						<com:TActiveTextBox 
+							ID="jmlFktr" 
+							Width="30px"
+							Text="1"
+						    MaxLength="2"
+						    OnCallback="panelRender"
+							ValidationGroup="val" 
+						/>
+                     	<com:TRequiredFieldValidator
+                            ControlToValidate="jmlFktr"
+                            ValidationGroup="val"
+                            ErrorMessage="*"
+                            Display="Dynamic"
+                            FocusOnError="true" 
+                            CssClass="valRequired"
+                            ControlCssClass="valctrl" /></td>
+                  </tr>
+				   <com:TActivePanel ID="noFktrPanel" >
+				  <tr>
+                    <td ><span>&#8226; </span>No. Faktur </td>
+                    <td >:</td>
+                    <td >
+						<com:TActiveTextBox 
+							ID="noFktr" 
+							Width="200px"
+						    MaxLength="30"
+							ValidationGroup="val" 
+						/>
+                     	<com:TRequiredFieldValidator
+                            ControlToValidate="noFktr"
+                            ValidationGroup="val"
+                            ErrorMessage="*"
+                            Display="Dynamic"
+                            FocusOnError="true" 
+                            CssClass="valRequired"
+                            ControlCssClass="valctrl" /></td>
+                  </tr>
+                  </com:TActivePanel>
+				  <com:TActivePanel ID="tglFktrPanel" >
+                  <tr>
+                    <td><span>&#8226; </span>Tanggal Faktur </td>
+                    <td>:</td>
+                    <td>
+						<com:TActiveDatePicker 
+							ID="tglFaktur" 
+							MaxLength="10"/>
+						<com:TRequiredFieldValidator
+                            ControlToValidate="tglFaktur"
+                            ValidationGroup="val"
+                            ErrorMessage="*"
+                            Display="Dynamic"
+                            FocusOnError="true" 
+                            CssClass="valRequired"
+                            ControlCssClass="valctrl" />
+						<com:TDataTypeValidator
+							ValidationGroup="val"
+							ControlToValidate="tglFaktur"
+							DataType="Date"
+							DateFormat="dd-MM-yyyy"
+							Display="Dynamic" 
+                            CssClass="valRequired"
+                            ControlCssClass="valctrl"
+						/>	
+						dd-mm-yyyy				</td>
+                  </tr>
+                  </com:TActivePanel>
+                  <com:TActivePanel ID="tglJthTmpPanel" >
+                  <tr>
+                    <td><span>&#8226; </span>Tanggal Jatuh Tempo </td>
+                    <td>:</td>
+                    <td>
+                    	<com:TActiveTextBox 
+							ID="jmlHari" 
+							Width="30px"
+						    MaxLength="3"
+                            Text="1"/>
+                            
+						<com:TActiveDatePicker 
+							ID="tglJthTempo"
+							MaxLength="10"
+                            Visible="false"/>
+						<com:TRequiredFieldValidator
+                        	Enabled="false"
+                            ControlToValidate="tglJthTempo"
+                            ValidationGroup="val"
+                            ErrorMessage="*"
+                            Display="Dynamic"
+                            FocusOnError="true" 
+                            CssClass="valRequired"
+                            ControlCssClass="valctrl" />
+						<com:TDataTypeValidator
+                        	Enabled="false"
+							ValidationGroup="val"
+							ControlToValidate="tglJthTempo"
+							DataType="Date"
+							DateFormat="dd-MM-yyyy"
+							Display="Dynamic" 
+                            CssClass="valRequired"
+                            ControlCssClass="valctrl"
+						/>						hari</td>
+                  </tr>
+                  </com:TActivePanel>
+                  <com:TActivePanel ID="tglTrmBrgPanel" >
+                  <tr>
+                    <td><span>&#8226; </span>Tanggal Terima Barang </td>
+                    <td>:</td>
+                    <td>
+						<com:TActiveDatePicker 
+							ID="tglTerima" 
+							MaxLength="10" />
+						<com:TRequiredFieldValidator
+                            ControlToValidate="tglTerima"
+                            ValidationGroup="val"
+                            ErrorMessage="*"
+                            Display="Dynamic"
+                            FocusOnError="true" 
+                            CssClass="valRequired"
+                            ControlCssClass="valctrl" />
+						<com:TDataTypeValidator
+							ValidationGroup="val"
+							ControlToValidate="tglTerima"
+							DataType="Date"
+							DateFormat="dd-MM-yyyy"
+							Display="Dynamic" 
+                            CssClass="valRequired"
+                            ControlCssClass="valctrl"
+						/>						dd-mm-yyyy</td>
+                  </tr>
+                  </com:TActivePanel>
+				  <com:TActivePanel ID="materaiPanel" >
+				  <tr>
+                    <td><span>&#8226; </span>Materai </td>
+                    <td>:</td>
+                    <td>
+						<com:TActiveDropDownList ID="mtr" 
+                        	OnSelectedIndexChanged="mtrChanged" 
+                            AutoPostBack="true" 
+                            CausesValidation="false">
+									<com:TListItem Text="Tidak Pakai Materai" Value="0" />
+                                    <com:TListItem Text="Materai Rp. 3000" Value="1" />
+                                    <com:TListItem Text="Materai Rp. 6000" Value="2" />
+						</com:TActiveDropDownList>
+					</td>
+                  </tr>
+				  <tr>
+                    <td><span>&#8226; </span>Ppn</td>
+                    <td>:</td>
+                    <td>
+						<com:TActiveDropDownList ID="ppn" 
+                        	OnSelectedIndexChanged="ppnChanged" 
+                            AutoPostBack="true" 
+                            CausesValidation="false">
+									<com:TListItem Text="Tidak Pakai Ppn" Value="0" />
+                                    <com:TListItem Text="Pakai Ppn" Value="1" />
+						</com:TActiveDropDownList>
+					</td>					
+                  </tr>
+				  <tr>
+                    <td ><span>&#8226; </span>Potongan </td>
+                    <td >:</td>
+                    <td >
+						<com:TActiveTextBox 
+							ID="potongan" 
+							Width="200px"
+						    MaxLength="30"
+							ValidationGroup="val" 
+						/>
+                     	<com:TRequiredFieldValidator
+                            ControlToValidate="potongan"
+                            ValidationGroup="val"
+                            ErrorMessage="*"
+                            Display="Dynamic"
+                            FocusOnError="true" 
+                            CssClass="valRequired"
+                            ControlCssClass="valctrl" /></td>
+                  </tr>
+				  <tr>
+                    <td ><span>&#8226; </span>Total Pembelian </td>
+                    <td >:</td>
+                    <td > Rp. <com:TActiveLabel ID="tot" Text="0" /></td>
+                  </tr>
+                  </com:TActivePanel>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>
+						<com:TActiveButton 
+							ID="prosesBtn" 
+							Text="Proses" 
+							OnClick="prosesClicked" 
+							CssClass="button_01" 
+							ValidationGroup="val">
+                            <prop:ClientSide 
+                                OnLoading="maskContent();"
+                                OnComplete="unmaskContent(); "/>
+                        </com:TActiveButton>    					
+					</td>
+                  </tr>
+				  <com:TActivePanel ID="prosesCtrl" >
+                  
+                  <tr>
+                    <td colspan="3"  >
+                    	<com:TActivePanel ID="checkPoFalseCtrl" >
+                    	<table width="100%">
+                        	<tr>
+                        	  <td style="color:#FF0000; font-size:12px;" align="center"><hr size="1" /></td>
+                      	  </tr>
+                        	<tr>
+                            	<td style="color:#FF0000; font-size:12px;" align="center">
+									<com:TLabel Text="No. PO tidak ditemukan " />
+                                    </td>
+                            </tr>
+                        </table>
+                        </com:TActivePanel>
+                    </td>
+                  </tr>          
+				  
+				  
+                  <tr>
+                    <td colspan="3">
+                    	<com:TActivePanel ID="checkPoTrueCtrl">
+						<table width="100%"  border="0" align="center" cellpadding="0" cellspacing="1">
+							<tr>
+							  <td align="center"><hr/></td>
+							  </tr>
+							<tr>
+								<td align="center">  TABEL
+									<com:XActiveDataGrid ID="UserGrid"
+										DataKeyField="id"
+										AutoGenerateColumns="false"	
+										AllowPaging="true"
+										AllowCustomPaging="true"
+										AllowSorting="false"
+										Width="100%"					
+										PageSize="15"
+										PagerStyle.Mode="Numeric"			
+										PagerStyle.Font.Name="Arial"
+										PagerStyle.Font.Size="12"
+										PagerStyle.HorizontalAlign="Right"			
+										GridLines="None"
+										CellSpacing="1"
+										CellPadding="2"
+										HeaderStyle.CssClass="headerstyle"
+										ItemStyle.CssClass="itemstyle"
+										AlternatingItemStyle.CssClass="itemstyle2"
+										OnPageIndexChanged="dtgSomeData_PageIndexChanged"
+										OnSortCommand="dtgSomeData_SortCommand"	
+										OnItemCreated="itemCreated"
+										OnEditCommand="editItem"
+										OnUpdateCommand="saveItem"
+										OnCancelCommand="cancelItem">
+									
+									<com:XActiveTemplateColumn
+										ID="nofak"
+										SortExpression="nofak"
+										HeaderText="No Faktur"
+										ItemStyle.Width="75px"
+										ItemStyle.HorizontalAlign="Center">
+                                    	
+                                        <prop:ItemTemplate >
+                                             <com:TActiveLabel
+                                                Text = "<%# $this->Parent->Data['nofak'] %>" />
+                                    	</prop:ItemTemplate>
+                                        
+                                    	<prop:EditItemTemplate >
+                                             <com:TActiveTextBox 
+                                             	ID="noFakTxt" 
+                                                Text = "<%# $this->Parent->Data['nofak'] %>" />
+                                             <com:TRequiredFieldValidator 
+                                                ControlToValidate="noFakTxt"  
+                                                ErrorMessage="*" 
+                                                Display="Dynamic" 
+                                                ValidationGroup="valTabel"  />
+                                    	</prop:EditItemTemplate>
+                                    </com:XActiveTemplateColumn>    
+									
+									<com:XActiveTemplateColumn  
+										HeaderText="Kode" 	
+										SortExpression="kode"					 
+										ItemStyle.Width="50px" 
+										ItemStyle.HorizontalAlign="Center" >									
+										<prop:ItemTemplate>
+											<%=	$this->Parent->DataItem['kode'] %>										
+										</prop:ItemTemplate>
+									</com:XActiveTemplateColumn >
+									
+									<com:XActiveTemplateColumn  HeaderText="Nama" 						 
+										ItemStyle.Width="150px" 
+										ItemStyle.HorizontalAlign="Center" >									
+										<prop:ItemTemplate>
+											<%=	ObatRecord::finder()->findByPk($this->Parent->DataItem['kode'])->nama;	  %>                                        </prop:ItemTemplate>
+									</com:XActiveTemplateColumn >
+									
+									<com:XActiveTemplateColumn  
+										HeaderText="Jumlah Pesan" 	
+										SortExpression="jml"					 
+										ItemStyle.Width="75px" 
+										ItemStyle.HorizontalAlign="Center" >									
+										<prop:ItemTemplate>
+											<%=	$this->Parent->DataItem['jml'] %>										
+										</prop:ItemTemplate>
+									</com:XActiveTemplateColumn >									
+									
+									<com:XActiveBoundColumn
+										ID="jmlTerima"
+										SortExpression="jml_terima"
+										HeaderText="Jumlah Terima"
+										ItemStyle.Width="75px"
+										DataField="jml_terima" 
+										ItemStyle.HorizontalAlign="Center"/>
+									
+                                    <com:XActiveTemplateColumn
+										ID="jmlTerimaTunda"
+										SortExpression="jml_terima_tunda"
+										HeaderText="Jumlah Terima Tunda"
+										ItemStyle.Width="75px"
+										ItemStyle.HorizontalAlign="Center">
+                                        <prop:ItemTemplate>
+											<%=	$this->Parent->DataItem['jml_terima_tunda'] %>										
+										</prop:ItemTemplate>
+                                    </com:XActiveTemplateColumn >
+                                        
+									<com:XActiveBoundColumn
+										ID="hrg"
+										SortExpression="hrg"
+										HeaderText="Harga"
+										ItemStyle.Width="75px"
+										DataField="hrg"   
+                                        DataFormatString="#number_format({0},0,'','')"
+										ItemStyle.HorizontalAlign="Right"/>
+									
+									<com:XActiveBoundColumn
+										ID="batch"
+										SortExpression="batch"
+										HeaderText="Batch"
+										ItemStyle.Width="75px"
+										DataField="batch" 
+										ItemStyle.HorizontalAlign="Left"/>
+									
+									<com:XActiveBoundColumn
+										ID="expired"
+										SortExpression="expired"
+										HeaderText="Expired <br/>(12/14 atau 12-14)"
+										ItemStyle.Width="75px"
+										DataField="expired" 
+										ItemStyle.HorizontalAlign="Center"/>
+                                     
+									<com:XActiveBoundColumn
+										ID="disc"
+										SortExpression="disc"
+										HeaderText="Disc (%)"
+										ItemStyle.Width="75px"
+										DataField="disc" 
+										ItemStyle.HorizontalAlign="Center"/>
+									
+                                    <com:XActiveTemplateColumn 
+                                        ID="stTunda" 
+                                        ItemStyle.HorizontalAlign="Center"
+                                        ItemStyle.CssClass="middle" 
+                                        ItemStyle.Width="10%">
+                                        <prop:HeaderTemplate>Status Tunda Sisa</prop:HeaderTemplate>
+                                        <prop:ItemTemplate>
+                                          <com:TActiveLabel
+                                            ID="stTundaText"/>
+                                        </prop:ItemTemplate>
+                                        <prop:EditItemTemplate>
+                                          <com:TActiveCheckBox
+                                            ID="checkBoxList" 
+                                            CssClass="pager" 
+                                            CausesValidation="false" 
+                                            AutoPostBack="false" 
+                                            Text="Ya"/>
+                                        </prop:EditItemTemplate>
+                                    </com:XActiveTemplateColumn>
+                                                    
+									<com:XActiveEditCommandColumn
+										HeaderText="Edit"
+										HeaderStyle.Width="50px"
+										UpdateText="Save" 
+                                        ValidationGroup="valTabel" 
+										ItemStyle.HorizontalAlign="Center"
+										ItemStyle.Font.Italic="false"
+										/>	
+									</com:XActiveDataGrid>								</td>                       
+							</tr>
+						</table>
+                        </com:TActivePanel>
+						</td>
+                    </tr>
+				  </com:TActivePanel>
+                </table>
+                </div>
+                
+                </td>
+              </tr>
+              <tr>
+                <td><hr /></td>
+              </tr>
+              <tr>
+                <td><table width="10" border="0" align="center" cellpadding="0" cellspacing="2">
+                    <tr>
+					<!--
+					  <td>
+					  	<com:TActiveButton 
+							Text="Preview"  
+							ID="prevBtn" 
+							OnClick="prevClicked" 
+							CssClass="button_01"
+                         Attributes.onclick = "if(!confirm('Preview data sekarang..?')) return false;">
+                           <prop:ClientSide
+                                    OnLoading="Element.show('loading'); Element.hide('messages');"/>
+                        </com:TActiveButton>              
+					  </td>
+					  --->
+                      <td>
+					  	<com:TActiveButton 
+							Text="Cetak" 
+							ID="cetakBtn" 
+							OnClick="cetakClicked" 
+							CssClass="button_01"
+                         Attributes.onclick = "if(!confirm('Cetak data sekarang..?')) return false;">
+                           <prop:ClientSide
+                                    OnLoading="maskContent();"/>
+                        </com:TActiveButton>              
+					  </td>
+                      <td>
+                      	<com:TActiveButton Text="Batal" 
+										OnClick="batalClicked"
+										CausesValidation="false" 
+										CssClass="button_01">
+                      	<prop:ClientSide
+                                                OnLoading="maskContent();"/>
+                                    </com:TActiveButton>
+					  </td>
+                      <td>
+                      	<com:TActiveButton Text="Keluar" 
+					  			OnClick="keluarClicked" 
+								CausesValidation="false" 
+								CssClass="button_01">
+                                <prop:ClientSide
+                                    OnLoading="maskContent();"/>
+                        </com:TActiveButton>
+					  </td>
+                    </tr>
+                </table></td>
+              </tr>
+          </table>
+          
+</com:TContent>

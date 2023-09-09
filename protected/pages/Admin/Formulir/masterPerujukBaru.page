@@ -1,0 +1,85 @@
+<%@ MasterClass="Application.layouts.MainLayout" %>
+<com:TContent ID="jdMain">
+	Daftar Bidan Perujuk - Baru
+    
+    <a href="<%= $this->Service->constructUrl('Simak') %>" onclick="maskContent()">
+    <span class="close-btn">
+        <span class="ui-icon ui-icon-circle-close"></span>
+    </span>
+    </a>
+    
+</com:TContent>	
+<com:TContent ID="Main">
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+              <tr>
+                <td><table width="100%" border="0" align="right" cellpadding="0" cellspacing="2">
+                  
+                  <tr>
+                    <td><span>&#8226; </span>Nama Bidan Perujuk</td>
+                    <td>:</td>
+                    <td>
+						<com:TTextBox 
+							ID="nama" 
+							Width="200px" 
+							TabIndex="2" 
+							ValidationGroup="val"
+						/>
+						<com:TRequiredFieldValidator 
+							ControlToValidate="nama"											 
+						  	ErrorMessage="Anda harus mengisikan nama"
+						  	Display="Dynamic" 
+							ValidationGroup="val"
+						/>
+					</td>
+                  </tr>
+				  <tr>
+                    <td><span>&#8226; </span>Alamat Bidan Perujuk</td>
+                    <td>:</td>
+                    <td>
+						<com:TTextBox 
+							ID="alamat" 
+							Width="200px" 
+							TabIndex="2" 
+							ValidationGroup="val"
+						/>
+						<com:TRequiredFieldValidator 
+							ControlToValidate="alamat"											 
+						  	ErrorMessage="Anda harus mengisikan alamat bidan perujuk"
+						  	Display="Dynamic" 
+							ValidationGroup="val"
+						/>
+					</td>
+                  </tr>
+                </table></td>
+              </tr>
+              <tr>
+                <td><hr /></td>
+              </tr>
+              <tr>
+                <td><table width="10" border="0" align="center" cellpadding="0" cellspacing="2">
+                    <tr>
+                      <td><com:TButton Text="Simpan" Attributes.onclick = "maskContent();" 
+					  					OnClick="simpanClicked" 
+										CssClass="button_01" 
+										TabIndex="6" 
+										ValidationGroup="val"/></td>
+                      <td><!--<com:TButton Text="Batal" 					  					
+										ButtonType="Reset" 
+										OnClick="batalClicked"
+										CausesValidation="false" 
+										CssClass="button_01" 
+										TabIndex="7" />--></td>
+                      <td><com:TButton Text="Batal" 
+					  			OnClick="keluarClicked" 
+								CausesValidation="false" 
+								CssClass="button_01" 
+								TabIndex="8" />
+					  </td>
+                    </tr>
+                </table></td>
+              </tr>
+          </table>
+</com:TContent>

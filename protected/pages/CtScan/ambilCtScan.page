@@ -1,0 +1,173 @@
+<%@ MasterClass="Application.layouts.MainLayout" %>
+<com:TContent ID="jdMain">
+	Hasil CT Scan
+    
+    <a href="<%= $this->Service->constructUrl('Simak') %>" onclick="maskContent()">
+    <span class="close-btn">
+        <span class="ui-icon ui-icon-circle-close"></span>
+    </span>
+    </a>
+    
+</com:TContent>	
+
+
+<com:TContent ID="Main"> 
+	
+    <com:TMultiView ID="MultiView" ActiveViewIndex="0" OnActiveViewChanged="viewChanged">
+   			<com:TView ID="utama">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>			  
+                <td>
+				<com:TLabel ID="showSql" />
+				
+				<table width="100%" align="center" border="0">
+			  		<tr>
+						<td align="center"><com:TPanel GroupingText="Pencarian No. Register Pasien">
+							<table width="100%"  border="0" align="left">
+							 <com:TControl ID="showFirst">
+							  <tr>
+								<td width="150"><span>&#8226;</span>&nbsp;&nbsp;No. Register</td>
+								<td width="5">:</td>
+								<td ><com:TTextBox CssClass="input_text" 
+												  ID="notrans" 
+												  AutoPostBack="true"													   
+												  MaxLength="14"
+												  OnTextChanged="checkRegister" 
+												  TabIndex="1"												  
+												  ToolTip="No. Register Pasien" 
+												  Width="100px" />&nbsp;<com:TLabel ID="errMsg" ForeColor="#FF0000" />									</td>
+							  </tr>
+							  </com:TControl>
+							  <com:TControl ID="showSecond">
+							  <tr>
+							    <td><span>&#8226;</span>&nbsp;&nbsp;No. CM </td>
+							    <td>:</td>
+							    <td><com:TLabel ID="cm" /></td>
+							    </tr>
+							  <tr>
+								<td ><span>&#8226;</span>&nbsp;&nbsp;Nama Pasien </td>
+								<td >:</td>
+								<td s><com:TLabel ID="nama" /></td>
+							  </tr>
+							  <tr>
+                                <td><span>&#8226;</span>&nbsp;&nbsp;Dokter </td>
+							    <td>:</td>
+							    <td><com:TLabel ID="dokter" /></td>
+							   </tr>
+								</com:TControl>
+							</table>
+							</com:TPanel>						</td>
+			  		</tr>
+				</table>			</td>
+              </tr>
+			  <com:TControl ID="showTable">
+              <tr>
+                <td>
+                	
+                    <table width="100%"  border="0" align="center" cellpadding="0" cellspacing="1">                      
+                      <tr>
+                        <td align="center">
+						<com:TDataGrid ID="UserGrid"
+								DataKeyField="id"
+								AutoGenerateColumns="false"	
+								AllowPaging="true"
+								AllowCustomPaging="true"
+								AllowSorting="true"
+								Width="100%"					
+								PageSize="10"
+								PagerStyle.Mode="Numeric"			
+								PagerStyle.Font.Name="Arial"
+								PagerStyle.Font.Size="12"
+								PagerStyle.HorizontalAlign="Right"			
+								GridLines="None"
+								CellSpacing="1"
+								CellPadding="2"
+								HeaderStyle.CssClass="headerstyle"
+								ItemStyle.CssClass="itemstyle"
+								AlternatingItemStyle.CssClass="itemstyle2"
+								OnPageIndexChanged="changePage"
+								OnPagerCreated="pagerCreated"			
+								OnSortCommand="sortGrid">								
+							</div>	
+																
+								<com:TTemplateColumn HeaderText="Pemeriksaan" 
+													 SortExpression="nama"
+													 ID="namaTdk" 													 
+													 ItemStyle.Width="150px" 
+													 ItemStyle.HorizontalAlign="Center" >									
+									<prop:ItemTemplate>
+										<%=	$this->Parent->DataItem['nama'] %>
+									</prop:ItemTemplate>
+								</com:TTemplateColumn>				
+									
+								<com:TBoundColumn  
+									ID="nm_film"
+									SortExpression="nm_film"
+									HeaderText="Ukuran Film"
+									ItemStyle.Width="100px"
+									DataField="nm_film"
+                                    ItemStyle.Horizontalalign="Center" />                                   
+                                		
+							</com:TDataGrid>
+						</td>                       
+                      </tr>
+                    </table>
+                    
+                </td>
+              </tr>
+              </com:TControl>
+              <tr>
+                <td><table width="10" border="0" align="center" cellpadding="0" cellspacing="2">
+                    <tr>                                        
+                      <td><com:TButton Text="Ambil" 
+					  				   OnClick="cetakClicked"
+									   ID="cetakBtn" 
+									   CausesValidation="false" 
+									   CssClass="button_01" 
+									   TabIndex="7" 
+                                       Attributes.onclick = "maskContent();"/></td>
+					  <td><com:TButton Text="Batal" 
+					  				   OnClick="batalClicked" 
+									   CausesValidation="false" 
+									   CssClass="button_01" 
+									   TabIndex="8" 
+                                       Attributes.onclick = "maskContent();"/></td>				   
+					  <td><com:TButton Text="Keluar" 
+					  				   OnClick="keluarClicked" 
+									   CausesValidation="false" 
+									   CssClass="button_01" 
+									   TabIndex="9" 
+                                       Visible="false"
+                                       Attributes.onclick = "maskContent();" /></td>
+                    </tr>
+                </table></td>
+              </tr>
+          </table>
+			  </com:TView>
+			  <com:TView ID="sukses">
+			  	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+					  <tr>			  
+						<td align="center" style="color:#FF0000; font-size:12px; ">
+							DATA REKAM BILLING LABORATORIUM TELAH MASUK KE DALAM DATABASE				</td>
+					  </tr>
+					   <tr>
+						 <td align="center">&nbsp;</td>
+						 </tr>
+					   <tr>			  
+						<td align="center">
+							<com:TButton  
+								ID="kembaliBtn"
+								Text="Kembali" 
+								OnClick="kembaliClicked" 
+								CausesValidation="false"
+                                Attributes.onclick = "maskContent();"
+							   />				</td>
+					  </tr>
+					  <tr>
+						<td>&nbsp;</td>
+					  </tr>
+				</table>
+			  </com:TView>
+			  </com:TMultiView>
+              
+</com:TContent> 

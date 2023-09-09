@@ -1,0 +1,187 @@
+<%@ MasterClass="Application.layouts.MainLayout" %>
+<com:TContent ID="jdMain">
+	Fraksi Jasmed
+    
+    <a href="<%= $this->Service->constructUrl('Simak') %>" onclick="maskContent()">
+    <span class="close-btn">
+        <span class="ui-icon ui-icon-circle-close"></span>
+    </span>
+    </a>
+    
+</com:TContent>	
+
+<com:TContent ID="Main">
+
+
+    <com:TActivePanel ID="cariPanel" GroupingText="" DefaultButton="prosesBtn" >
+    
+        <table width="100%" border="0" cellpadding="2" cellspacing="2" >
+          <tr>							  
+            <td width="200" class="tes">Jumlah Level Pembagian Fraksi</td>
+            <td width="5">:</td>
+            <td >
+                <com:TActiveTextBox 
+                    ID="jml" 
+                    MaxLength="2"
+                    Width="40px"
+                    AutoPostBack="false"
+                    CausesValidation="false"
+                    ValidationGroup="val">
+              	</com:TActiveTextBox>       
+                
+                <com:TRequiredFieldValidator
+                        Display="Dynamic"
+                        ControlToValidate="jml"  
+                        ErrorMessage="*"
+                        ValidationGroup="val"
+                        FocusOnError="true" 
+                        CssClass="valRequired"
+                        ControlCssClass="valctrl"/>
+                  &nbsp;          
+              <com:TButton 
+                    ID="prosesBtn"
+                    Text="Proses" 
+                    OnClick="Page.prosesClicked" 
+                    CssClass="button_01" 
+                    CausesValidation="true"
+                    ValidationGroup="val"
+                    Visible="true"/>   	</td>							   			
+          </tr>
+          <tr>
+            <td colspan="3" class="tes"><hr/></td>
+          </tr>	
+        </table>
+    </com:TActivePanel>
+    
+    
+    
+    <com:TActivePanel ID="uploadPanel" GroupingText="" >
+    	
+        <table width="100%"  border="0" align="left">   
+                                      
+            <com:TRepeater 
+                    ID="Repeater"
+                    OnItemDataBound="repeaterDataBound">                        
+                    <prop:ItemTemplate>
+                    	<com:TControl ID="uploadPanel">
+                    	<tr>							  
+                            <td width="80" >Level <com:TActiveLabel ID="no"/> <com:THiddenField ID="nmValue" Value="<%#$this->Data['nama']%>" /></td>
+                            <td width="5" >:</td>
+                            <td>
+                            	<com:TActiveTextBox 
+                                    ID="persentase" 
+                                    MaxLength="2"
+                                    Width="40px"
+                                    AutoPostBack="false"
+                                    CausesValidation="false">
+                                </com:TActiveTextBox>       
+                                
+                                <com:TRequiredFieldValidator
+                                        Display="Dynamic"
+                                        ControlToValidate="persentase"  
+                                        ErrorMessage="*"
+                                        ValidationGroup="<%#$this->Data['no']%>"
+                                        FocusOnError="true" 
+                                        CssClass="valRequired"
+                                        ControlCssClass="valctrl"/>
+                            	
+                                <com:TActiveButton 
+                                        ID="prosesBtn2"
+                                        Text="Proses" 
+                                        OnClick="Page.bindData2" 
+                                        CssClass="button_01" 
+                                        CausesValidation="true"
+                                        ValidationGroup="<%#$this->Data['no']%>"
+                                        Visible="true"/>        
+                                        
+                                <com:TActiveRepeater 
+                                        ID="Repeater2"
+                                        OnItemCreated="SourceTemplateControl.repeaterDataBound2"
+                                        EnableViewState="true" >
+                                        <prop:ItemTemplate>
+                                         	<com:TActiveLabel ID="level1Lbl"/>
+                                            <com:TActiveTextBox 
+                                                ID="persentase2" 
+                                                MaxLength="2"
+                                                Width="40px"
+                                                AutoPostBack="false"
+                                                CausesValidation="false">
+                                            </com:TActiveTextBox>       
+                                            
+                                            <com:TRequiredFieldValidator
+                                                    Display="Dynamic"
+                                                    ControlToValidate="persentase2"  
+                                                    ErrorMessage="*"
+                                                    ValidationGroup="val3"
+                                                    FocusOnError="true" 
+                                                    CssClass="valRequired"
+                                                    ControlCssClass="valctrl"/>   
+                                                   
+                                        </prop:ItemTemplate>
+                                    </com:TActiveRepeater>    
+                                    
+                            	<com:TActiveButton 
+                                    ID="prosesPembagianFraksiBtn"
+                                    Text="Proses" 
+                                    OnClick="Page.prosesPembagianFraksi" 
+                                    CssClass="button_01" 
+                                    CausesValidation="true"
+                                    ValidationGroup="val3"
+                                    Enabled="false"/> 
+                                                
+                            </td>
+                        </tr>
+                        <tr>							  
+                            <td width="80" valign="top"></td>
+                            <td width="5" valign="top"></td>
+                            <td valign="top" style="padding-left:7px;" >
+                            	
+                            </td>
+                        </tr>
+                        <tr>							  
+                            <td colspan="3"><hr/></td>
+                        </tr>
+                        </com:TControl>
+                     </prop:ItemTemplate>
+            </com:TRepeater>     
+                
+                
+                
+            </table>        
+                
+    </com:TActivePanel>
+	
+    <table width="100%" border="0" cellpadding="2" cellspacing="2" >
+    	<tr>	
+            <td colspan="3" align="center" >
+                <com:TButton 
+                    ID="uploadBtn"
+                    Text="Upload" 
+                    OnClick="fileUploaded" 
+                    CssClass="button_01" 
+                    CausesValidation="true"
+                    ValidationGroup="val3"/>
+                
+                <com:TActiveButton 
+                    ID="batalBtn"
+                    Text="Batal" 
+                    OnClick="batalClicked" 
+                    CssClass="button_01" 
+                    CausesValidation="false"
+                    ValidationGroup="val">
+                    <prop:ClientSide OnLoading="maskContent();"/>
+                </com:TActiveButton>	
+                
+                <com:TActiveButton 
+                    ID="selesaiBtn"
+                    Text="Selesai" 
+                    OnClick="selesaiClicked" 
+                    CssClass="button_01" 
+                    CausesValidation="false">
+                    <prop:ClientSide OnLoading="maskContent();"/>
+                </com:TActiveButton>
+            </td>
+        </tr>
+    </table>
+      
+</com:TContent>

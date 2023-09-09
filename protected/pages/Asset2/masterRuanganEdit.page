@@ -1,0 +1,125 @@
+<%@ MasterClass="Application.layouts.AssetLayout" %>
+<com:TContent ID="Main">
+<tr>
+<table width="100%"  border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td height="40"><table width="10" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td><table width="10" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+          </table></td>
+          <td><table width="200" border="0" cellspacing="2" cellpadding="0">
+              <tr>
+                <td class="text_01">Data Master Aset </td>
+              </tr>
+          </table></td>
+          <td>&nbsp;</td>
+        </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="100%"  border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td width="1%"><table width="10" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+          </table></td>
+          <td width="99%" height="350" valign="top" class="table_03"><table width="100%"  border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td width="1%"><table width="18" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                      <td>&nbsp;</td>
+                    </tr>
+                </table></td>
+                <td width="99%"><table width="100%"  border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                      <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                      <td class="text_02">Data Aset Ruangan</td>
+                    </tr>
+                    <tr>
+                      <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                      <td>
+                      	<table width="650"  border="0" cellspacing="2" cellpadding="0">
+                            <tr valign="top">
+                              <td width="162">&#8226; ID Ruangan </td>
+                            <td width="12">:</td>
+                            <td width="468">
+								<com:TTextBox 
+									ID="kode" 
+									ReadOnly="true" 
+									CssClass="inputtex" 
+									Width="100px"
+									MaxLength="7" 
+									ToolTip="Kode Ruangan"
+									ValidationGroup="val" />
+								
+							</td>
+                          </tr>
+                          <tr>
+                            <td>&#8226; Nama Ruangan</td>
+                            <td>:</td>
+                            <td>
+								<com:TTextBox 
+									ID="nama"
+									CssClass="inputtex" 
+									Width="280px" 
+									MaxLength="100"
+									ToolTip="Nama Ruangan"
+									ValidationGroup="val" />
+								<com:TRequiredFieldValidator 
+									ControlToValidate="nama"											 
+									ErrorMessage="Anda harus mengisi Nama Ruangan"
+									Display="Dynamic" 
+									ValidationGroup="val"/>
+							</td>
+                            </tr>
+                          </table>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                      <td><table width="95%"  border="0" cellspacing="0" cellpadding="0">
+                          <tr>
+                            <td class="table_05"></td>
+                          </tr>
+                      </table></td>
+                    </tr>
+                    <tr>
+                      <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                      <td><table width="100" border="0" align="center" cellpadding="0" cellspacing="4" class="table_04">
+                          <tr>
+                            <td><table width="10" border="0" cellspacing="2" cellpadding="0">
+                                <tr>
+                                   <td><com:TButton Text="Simpan" OnClick="simpanClicked" CssClass="button_01"  ValidationGroup="val"/></td>
+								  <td><com:TButton Text="Batal" OnClick="batalClicked" buttonType="Reset" CssClass="button_01"/></td>
+								  <td><!--<com:TButton Text="Keluar" OnClick="keluarClicked" CausesValidation="false" CssClass="button_01" />--></td>
+                                </tr>
+                            </table></td>
+                          </tr>
+                      </table></td>
+                    </tr>
+                    <tr>
+                      <td>&nbsp;</td>
+                    </tr>
+                </table></td>
+              </tr>
+          </table></td>
+        </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td height="10"></td>
+  </tr>
+</table>
+</com:TContent>

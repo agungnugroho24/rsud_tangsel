@@ -1,0 +1,1518 @@
+<%@ MasterClass="Application.layouts.MainLayout" %>
+<com:TContent ID="jdMain">
+	Data Detail Perusahaan Asuransi
+    
+    <a href="<%= $this->Service->constructUrl('Simak') %>" onclick="maskContent()">
+    <span class="close-btn">
+        <span class="ui-icon ui-icon-circle-close"></span>
+    </span>
+    </a>
+    
+</com:TContent>	
+<com:TContent ID="Main">
+
+	<table width="100%" border="0" cellspacing="2" cellpadding="2">
+              <tr>
+                <td>                
+                <com:TActivePanel DefaultButton="tambahObatBtn">
+                <table width="100%" border="0" align="right" cellpadding="0" cellspacing="2">
+                  <com:TControl Visible="false" Enabled="false">
+                  <tr>
+                    <td width="150"><span>&#8226;</span> ID</td>
+                    <td width="5">:</td>
+                    <td ><com:TActiveTextBox CssClass="input_text" 
+												  ID="ID" 												   
+												  MaxLength="2" 										   
+												  ToolTip="ID Ruangan Pasien" 
+												  Width="100px"	
+												  ValidationGroup="val"	
+												  />
+								<com:TRequiredFieldValidator 
+											  ControlToValidate="ID"											 
+											  ErrorMessage="Anda harus mengisi ID Ruangan Pasien"
+											  Display="Dynamic"
+											  ValidationGroup="val" />
+									<com:TActiveCustomValidator
+												ControlToValidate="ID"
+												ValidationGroup="val"
+												ErrorMessage="Maaf, ID tersebut sudah ada!"
+												OnServerValidate="checkRM" 
+												FocusOnError="true"												
+												Display="Dynamic" />								</td>
+                  </tr>
+                  </com:TControl>
+                  
+                  <tr>
+                    <td width="150"><span>&#8226; </span>Perusahaan Asuransi</td>
+                    <td width="5">:</td>
+                    <td>
+                      <com:TActiveDropDownList 
+                        ID="DDPerus" 
+                        Width="300px"
+                        CssClass="input_text"
+                        AutoPostBack="false"
+                        CausesValidation="false"
+                        PromptText ="--Silakan Pilih--"
+                        PromptValue ="empty"
+                        DataTextField="nama"
+                        DataValueField="id"/>
+                      <com:TRequiredFieldValidator
+                        ControlToValidate="DDPerus"
+                        ValidationGroup="val"
+                        ErrorMessage="*"
+                        Display="Dynamic"
+                        FocusOnError="true" s
+                        CssClass="valRequired"
+                        ControlCssClass="valctrl"
+                        InitialValue="empty"/>
+                     </td>
+                  </tr>
+                  
+                  <com:TControl Enabled="false" Visible="false">
+                  <tr>
+                    <td><span>&#8226; </span>Plafon Master</td>
+                    <td>:</td>
+                    <td>
+                    	<com:TActiveTextBox 
+                        ID="plafon_master"
+                        CssClass="input_text" 						   
+                        MaxLength="10" 
+                        Width="80px"										 
+                        CausesValidation="false"
+                        ValidationGroup="valTambahObat"
+                        Text="0"/>
+                      <com:TRegularExpressionValidator
+                        ControlToValidate="plafon_master"
+                        RegularExpression="^\d*\.?\d*$"
+                        ErrorMessage="*"
+                        ValidationGroup="val"
+                        Display="Dynamic"
+                        FocusOnError="true" 
+                        CssClass="valRequired"
+                        ControlCssClass="valctrl" />
+                   	</td>
+                  </tr>
+                  </com:TControl>
+                  
+                  <tr>
+                    <td colspan="3"><hr/></td>
+                  </tr>
+                  
+                  <tr>
+                    <td colspan="3"><strong>OBAT</strong></td>
+                  </tr>  
+                  <tr>
+                    <td width="150"><span>&#8226; </span>Poliklinik</td>
+                    <td width="5">:</td>
+                    <td>
+                    	<com:TActiveDropDownList 
+                         ID="DDPoli2" 
+                         Width="300px"
+                         CssClass="input_text"
+                         AutoPostBack="false"
+                         CausesValidation="false"
+                         PromptText ="--- Berlaku Untuk Semua Poli ---"
+                         PromptValue ="empty"
+                         DataTextField="nama"
+                         DataValueField="id"/>
+                     	<com:TRequiredFieldValidator
+                        ControlToValidate="DDPoli2"
+                        ValidationGroup="valTambahObat"
+                        InitialValue="empty"
+                        ErrorMessage="*"
+                        Display="Dynamic"
+                        FocusOnError="true" 
+                        CssClass="valRequired"
+                        ControlCssClass="valctrl"
+                        Enabled="false"/>	
+                     </td>
+                  </tr>
+                  
+                  <tr>
+                    <td><span>&#8226; </span>Plafon Obat</td>
+                    <td>:</td>
+                    <td>
+                      <com:TActiveTextBox 
+                        ID="plafonObat"
+                        CssClass="input_text" 						   
+                        MaxLength="10" 
+                        Width="80px"										 
+                        CausesValidation="false"
+                        ValidationGroup="valTambahObat"
+                        Text="0"/>
+                      <com:TRegularExpressionValidator
+                        ControlToValidate="plafonObat"
+                        RegularExpression="^\d*\.?\d*$"
+                        ErrorMessage="*"
+                        ValidationGroup="valTambahObat"
+                        Display="Dynamic"
+                        FocusOnError="true" 
+                        CssClass="valRequired"
+                        ControlCssClass="valctrl" />	
+                    </td>
+                  </tr>
+                  
+                  <tr>
+                    <td><span>&#8226; </span>Margin Obat</td>
+                    <td>:</td>
+                    <td>
+                      <com:TActiveTextBox 
+                        ID="marginObat"
+                        CssClass="input_text" 						   
+                        MaxLength="3" 
+                        Width="30px"										 
+                        CausesValidation="false"
+                        ValidationGroup="valTambahObat"
+                        Text="0"/> %
+                      <com:TRegularExpressionValidator
+                        ControlToValidate="marginObat"
+                        RegularExpression="^\d*\.?\d*$"
+                        ErrorMessage="*"
+                        ValidationGroup="valTambahObat"
+                        Display="Dynamic"
+                        FocusOnError="true" 
+                        CssClass="valRequired"
+                        ControlCssClass="valctrl"/>	
+                    </td>
+                  </tr>
+                  
+                  <tr>
+                    <td><span>&#8226; </span>Discount Obat</td>
+                    <td>:</td>
+                    <td>
+                      <com:TActiveTextBox 
+                        ID="discObat"
+                        CssClass="input_text" 						   
+                        MaxLength="5" 
+                        Width="45px"										 
+                        CausesValidation="false"
+                        ValidationGroup="valTambahObat"
+                        Text="0"/> %
+                      <com:TRegularExpressionValidator
+                        ControlToValidate="discObat"
+                        RegularExpression="^\d*\.?\d*$"
+                        ErrorMessage="*"
+                        ValidationGroup="valTambahObat"
+                        Display="Dynamic"
+                        FocusOnError="true" 
+                        CssClass="valRequired"
+                        ControlCssClass="valctrl"/>	
+                    </td>
+                  </tr>
+                  
+                  <tr>
+                    <td><span>&#8226; </span></td>
+                    <td>:</td>
+                    <td>
+                      <com:TActiveButton 
+                        ID="tambahObatBtn"
+                        Text="Tambah" 
+                        OnClick="tambahObatClicked" 
+                        CssClass="button_01" 
+                        CausesValidation="true"
+                        ValidationGroup="valTambahObat">
+                        	<prop:ClientSide 
+                            OnLoading="maskContent();"
+                						OnComplete="unmaskContent(); "/>
+                      </com:TActiveButton>  
+                      
+                      <com:TActiveLabel ID="jmlObat" Style="float:right;"/>
+                    </td>
+                  </tr>
+                  
+                  <tr>
+                    <td colspan="3">
+                    	<com:XActiveDataGrid 
+                        	ID="UserGridObat"
+                            DataKeyField="id"
+                            AutoGenerateColumns="false"	
+                            AllowPaging="true"
+                            AllowCustomPaging="false"
+                            AllowSorting="true"			
+                            PageSize="10"
+                            PagerStyle.Mode="Numeric"			
+                            PagerStyle.Font.Name="Arial"
+                            PagerStyle.Font.Size="12"
+                            PagerStyle.HorizontalAlign="Right"		
+                            Width="100%"	
+                            GridLines="None"
+                            CellSpacing="1"
+                            CellPadding="2"						
+                            HeaderStyle.CssClass="headerstyle"
+                            ItemStyle.CssClass="itemstyle"
+                            AlternatingItemStyle.CssClass="itemstyle2"								
+                            OnDeleteCommand="deleteClickedObat"	
+                            OnItemCreated="itemCreatedObat"			
+                            OnSortCommand="sortGridObat"
+                            OnPageIndexChanged="PageIndexChangedObat">
+                            
+                            <com:XActiveTemplateColumn
+                                    ID="poli2Coloumn"
+                                    HeaderText="Poliklinik"
+                                    ItemStyle.HorizontalAlign="Center"		
+                                    ItemStyle.Width="250px"/>
+                                            
+                            <com:XActiveTemplateColumn
+                                    ID="plafonColoumn"
+                                    HeaderText="Plafon"
+                                    ItemStyle.HorizontalAlign="Center"		
+                                    ItemStyle.Width="250px"/>
+                            
+                            <com:XActiveTemplateColumn
+                                    ID="marginColoumn"
+                                    HeaderText="Margin"
+                                    ItemStyle.HorizontalAlign="Center"		
+                                    ItemStyle.Width="250px" />
+                            
+                            <com:XActiveTemplateColumn
+                                    ID="discColoumn"
+                                    HeaderText="Discount"
+                                    ItemStyle.HorizontalAlign="Center"		
+                                    ItemStyle.Width="250px" />
+                                    
+                            <com:XActiveButtonColumn												
+                                    HeaderText="Mode"
+                                    Text="Delete"
+                                    ID="HapusObat"
+                                    ItemStyle.HorizontalAlign="Center"									
+                                    ButtonType="PushButton"		
+                                    ItemStyle.Width="25px"							
+                                    CommandName="delete" />
+                                        
+                          </com:XActiveDataGrid>
+                    </td>
+                  </tr>
+                  
+                  <tr>
+                    <td colspan="3"><hr/></td>
+                  </tr>
+                  </table>
+                  </com:TActivePanel>
+
+<!-- ------------------------------------- RETRIBUSI ---------------------------------------->                  
+                  <com:TActivePanel DefaultButton="tambahBtnRetribusi">
+                  <table width="100%" border="0" align="left" cellpadding="0" cellspacing="2">
+                  <tr>
+                    <td colspan="3"><strong>Retribusi</strong></td>
+                  </tr>  
+                  <tr>
+                    <td width="150"><span>&#8226; </span>Poliklinik</td>
+                    <td width="5">:</td>
+                    <td>
+                    	<com:TActiveDropDownList 
+                             ID="DDPoliRetribusi" 
+                             Width="300px"
+                             CssClass="input_text"
+                             AutoPostBack="true"
+                             CausesValidation="false"
+                             PromptText ="--Silakan Pilih--"
+                             PromptValue ="empty"
+                             DataTextField="nama"
+                             DataValueField="id"
+                             OnSelectedIndexChanged="DDPoliChangedRetribusi"/>
+                     	<com:TRequiredFieldValidator
+                            ControlToValidate="DDPoliRetribusi"
+                            ValidationGroup="valTambahRetribusi"
+                            InitialValue="empty"
+                            ErrorMessage="*"
+                            Display="Dynamic"
+                            FocusOnError="true" 
+                            CssClass="valRequired"
+                            ControlCssClass="valctrl"/>
+                     </td>
+                  </tr>
+		  						<tr>
+                    <td><span>&#8226; </span>Tarif RS</td>
+                    <td>:</td>
+                    <td>
+                      <com:TActiveTextBox 
+                        ID="tarifOperatorViewRetribusi"
+                        CssClass="input_text" 						   
+                        MaxLength="30" 
+                        Width="120px"
+												Enabled = "false"
+                        CausesValidation="false"
+                        ValidationGroup="val"
+                        Text="0"/>	
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><span>&#8226; </span><com:TActiveLabel ID="tarifTxtTindakanRetribusi" Text="Tarif Kerjasama"/></td>
+                    <td>:</td>
+                    <td>
+                      <com:TActiveTextBox 
+                        ID="tarifOperatorRetribusi"
+                        CssClass="input_text" 						   
+                        MaxLength="10" 
+                        Width="80px"										 
+                        CausesValidation="false"
+                        ValidationGroup="val"
+                        Text="0"/>
+                      <com:TRequiredFieldValidator
+                        ControlToValidate="tarifOperatorRetribusi"
+                        ValidationGroup="valTambahRetribusi"
+                        ErrorMessage="*"
+                        Display="Dynamic"
+                        FocusOnError="true" 
+                        CssClass="valRequired"
+                        ControlCssClass="valctrl"/>
+                      <com:TRegularExpressionValidator
+                        ControlToValidate="tarifOperatorRetribusi"
+                        RegularExpression="^\d*\.?\d*$"
+                        ErrorMessage="*"
+                        ValidationGroup="valTambahRetribusi"
+                        Display="Dynamic"
+                        FocusOnError="true" 
+                        CssClass="valRequired"
+                        ControlCssClass="valctrl"/>	
+                    </td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td></td>
+                    <td>
+                      <com:TActiveButton 
+                        ID="tambahBtnRetribusi"
+                        Text="Tambah" 
+                        OnClick="tambahClickedRetribusi" 
+                        CssClass="button_01" 
+                        CausesValidation="true"
+                        ValidationGroup="valTambahRetribusi">
+                        	<prop:ClientSide 
+                            OnLoading="maskContent();"
+                						OnComplete="unmaskContent(); "/>
+                      </com:TActiveButton>
+                    </td>
+                  </tr>
+		  						<tr style="display:none;">
+                    <td colspan="3"><hr/></td>
+                  </tr>
+                  <tr>
+                    <td colspan="3" height="15px">&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td colspan="3">
+                    	<com:XActiveDataGrid 
+                        	ID="UserGridRetribusi"
+                            DataKeyField="id"
+                            AutoGenerateColumns="false"	
+                            AllowPaging="true"
+                            AllowCustomPaging="false"
+                            AllowSorting="true"			
+                            PageSize="10"
+                            PagerStyle.Mode="Numeric"			
+                            PagerStyle.Font.Name="Arial"
+                            PagerStyle.Font.Size="12"
+                            PagerStyle.HorizontalAlign="Right"		
+                            Width="100%"	
+                            GridLines="None"
+                            CellSpacing="1"
+                            CellPadding="2"						
+                            HeaderStyle.CssClass="headerstyle"
+                            ItemStyle.CssClass="itemstyle"
+                            AlternatingItemStyle.CssClass="itemstyle2"								
+                            OnDeleteCommand="deleteClickedRetribusi"	
+                            OnItemCreated="itemCreatedRetribusi"			
+                            OnSortCommand="sortGridRetribusi"
+                            OnPageIndexChanged="PageIndexChangedRetribusi">
+                            
+                            <com:XActiveTemplateColumn ID="poliColoumnRetribusi" HeaderText="Poliklinik" ItemStyle.Width="250px" />
+			    									<com:XActiveTemplateColumn ID="tarifGsmColoumnRetribusi" HeaderText="Tarif RS" ItemStyle.Width="250px" ItemStyle.HorizontalAlign="Right" />
+                            <com:XActiveTemplateColumn ID="tarifColoumnRetribusi" HeaderText="Tarif Kerjasama" ItemStyle.Width="150px" ItemStyle.HorizontalAlign="Right" />
+                            <com:XActiveButtonColumn HeaderText="Mode" Text="Delete" ID="HapusRetribusi" ItemStyle.HorizontalAlign="Center" ButtonType="PushButton" ItemStyle.Width="25px" CommandName="delete" />
+                                    
+                          </com:XActiveDataGrid>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="3"><hr/></td>
+                  </tr>
+                  </table>
+                    
+                </com:TActivePanel>
+                
+<!-- ------------------------------------- TINDAKAN POLI ---------------------------------------->                  
+                  <com:TActivePanel DefaultButton="tambahBtn">
+                  <table width="100%" border="0" align="left" cellpadding="0" cellspacing="2">
+                  <tr>
+                    <td colspan="3"><strong>TINDAKAN</strong></td>
+                  </tr>  
+                  <tr>
+                    <td width="150"><span>&#8226; </span>Poliklinik</td>
+                    <td width="5">:</td>
+                    <td>
+                    	<com:TActiveDropDownList 
+                             ID="DDPoli" 
+                             Width="300px"
+                             CssClass="input_text"
+                             AutoPostBack="true"
+                             CausesValidation="false"
+                             PromptText ="--Silakan Pilih--"
+                             PromptValue ="empty"
+                             DataTextField="nama"
+                             DataValueField="id"
+                             OnSelectedIndexChanged="DDPoliChanged"/>
+                     	<com:TRequiredFieldValidator
+                            ControlToValidate="DDPoli"
+                            ValidationGroup="valTambah"
+                            InitialValue="empty"
+                            ErrorMessage="*"
+                            Display="Dynamic"
+                            FocusOnError="true" 
+                            CssClass="valRequired"
+                            ControlCssClass="valctrl"/>
+                     </td>
+                  </tr>
+                  
+                  <tr>
+                    <td width="150"><span>&#8226; </span>Tindakan</td>
+                    <td width="5">:</td>
+                    <td>
+                    	<com:TActiveDropDownList 
+                             ID="DDTindakan" 
+                             Width="300px"
+                             CssClass="input_text"
+                             AutoPostBack="true"
+                             CausesValidation="false"
+                             PromptText ="--Silakan Pilih--"
+                             PromptValue ="empty"
+                             DataTextField="nama"
+                             DataValueField="kode"
+			     OnSelectedIndexChanged="DDChangedTindakan"/>
+                     	<com:TRequiredFieldValidator
+                            ControlToValidate="DDTindakan"
+                            ValidationGroup="valTambah"
+                            InitialValue="empty"
+                            ErrorMessage="*"
+                            Display="Dynamic"
+                            FocusOnError="true" 
+                            CssClass="valRequired"
+                            ControlCssClass="valctrl"/>
+                     </td>
+                  </tr>
+                  
+                  <tr>
+                    <td><span>&#8226; </span>Dokter</td>
+                    <td>:</td>
+                    <td>
+                    	<com:TActiveDropDownList 
+                             ID="DDDokter" 
+                             Width="300px"
+                             CssClass="input_text"
+                             AutoPostBack="false"
+                             CausesValidation="false"
+                             PromptText ="--Silakan Pilih--"
+                             PromptValue ="empty"
+                             DataTextField="nama"
+                             DataValueField="id"/>
+                     </td>
+                  </tr>
+                  
+                  <!--
+                  <tr>
+                    <td colspan="3"><strong>Standar Tarif :</strong></td>
+                  </tr>-->
+		  <tr>
+                    <td><span>&#8226; </span>Tarif RS</td>
+                    <td>:</td>
+                    <td>
+                      <com:TActiveTextBox 
+                        ID="tarifOperatorView"
+                        CssClass="input_text" 						   
+                        MaxLength="30" 
+                        Width="120px"
+												Enabled = "false"
+                        CausesValidation="false"
+                        ValidationGroup="val"
+                        Text="0"/>	
+                    </td>
+                  </tr>
+		  						<tr>
+                    <td><span>&#8226; </span>Diskon</td>
+                    <td>:</td>
+                    <td>
+                      <com:TActiveTextBox 
+                        ID="diskonOperator"
+                        CssClass="input_text" 						   
+                        MaxLength="5" 
+                        Width="45px"
+                        OnTextChanged="hitungDiskonTindakan"
+                        AutoPostBack="true"
+                        CausesValidation="false"
+                        ValidationGroup="val"
+                        Text="0"/>
+                      <com:TRequiredFieldValidator
+                        ControlToValidate="diskonOperatorLab"
+                        ValidationGroup="valTambahLab"
+                        ErrorMessage="*"
+                        Display="Dynamic"
+                        FocusOnError="true" 
+                        CssClass="valRequired"
+                        ControlCssClass="valctrl"/>
+                      <com:TRegularExpressionValidator
+                        ControlToValidate="diskonOperatorLab"
+                        RegularExpression="^\d*\.?\d*$"
+                        ErrorMessage="*"
+                        ValidationGroup="valTambahLab"
+                        Display="Dynamic"
+                        FocusOnError="true" 
+                        CssClass="valRequired"
+                        ControlCssClass="valctrl"/>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><span>&#8226; </span>Mode Tarif</td>
+                    <td>:</td>
+                    <td>
+                    	<com:TActiveRadioButtonList
+                        ID="modeTarifTindakan"
+                        RepeatDirection="Horizontal"
+                        CausesValidation="false"
+                        AutoPostBack="true"
+                        OnSelectedIndexChanged="modeTarifTindakanChanged"
+                        CssClass="radiobtn"
+                        SelectedValue="1">
+                          <com:TListItem Text="Kerjasama" Value="1" />
+                          <com:TListItem Text="plafond" Value="2" />
+                      </com:TActiveRadioButtonList>
+                    </td>
+                  </tr>  
+                  <tr>
+                    <td><span>&#8226; </span><com:TActiveLabel ID="tarifTxtTindakan" Text="Tarif Kerjasama"/></td>
+                    <td>:</td>
+                    <td>
+                      <com:TActiveTextBox 
+                        ID="tarifOperator"
+                        CssClass="input_text" 						   
+                        MaxLength="10" 
+                        Width="80px"										 
+                        CausesValidation="false"
+                        ValidationGroup="val"
+                        Text="0"/>
+                      <com:TRequiredFieldValidator
+                        ControlToValidate="tarifOperator"
+                        ValidationGroup="valTambah"
+                        ErrorMessage="*"
+                        Display="Dynamic"
+                        FocusOnError="true" 
+                        CssClass="valRequired"
+                        ControlCssClass="valctrl"/>
+                      <com:TRegularExpressionValidator
+                        ControlToValidate="tarifOperator"
+                        RegularExpression="^\d*\.?\d*$"
+                        ErrorMessage="*"
+                        ValidationGroup="valTambah"
+                        Display="Dynamic"
+                        FocusOnError="true" 
+                        CssClass="valRequired"
+                        ControlCssClass="valctrl"/>	
+                    </td>
+                  </tr>
+                  
+                  <tr>
+                    <td></td>
+                    <td></td>
+                    <td>
+                      <com:TActiveButton 
+                        ID="tambahBtn"
+                        Text="Tambah" 
+                        OnClick="tambahClicked" 
+                        CssClass="button_01" 
+                        CausesValidation="true"
+                        ValidationGroup="valTambah">
+                        	<prop:ClientSide 
+                            OnLoading="maskContent();"
+                						OnComplete="unmaskContent(); "/>
+                      </com:TActiveButton>
+                    </td>
+                  </tr>
+		  						<tr style="display:none;">
+                    <td colspan="3"><hr/></td>
+                  </tr>
+                  <tr>
+                    <td colspan="3" height="15px">&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td><span>&#8226; </span>Pencarian Tindakan</td>
+                    <td>:</td>
+                    <td>
+                      <com:TActiveTextBox 
+                        ID="cariNama"
+                        CssClass="input_text" 						   
+                        MaxLength="30" 
+                        Width="300px"
+			OnTextChanged="cariNamaTdk"
+			AutoPostBack="true"
+                        CausesValidation="false"/>
+                        
+                        <com:TActiveLabel ID="jmlTdk" Style="float:right;"/>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="3">
+                    	<com:XActiveDataGrid 
+                        	ID="UserGrid"
+                            DataKeyField="id"
+                            AutoGenerateColumns="false"	
+                            AllowPaging="true"
+                            AllowCustomPaging="false"
+                            AllowSorting="true"			
+                            PageSize="10"
+                            PagerStyle.Mode="Numeric"			
+                            PagerStyle.Font.Name="Arial"
+                            PagerStyle.Font.Size="12"
+                            PagerStyle.HorizontalAlign="Right"		
+                            Width="100%"	
+                            GridLines="None"
+                            CellSpacing="1"
+                            CellPadding="2"						
+                            HeaderStyle.CssClass="headerstyle"
+                            ItemStyle.CssClass="itemstyle"
+                            AlternatingItemStyle.CssClass="itemstyle2"								
+                            OnDeleteCommand="deleteClicked"	
+                            OnItemCreated="itemCreated"			
+                            OnSortCommand="sortGrid"
+                            OnPageIndexChanged="PageIndexChanged">
+                                    
+                            <com:XActiveTemplateColumn
+                                    ID="tindakanColoumn"
+                                    HeaderText="Tindakan"
+                                    ItemStyle.Width="250px"/>
+                            
+                            <com:XActiveTemplateColumn
+                                    ID="poliColoumn"
+                                    HeaderText="Poliklinik"
+                                    ItemStyle.Width="250px" />
+                            
+                            <com:XActiveTemplateColumn
+                                    ID="dokterColoumn"
+                                    HeaderText="Dokter"
+                                    ItemStyle.Width="250px" />
+			    
+			    <com:XActiveTemplateColumn
+                                    ID="tarifGsmColoumn"
+                                    HeaderText="Tarif RS"
+                                    ItemStyle.Width="250px"
+                                    ItemStyle.HorizontalAlign="Right" />
+				    
+			    <com:XActiveTemplateColumn
+                                    ID="diskonColoumn"
+                                    HeaderText="Diskon"
+                                    ItemStyle.Width="50px"
+                                    ItemStyle.HorizontalAlign="Right" />	    
+                                                                               
+                            <com:XActiveTemplateColumn
+                                    ID="tarifColoumn"
+                                    HeaderText="Tarif Kerjasama"
+                                    ItemStyle.Width="150px"
+                                    ItemStyle.HorizontalAlign="Right" />
+                            
+                            <com:XActiveTemplateColumn
+                                    ID="tarifColoumn2"
+                                    HeaderText="Tarif Plafond"
+                                    ItemStyle.Width="150px" 
+                                    ItemStyle.HorizontalAlign="Right"/>
+                                            
+                            <com:XActiveButtonColumn												
+                                    HeaderText="Mode"
+                                    Text="Delete"
+                                    ID="Hapus"
+                                    ItemStyle.HorizontalAlign="Center"									
+                                    ButtonType="PushButton"		
+                                    ItemStyle.Width="25px"							
+                                    CommandName="delete" />
+                                        
+                          </com:XActiveDataGrid>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="3"><hr/></td>
+                  </tr>
+                  </table>
+                    
+                </com:TActivePanel>
+                
+<!-- ------------------------------------- TINDAKAN Lab ---------------------------------------->                  
+                <com:TActivePanel DefaultButton="tambahBtnLab">
+                  <table width="100%" border="0" align="left" cellpadding="0" cellspacing="2">
+                  <tr>
+                    <td colspan="3"><strong>LABORATORIUM</strong></td>
+                  </tr>
+		  <tr>
+                        <td><span>&#8226; </span>Kategori Lab</td>
+                        <td>:</td>
+                        <td>
+                          <com:TActiveDropDownList 
+                            ID="kategori"
+                            PromptText ="--Silakan Pilih--"
+                            PromptValue ="empty"											
+                            DataTextField="jenis"
+                            DataValueField="kode" 	
+                            Width="300px"
+                            OnSelectedIndexChanged="kategoriLabChanged"
+                            CausesValidation="false"/>
+                          <com:TRequiredFieldValidator
+                            ControlToValidate="kategori"
+                            ValidationGroup="valTdk"
+                            ErrorMessage="*"
+                            Display="Dynamic"
+                            FocusOnError="true" 
+                            CssClass="valRequired"
+                            ControlCssClass="valctrl"
+                            InitialValue="empty"/> 
+                        </td>
+                      </tr>
+                  <tr>
+                    <td width="150"><span>&#8226; </span>Tindakan</td>
+                    <td width="5">:</td>
+                    <td>
+                    	<com:TActiveDropDownList 
+                             ID="DDLab" 
+                             Width="300px"
+                             CssClass="input_text"
+                             CausesValidation="false"
+                             PromptText ="--Silakan Pilih--"
+                             PromptValue ="empty"
+			     AutoPostBack="true"
+			     Enabled = "false"
+			     OnSelectedIndexChanged="DDChangedLab"
+                             DataTextField="nama"
+                             DataValueField="kode"/>
+                     	<com:TRequiredFieldValidator
+                            ControlToValidate="DDLab"
+                            ValidationGroup="valTambahLab"
+                            InitialValue="empty"
+                            ErrorMessage="*"
+                            Display="Dynamic"
+                            FocusOnError="true" 
+                            CssClass="valRequired"
+                            ControlCssClass="valctrl"/>
+                     </td>
+                  </tr>
+		  <tr>
+                    <td><span>&#8226; </span>Tarif RS</td>
+                    <td>:</td>
+                    <td>
+                      <com:TActiveTextBox 
+                        ID="tarifOperatorLabView"
+                        CssClass="input_text" 						   
+                        MaxLength="10" 
+                        Width="80px"
+			Enabled = "false"
+                        CausesValidation="false"
+                        ValidationGroup="val"
+                        Text="0"/>	
+                    </td>
+                  </tr>
+		  <tr>
+                    <td><span>&#8226; </span>Diskon</td>
+                    <td>:</td>
+                    <td>
+                      <com:TActiveTextBox 
+                        ID="diskonOperatorLab"
+                        CssClass="input_text" 						   
+                        MaxLength="5" 
+                        Width="45px"
+			OnTextChanged="hitungDiskonLab"
+			AutoPostBack="true"
+                        CausesValidation="false"
+                        ValidationGroup="val"
+                        Text="0"/>
+                      <com:TRequiredFieldValidator
+                        ControlToValidate="diskonOperatorLab"
+                        ValidationGroup="valTambahLab"
+                        ErrorMessage="*"
+                        Display="Dynamic"
+                        FocusOnError="true" 
+                        CssClass="valRequired"
+                        ControlCssClass="valctrl"/>
+                      <com:TRegularExpressionValidator
+                        ControlToValidate="diskonOperatorLab"
+                        RegularExpression="^\d*\.?\d*$"
+                        ErrorMessage="*"
+                        ValidationGroup="valTambahLab"
+                        Display="Dynamic"
+                        FocusOnError="true" 
+                        CssClass="valRequired"
+                        ControlCssClass="valctrl"/>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><span>&#8226; </span>Mode Tarif</td>
+                    <td>:</td>
+                    <td>
+                    	<com:TActiveRadioButtonList
+                        ID="modeTarifLab"
+                        RepeatDirection="Horizontal"
+                        CausesValidation="false"
+                        AutoPostBack="true"
+                        OnSelectedIndexChanged="modeTarifLabChanged"
+                        CssClass="radiobtn"
+                        SelectedValue="1">
+                          <com:TListItem Text="Kerjasama" Value="1" />
+                          <com:TListItem Text="plafond" Value="2" />
+                      </com:TActiveRadioButtonList>
+                    </td>
+                  </tr>  
+                  <tr>
+                    <td><span>&#8226; </span><com:TActiveLabel ID="tarifTxtLab" Text="Tarif Kerjasama"/></td>
+                    <td>:</td>
+                    <td>
+                      <com:TActiveTextBox 
+                        ID="tarifOperatorLab"
+                        CssClass="input_text" 						   
+                        MaxLength="10" 
+                        Width="80px"
+                        CausesValidation="false"
+                        ValidationGroup="val"
+                        Text="0"/>
+                      <com:TRequiredFieldValidator
+                        ControlToValidate="tarifOperatorLab"
+                        ValidationGroup="valTambahLab"
+                        ErrorMessage="*"
+                        Display="Dynamic"
+                        FocusOnError="true" 
+                        CssClass="valRequired"
+                        ControlCssClass="valctrl"/>
+                      <com:TRegularExpressionValidator
+                        ControlToValidate="tarifOperatorLab"
+                        RegularExpression="^\d*\.?\d*$"
+                        ErrorMessage="*"
+                        ValidationGroup="valTambahLab"
+                        Display="Dynamic"
+                        FocusOnError="true" 
+                        CssClass="valRequired"
+                        ControlCssClass="valctrl"/>	
+                    </td>
+                  </tr>
+                  
+                  <tr>
+                    <td></td>
+                    <td></td>
+                    <td>
+                      <com:TActiveButton 
+                        ID="tambahBtnLab"
+                        Text="Tambah" 
+                        OnClick="tambahClickedLab" 
+                        CssClass="button_01" 
+                        CausesValidation="true"
+                        ValidationGroup="valTambahLab">
+                        	<prop:ClientSide 
+                            OnLoading="maskContent();"
+                						OnComplete="unmaskContent(); "/>
+                      </com:TActiveButton>  
+                    </td>
+                  </tr>
+                  <tr style="display:none;">
+                    <td colspan="3"><hr/></td>
+                  </tr>
+                  <tr>
+                    <td colspan="3" height="15px">&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td><span>&#8226; </span>Pencarian Pemeriksaan</td>
+                    <td>:</td>
+                    <td>
+                      <com:TActiveTextBox 
+                        ID="cariNamaLab"
+                        CssClass="input_text" 						   
+                        MaxLength="30" 
+                        Width="300px"
+			OnTextChanged="cariNamaLab"
+			AutoPostBack="true"
+                        CausesValidation="false"/>
+                        
+                        <com:TActiveLabel ID="jmlLab" Style="float:right;"/>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="3">
+                    	<com:XActiveDataGrid 
+                        	ID="UserGridLab"
+                            DataKeyField="id"
+                            AutoGenerateColumns="false"	
+                            AllowPaging="true"
+                            AllowCustomPaging="false"
+                            AllowSorting="true"			
+                            PageSize="10"
+                            PagerStyle.Mode="Numeric"			
+                            PagerStyle.Font.Name="Arial"
+                            PagerStyle.Font.Size="12"
+                            PagerStyle.HorizontalAlign="Right"		
+                            Width="100%"	
+                            GridLines="None"
+                            CellSpacing="1"
+                            CellPadding="2"						
+                            HeaderStyle.CssClass="headerstyle"
+                            ItemStyle.CssClass="itemstyle"
+                            AlternatingItemStyle.CssClass="itemstyle2"								
+                            OnDeleteCommand="deleteClickedLab"	
+                            OnItemCreated="itemCreatedLab"			
+                            OnSortCommand="sortGridLab"
+                            OnPageIndexChanged="PageIndexChangedLab">
+                                    
+                            <com:XActiveTemplateColumn
+                                    ID="tindakanLabColoumn"
+				    ItemStyle.HorizontalAlign="Left"
+                                    HeaderText="Tindakan"/>
+			
+			    <com:XActiveTemplateColumn
+                                    ID="tarifGsmLabColoumn"
+                                    HeaderText="Tarif RS"
+                                    ItemStyle.Width="150px" 
+                                    ItemStyle.HorizontalAlign="Right"/>
+				    
+			    <com:XActiveTemplateColumn
+                                    ID="diskonLabColoumn"
+                                    HeaderText="Diskon"
+                                    ItemStyle.Width="150px" 
+                                    ItemStyle.HorizontalAlign="Right"/>    
+                                                                               
+                            <com:XActiveTemplateColumn
+                                    ID="tarifLabColoumn"
+                                    HeaderText="Tarif Kerjasama"
+                                    ItemStyle.Width="150px" 
+                                    ItemStyle.HorizontalAlign="Right"/>
+                            
+                            <com:XActiveTemplateColumn
+                                    ID="tarifLabColoumn2"
+                                    HeaderText="Tarif Plafond"
+                                    ItemStyle.Width="150px" 
+                                    ItemStyle.HorizontalAlign="Right"/>
+                                    
+                            <com:XActiveButtonColumn												
+                                    HeaderText="Mode"
+                                    Text="Delete"
+                                    ID="HapusLab"
+                                    ItemStyle.HorizontalAlign="Center"									
+                                    ButtonType="PushButton"		
+                                    ItemStyle.Width="25px"							
+                                    CommandName="delete" />
+                                        
+                          </com:XActiveDataGrid>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="3"><hr/></td>
+                  </tr>
+                </table>
+                    
+                </com:TActivePanel>
+                
+<!-- ------------------------------------- TINDAKAN Rad ---------------------------------------->                  
+                <com:TActivePanel DefaultButton="tambahBtnRad">
+                  <table width="100%" border="0" align="left" cellpadding="0" cellspacing="2">
+                  <tr>
+                    <td colspan="3"><strong>RADIOLOGI</strong></td>
+                  </tr>  
+                  <tr>
+                    <td width="150"><span>&#8226; </span>Tindakan</td>
+                    <td width="5">:</td>
+                    <td>
+                    	<com:TActiveDropDownList 
+                             ID="DDRad" 
+                             Width="300px"
+                             CssClass="input_text"
+                             AutoPostBack="true"
+			     OnSelectedIndexChanged="DDChangedRad"
+                             CausesValidation="false"
+                             PromptText ="--Silakan Pilih--"
+                             PromptValue ="empty"
+                             DataTextField="nama"
+                             DataValueField="kode"/>
+                     	<com:TRequiredFieldValidator
+                            ControlToValidate="DDRad"
+                            ValidationGroup="valTambahRad"
+                            InitialValue="empty"
+                            ErrorMessage="*"
+                            Display="Dynamic"
+                            FocusOnError="true" 
+                            CssClass="valRequired"
+                            ControlCssClass="valctrl"/>
+                     </td>
+                  </tr>
+		  <tr>
+                    <td><span>&#8226; </span>Tarif RS</td>
+                    <td>:</td>
+                    <td>
+                      <com:TActiveTextBox 
+                        ID="tarifOperatorRadView"
+                        CssClass="input_text" 						   
+                        MaxLength="10" 
+                        Width="80px"
+			Enabled = "false"
+                        CausesValidation="false"
+                        ValidationGroup="val"
+                        Text="0"/>	
+                    </td>
+                  </tr>
+		  <tr>
+                    <td><span>&#8226; </span>Diskon</td>
+                    <td>:</td>
+                    <td>
+                      <com:TActiveTextBox 
+                        ID="diskonOperatorRad"
+                        CssClass="input_text" 						   
+                        MaxLength="5" 
+                        Width="45px"
+			OnTextChanged="hitungDiskonRad"
+			AutoPostBack="true"
+                        CausesValidation="false"
+                        ValidationGroup="val"
+                        Text="0"/>
+                      <com:TRequiredFieldValidator
+                        ControlToValidate="diskonOperatorRad"
+                        ValidationGroup="valTambahRad"
+                        ErrorMessage="*"
+                        Display="Dynamic"
+                        FocusOnError="true" 
+                        CssClass="valRequired"
+                        ControlCssClass="valctrl"/>
+                      <com:TRegularExpressionValidator
+                        ControlToValidate="diskonOperatorRad"
+                        RegularExpression="^\d*\.?\d*$"
+                        ErrorMessage="*"
+                        ValidationGroup="valTambahRad"
+                        Display="Dynamic"
+                        FocusOnError="true" 
+                        CssClass="valRequired"
+                        ControlCssClass="valctrl"/>	
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><span>&#8226; </span>Mode Tarif</td>
+                    <td>:</td>
+                    <td>
+                    	<com:TActiveRadioButtonList
+                        ID="modeTarifRad"
+                        RepeatDirection="Horizontal"
+                        CausesValidation="false"
+                        AutoPostBack="true"
+                        OnSelectedIndexChanged="modeTarifRadChanged"
+                        CssClass="radiobtn"
+                        SelectedValue="1">
+                          <com:TListItem Text="Kerjasama" Value="1" />
+                          <com:TListItem Text="plafond" Value="2" />
+                      </com:TActiveRadioButtonList>
+                    </td>
+                  </tr>  
+                  <tr>
+                    <td><span>&#8226; </span><com:TActiveLabel ID="tarifTxtRad" Text="Tarif Kerjasama"/></td>
+                    <td>:</td>
+                    <td>
+                      <com:TActiveTextBox 
+                        ID="tarifOperatorRad"
+                        CssClass="input_text" 						   
+                        MaxLength="10" 
+                        Width="80px"										 
+                        CausesValidation="false"
+                        ValidationGroup="val"
+                        Text="0"/>
+                      <com:TRequiredFieldValidator
+                        ControlToValidate="tarifOperatorRad"
+                        ValidationGroup="valTambahRad"
+                        ErrorMessage="*"
+                        Display="Dynamic"
+                        FocusOnError="true" 
+                        CssClass="valRequired"
+                        ControlCssClass="valctrl"/>
+                      <com:TRegularExpressionValidator
+                        ControlToValidate="tarifOperatorRad"
+                        RegularExpression="^\d*\.?\d*$"
+                        ErrorMessage="*"
+                        ValidationGroup="valTambahRad"
+                        Display="Dynamic"
+                        FocusOnError="true" 
+                        CssClass="valRequired"
+                        ControlCssClass="valctrl"/>	
+                    </td>
+                  </tr>
+                  
+                  <tr>
+                    <td></td>
+                    <td></td>
+                    <td>
+                      <com:TActiveButton 
+                        ID="tambahBtnRad"
+                        Text="Tambah" 
+                        OnClick="tambahClickedRad" 
+                        CssClass="button_01" 
+                        CausesValidation="true"
+                        ValidationGroup="valTambahRad">
+                        	<prop:ClientSide 
+                            OnLoading="maskContent();"
+                						OnComplete="unmaskContent(); "/>
+                      </com:TActiveButton>  
+                    </td>
+                  </tr>
+                  <tr style="display:none;">
+                    <td colspan="3"><hr/></td>
+                  </tr>
+                  <tr>
+                    <td colspan="3" height="15px">&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td><span>&#8226; </span>Pencarian Pemeriksaan</td>
+                    <td>:</td>
+                    <td>
+                      <com:TActiveTextBox 
+                        ID="cariNamaRad"
+                        CssClass="input_text" 						   
+                        MaxLength="30" 
+                        Width="300px"
+			OnTextChanged="cariNamaRad"
+			AutoPostBack="true"
+                        CausesValidation="false"/>
+                        
+                        <com:TActiveLabel ID="jmlRad" Style="float:right;"/>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="3">
+                    	<com:XActiveDataGrid 
+                        	ID="UserGridRad"
+                            DataKeyField="id"
+                            AutoGenerateColumns="false"	
+                            AllowPaging="true"
+                            AllowCustomPaging="false"
+                            AllowSorting="true"			
+                            PageSize="10"
+                            PagerStyle.Mode="Numeric"			
+                            PagerStyle.Font.Name="Arial"
+                            PagerStyle.Font.Size="12"
+                            PagerStyle.HorizontalAlign="Right"		
+                            Width="100%"	
+                            GridLines="None"
+                            CellSpacing="1"
+                            CellPadding="2"						
+                            HeaderStyle.CssClass="headerstyle"
+                            ItemStyle.CssClass="itemstyle"
+                            AlternatingItemStyle.CssClass="itemstyle2"								
+                            OnDeleteCommand="deleteClickedRad"	
+                            OnItemCreated="itemCreatedRad"			
+                            OnSortCommand="sortGridRad"
+                            OnPageIndexChanged="PageIndexChangedRad">
+                                    
+                            <com:XActiveTemplateColumn
+                                    ID="tindakanRadColoumn"
+                                    HeaderText="Tindakan"/>
+				    
+			    <com:XActiveTemplateColumn
+                                    ID="tarifGsmRadColoumn"
+                                    HeaderText="Tarif RS"
+                                    ItemStyle.Width="150px" 
+                                    ItemStyle.HorizontalAlign="Right"/>
+				    
+			    <com:XActiveTemplateColumn
+                                    ID="diskonRadColoumn"
+                                    HeaderText="Diskon"
+                                    ItemStyle.Width="150px" 
+                                    ItemStyle.HorizontalAlign="Right"/>	    
+                                                                               
+                            <com:XActiveTemplateColumn
+                                    ID="tarifRadColoumn"
+                                    HeaderText="Tarif Kerjasama"
+                                    ItemStyle.Width="150px" 
+                                    ItemStyle.HorizontalAlign="Right" />
+                            
+                            <com:XActiveTemplateColumn
+                                    ID="tarifRadColoumn2"
+                                    HeaderText="Tarif Plafond"
+                                    ItemStyle.Width="150px" 
+                                    ItemStyle.HorizontalAlign="Right"/>
+                                            
+                            <com:XActiveButtonColumn												
+                                    HeaderText="Mode"
+                                    Text="Delete"
+                                    ID="HapusRad"
+                                    ItemStyle.HorizontalAlign="Center"									
+                                    ButtonType="PushButton"		
+                                    ItemStyle.Width="25px"							
+                                    CommandName="delete" />
+                                        
+                          </com:XActiveDataGrid>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="3"><hr/></td>
+                  </tr>
+                </table>
+                    
+                </com:TActivePanel>                
+
+<!-- ------------------------------------- TINDAKAN Fisio ---------------------------------------->                  
+                <com:TActivePanel DefaultButton="tambahBtnFisio">
+                  <table width="100%" border="0" align="left" cellpadding="0" cellspacing="2">
+                  <tr>
+                    <td colspan="3"><strong>FISIO</strong></td>
+                  </tr>  
+                  <tr>
+                    <td width="150"><span>&#8226; </span>Tindakan</td>
+                    <td width="5">:</td>
+                    <td>
+                    	<com:TActiveDropDownList 
+                             ID="DDFisio" 
+                             Width="300px"
+                             CssClass="input_text"
+                             AutoPostBack="true"
+			     OnSelectedIndexChanged="DDChangedFisio"
+                             CausesValidation="false"
+                             PromptText ="--Silakan Pilih--"
+                             PromptValue ="empty"
+                             DataTextField="nama"
+                             DataValueField="kode"/>
+                     	<com:TRequiredFieldValidator
+                            ControlToValidate="DDFisio"
+                            ValidationGroup="valTambahFisio"
+                            InitialValue="empty"
+                            ErrorMessage="*"
+                            Display="Dynamic"
+                            FocusOnError="true" 
+                            CssClass="valRequired"
+                            ControlCssClass="valctrl"/>
+                     </td>
+                  </tr>
+		  <tr>
+                    <td><span>&#8226; </span>Tarif RS</td>
+                    <td>:</td>
+                    <td>
+                      <com:TActiveTextBox 
+                        ID="tarifOperatorFisioView"
+                        CssClass="input_text" 						   
+                        MaxLength="10" 
+                        Width="80px"
+			Enabled = "false"
+                        CausesValidation="false"
+                        ValidationGroup="val"
+                        Text="0"/>	
+                    </td>
+                  </tr>
+		  <tr>
+                    <td><span>&#8226; </span>Diskon</td>
+                    <td>:</td>
+                    <td>
+                      <com:TActiveTextBox 
+                        ID="diskonOperatorFisio"
+                        CssClass="input_text" 						   
+                        MaxLength="5" 
+                        Width="45px"
+			OnTextChanged="hitungDiskonFisio"
+			AutoPostBack="true"
+                        CausesValidation="false"
+                        ValidationGroup="val"
+                        Text="0"/>
+                      <com:TRequiredFieldValidator
+                        ControlToValidate="diskonOperatorFisio"
+                        ValidationGroup="valTambahRad"
+                        ErrorMessage="*"
+                        Display="Dynamic"
+                        FocusOnError="true" 
+                        CssClass="valRequired"
+                        ControlCssClass="valctrl"/>
+                      <com:TRegularExpressionValidator
+                        ControlToValidate="diskonOperatorFisio"
+                        RegularExpression="^\d*\.?\d*$"
+                        ErrorMessage="*"
+                        ValidationGroup="valTambahRad"
+                        Display="Dynamic"
+                        FocusOnError="true" 
+                        CssClass="valRequired"
+                        ControlCssClass="valctrl"/>	
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><span>&#8226; </span>Mode Tarif</td>
+                    <td>:</td>
+                    <td>
+                    	<com:TActiveRadioButtonList
+                        ID="modeTarifFisio"
+                        RepeatDirection="Horizontal"
+                        CausesValidation="false"
+                        AutoPostBack="true"
+                        OnSelectedIndexChanged="modeTarifFisioChanged"
+                        CssClass="radiobtn"
+                        SelectedValue="1">
+                          <com:TListItem Text="Kerjasama" Value="1" />
+                          <com:TListItem Text="plafond" Value="2" />
+                      </com:TActiveRadioButtonList>
+                    </td>
+                  </tr>  
+                  <tr>
+                    <td><span>&#8226; </span><com:TActiveLabel ID="tarifTxtFisio" Text="Tarif Kerjasama"/></td>
+                    <td>:</td>
+                    <td>
+                      <com:TActiveTextBox 
+                        ID="tarifOperatorFisio"
+                        CssClass="input_text" 						   
+                        MaxLength="10" 
+                        Width="80px"										 
+                        CausesValidation="false"
+                        ValidationGroup="val"
+                        Text="0"/>
+                      <com:TRequiredFieldValidator
+                        ControlToValidate="tarifOperatorFisio"
+                        ValidationGroup="valTambahFisio"
+                        ErrorMessage="*"
+                        Display="Dynamic"
+                        FocusOnError="true" 
+                        CssClass="valRequired"
+                        ControlCssClass="valctrl"/>
+                      <com:TRegularExpressionValidator
+                        ControlToValidate="tarifOperatorFisio"
+                        RegularExpression="^\d*\.?\d*$"
+                        ErrorMessage="*"
+                        ValidationGroup="valTambahFisio"
+                        Display="Dynamic"
+                        FocusOnError="true" 
+                        CssClass="valRequired"
+                        ControlCssClass="valctrl"/>	
+                    </td>
+                  </tr>
+                  
+                  <tr>
+                    <td></td>
+                    <td></td>
+                    <td>
+                      <com:TActiveButton 
+                        ID="tambahBtnFisio"
+                        Text="Tambah" 
+                        OnClick="tambahClickedFisio" 
+                        CssClass="button_01" 
+                        CausesValidation="true"
+                        ValidationGroup="valTambahFisio">
+                        	<prop:ClientSide 
+                            OnLoading="maskContent();"
+                						OnComplete="unmaskContent(); "/>
+                      </com:TActiveButton>  
+                    </td>
+                  </tr>
+                  <tr style="display:none;">
+                    <td colspan="3"><hr/></td>
+                  </tr>
+                  <tr>
+                    <td colspan="3" height="15px">&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td><span>&#8226; </span>Pencarian Pemeriksaan</td>
+                    <td>:</td>
+                    <td>
+                      <com:TActiveTextBox 
+                        ID="cariNamaFisio"
+                        CssClass="input_text" 						   
+                        MaxLength="30" 
+                        Width="300px"
+			OnTextChanged="cariNamaFisio"
+			AutoPostBack="true"
+                        CausesValidation="false"/>
+                        
+                        <com:TActiveLabel ID="jmlFisio" Style="float:right;"/>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="3">
+                    	<com:XActiveDataGrid 
+                        	ID="UserGridFisio"
+                            DataKeyField="id"
+                            AutoGenerateColumns="false"	
+                            AllowPaging="true"
+                            AllowCustomPaging="false"
+                            AllowSorting="true"			
+                            PageSize="10"
+                            PagerStyle.Mode="Numeric"			
+                            PagerStyle.Font.Name="Arial"
+                            PagerStyle.Font.Size="12"
+                            PagerStyle.HorizontalAlign="Right"		
+                            Width="100%"	
+                            GridLines="None"
+                            CellSpacing="1"
+                            CellPadding="2"						
+                            HeaderStyle.CssClass="headerstyle"
+                            ItemStyle.CssClass="itemstyle"
+                            AlternatingItemStyle.CssClass="itemstyle2"								
+                            OnDeleteCommand="deleteClickedFisio"	
+                            OnItemCreated="itemCreatedFisio"			
+                            OnSortCommand="sortGridFisio"
+                            OnPageIndexChanged="PageIndexChangedFisio">
+                                    
+                            <com:XActiveTemplateColumn
+                                    ID="tindakanFisioColoumn"
+                                    HeaderText="Tindakan"/>
+				    
+			    <com:XActiveTemplateColumn
+                                    ID="tarifGsmFisioColoumn"
+                                    HeaderText="Tarif RS"
+                                    ItemStyle.Width="150px" 
+                                    ItemStyle.HorizontalAlign="Right"/>
+                                                                               
+                            <com:XActiveTemplateColumn
+                                    ID="diskonFisioColoumn"
+                                    HeaderText="Diskon"
+                                    ItemStyle.Width="150px" 
+                                    ItemStyle.HorizontalAlign="Right"/>
+				    
+			    <com:XActiveTemplateColumn
+                                    ID="tarifFisioColoumn"
+                                    HeaderText="Tarif Kerjasama"
+                                    ItemStyle.Width="150px" 
+                                    ItemStyle.HorizontalAlign="Right"/>	    
+                            
+                            <com:XActiveTemplateColumn
+                                    ID="tarifFisioColoumn2"
+                                    HeaderText="Tarif Plafond"
+                                    ItemStyle.Width="150px" 
+                                    ItemStyle.HorizontalAlign="Right"/>
+                                    
+                            <com:XActiveButtonColumn												
+                                    HeaderText="Mode"
+                                    Text="Delete"
+                                    ID="HapusFisio"
+                                    ItemStyle.HorizontalAlign="Center"									
+                                    ButtonType="PushButton"		
+                                    ItemStyle.Width="25px"							
+                                    CommandName="delete" />
+                                        
+                          </com:XActiveDataGrid>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="3"><hr/></td>
+                  </tr>
+                </table>
+                    
+                </com:TActivePanel> 
+              
+              <tr>
+                <td><table width="10" border="0" align="center" cellpadding="0" cellspacing="2">
+                    <tr>
+                      <td><com:TActiveButton Text="Simpan" Attributes.onclick = "maskContent();" 
+					  					OnClick="simpanClicked" 
+										CssClass="button_01" 
+										ValidationGroup="val"/></td>
+                      <td><com:TActiveButton Text="Batal" Visible="True" Attributes.onclick = "maskContent();" 
+					  			OnClick="batalClicked" 
+								CausesValidation="false" 
+								CssClass="button_01"  /></td>
+                      <td><com:TActiveButton Text="Keluar" Visible="True" Attributes.onclick = "maskContent();" 
+					  			OnClick="keluarClicked" 
+								CausesValidation="false" 
+								CssClass="button_01"  />
+					  </td>
+                    </tr>
+                </table></td>
+              </tr>
+          </table>
+          
+	<com:TCallback ID="UpdateCallback" OnCallback="prosesKonfirmasi" ActiveControl.CausesValidation="false"/>
+	<script type="text/javascript">
+		//<![CDATA[
+		function konfirmasi(mode){
+			var request= <%= $this->UpdateCallback->ActiveControl->Javascript %>;
+				request.setCallbackParameter({
+					Id:mode
+				});
+				request.dispatch();
+		}
+		//]]>
+	</script>
+          
+</com:TContent>

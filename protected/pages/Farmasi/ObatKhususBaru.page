@@ -1,0 +1,118 @@
+<%@ MasterClass="Application.layouts.MainLayout" %>
+<com:TContent ID="jdMain">
+	Penambahan Obat Harga Khusus
+    
+    <a href="<%= $this->Service->constructUrl('Simak') %>" onclick="maskContent()">
+    <span class="close-btn">
+        <span class="ui-icon ui-icon-circle-close"></span>
+    </span>
+    </a>
+    
+</com:TContent>	
+
+<com:TContent ID="Main">
+	
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+              <tr>
+                <td><table width="100%" border="0" align="right" cellpadding="0" cellspacing="2">
+                	<tr>
+                    <td valign="top"><span>&#8226;</span>&nbsp;&nbsp;Nama Obat </td>
+                    <td valign="top">:</td>
+                    <td valign="top">
+						<com:TDropDownList 
+							ID="DDObat"
+							PromptText ="--Silakan Pilih--"
+							PromptValue =""											
+							DataTextField="nama"
+							DataValueField="kode" 	
+							ToolTip="Pilih Nama Obat" 
+							TabIndex="3" 
+							AutoPostBack="true" 
+							CausesValidation="false"
+							Width="300px" 
+							OnSelectedIndexChanged="selectionChangedObat"/>
+						<com:TRequiredFieldValidator
+							Display="Dynamic"
+							ControlToValidate="DDObat"
+							Text="Obat belum dipilih" 
+							InitialValue="--Silakan Pilih--" 
+							ValidationGroup="val"
+						/>
+                        <br/>
+                        <com:TLabel ID="cekObatMsg" ForeColor="#FF0000" />
+                    </td>
+                  </tr>
+                  <com:TControl Visible="false">
+                	<tr>
+                      <td valign="top"><span>&#8226;</span>&nbsp;&nbsp;Harga Beli Obat </td>
+                	  <td valign="top">:</td>
+                	  <td valign="top"><com:TTextBox 
+							ID="hrgBeli" 
+							Width="100px" 
+							TabIndex="3" 
+                            ReadOnly="true"
+						/>
+                      </td>
+              	  </tr>
+                  </com:TControl>
+                  <tr>
+                    <td width="130" valign="top"><span>&#8226;</span>&nbsp;&nbsp;Harga Jual Obat </td>
+                    <td width="5" valign="top">:</td>
+                    <td valign="top">
+                      <com:TTextBox 
+							ID="hrg" 
+							Width="100px" 
+							TabIndex="3"
+						/>
+                      <com:TRequiredFieldValidator 
+							ControlToValidate="hrg"											 
+						  	ErrorMessage="Anda harus mengisikan Harga Obat"
+						  	Display="Dynamic" 
+							ValidationGroup="val"
+						/>
+                        <com:TRegularExpressionValidator
+                            ControlToValidate="hrg"
+                            FocusOnError="true"
+                            RegularExpression="[\d]{1,}"
+                            ErrorMessage="Jumlah yang dimasukan tidak sesuai"
+                            ValidationGroup="val"
+                        />
+                        <br/>
+                        <com:TLabel ID="errMsg" ForeColor="#FF0000" Text="Harga jual lebih kecil dari harga beli" Visible="false" />	
+                        </td>
+                  </tr>
+                </table></td>
+              </tr>
+              <tr>
+                <td><hr/></td>
+              </tr>
+              <tr>
+                <td><table width="10" border="0" align="center" cellpadding="0" cellspacing="2">
+                    <tr>
+                      <td><com:TButton Text="Simpan" 
+					  					OnClick="simpanClicked" 
+										CssClass="button_01" 
+										TabIndex="15" ValidationGroup="val"
+                                         Attributes.onclick = "maskContent();" /></td>
+                      <td><!-- <com:TButton Text="Batal" 					  					
+										ButtonType="Reset" 
+										OnClick="batalClicked"
+										CausesValidation="false" 
+										CssClass="button_01" 
+										TabIndex="5" /> --></td>
+                      <td><com:TButton Text="Keluar" 
+					  			OnClick="keluarClicked" 
+								CausesValidation="false" 
+								CssClass="button_01" 
+								TabIndex="16"
+                                Attributes.onclick = "maskContent();" />
+					  </td>
+                    </tr>
+                </table></td>
+              </tr>
+          </table>
+          
+</com:TContent>

@@ -1,0 +1,71 @@
+<%@ MasterClass="Application.layouts.MainLayout" %>
+<com:TContent ID="jdMain">
+	Daftar Kelompok Tindakan Laboratorium - Edit
+    
+    <a href="<%= $this->Service->constructUrl('Simak') %>" onclick="maskContent()">
+    <span class="close-btn">
+        <span class="ui-icon ui-icon-circle-close"></span>
+    </span>
+    </a>
+    
+</com:TContent>	
+<com:TContent ID="Main">
+
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+             
+              <tr>
+                <td><table width="100%" border="0" align="right" cellpadding="0" cellspacing="2">
+                  <tr>
+                    <td width="150"><span>&#8226;</span> ID</td>
+                    <td width="5">:</td>
+                    <td ><com:TActiveTextBox CssClass="input_text" 
+												  ID="ID" 
+												  ReadOnly="true" 
+												  AutoPostBack="true"													   
+												  MaxLength="2" 
+												  TabIndex="1"												   
+												  ToolTip="ID kelompok Laboratorium" 
+												  Width="55px"													  
+												  ValidationGroup="ID" 
+												  /></td>
+                  </tr>
+                  <tr>
+                    <td><span>&#8226; </span>Nama Kelompok </td>
+                    <td>:</td>
+                    <td>
+						<com:TTextBox 
+							ID="nama" 
+							Width="200px" 
+							TabIndex="2" 
+						/>
+						<com:TRequiredFieldValidator 
+							ControlToValidate="nama"											 
+						  	ErrorMessage="Anda harus mengisikan nama kelompok laboratorium"
+						  	Display="Dynamic" 
+						/>
+					</td>
+                  </tr>
+                </table></td>
+              </tr>
+              <tr>
+                <td><hr /></td>
+              </tr>
+              <tr>
+                <td><table width="10" border="0" align="center" cellpadding="0" cellspacing="2">
+                    <tr>
+                      <td><com:TButton Text="Simpan"  Attributes.onclick = "maskContent();" 
+					  					OnClick="simpanClicked" 
+										CssClass="button_01" 
+										TabIndex="6" /></td>                     
+                      <td><com:TButton Text="Keluar" Attributes.onclick = "maskContent();" 
+					  			OnClick="keluarClicked" 
+								CausesValidation="false" 
+								CssClass="button_01" 
+								TabIndex="7" />
+					  </td>
+                    </tr>
+                </table></td>
+              </tr>
+          </table>
+          
+</com:TContent>

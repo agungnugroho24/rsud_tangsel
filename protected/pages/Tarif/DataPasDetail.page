@@ -1,0 +1,387 @@
+<%@ MasterClass="Application.layouts.BlankLayout" %>
+
+<com:TContent ID="isi">
+<com:TActivePanel GroupingText="<strong>Data Pasien</strong>" >
+    <table width="100%" border="0" cellpadding="2" cellspacing="2" >
+      <tr>
+        <td width="13%">No. Rekam Medis</td>
+        <td width="1%">:</td>
+        <td width="86%"><com:TActiveLabel ID="cm"/></td>
+      </tr>
+      <tr>
+        <td valign="top">Nama</td>
+        <td valign="top">:</td>
+        <td valign="top"><com:TActiveLabel ID="nama"/></td>
+      </tr>
+      <tr>
+        <td valign="top">Tempat Tanggal Lahir</td>
+        <td valign="top">:</td>
+        <td valign="top"><com:TActiveLabel ID="ttl"/></td>
+      </tr>
+      <tr>
+        <td valign="top">Jenis Kelamin</td>
+        <td valign="top">:</td>
+        <td valign="top"><com:TActiveLabel ID="jk"/></td>
+      </tr>
+      <tr>
+        <td valign="top">Agama</td>
+        <td valign="top">:</td>
+        <td valign="top"><com:TActiveLabel ID="agama"/></td>
+      </tr>
+      <tr>
+        <td valign="top">Alamat</td>
+        <td valign="top">:</td>
+        <td valign="top"><com:TActiveLabel ID="alamat"/></td>
+      </tr>
+      <tr>
+        <td valign="top">Telepon</td>
+        <td valign="top">:</td>
+        <td valign="top"><com:TActiveLabel ID="telp"/></td>
+      </tr>
+      <tr>
+        <td valign="top">HP</td>
+        <td valign="top">:</td>
+        <td valign="top"><com:TActiveLabel ID="hp"/></td>
+      </tr>
+      <tr>
+        <td valign="top">Status Perkawinan</td>
+        <td valign="top">:</td>
+        <td valign="top"><com:TActiveLabel ID="stKawin"/></td>
+      </tr>
+      <tr>
+        <td valign="top">Golongan Darah</td>
+        <td valign="top">:</td>
+        <td valign="top"><com:TActiveLabel ID="golDarah"/></td>
+      </tr>
+      <tr>
+        <td valign="top">Pekerjaan</td>
+        <td valign="top">:</td>
+        <td valign="top"><com:TActiveLabel ID="pekerjaan"/></td>
+      </tr>
+      <tr>
+        <td valign="top">Pendidikan</td>
+        <td valign="top">:</td>
+        <td valign="top"><com:TActiveLabel ID="pendidikan"/></td>
+      </tr>
+    </table>
+  </com:TActivePanel>
+  
+  <br/>
+  <com:TActivePanel ID="historyPanelJalan"  >
+  	<strong><com:TActiveLabel ID="msg" Visible="true"/></strong>
+    
+    <com:XActiveDataGrid 
+        ID="grid" 
+        DataKeyField="no_trans" 
+        AutoGenerateColumns="false"	
+        AllowPaging="true"
+        AllowCustomPaging="true"
+        AllowSorting="true"
+        Width="100%"	
+        PageSize="10" 
+        PagerStyle.Mode="Numeric"				
+        PagerStyle.Font.Name="Arial"	
+        PagerStyle.Font.Size="11"
+        PagerStyle.HorizontalAlign="Right"
+        PagerStyle.PageButtonCount="3" 
+        PagerStyle.CssClass="pager" 
+        PagerStyle.Visible="true" 
+        CellSpacing="1"	
+        CellPadding="1"	                                                    
+        HeaderStyle.CssClass="headerstyle"
+        HeaderStyle.BackColor="#B6B6B6"
+        HeaderStyle.Height="20px;"
+        ItemStyle.Height="20px"   
+        ItemStyle.Font.Size="10px"
+        AlternatingItemStyle.Font.Size="10px"  
+        ItemStyle.CssClass="itemstyle"    
+        ItemStyle.BackColor="#E1E1E1"             
+        AlternatingItemStyle.BackColor="#EAEAEA"
+        AlternatingItemStyle.CssClass="itemstyle2" 
+        OnItemCreated="grid_ItemCreated"
+        OnEditCommand="grid_EditCommand"
+        OnUpdateCommand="grid_UpdateCommand"
+        OnCancelCommand="grid_CancelCommand"
+        OnDeleteCommand="deleteButtonClicked"								
+        OnPageIndexChanged="grid_PageIndexChanged"
+        OnSortCommand="grid_SortCommand">
+        
+        <com:XActiveTemplateColumn 
+            ID="tglVisitColumn" 
+            ItemStyle.Width="10%"
+            ItemStyle.HorizontalAlign="Center"
+            ItemStyle.VerticalAlign="Top" >
+            <prop:HeaderTemplate><strong>Tgl. Kunjung</strong></prop:HeaderTemplate>
+        </com:XActiveTemplateColumn>
+        
+        <com:XActiveTemplateColumn 
+            ID="poliColumn" 
+            ItemStyle.Width="10%"
+            ItemStyle.HorizontalAlign="Center"
+            ItemStyle.VerticalAlign="Top"  >
+            <prop:HeaderTemplate><strong>Poli</strong></prop:HeaderTemplate>
+        </com:XActiveTemplateColumn>
+        
+        <com:XActiveTemplateColumn 
+            ID="umurColumn" 
+            ItemStyle.Width="10%"
+            ItemStyle.HorizontalAlign="Center"
+            ItemStyle.VerticalAlign="Top" >
+            <prop:HeaderTemplate><strong>Umur</strong></prop:HeaderTemplate>
+        </com:XActiveTemplateColumn>
+        
+        <com:XActiveTemplateColumn 
+            ID="diagnosaColumn" 
+            ItemStyle.HorizontalAlign="Left"
+            ItemStyle.VerticalAlign="Top" >
+            <prop:HeaderTemplate><strong>Diagnosa</strong></prop:HeaderTemplate>
+        </com:XActiveTemplateColumn>
+        
+        <com:XActiveTemplateColumn 
+            ID="DokterColumn" 
+            ItemStyle.Width="10%"
+            ItemStyle.HorizontalAlign="Center"
+            ItemStyle.VerticalAlign="Top" >
+            <prop:HeaderTemplate><strong>Dokter</strong></prop:HeaderTemplate>
+        </com:XActiveTemplateColumn>
+        
+        <com:XActiveTemplateColumn 
+            ID="jaminanColumn" 
+            ItemStyle.Width="10%"
+            ItemStyle.HorizontalAlign="Center"
+            ItemStyle.VerticalAlign="Top" >
+            <prop:HeaderTemplate><strong>Kelompok Penjamin</strong></prop:HeaderTemplate>
+        </com:XActiveTemplateColumn>
+        
+        <com:XActiveTemplateColumn 
+            ID="perusColumn" 
+            ItemStyle.Width="10%"
+            ItemStyle.HorizontalAlign="Center"
+            ItemStyle.VerticalAlign="Top" >
+            <prop:HeaderTemplate><strong>Perusahaan Asuransi</strong></prop:HeaderTemplate>
+        </com:XActiveTemplateColumn>
+        
+        <com:XActiveTemplateColumn 
+            ID="stPulangColumn" 
+            ItemStyle.Width="5%"
+            ItemStyle.HorizontalAlign="Center"
+            ItemStyle.VerticalAlign="Top" 
+            Visible = "True">
+            <prop:HeaderTemplate><strong>PLG/RWT</strong></prop:HeaderTemplate>
+        </com:XActiveTemplateColumn>
+        
+        <com:XActiveTemplateColumn 
+            ID="cetakKwtColumn" 
+            ItemStyle.Width="7%"
+            ItemStyle.HorizontalAlign="Center"
+            ItemStyle.VerticalAlign="Top" 
+            Visible = "True">
+            <prop:HeaderTemplate><strong>Cetak Kwt.</strong></prop:HeaderTemplate>
+            <prop:ItemTemplate>
+            	<com:TActiveLabel Text="<%# $this->Parent->Data['no_trans'] %>" Style="display:none;"/>
+            	<com:TActiveButton
+            		ID="cetakKwtBtn"
+                	Text="Cetak"
+                    OnClick="Page.cetakKwtBtnClicked"
+                    CausesValidation="false"
+                    CommandParameter="<%# $this->Parent->Data['no_trans'] %>"/>
+            </prop:ItemTemplate>    
+        </com:XActiveTemplateColumn>
+        
+        
+      </com:XActiveDataGrid>
+  </com:TActivePanel>
+  
+  
+  
+  <!-- ---------------------------------------GRID RWT INAP ---------------------------------------------- -->
+  <br/>
+  <com:TActivePanel ID="historyPanelInap"  >
+  	<strong><com:TActiveLabel ID="msgInap" Visible="true"/></strong>
+    
+    <com:XActiveDataGrid 
+        ID="gridInap" 
+        DataKeyField="cm" 
+        AutoGenerateColumns="false"	
+        AllowPaging="true"
+        AllowCustomPaging="true"
+        AllowSorting="true"
+        Width="100%"	
+        PageSize="10" 
+        PagerStyle.Mode="Numeric"				
+        PagerStyle.Font.Name="Arial"	
+        PagerStyle.Font.Size="11"
+        PagerStyle.HorizontalAlign="Right"
+        PagerStyle.PageButtonCount="3" 
+        PagerStyle.CssClass="pager" 
+        PagerStyle.Visible="true" 
+        CellSpacing="1"	
+        CellPadding="1"	                                                    
+        HeaderStyle.CssClass="headerstyle"
+        HeaderStyle.BackColor="#B6B6B6"
+        HeaderStyle.Height="20px;"
+        ItemStyle.Height="20px"   
+        ItemStyle.Font.Size="10px"
+        AlternatingItemStyle.Font.Size="10px"  
+        ItemStyle.CssClass="itemstyle"    
+        ItemStyle.BackColor="#E1E1E1"             
+        AlternatingItemStyle.BackColor="#EAEAEA"
+        AlternatingItemStyle.CssClass="itemstyle2" 
+        OnItemCreated="gridInap_ItemCreated"
+        OnEditCommand="gridInap_EditCommand"
+        OnUpdateCommand="gridInap_UpdateCommand"
+        OnCancelCommand="gridInap_CancelCommand"
+        OnDeleteCommand="deleteButtonClicked"								
+        OnPageIndexChanged="gridInap_PageIndexChanged"
+        OnSortCommand="gridInap_SortCommand">
+        
+        <com:XActiveTemplateColumn 
+            ID="tglVisitInapColumn" 
+            ItemStyle.Width="10%"
+            ItemStyle.HorizontalAlign="Center"
+            ItemStyle.VerticalAlign="Top" >
+            <prop:HeaderTemplate><strong>Tgl. Kunjung</strong></prop:HeaderTemplate>
+        </com:XActiveTemplateColumn>
+        
+        
+        <com:XActiveTemplateColumn 
+            ID="umurInapColumn" 
+            ItemStyle.Width="10%"
+            ItemStyle.HorizontalAlign="Center"
+            ItemStyle.VerticalAlign="Top" >
+            <prop:HeaderTemplate><strong>Umur</strong></prop:HeaderTemplate>
+        </com:XActiveTemplateColumn>
+        
+        <com:XActiveTemplateColumn 
+            ID="diagnosaInapColumn" 
+            ItemStyle.HorizontalAlign="Left"
+            ItemStyle.VerticalAlign="Top" >
+            <prop:HeaderTemplate><strong>Diagnosa</strong></prop:HeaderTemplate>
+        </com:XActiveTemplateColumn>
+        
+        <com:XActiveTemplateColumn 
+            ID="DokterInapColumn" 
+            ItemStyle.Width="10%"
+            ItemStyle.HorizontalAlign="Center"
+            ItemStyle.VerticalAlign="Top" >
+            <prop:HeaderTemplate><strong>Dokter</strong></prop:HeaderTemplate>
+        </com:XActiveTemplateColumn>
+        
+        <com:XActiveTemplateColumn 
+            ID="jaminanInapColumn" 
+            ItemStyle.Width="10%"
+            ItemStyle.HorizontalAlign="Center"
+            ItemStyle.VerticalAlign="Top" >
+            <prop:HeaderTemplate><strong>Kelompok Penjamin</strong></prop:HeaderTemplate>
+        </com:XActiveTemplateColumn>
+        
+        <com:XActiveTemplateColumn 
+            ID="perusInapColumn" 
+            ItemStyle.Width="10%"
+            ItemStyle.HorizontalAlign="Center"
+            ItemStyle.VerticalAlign="Top" >
+            <prop:HeaderTemplate><strong>Perusahaan Asuransi</strong></prop:HeaderTemplate>
+        </com:XActiveTemplateColumn>
+        
+        <com:XActiveTemplateColumn 
+            ID="stPulangInapColumn" 
+            ItemStyle.Width="5%"
+            ItemStyle.HorizontalAlign="Center"
+            ItemStyle.VerticalAlign="Top" 
+            Visible = "False">
+            <prop:HeaderTemplate><strong>PLG/RWT</strong></prop:HeaderTemplate>
+        </com:XActiveTemplateColumn>
+        
+        
+      </com:XActiveDataGrid>
+  </com:TActivePanel>
+  
+  <!-- ---------------------------------------GRID OBAT ---------------------------------------------- -->
+  <br/>
+  <com:TActivePanel ID="historyPanelObat"  >
+  	<strong><com:TActiveLabel ID="msgObat" Visible="true"/></strong>
+    
+    <com:XActiveDataGrid 
+        ID="gridObat" 
+        DataKeyField="cm" 
+        AutoGenerateColumns="false"	
+        AllowPaging="true"
+        AllowCustomPaging="true"
+        AllowSorting="true"
+        Width="100%"	
+        PageSize="10" 
+        PagerStyle.Mode="Numeric"				
+        PagerStyle.Font.Name="Arial"	
+        PagerStyle.Font.Size="11"
+        PagerStyle.HorizontalAlign="Right"
+        PagerStyle.PageButtonCount="3" 
+        PagerStyle.CssClass="pager" 
+        PagerStyle.Visible="true" 
+        CellSpacing="1"	
+        CellPadding="1"	                                                    
+        HeaderStyle.CssClass="headerstyle"
+        HeaderStyle.BackColor="#B6B6B6"
+        HeaderStyle.Height="20px;"
+        ItemStyle.Height="20px"   
+        ItemStyle.Font.Size="10px"
+        AlternatingItemStyle.Font.Size="10px"  
+        ItemStyle.CssClass="itemstyle"    
+        ItemStyle.BackColor="#E1E1E1"             
+        AlternatingItemStyle.BackColor="#EAEAEA"
+        AlternatingItemStyle.CssClass="itemstyle2" 
+        OnItemCreated="gridObat_ItemCreated"
+        OnEditCommand="gridObat_EditCommand"
+        OnUpdateCommand="gridObat_UpdateCommand"
+        OnCancelCommand="gridObat_CancelCommand"
+        OnDeleteCommand="deleteButtonClicked"								
+        OnPageIndexChanged="gridObat_PageIndexChanged"
+        OnSortCommand="gridObat_SortCommand">
+        
+        <com:XActiveTemplateColumn 
+            ID="namaObatColumn" 
+            ItemStyle.HorizontalAlign="Center"
+            ItemStyle.VerticalAlign="Top" >
+            <prop:HeaderTemplate><strong>Nama Obat/Alkes</strong></prop:HeaderTemplate>
+        </com:XActiveTemplateColumn>
+        
+        <com:XActiveTemplateColumn 
+            ID="jmlObatColumn" 
+            ItemStyle.Width="150px"
+            ItemStyle.HorizontalAlign="Center"
+            ItemStyle.VerticalAlign="Top" >
+            <prop:HeaderTemplate><strong>Jumlah</strong></prop:HeaderTemplate>
+        </com:XActiveTemplateColumn>
+        
+        <com:XActiveTemplateColumn 
+            ID="totalObatColumn" 
+            ItemStyle.Width="150px"
+            ItemStyle.HorizontalAlign="Right"
+            ItemStyle.VerticalAlign="Top" >
+            <prop:HeaderTemplate><strong>Total</strong></prop:HeaderTemplate>
+        </com:XActiveTemplateColumn>
+        
+      </com:XActiveDataGrid>
+  </com:TActivePanel>
+  
+  
+  <br/>
+  <div align="center">
+  	<com:TActiveButton 
+        ID="cetakHistoriBtn"
+        Width="120px"
+        Text="Cetak History" 
+        OnClick="cetakHistoriClicked" 
+        CssClass="button_01" 
+        CausesValidation="false"/>
+        
+    <com:TActiveButton 
+        ID="cariBtn"
+        Width="120px"
+        Text="Cetak Kartu" 
+        OnClick="cetakClicked" 
+        CssClass="button_01" 
+        CausesValidation="false"
+        Visible="false"/>
+  </div>  
+  
+</com:TContent>

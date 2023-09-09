@@ -1,0 +1,278 @@
+<%@ MasterClass="Application.layouts.MainLayout" %>
+<com:TContent ID="Main">
+<table width="56%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td height="18"></td>
+  </tr>
+  <tr>
+    <td><table width="10"  border="0" align="center" cellpadding="0" cellspacing="0">
+      <tr>
+        <td width="1%"><table width="100%"  border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="1%"><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndAppTopLft.png'%>" width="15" height="15" /></td>
+            <td width="99%" background="<%=$this->Page->Theme->BaseUrl.'/images/bkg3.png'%>">&nbsp;</td>
+            <td width="1%"><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndAppTopRgt.png'%>" width="15" height="15" /></td>
+          </tr>
+        </table></td>
+      </tr>
+      <tr>
+        <td valign="top" background="<%=$this->Page->Theme->BaseUrl.'/images/bkg3.png'%>"><table width="10" border="0" cellpadding="0" cellspacing="0">
+          <tr>
+            <td><table width="15" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+            </table></td>
+            <td><table width="750" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td class="text_08">Administrasi Penerimaan Barang Edit</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td><table width="10" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndTopLft.png'%>" width="15" height="15" /></td>
+          <td><table width="720" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td><table width="720" border="0" align="right" cellpadding="0" cellspacing="0">
+                    <tr>
+                      <td width="210" height="15" class="text_07">&nbsp;&nbsp;Penerimaan Obat/Barang </td>
+                      <td width="557" background="<%=$this->Page->Theme->BaseUrl.'/images/rndBkgTop.png'%>"></td>
+                    </tr>
+                </table></td>
+              </tr>
+          </table></td>
+          <td><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndTopRgt.png'%>" width="15" height="15" /></td>
+        </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="10" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td background="<%=$this->Page->Theme->BaseUrl.'/images/rndBkgLft.png'%>"><table width="15" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+          </table></td>
+          <td>
+          	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td >&nbsp;<com:TActiveLabel ID="showSql"/></td>
+              </tr>
+			  <tr>
+                <td><span>&#8226;</span>&nbsp;&nbsp;Materai &nbsp; : &nbsp; Rp. 
+						<com:TActiveDropDownList ID="mtr" 
+                        	OnSelectedIndexChanged="mtrChanged" 
+                            AutoPostBack="true" 
+                            CausesValidation="false">
+									<com:TListItem Text="Tidak Pakai Materai" Value="0" />
+                                    <com:TListItem Text="Materai Rp. 3000" Value="1" />
+                                    <com:TListItem Text="Materai Rp. 6000" Value="2" />
+						</com:TActiveDropDownList>
+				</td>
+			  <tr>
+			  <tr>
+                <td><span>&#8226;</span>&nbsp;&nbsp;Ppn &nbsp; : &nbsp; Rp. 
+						<com:TActiveDropDownList ID="ppn" 
+                        	OnSelectedIndexChanged="ppnChanged" 
+                            AutoPostBack="true" 
+                            CausesValidation="false">
+									<com:TListItem Text="Tidak Pakai Ppn" Value="0" />
+                                    <com:TListItem Text="Pakai Ppn" Value="1" />
+						</com:TActiveDropDownList>
+				</td>
+				</tr>
+				<tr>
+                <td><span>&#8226;</span>&nbsp;&nbsp;Potongan &nbsp; : &nbsp; Rp. 
+						<com:TActiveTextBox 
+							ID="potongan" 
+							OnTextChanged="potChanged" 
+							AutoPostBack="true" 
+							Width="200px"
+						    MaxLength="30"
+							ValidationGroup="val" 
+						/>
+				</td>
+			  </tr>
+			 
+			  <tr>	
+                <td ><span>&#8226;</span>&nbsp;&nbsp;Jumlah Pembelian &nbsp; : &nbsp; Rp. 
+						<com:TActiveLabel ID="JmlBeli"/>
+				</td>
+              </tr>
+			  <tr>
+                <td>&nbsp;</td>
+              </tr>
+              <tr>
+                <td>
+                <div id="loading" style="display:none" align="center" > <br/>
+                    Loading Data... <br/>
+                    <img src="<%=$this->Page->Theme->BaseUrl.'/images/loading.gif'%>" /> <br/><br/><br/>
+                  </div>
+                <div id="messages">
+                	<table width="95%"  border="0" align="center" cellpadding="0" cellspacing="1"> 
+                      <tr>
+                        <td align="center">
+                        	<com:XActiveDataGrid ID="EditGrid"
+                                DataKeyField="id"
+                                AutoGenerateColumns="false"	
+                                AllowPaging="true"
+                                AllowCustomPaging="true"
+                                AllowSorting="false"
+                                Width="680px"	
+                                PagerStyle.Mode="Numeric"			
+                                PagerStyle.Font.Name="Arial"
+                                PagerStyle.Font.Size="12"
+                                PagerStyle.HorizontalAlign="Right"			
+                                GridLines="None"
+                                CellSpacing="1"
+                                CellPadding="2"
+                                BackColor="#000000"
+                                HeaderStyle.CssClass="headerstyle"
+                                ItemStyle.CssClass="itemstyle"
+                                AlternatingItemStyle.CssClass="itemstyle2"
+                                OnPageIndexChanged="dtgSomeData_PageIndexChanged"
+                                OnSortCommand="dtgSomeData_SortCommand"	
+                                OnItemCreated="itemCreated"
+                                OnEditCommand="editItem"
+                                OnUpdateCommand="saveItem"
+                                OnCancelCommand="cancelItem">
+                            <!---
+                           <com:XActiveTemplateColumn 
+                                 HeaderText="Kode" 	
+                                 SortExpression="kode"					 
+                                 ItemStyle.Width="75px" 
+                                 ItemStyle.HorizontalAlign="Center" >									
+                                <prop:ItemTemplate>
+                                    <%=	$this->Parent->DataItem['kode'] %>                                                    </prop:ItemTemplate>
+                            </com:XActiveTemplateColumn>--->
+							
+							 <com:XActiveDropDownListColumn 
+                                    ID="kode"
+                                    ItemStyle.HorizontalAlign="Left"
+                                    ItemStyle.Width="200px"
+                                    HeaderText="Kode"
+                                    SortExpression="kode"
+                                    ListDataSource=<%= $this->getTindakanRecords() %>
+                                    ListValueField="kode"
+                                    ListTextField="nama"					
+                                    DataTextField="kode"
+                                    />
+                           
+                           <com:XActiveTemplateColumn HeaderText="Nama" 						 
+                                 ItemStyle.Width="300px" 
+                                 ItemStyle.HorizontalAlign="Center" >									
+                                <prop:ItemTemplate>
+                                    <%=	ObatRecord::finder()->findByPk($this->Parent->DataItem['kode'])->nama;	  %>                                                    </prop:ItemTemplate>
+                            </com:XActiveTemplateColumn>
+                            
+                            <com:XActiveBoundColumn
+                            	ID="jmlColumn"
+                                HeaderText="Jumlah"
+                                ItemStyle.Width="100px"
+                                DataField="jml"
+                                ItemStyle.Horizontalalign="Center" />
+							
+							<com:XActiveBoundColumn
+                            	ID="hrgColumn"
+                                HeaderText="Harga"
+                                ItemStyle.Width="100px"
+                                DataField="hrg"
+                                ItemStyle.Horizontalalign="Center" />
+                                                    
+                            <com:XActiveEditCommandColumn
+                                HeaderText="Edit"
+                                HeaderStyle.Width="50px"
+                                UpdateText="Save" 
+                                ItemStyle.HorizontalAlign="Center"
+                                ItemStyle.Font.Italic="false"
+                                />	
+                            </com:XActiveDataGrid>
+                        </td>                       
+                      </tr>
+                    </table>
+                </div>
+				</td>
+              </tr>
+              <tr>
+                <td><hr align="center" width="96%" size="2" noshade color="#CECECE"/></td>
+              </tr>
+              <tr>
+                <td><table width="10" border="0" align="center" cellpadding="0" cellspacing="2">
+                    <tr>
+                      <td><com:TButton Text="Cetak" 
+					  					ID="cetakLapBtn" 
+					  					OnClick="cetakClicked" 
+										CssClass="button_01"
+                                        Attributes.onclick = "if(!confirm('Cetak data sekarang..?')) return false;">
+                           
+                        </com:TButton>             
+										</td>
+                      <td><com:TActiveButton Text="Batal" 
+										OnClick="batalClicked"
+										CausesValidation="false" 
+										CssClass="button_01">
+                      	<prop:ClientSide
+                                                OnLoading="Element.show('loading'); Element.hide('messages');"/>
+                                    </com:TActiveButton>
+                      </td>
+                      <td><com:TActiveButton Text="Keluar" 
+					  			OnClick="keluarClicked" 
+								CausesValidation="false" 
+								CssClass="button_01">
+                                <prop:ClientSide
+                                    OnLoading="Element.show('loading'); Element.hide('messages');"/>
+                        </com:TActiveButton>
+					  </td>
+                    </tr>
+                </table></td>
+              </tr>
+          </table></td>
+          <td background="<%=$this->Page->Theme->BaseUrl.'/images/rndBkgRgt.png'%>"><table width="15" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+          </table></td>
+        </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="10" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndBtmLft.png'%>" width="15" height="15" /></td>
+          <td background="<%=$this->Page->Theme->BaseUrl.'/images/rndBkgBtm.png'%>"><table width="720" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+          </table></td>
+          <td><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndBtmRgt.png'%>" width="15" height="15" /></td>
+        </tr>
+    </table></td>
+  </tr>
+</table></td>
+            <td><table width="15" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+            </table></td>
+          </tr>
+        </table></td>
+      </tr>
+      <tr>
+        <td><table width="100%"  border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="1%"><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndAppBtmLft.png'%>" width="15" height="15" /></td>
+            <td width="99%" background="<%=$this->Page->Theme->BaseUrl.'/images/bkg3.png'%>">&nbsp;</td>
+            <td width="1%"><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndAppBtmRgt.png'%>" width="15" height="15" /></td>
+          </tr>
+        </table></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td>&nbsp;<com:TJavascriptLogger Visible="false"/></td>
+  </tr>
+</table>
+</com:TContent>

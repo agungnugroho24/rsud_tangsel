@@ -1,0 +1,422 @@
+<%@ MasterClass="Application.layouts.MainLayout" %>
+<com:TContent ID="jdMain">
+	Kasir Rawat Inap
+    
+    <a href="<%= $this->Service->constructUrl('Simak') %>" onclick="maskContent()">
+    <span class="close-btn">
+        <span class="ui-icon ui-icon-circle-close"></span>
+    </span>
+    </a>
+    
+</com:TContent> 
+
+<com:TContent ID="Main">
+	<com:TActiveLabel ID="showSql" Visible="true" />
+    
+    <com:TActivePanel ID="panel1" Style="display:block;">
+        <table width="100%"  border="0" align="left">
+            <tr>
+                <td width="120"><span>&#8226;</span>&nbsp;&nbsp;No. CM</td>
+                <td width="5">:</td>
+                <td >
+                    <com:TActiveTextBox 
+                        ID="notrans" 
+                        AutoPostBack="true"													   
+                        MaxLength="7"
+                        OnTextChanged="checkRegister" 
+                        OnCallback="notransCallback"
+                        Width="75px" 
+                        CssClass="input_text"/>
+                    <com:TActiveCheckBox 
+                        AutoPostBack="true" 
+                        ID="CBuangMuka" 
+                        Text="Uang Muka" 
+                        Value="1"
+                        CausesValidation="false"
+                        OnCheckedChanged="CBuangMukaChanged" 
+                        Visible="true"/>
+                    &nbsp;
+                    <com:TActiveLabel 
+                        ID="errMsg" 
+                        ForeColor="#FF0000" />
+                </td>
+            </tr>
+            <tr><td colspan="3"><hr/></td></tr>
+        </table>
+    </com:TActivePanel> 
+    
+    <br/>
+    
+    <com:TActivePanel ID="panel2" Style="display:block;">
+        <table width="100%"  border="0" align="left">
+            <tr>
+                <td width="120"><span>&#8226;</span>&nbsp;&nbsp;Nama Pembayar</td>
+                <td width="5">:</td>
+                <td >
+                    <com:TActiveTextBox 
+                        ID="nmPembayar" 													   
+                        MaxLength="30"	
+                        CssClass="input_text" />
+                    <com:TRequiredFieldValidator
+                        ControlToValidate="nmPembayar"
+                        ValidationGroup="val"
+                        ErrorMessage="*"
+                        Display="Dynamic"
+                        FocusOnError="true" 
+                        CssClass="valRequired"
+                        ControlCssClass="valctrl"/> 
+                </td>
+            </tr>
+            <tr>
+                <td ><span>&#8226;</span>&nbsp;&nbsp;Nama Pasien</td>
+                <td >:</td>
+                <td >
+                	<com:TActiveTextBox ID="nama" ReadOnly="true" /> 	   
+                </td>
+            </tr>
+            <tr>
+                <td ><span>&#8226;</span>&nbsp;&nbsp;Tanggal Masuk</td>
+                <td >:</td>
+                <td >
+                	<com:TActiveTextBox 
+                        ID="tglMasuk" 
+                        ReadOnly="true" /> 
+                    &nbsp; &nbsp; Jam Masuk &nbsp;
+                    <com:TActiveTextBox 
+                        ID="wktMasuk" 
+                        ReadOnly="true"
+                        Width="100px" />    
+                </td>
+            </tr>
+            <tr>
+                <td ><span>&#8226;</span>&nbsp;&nbsp;Tanggal Keluar</td>
+                <td >:</td>
+                <td >
+                	<com:TActiveTextBox 
+                        ID="tglKeluar" 
+                        ReadOnly="true" />
+                    &nbsp; &nbsp; Jam Keluar &nbsp;
+                    <com:TActiveTextBox 
+                        ID="wktKeluar" 
+                        ReadOnly="true"
+                        Width="100px" />    
+                </td>
+            </tr>
+            <tr>
+                <td ><span>&#8226;</span>&nbsp;&nbsp;Lama Inap</td>
+                <td >:</td>
+                <td >
+                	<com:TActiveTextBox 
+                        ID="lamaInap" 
+                        ReadOnly="true" />    
+                </td>
+            </tr>
+            <tr><td colspan="3"><hr/></td></tr>
+        </table>
+    </com:TActivePanel> 
+    
+    <br/>
+    
+    <com:TActivePanel ID="panel3" Style="display:block;">
+    	<div style="float:left; padding-left:10px; padding-bottom:5px; text-decoration:none;">
+        	<strong><com:TActiveLinkButton ID="rincianBtn" Text="[ Rincian ]" OnClick="rincianBtnClicked" Style="outline:none;"/></strong>
+        </div>
+        <div id="panel3a" style="display:none;">
+        <table width="100%"  border="0" align="left" cellpadding="3" cellspacing="0" >
+            <tr class="itemstyle">
+                <td width="200"><span>&#8226;</span>&nbsp;&nbsp;Emergency</td>
+                <td width="5">:</td>
+                <td >
+					<com:TActiveLabel ID="jsEmergency"/>
+                </td>
+            </tr>
+            <tr class="itemstyle2">
+                <td ><span>&#8226;</span>&nbsp;&nbsp;Jasa Konsultasi </td>
+                <td >:</td>
+                <td >
+					<com:TActiveLabel ID="jsKonsul"/>                	    
+                </td>
+            </tr>
+            <tr class="itemstyle">
+                <td ><span>&#8226;</span>&nbsp;&nbsp;Jasa Visite </td>
+                <td >:</td>
+                <td >
+					<com:TActiveLabel ID="jsVisite"/>
+                </td>
+            </tr>
+            <tr class="itemstyle2">
+                <td ><span>&#8226;</span>&nbsp;&nbsp;Jasa Tindakan </td>
+                <td >:</td>
+                <td >
+					<com:TActiveLabel ID="jsTdkOperasi"/>
+                </td>
+            </tr>
+            <tr class="itemstyle">
+                <td ><span>&#8226;</span>&nbsp;&nbsp;Akomodasi Kamar Tindakan </td>
+                <td >:</td>
+                <td >
+					<com:TActiveLabel ID="jsKamarOperasi"/>
+                </td>
+            </tr>
+            <tr class="itemstyle2">
+                <td ><span>&#8226;</span>&nbsp;&nbsp;Sewa Alat Tindakan dan Bhp </td>
+                <td >:</td>
+                <td >
+					<com:TActiveLabel ID="jsSewaAlat"/>
+                </td>
+            </tr>
+            <tr class="itemstyle">
+                <td ><span>&#8226;</span>&nbsp;&nbsp;Kamar Perawatan </td>
+                <td >:</td>
+                <td >
+					<com:TActiveLabel ID="jsKamar"/>
+                </td>
+            </tr>
+            <tr class="itemstyle2">
+                <td ><span>&#8226;</span>&nbsp;&nbsp;Jasa Asuhan Keperawatan  </td>
+                <td >:</td>
+                <td >
+					<com:TActiveLabel ID="jsAskep"/>
+                </td>
+            </tr>
+            <tr class="itemstyle">
+                <td ><span>&#8226;</span>&nbsp;&nbsp;Pemeriksaan Penunjang Medik </td>
+                <td >:</td>
+                <td >
+					<com:TActiveLabel ID="jsPenunjang"/>
+                </td>
+            </tr>
+            <tr class="itemstyle2">
+                <td ><span>&#8226;</span>&nbsp;&nbsp;Sewa Alat Penunjang Medik </td>
+                <td >:</td>
+                <td >
+					<com:TActiveLabel ID="jsSewaAlatPenunjang"/>
+                </td>
+            </tr>
+            <tr class="itemstyle">
+                <td ><span>&#8226;</span>&nbsp;&nbsp;Tindakan Kecil </td>
+                <td >:</td>
+                <td >
+					<com:TActiveLabel ID="jsTdkKecil"/>
+                </td>
+            </tr>
+            <tr class="itemstyle2">
+                <td ><span>&#8226;</span>&nbsp;&nbsp;Tindakan Khusus </td>
+                <td >:</td>
+                <td >
+					<com:TActiveLabel ID="jsTdkKhusus"/>
+                </td>
+            </tr>
+            <tr class="itemstyle">
+                <td ><span>&#8226;</span>&nbsp;&nbsp;Obat dan Alkes </td>
+                <td >:</td>
+                <td >
+					<com:TActiveLabel ID="jsObat"/>
+                </td>
+            </tr>
+            <tr class="itemstyle2">
+                <td ><span>&#8226;</span>&nbsp;&nbsp;Oksigen </td>
+                <td >:</td>
+                <td >
+					<com:TActiveLabel ID="jsOksigen"/>
+                </td>
+            </tr>
+            <tr class="itemstyle">
+                <td ><span>&#8226;</span>&nbsp;&nbsp;Ambulance </td>
+                <td >:</td>
+                <td >
+					<com:TActiveLabel ID="jsAmbulan"/>
+                </td>
+            </tr>
+            <tr class="itemstyle2">
+                <td ><span>&#8226;</span>&nbsp;&nbsp;Lain-Lain </td>
+                <td >:</td>
+                <td >
+					<com:TActiveLabel ID="jsLainLain"/>
+                </td>
+            </tr>
+             <tr class="itemstyle">
+                <td ><span>&#8226;</span>&nbsp;&nbsp;Administrasi </td>
+                <td >:</td>
+                <td >
+					<com:TActiveLabel ID="jsAdm"/>
+                </td>
+            </tr>
+        </table>
+        </div>
+    </com:TActivePanel>  
+    
+    <br/>
+    
+    <com:TActivePanel ID="panel4" Style="display:block;">
+        <table width="100%"  border="0" align="left" cellpadding="3">
+            <tr><td colspan="3"><hr/></td></tr>
+            <tr>
+                <td width="240"><span>&#8226;</span>&nbsp;&nbsp;Jumlah Total Biaya</td>
+                <td width="5">:</td>
+                <td >
+                 	<com:TActiveLabel ID="jmlShow" />   
+                </td>
+            </tr>
+            <tr>
+                <td ><span>&#8226;</span>&nbsp;&nbsp;Total Uang Muka Yang Sudah Dibayar</td>
+                <td >:</td>
+                <td >
+                	<com:TActiveLabel ID="uangMuka" />	   
+                </td>
+            </tr>
+            <com:TControl ID="sisaBayarCtrl">
+            <tr>
+                <td ><span>&#8226;</span>&nbsp;&nbsp;Sisa Bayar</td>
+                <td >:</td>
+                <td >
+                	<com:TActiveLabel ID="jmlKurangBayar" Font.Bold="True" />	   
+                </td>
+            </tr>
+            </com:TControl>
+            <tr>
+                <td ><span>&#8226;</span>&nbsp;&nbsp;Discount</td>
+                <td >:</td>
+                <td >
+                	<com:TActiveTextBox 
+                          CssClass="input_text" 
+                          ID="disc" 													   
+                          MaxLength="4"												  
+                          ToolTip="jumlah Discount" 
+                          Width="30px" 
+                          AutoPostBack="true"
+                          CausesValidation="false"
+                          OnTextChanged="discChanged" 
+                          OnCallback="discCallBack"/>
+                      &nbsp; % &nbsp;
+                      <com:TRegularExpressionValidator
+                        ControlToValidate="disc"
+                        FocusOnError="true"
+                        RegularExpression="[\d]{0,4}"
+                        ErrorMessage="Jumlah discount yang dimasukan tidak sesuai"
+                        ValidationGroup="valBayar" />  	   
+                </td>
+            </tr>
+           
+            <com:Tcontrol ID="discCtrl" Visible="false">
+            <tr>
+                <td><span>&#8226;</span>&nbsp;&nbsp;Jumlah Biaya Setelah Discount</td>
+                <td>:</td>
+                <td><strong><com:TActiveLabel ID="jmlBiayaDisc" /></strong></td>
+            </tr>
+            </com:Tcontrol>
+          
+            <tr>
+                <td ><span>&#8226;</span>&nbsp;&nbsp;Bayar</td>
+                <td >:</td>
+                <td >
+                	<com:TActiveTextBox CssClass="input_text" 
+                          ID="bayar" 													   
+                          MaxLength="12"												  
+                          ToolTip="jumlah bayar" 
+                          Width="100px" />&nbsp;
+                              
+                     <com:TActiveButton 
+                        Text="Bayar" 
+                        OnClick="bayarClicked" 
+                        OnCallback="discCallBack"
+                        ID="bayarBtn" 
+                        CssClass="button_01" 
+                        ValidationGroup="valBayar"	/>
+                         
+                    <com:TRequiredFieldValidator 
+                        ControlToValidate="bayar"											 
+                        ErrorMessage=""
+                        Display="Dynamic" 
+                        ValidationGroup="valBayar" />
+                        
+                    <com:TRegularExpressionValidator
+                        ControlToValidate="bayar"
+                        FocusOnError="true"
+                        RegularExpression="[\d]{1,}"
+                        ErrorMessage="Jumlah bayar yang dimasukan tidak sesuai"
+                        ValidationGroup="valBayar" />	   
+                </td>
+            </tr>
+            <tr>
+                <td ><span>&#8226;</span>&nbsp;&nbsp;Sisa/Kembalian</td>
+                <td >:</td>
+                <td >
+					<strong><com:TActiveLabel ID="sisaByr" /></strong>&nbsp;<com:TActiveLabel ID="errByr" ForeColor="#FF0000" />
+                </td>
+            </tr>
+            <tr><td colspan="3"><hr/></td></tr>
+        </table>
+    </com:TActivePanel> 
+    
+    <br/>
+    
+    <com:TActivePanel ID="panel5" Style="display:block;">
+        <table width="100%"  border="0" align="left">
+            <tr>
+                <td align="center" >
+                    Mode Cetak : 
+                    <com:TActiveRadioButtonList
+                        ID="modeCetak"
+                        RepeatDirection="Horizontal" 
+                        CausesValidation="false" 
+                        SelectedValue="0"
+                        Style="display:inline; vertical-align:middle; padding-top:4px;">
+                            <com:TListItem Text="PDF" Value="0" />
+                            <com:TListItem Text="MS. Word" Value="1" />
+                    </com:TActiveRadioButtonList>
+                </td>
+            </tr>
+            <tr><td><hr/></td></tr>
+        </table>
+    </com:TActivePanel> 
+    
+    <br/>
+    
+    <com:TActivePanel ID="panel6" Style="display:block;">
+        <table width="100%"  border="0" align="left">
+            <tr>
+                <td align="center" >
+                    <com:TActiveButton 
+                        Text="Preview" 
+                        OnClick="previewClicked" 
+                        ID="previewBtn" 
+                        CssClass="button_01" 
+                        Attributes.onclick = "if(!confirm('Preview transaksi..?')) return false; " />
+                        
+                    <com:TActiveButton Text="Cetak" 
+                        OnClick="cetakClicked"
+                        ID="cetakBtn" 
+                        CausesValidation="true" 
+                        CssClass="button_01" 
+                        ValidationGroup="val"
+                        Attributes.onclick = "if(!confirm('Cetak Sekarang..?')) return false; else maskContent();" />
+                    
+                     <com:TActiveButton Text="Refresh" 
+                     	ID="refreshBtn"
+                        OnClick="checkRegister" 
+                        CausesValidation="false" 
+                        CssClass="button_01" >
+                        <prop:ClientSide 
+                        OnLoading="maskContent();"
+                        OnComplete="unmaskContent();"/>
+                  	</com:TActiveButton>
+                        
+                    <com:TActiveButton Text="Batal" 
+                        OnClick="batalClicked" 
+                        CausesValidation="false" 
+                        CssClass="button_01" 
+                        Attributes.onclick = "if(!confirm('Batalkan pengisian data..?')) return false; else maskContent();" />
+
+					<com:TActiveButton Text="Keluar" 
+                        Visible="false"
+                        OnClick="keluarClicked" 
+                        CausesValidation="false" 
+                        CssClass="button_01" />
+                
+                </td>
+            </tr>
+        </table>
+    </com:TActivePanel> 
+
+</com:TContent>

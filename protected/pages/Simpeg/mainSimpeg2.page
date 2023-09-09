@@ -1,0 +1,647 @@
+<%@ MasterClass="Application.layouts.SimpegLayout" %>
+<com:TContent ID="Main">
+<table width="728" border="0" align="center" cellpadding="0" cellspacing="0" class="table_03">
+  <tr>
+    <td><table width="96%"  border="0" align="center" cellpadding="0" cellspacing="0">
+      <tr>
+        <td>
+		<table width="100%" border="0">
+		  <tr>
+			<td>
+				<com:TTabPanel 
+				ID="TPpegawai" 
+				ActiveViewIndex="0" BorderColor="#FFFFFF" >
+					<com:TTabView 
+					ID="TVidentitasPeg" 
+					Caption="Identitas Pegawai" BorderColor="#FFFFFF" >
+					<table width="100%" border="0" cellspacing="2" cellpadding="2">
+					  <tr>
+						<td width="32%"><span class="bullet_02">&#8226;</span>&nbsp;NIP/NRP/NRPTT</td>
+						<td width="68%">
+							<com:TTextBox 
+								ID="nip" 
+								CssClass="inputtext" 
+								Width="250px" 								
+								/>						</td>
+					  </tr>
+					  <tr>
+						<td><span class="bullet_02">&#8226;</span>&nbsp;Nama </td>
+						<td>
+							<com:TTextBox 
+								ID="nmPeg" 
+								CssClass="inputtext" 
+								Width="250px" 								
+								/>						</td>
+					  </tr>
+					  <tr>
+						<td><span class="bullet_02">&#8226;</span>&nbsp;Jenis Kelamin</td>
+						<td>
+							<com:TRadioButtonList 
+								ID="jkPeg" 
+								RepeatDirection="Horizontal"
+								OnSelectedIndexChanged="selectionChanged">
+								<com:TListItem Value="value 1" Text="Laki-Laki" />
+								<com:TListItem Value="value 2" Text="Perempuan" />
+							</com:TRadioButtonList>						</td>
+					  </tr>
+					  <tr>
+					   <td><span class="bullet_02">&#8226;</span>&nbsp;Tempat Lahir </td>
+						<td>
+							<com:TTextBox 
+								ID="tmpLhrPeg" 
+								CssClass="inputtext" 
+								Width="250px" 								
+								/>						</td>
+					  </tr>
+					  <tr>
+					    <td><span class="bullet_02">&#8226;</span> Tanggal Lahir</td>
+					    <td>
+							<com:TDatePicker 
+								ID="DPtglLhrPeg" 
+								Width="70px" 
+								FromYear="1940" 
+								DateFormat="dd-MM-yyyy"
+								ToolTip="Masukan tanggal lahir" 								
+								/>						</td>
+					    </tr>
+					  <tr>
+						<td><span class="bullet_02">&#8226;</span>&nbsp;Agama </td>
+						<td width="68%" valign="middle">
+							<com:TRadioButtonList 
+								ID="agamaPeg" 
+								RepeatDirection="Horizontal"
+								OnSelectedIndexChanged="selectionChanged">
+								<com:TListItem Value="value 1" Text="Islam" />
+								<com:TListItem Value="value 2" Text="Protestan" />
+								<com:TListItem Value="value 3" Text="Katolik" />
+								<com:TListItem Value="value 4" Text="Hindu" />
+								<com:TListItem Value="value 5" Text="Budha" />
+							</com:TRadioButtonList>						</td>
+					  </tr>
+					  <tr>
+					    <td><span class="bullet_02">&#8226;</span>&nbsp;Status Perkawinan </td>
+					    <td>
+							<com:TRadioButtonList 
+								ID="statKwnPeg" 
+								RepeatDirection="Horizontal"
+								OnSelectedIndexChanged="selectionChanged">
+								<com:TListItem Value="value 1" Text="Kawin" />
+								<com:TListItem Value="value 2" Text="Belum Kawin" />
+								<com:TListItem Value="value 3" Text="Janda" />
+								<com:TListItem Value="value 4" Text="Duda" />
+							</com:TRadioButtonList>						</td>
+					  </tr>
+					  <tr>
+					    <td colspan="2">&nbsp;</td>
+					    </tr>
+					  <tr>
+					    <td colspan="2"><strong>Susunan Keluarga (Diisi apabila sudah berkeluarga)</strong></td>
+					   </tr>
+					</table>
+				<com:TPanel GroupingText="A. Suami / Istri" Width="100%" >
+					<table width="100%"  border="0">
+					  <tr>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="bullet_02">&#8226;</span>&nbsp;Nama</td>
+						<td>
+							<com:TTextBox 
+								ID="nmSuamiIstriPeg" 
+								CssClass="inputtext" 
+								Width="250px" 								
+								/>						</td>
+					  </tr>
+					  <tr>
+					    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="bullet_02">&#8226;</span>&nbsp;Tempat Lahir</td>
+					    <td>
+							<com:TTextBox 
+								ID="tmpLhrSuamiIstriPeg" 
+								CssClass="inputtext" 
+								Width="250px" 								
+								/>						</td>
+					    </tr>
+					  <tr>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="bullet_02">&#8226;</span>&nbsp;Tanggal Lahir</td>
+						<td>
+							
+							<com:TDatePicker 
+								ID="DPtglLhrSuamiIstriPeg" 
+								Width="70px" 
+								FromYear="1940" 
+								DateFormat="dd-MM-yyyy"
+								ToolTip="Masukan tanggal lahir" 								
+								/>						</td>
+					  </tr>
+					  <tr>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="bullet_02">&#8226;</span>&nbsp;Tanggal Perkawinan</td>
+						<td>
+							<com:TDatePicker 
+								ID="DPtglKawin" 
+								Width="70px" 
+								FromYear="1940" 
+								DateFormat="dd-MM-yyyy"
+								ToolTip="Masukan tanggal lahir" 								
+								/>						</td>
+					  </tr>
+					  <tr>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="bullet_02">&#8226;</span>&nbsp;No. Seri Kartu Istri / Kartu Suami</td>
+						<td width="68%">
+							<com:TTextBox 
+								ID="noSrKrtu" 
+								CssClass="inputtext" 
+								Width="250px" 								
+								/>						</td>
+					  </tr>
+					  </table>
+					</com:TPanel>
+					<br />	
+					<com:TPanel GroupingText="B. Anak" Width="100%" >
+						<table width="100%"  border="0">
+						  <tr>
+							<td width="21%"><span class="bullet_02">&#8226;</span> Nama </td>
+							<td width="1%"><div align="center">:</div></td>
+							<td width="78%">
+								<com:TTextBox 
+									ID="nmAnak" 
+									CssClass="inputtext" 
+									Width="250px" 								
+								/>
+							</td>
+						  </tr>
+						  <tr>
+							<td><span class="bullet_02">&#8226;</span> Tanggal Lahir </td>
+							<td><div align="center">:</div></td>
+							<td>
+								<com:TDatePicker 
+								ID="DPtglLhrAnak" 
+								Width="70px" 
+								FromYear="1940" 
+								DateFormat="dd-MM-yyyy"
+								ToolTip="Masukan tanggal lahir" 								
+								/>
+							</td>
+						  </tr>
+						  <tr>
+							<td><span class="bullet_02">&#8226;</span> Jenis Kelamin </td>
+							<td><div align="center">:</div></td>
+							<td>
+								<com:TRadioButtonList 
+									ID="jkAnak" 
+									RepeatDirection="Horizontal"
+									OnSelectedIndexChanged="selectionChanged">
+									<com:TListItem Value="value 1" Text="Laki-Laki" />
+									<com:TListItem Value="value 2" Text="Perempuan" />
+								</com:TRadioButtonList>						
+							</td>
+						  </tr>
+						  <tr>
+							<td colspan="3">
+								<com:TButton ID="tbhFas" TabIndex="20" Text="Tambah" OnClick="tbhFasClick" CausesValidation="false" />						</td>
+						  </tr>
+					  </table>
+					</com:TPanel>
+					<table width="100%">
+						<tr>
+							<td bgcolor="#CCCCCC">
+								<com:TDataGrid
+									ID="DGanak"
+									EnableViewState="true" 
+									AutoGenerateColumns="false" 
+									DataKeyField="id"
+									CellPadding="2" 
+									Width="100%"
+									HeaderStyle.BackColor="white"
+									HeaderStyle.ForeColor="white"
+									ItemStyle.BackColor="#BFCFFF"					
+									ItemStyle.Font.Italic="false"
+									AlternatingItemStyle.BackColor="#E6ECFF" 								
+									OnDeleteCommand="delFas" >					
+									
+									<com:TBoundColumn						
+										HeaderText="Nama"
+										ItemStyle.Width="200px"
+										ItemStyle.HorizontalAlign="Center";
+										DataField="item" />
+									
+									<com:TBoundColumn						
+										HeaderText="Jumlah"
+										ItemStyle.Width="100px"
+										ItemStyle.HorizontalAlign="Center";
+										DataField="jml" />	
+									
+									<com:TBoundColumn						
+										HeaderText="Spek / Merk"
+										ItemStyle.Width="100px"
+										ItemStyle.HorizontalAlign="Center";
+										DataField="merk" />
+									
+									<com:TBoundColumn						
+										HeaderText="Harga"
+										ItemStyle.Width="100px"
+										ItemStyle.HorizontalAlign="Center";
+										DataField="hrg" />
+									
+									<com:TBoundColumn						
+										HeaderText="Keterangan"
+										ItemStyle.Width="100px"
+										ItemStyle.HorizontalAlign="Center";
+										DataField="ket" />
+									
+									<com:TButtonColumn												
+										HeaderText="Mode"
+										Text="Delete"						
+										ItemStyle.HorizontalAlign="Center"
+										ButtonType="PushButton"
+										CausesValidation="false" 															
+										CommandName="delete" 
+										ItemStyle.Width="30px"/>	
+								</com:TDataGrid>			
+							</td>
+						</tr>
+						<tr>
+							<td>&nbsp;</td>
+						</tr>	
+					</table>	
+					</com:TTabView>
+				
+				</com:TTabPanel>
+			</td>
+		  </tr>
+		</table>
+
+		
+		
+		<table width="100%"  border="0" align="center" cellpadding="0" cellspacing="0">
+          <tr>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td class="text_02">I. Identitas Pegawai </td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td><table width="100%"  border="0" align="right" cellpadding="0" cellspacing="1">
+              <tr>
+                <td width="33%">&#8226; NIP/NRP/NRPTT</td>
+                <td width="1%">:</td>
+                <td width="66%"><input name="textfield" type="text" class="input_text" /></td>
+              </tr>
+              <tr>
+                <td>&#8226; Nama </td>
+                <td>:</td>
+                <td><input name="textfield2" type="text" class="input_text" /></td>
+              </tr>
+              <tr>
+                <td>&#8226; Jenis Kelamin </td>
+                <td>:</td>
+                <td><input name="textfield3" type="text" class="input_text" /></td>
+              </tr>
+              <tr>
+                <td>&#8226; Tempat &amp; Tanggal Lahir </td>
+                <td>:</td>
+                <td><input name="textfield4" type="text" class="input_text" /></td>
+              </tr>
+              <tr>
+                <td>&#8226; Agama </td>
+                <td>:</td>
+                <td><input name="textfield5" type="text" class="input_text" /></td>
+              </tr>
+              <tr>
+                <td>&#8226; Status Perkawinan </td>
+                <td>:</td>
+                <td><input name="textfield6" type="text" class="input_text" /></td>
+              </tr>
+            </table></td>
+          </tr>
+          <tr>
+            <td><table width="100%"  border="0" align="right" cellpadding="0" cellspacing="1">
+              <tr>
+                <td height="21">&#8226; Susunan Keluarga (Diisi apabila sudah berkeluarga) </td>
+              </tr>
+            </table></td>
+          </tr>
+          <tr>
+            <td><table width="98%"  border="0" align="right" cellpadding="0" cellspacing="1">
+              <tr>
+                <td width="30%">A. Suami / Istri </td>
+              </tr>
+              <tr>
+                <td><table width="98%"  border="0" align="right" cellpadding="0" cellspacing="1">
+                  <tr>
+                    <td width="30%">&#8226; Nama </td>
+                    <td width="1%">:</td>
+                    <td width="69%"><input name="textfield7" type="text" class="input_text" /></td>
+                  </tr>
+                  <tr>
+                    <td>&#8226; Tempat &amp; Tanggal Lahir </td>
+                    <td>:</td>
+                    <td><input name="textfield42" type="text" class="input_text" /></td>
+                  </tr>
+                  <tr>
+                    <td>&#8226; Tanggal Perkawinan</td>
+                    <td>:</td>
+                    <td><input name="textfield52" type="text" class="input_text" /></td>
+                  </tr>
+                  <tr>
+                    <td>&#8226; Pekerjaan </td>
+                    <td>:</td>
+                    <td><input name="textfield522" type="text" class="input_text" /></td>
+                  </tr>
+                  <tr>
+                    <td>&#8226; No. Seri Kartu Istri / Kartu Suami </td>
+                    <td>:</td>
+                    <td><input name="textfield62" type="text" class="input_text" /></td>
+                  </tr>
+                </table></td>
+              </tr>
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+              <tr>
+                <td>B. Anak </td>
+              </tr>
+              <tr>
+                <td><table width="98%"  border="0" align="right" cellpadding="0" cellspacing="1">
+                  <tr>
+                    <td width="30%">&nbsp;</td>
+                  </tr>
+                </table></td>
+              </tr>
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+            </table></td>
+          </tr>
+          <tr>
+            <td><table width="100%"  border="0" align="right" cellpadding="0" cellspacing="1">
+              <tr>
+                <td width="33%">&#8226; TMT Menjadi Pegawai </td>
+                <td width="1%">:</td>
+                <td width="66%"><input name="textfield8" type="text" class="input_text" /></td>
+              </tr>
+              <tr>
+                <td>&#8226; Pendidikan pada waktu pengangkatan </td>
+                <td>:</td>
+                <td><input name="textfield22" type="text" class="input_text" /></td>
+              </tr>
+              <tr>
+                <td>&#8226; Ststus Kepegawaian </td>
+                <td>:</td>
+                <td><input name="textfield32" type="text" class="input_text" /></td>
+              </tr>
+              <tr>
+                <td>&#8226; Jenis Kepegawaian </td>
+                <td>:</td>
+                <td><input name="textfield43" type="text" class="input_text" /></td>
+              </tr>
+              <tr>
+                <td>&#8226; No. Seri Karpeg </td>
+                <td>:</td>
+                <td><input name="textfield53" type="text" class="input_text" /></td>
+              </tr>
+              <tr>
+                <td>&#8226; Golongan terakhir </td>
+                <td>:</td>
+                <td><input name="textfield63" type="text" class="input_text" /></td>
+              </tr>
+              <tr>
+                <td>&#8226; TMT </td>
+                <td>:</td>
+                <td><input name="textfield632" type="text" class="input_text" /></td>
+              </tr>
+            </table></td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+          </tr>
+        </table></td>
+      </tr>
+      <tr>
+        <td><table width="100%"  border="0" align="center" cellpadding="0" cellspacing="0">
+          <tr>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td class="text_02">II. Riwayat Pekerjaan </td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td><table width="100%"  border="0" align="right" cellpadding="0" cellspacing="1">
+              <tr>
+                <td width="33%">&#8226; No. SK Penempatan </td>
+                <td width="1%">:</td>
+                <td width="66%"><input name="textfield9" type="text" class="input_text" /></td>
+              </tr>
+              <tr>
+                <td>&#8226; Tgl. Melaksanakan tugas di unit kerja </td>
+                <td>:</td>
+                <td><input name="textfield23" type="text" class="input_text" /></td>
+              </tr>
+              <tr>
+                <td>&#8226; Nama unti kerja </td>
+                <td>:</td>
+                <td><input name="textfield33" type="text" class="input_text" /></td>
+              </tr>
+              <tr>
+                <td>&#8226; Nama satuan tugas </td>
+                <td>:</td>
+                <td><input name="textfield44" type="text" class="input_text" /></td>
+              </tr>
+              <tr>
+                <td>&#8226; Kabupaten / Kota </td>
+                <td>:</td>
+                <td><input name="textfield54" type="text" class="input_text" /></td>
+              </tr>
+              <tr>
+                <td>&#8226; Propinsi </td>
+                <td>:</td>
+                <td><input name="textfield64" type="text" class="input_text" /></td>
+              </tr>
+            </table></td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+          </tr>
+        </table></td>
+      </tr>
+      <tr>
+        <td><table width="100%"  border="0" align="center" cellpadding="0" cellspacing="0">
+          <tr>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td class="text_02">III. Riwayat Kepangkatan </td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td><table width="100%"  border="0" align="right" cellpadding="0" cellspacing="1">
+              <tr>
+                <td width="33%">&#8226; Grid </td>
+              </tr>
+            </table></td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+          </tr>
+        </table></td>
+      </tr>
+      <tr>
+        <td><table width="100%"  border="0" align="center" cellpadding="0" cellspacing="0">
+          <tr>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td class="text_02">IV. Riwayat Jabatan Struktur / Fungsional </td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td><table width="100%"  border="0" align="right" cellpadding="0" cellspacing="1">
+              <tr>
+                <td width="33%">&#8226; Grid </td>
+              </tr>
+            </table></td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+          </tr>
+        </table></td>
+      </tr>
+      <tr>
+        <td><table width="100%"  border="0" align="center" cellpadding="0" cellspacing="0">
+          <tr>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td class="text_02">V. Riwayat Pendidikan </td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td><table width="100%"  border="0" align="right" cellpadding="0" cellspacing="1">
+              <tr>
+                <td width="33%">&#8226; Grid </td>
+              </tr>
+            </table></td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+          </tr>
+        </table></td>
+      </tr>
+      <tr>
+        <td><table width="100%"  border="0" align="center" cellpadding="0" cellspacing="0">
+          <tr>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td class="text_02">VI. Pelatihan</td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td><table width="98%"  border="0" align="right" cellpadding="0" cellspacing="1">
+              <tr>
+                <td width="30%">A. Latihan Penjenjangan </td>
+              </tr>
+              <tr>
+                <td><table width="98%"  border="0" align="right" cellpadding="0" cellspacing="1">
+                  <tr>
+                    <td width="30%">&#8226; Grid </td>
+                  </tr>
+                </table></td>
+              </tr>
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+              <tr>
+                <td>B. Latihan Teknis / Fungsional </td>
+              </tr>
+              <tr>
+                <td><table width="98%"  border="0" align="right" cellpadding="0" cellspacing="1">
+                  <tr>
+                    <td width="30%">&#8226; Grid </td>
+                  </tr>
+                </table></td>
+              </tr>
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+            </table></td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+          </tr>
+        </table></td>
+      </tr>
+      <tr>
+        <td><table width="100%"  border="0" align="center" cellpadding="0" cellspacing="0">
+          <tr>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td class="text_02">VII. Pelatihan </td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td><table width="100%"  border="0" align="right" cellpadding="0" cellspacing="1">
+              <tr>
+                <td width="33%">&#8226; Grid </td>
+              </tr>
+            </table></td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+          </tr>
+        </table></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td>
+		<table width="100%" border="0">
+		  <tr>
+			<td>
+			
+			</td>
+		  </tr>
+		</table>
+
+		<table width="100%"  border="0" align="center" cellpadding="0" cellspacing="0">
+          <tr>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td height="2" bgcolor="#999999"></td>
+          </tr>
+          <tr>
+            <td height="7"></td>
+          </tr>
+          <tr>
+            <td><table width="10" border="0" align="center" cellpadding="0" cellspacing="5" bgcolor="#CCCCCC">
+              <tr>
+                <td><input name="Submit4222" type="submit" class="button_01" value="Simpan" /></td>
+                <td><input name="Submit22222" type="submit" class="button_01" value="Batal" /></td>
+                <td><input name="Submit32222" type="submit" class="button_01" value="Keluar" /></td>
+              </tr>
+            </table></td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+          </tr>
+        </table></td>
+      </tr>
+    </table></td>
+  </tr>
+</table>
+</com:TContent> 

@@ -1,0 +1,147 @@
+<%@ MasterClass="Application.layouts.MainLayout" %>
+<com:TContent ID="jdMain">
+	Berita Diagnosa Radiologi
+    
+    <a href="<%= $this->Service->constructUrl('Simak') %>" onclick="maskContent()">
+    <span class="close-btn">
+        <span class="ui-icon ui-icon-circle-close"></span>
+    </span>
+    </a>
+    
+</com:TContent>	
+
+<com:TContent ID="Main"> 
+
+<com:TTimeTriggeredCallback OnCallback="refreshMe" StartTimerOnLoad="true" Interval="5" Enabled="false" />
+
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>			  
+                <td>
+				<com:TLabel ID="showSql" />
+				<table width="100%" align="center" border="0">
+			  		<tr>
+						<td align="center"><com:TPanel GroupingText="Pencarian Data Radiologi" >
+							<table width="85%"  border="0" align="left">
+							  <tr>
+                                <td><span>&#8226;</span>&nbsp;&nbsp;No. Register</td>
+                                <td>:</td>
+                                <td><com:TTextBox ID="noReg"
+										MaxLength="14"										
+										Width="120px" 
+										ToolTip="Cari berdasarkan No Registrasi !!" 
+										TabIndex="1" 
+										AutoPostBack="true" 
+										OnTextChanged="noRegChanged"/>&nbsp;&nbsp;&nbsp;<com:TLabel ID="errMsg" />
+                                </td>
+							    </tr>
+								<com:TControl id="show">
+							  <tr>
+								<td width="23%"><span>&#8226;</span>&nbsp;&nbsp;Kode CM</td>
+								<td width="2%">:</td>
+								<td width="75%"><com:TActiveLabel ID="CM"/></td>
+							  </tr>
+							  <tr>
+                                <td><span>&#8226;</span>&nbsp;&nbsp;Nama Pasien </td>
+                                <td>:</td>
+                                <td><com:TLabel ID="namaPasien"/></td>
+							    </tr>
+							  <tr>
+                                <td><span>&#8226;</span>&nbsp;&nbsp;Nama Dokter</td>
+                                <td>:</td>
+                                <td><com:TLabel ID="namaDokter"/></td>
+							  </tr>
+							</com:TControl>  
+							  <tr>
+							    <td>&nbsp;</td>
+							    <td>&nbsp;</td>
+							    <td><!--
+									<com:TButton Text="Cari" OnClick="cariClicked" CssClass="button_01" TabIndex="6" />-->
+								</td>
+							    </tr>
+							</table>
+							</com:TPanel>
+						</td>
+			  		</tr>
+				</table>
+			</td>
+              </tr>
+              <tr>
+                <td><table width="95%"  border="0" align="center" cellpadding="0" cellspacing="1">                      
+                      <tr>
+                        <td align="center">
+						<com:TDataGrid ID="UserGrid"
+								DataKeyField="id"
+								AutoGenerateColumns="false"	
+								AllowPaging="true"
+								AllowCustomPaging="true"
+								AllowSorting="true"
+								Width="100%"					
+								PageSize="5"
+								PagerStyle.Mode="Numeric"			
+								PagerStyle.Font.Name="Arial"
+								PagerStyle.Font.Size="12"
+								PagerStyle.HorizontalAlign="Right"			
+								GridLines="None"
+								CellSpacing="1"
+								CellPadding="2"
+								HeaderStyle.CssClass="headerstyle"
+								ItemStyle.CssClass="itemstyle"
+								AlternatingItemStyle.CssClass="itemstyle2"
+								OnItemCreated="itemCreated"
+								OnEditCommand="editItem"
+								OnUpdateCommand="saveItem"
+								OnCancelCommand="cancelItem"
+								OnDeleteCommand="deleteButtonClicked"								
+								OnPageIndexChanged="changePage"
+								OnPagerCreated="pagerCreated"			
+								OnSortCommand="sortGrid">								
+							</div>	
+								
+								<com:TTemplateColumn HeaderText="Deskripsi" 
+													 SortExpression="nama"
+													 ID="nama" 													 
+													 ItemStyle.Width="100px" 
+													 ItemStyle.HorizontalAlign="Center" >									
+									<prop:ItemTemplate>
+										<%=	$this->Parent->DataItem['nama'] %>
+									</prop:ItemTemplate>
+								</com:TTemplateColumn> 
+								
+								<com:TBoundColumn 
+									ID="catatan"
+									SortExpression="catatan"
+									HeaderText="Keterangan"
+									ItemStyle.Width="200px"
+									DataField="catatan" />															
+								
+								<com:TEditCommandColumn
+									HeaderText="Edit"
+									HeaderStyle.Width="50px"
+									UpdateText="Save"
+									ItemStyle.HorizontalAlign="Center"
+									ItemStyle.Font.Italic="false"
+									/>			
+							</com:TDataGrid>
+						</td>                       
+                      </tr>
+                    </table></td>
+              </tr>
+              <tr>
+                <td><hr /></td>
+              </tr>
+              <tr>
+                <td><table width="10" border="0" align="center" cellpadding="0" cellspacing="2">
+                    <tr>
+                      <td>
+                      <!---
+					  <com:TControl Visible="<%= $this->User->IsAdmin %>"> --->
+					  	<com:TButton Text="Cetak" OnClick="simpanClicked" CssClass="button_01" TabIndex="6" Attributes.onclick = "maskContent();"/>
+					  <!---</com:TControl> --->
+					  </td>                      
+                      <td><com:TButton Text="Batal" Visible="false" OnClick="keluarClicked" CausesValidation="false" CssClass="button_01" TabIndex="7" Attributes.onclick = "maskContent();"/></td>
+                    </tr>
+                </table></td>
+              </tr>
+          </table>
+          
+</com:TContent>

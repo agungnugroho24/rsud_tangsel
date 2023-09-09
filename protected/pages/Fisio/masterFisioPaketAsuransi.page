@@ -1,0 +1,260 @@
+<%@ MasterClass="Application.layouts.MainLayout" %>
+<com:TContent ID="jdMain">
+	Master Tindakan Paket Asuransi Fisio
+    
+    <a href="<%= $this->Service->constructUrl('Simak') %>" onclick="maskContent()">
+    <span class="close-btn">
+        <span class="ui-icon ui-icon-circle-close"></span>
+    </span>
+    </a>
+    
+</com:TContent>	
+
+
+<com:TContent ID="Main">
+
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+		  
+              <tr>			  
+                <td>
+				<com:TActiveLabel ID="showSql" />
+				<table width="100%" align="center" border="0">
+			  		<tr>
+						<td align="center"><com:TPanel Width="100%">
+							<table width="100%"  border="0" align="left">
+                              <com:TControl Visible="false">	
+							  <tr>
+								<td width="150"><span>&#8226;</span>&nbsp;&nbsp;ID </td>
+								<td width="5">:</td>
+								<td >
+                                	<com:TActiveTextBox ID="ID" 
+										MaxLength="7"										
+										Width="100px"
+                                        AutoPostBack="true"
+                                        CausesValidation="false"
+                                        OnTextChanged="cariClicked" />
+                               </td>
+							  </tr>
+                              
+                              <tr>
+								<td><span>&#8226;</span>&nbsp;&nbsp;Group</td>
+								<td>:</td>
+								<td>
+									<com:TActiveDropDownList 
+                                         ID="DDKateg" 
+                                         Width="300px"
+                                         CssClass="input_text"
+                                         AutoPostBack="true"
+                                         CausesValidation="false"
+                                         PromptText ="--Silakan Pilih--"
+                                         PromptValue ="empty"
+                                         DataTextField="nama"
+                                         DataValueField="id"
+                                         OnSelectedIndexChanged="cariClicked"/>
+								</td>
+							  </tr>
+                              
+                              </com:TControl>
+                              <tr>
+								<td><span>&#8226;</span>&nbsp;&nbsp;Status Perawatan</td>
+								<td>:</td>
+								<td>
+									<com:TActiveRadioButtonList
+                                          ID="stRawat"
+                                          RepeatDirection="Horizontal" 
+                                          AutoPostBack="true" 
+                                          CausesValidation="false" 
+                                          OnSelectedIndexChanged="cariClicked"
+                                          SelectedValue="0">
+                                    <com:TListItem Text="Rawat jalan" Value="0" />
+                                    <com:TListItem Text="Rawat Inap" Value="1" />                          
+                                  </com:TActiveRadioButtonList>		
+								</td>
+							  </tr>
+                              
+                              <!--- <com:TControl ID="hiden" Visible="false"> --->
+							  <tr>
+								<td width="150"><span>&#8226;</span>&nbsp;&nbsp;Nama Tindakan</td>
+								<td width="5">:</td>
+								<td>
+									<com:TActiveTextBox 
+                                    	ID="cariNama"  
+										Width="300px" 
+                                        AutoPostBack="true"
+                                        CausesValidation="false"
+                                        OnTextChanged="cariClicked"/>
+										&nbsp;
+									<com:TActiveCheckBox 
+										ID="Advance" 
+										Text="Elemen Kata" 
+										Value="1" 
+                                        AutoPostBack="true"
+                                        CausesValidation="false"
+                                        OnCheckedChanged="cariClicked"/>
+								</td>
+							  </tr>
+                              
+                              <tr>
+								<td><span>&#8226;</span>&nbsp;&nbsp;Perusahaan Penjamin</td>
+								<td>:</td>
+								<td>
+									<com:TActiveDropDownList 
+                                         ID="DDKamar" 
+                                         Width="300px"
+                                         CssClass="input_text"
+                                         AutoPostBack="true"
+                                         CausesValidation="false"
+                                         PromptText ="--Silakan Pilih--"
+                                         PromptValue =""
+                                         DataTextField="nama"
+                                         DataValueField="id" 
+                                         OnSelectedIndexChanged="cariClicked"  />
+								</td>
+							  </tr>
+                              
+                              <com:TControl Visible="false" Enabled="false">
+                              <tr>
+								<td><span>&#8226;</span>&nbsp;&nbsp;Kelas</td>
+								<td>:</td>
+								<td>
+									<com:TActiveDropDownList 
+                                         ID="DDKelas" 
+                                         Width="300px"
+                                         CssClass="input_text"
+                                         AutoPostBack="true"
+                                         CausesValidation="false"
+                                         PromptText ="--Silakan Pilih--"
+                                         PromptValue =""
+                                         DataTextField="nama"
+                                         DataValueField="id" 
+                                         OnSelectedIndexChanged="cariClicked"  />
+								</td>
+							  </tr>
+                     			</com:TControl>
+                                
+                              <!--- </com:TControl> --->
+							  <tr>
+							    <td>&nbsp;</td>
+							    <td>&nbsp;</td>
+							    <td>
+                                	<com:TActiveButton 
+                                    	Text="Cari" 
+                                        OnClick="cariClicked" 
+                                        CssClass="button_01">
+                                        <prop:ClientSide 
+                                            OnLoading="maskContent();"
+                                            OnComplete="unmaskContent(); "/>
+                                    </com:TActiveButton>    
+                                </td>
+							  </tr>
+                              <tr>
+							    <td colspan="3"><hr/></td>
+							</table>
+							</com:TPanel>
+						</td>
+			  		</tr>
+				</table>
+			</td>
+              </tr>
+			  
+              <tr>
+                <td><table width="100%"  border="0" align="center" cellpadding="0" cellspacing="1">                      
+                      <tr>
+                        <td align="center">
+						<com:XActiveDataGrid ID="dtgSomeData"
+								DataKeyField="id"
+								AutoGenerateColumns="false"	
+								AllowPaging="true"
+								AllowCustomPaging="true"
+								AllowSorting="true"
+								Width="100%"					
+								PageSize="15"
+								PagerStyle.Mode="Numeric"			
+								PagerStyle.Font.Name="Arial"
+								PagerStyle.Font.Size="12"
+								PagerStyle.HorizontalAlign="Right"			
+								GridLines="None"
+								CellSpacing="1"
+								CellPadding="2"
+								HeaderStyle.CssClass="headerstyle"
+								ItemStyle.CssClass="itemstyle"
+								AlternatingItemStyle.CssClass="itemstyle2"
+								OnItemCreated="itemCreated"
+								OnDeleteCommand="deleteButtonClicked"								
+								OnPageIndexChanged="dtgSomeData_PageIndexChanged"
+								OnSortCommand="dtgSomeData_SortCommand"
+                                EmptyTemplate="BELUM ADA DATA">	
+                                
+                                <com:XActiveBoundColumn
+									SortExpression="nm_tindakan"
+									HeaderText="Tindakan"
+									ItemStyle.Width="30%"
+                                    ItemStyle.HorizontalAlign="Center"
+									DataField="nm_tindakan" />
+                                 
+                                 <com:XActiveBoundColumn
+									SortExpression="nm_perus"
+									HeaderText="Penjamin"
+									ItemStyle.Width="30%"
+                                    ItemStyle.HorizontalAlign="Center"
+									DataField="nm_perus" />
+                                                                        
+                                <com:XActiveTemplateColumn
+                                	ID="tarif"
+									SortExpression="tarif"
+									HeaderText="Tarif"
+									ItemStyle.Width="15%"
+                                    ItemStyle.HorizontalAlign="Right" />
+                               	
+                                <com:XActiveTemplateColumn 
+                                    ID="editColumn"
+                                    ItemStyle.HorizontalAlign="Center"
+                                    ItemStyle.Width="10px"
+                                    Visible="True">
+                                    <prop:HeaderTemplate>Edit</prop:HeaderTemplate>
+                                    <prop:ItemTemplate>
+                                        <com:TActiveButton 
+                                            ID="editBtnPangkat"
+                                            CommandParameter="<%# $this->Parent->Data['id'] %>"
+                                            Text="Edit" 
+                                            OnClick="Page.editRow" 
+                                            CssClass="button_01" 
+                                            CausesValidation="false"
+                                            Attributes.onclick="if(!confirm('Edit Data Paket <%# $this->Parent->Data['nm_tindakan'] %>, kelompok penjamin <%# $this->Parent->Data['nm_perus'] %> ?')) return false;">
+                                            <prop:ClientSide
+                                                    OnLoading="maskContent(); "
+                                                    OnComplete="unmaskContent(); "/>
+                                       </com:TActiveButton>  
+                                    </prop:ItemTemplate>
+                                </com:XActiveTemplateColumn>
+                                 
+								<com:XActiveButtonColumn												
+									HeaderText="Mode"
+									Text="Delete"
+									ID="Hapus" ItemStyle.Width="50px"
+									ItemStyle.HorizontalAlign="Center"
+									ButtonType="PushButton"									
+									CommandName="delete" />	
+									
+							</com:XActiveDataGrid>
+						</td>                       
+                      </tr>
+                      <tr>
+                        <td><hr /></td>
+                      </tr>
+                    </table></td>
+              </tr>
+              
+              <tr>
+                <td align="center">
+                	<com:TControl Visible="<%= $this->User->IsAdmin %>">
+					  	<com:TActiveButton Text="Baru" Attributes.onclick = "maskContent();" OnClick="baruClicked" CssClass="tes" />
+                  	</com:TControl>
+                  
+                  	<com:TActiveButton Text="Tarif Tindakan Operasi" Visible="false" Attributes.onclick = "maskContent();" OnClick="tarifBtnClicked" CssClass="button_01" />
+                  	<com:TActiveButton Text="Keluar" Visible="True" Attributes.onclick = "maskContent();" OnClick="keluarClicked" CausesValidation="false" CssClass="button_01" />
+                </td>
+              </tr>
+          </table>
+          
+</com:TContent>

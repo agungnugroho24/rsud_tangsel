@@ -1,0 +1,1 @@
+<?php return '/var/www/simak_tangsel/gallery'; ?>

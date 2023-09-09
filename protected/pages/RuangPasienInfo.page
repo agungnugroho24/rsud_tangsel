@@ -1,0 +1,116 @@
+<%@ MasterClass="Application.layouts.InfoLayout" %>
+
+<com:TContent ID="isi">
+	
+  <div class="row-fluid page-head main-title">
+  	<h2 class="page-title darkblue f60"><i class="fontello-icon-monitor"></i> INFO KAMAR RAWAT INAP</h2>
+  </div>
+  
+  <div id="page-content" class="page-content">
+    
+    <section>
+			<div class="row-fluid">  
+        <div class="span12">
+   				<div class="widget widget-simple">
+            <div class="widget-content">
+							<div class="widget-body">  
+        				
+                <com:XActiveDataGrid 
+                  ID="dtgSomeData"
+                  DataKeyField="id"
+                  AutoGenerateColumns="false"	
+                  AllowPaging="false"
+                  AllowCustomPaging="true"
+                  AllowSorting="false"
+                  Width="100%"					
+                  PageSize="100"
+                  PagerStyle.Mode="Numeric"			
+                  PagerStyle.Font.Name="Arial"
+                  PagerStyle.Font.Size="12"
+                  PagerStyle.HorizontalAlign="Right"			
+                  GridLines="None"
+                  CellSpacing="1"
+                  CellPadding="2"
+                  CssClass="table table-striped table-condensed bg-green-strong infoTxt"
+                  HeaderStyle.CssClass=""
+                  ItemStyle.CssClass=""
+                  AlternatingItemStyle.CssClass=""
+                  OnItemCreated="itemCreated"
+                  OnDeleteCommand="deleteButtonClicked"								
+                  OnPageIndexChanged="dtgSomeData_PageIndexChanged"
+                  OnSortCommand="dtgSomeData_SortCommand">	
+                  
+                  <com:XActiveTemplateColumn
+                    ID="ruang"
+                    HeaderText="RUANGAN"
+                    HeaderStyle.CssClass="p10 f28"
+                    ItemStyle.CssClass="p20 f28"
+                    ItemStyle.HorizontalAlign="Left" />
+                  
+                  <com:XActiveTemplateColumn
+                    ID="kelas"
+                    SortExpression="nm_kelas"
+                    HeaderText="KELAS KAMAR"
+                    ItemStyle.Width="8%"
+                    Visible="False"
+                    HeaderStyle.CssClass="p10 f10"
+                    ItemStyle.CssClass="p20 f10"
+                    ItemStyle.HorizontalAlign="Center" />
+                  
+                  <com:XActiveTemplateColumn
+                    ID="jmlBed"
+                    SortExpression="jml_bed"
+                    HeaderText="TOTAL"
+                    ItemStyle.Width="10%"
+                    HeaderStyle.CssClass="p10 f28"
+                    ItemStyle.CssClass="p20 f28"
+                    ItemStyle.CustomStyle="text-align:right;padding-right:85px;" />
+                  
+                  <com:XActiveTemplateColumn
+                    ID="jmlBedPakai"
+                    SortExpression="jml_bed_pakai"
+                    HeaderText="TERPAKAI"
+                    ItemStyle.Width="13%"
+                    HeaderStyle.CssClass="p10 f28"
+                    ItemStyle.CssClass="p20 f28"
+                    ItemStyle.CustomStyle="text-align:right;padding-right:90px;" />
+                  
+                  <com:XActiveTemplateColumn
+                    ID="jmlTersedia"
+                    HeaderText="TERSEDIA"
+                    ItemStyle.Width="13%"
+                    HeaderStyle.CssClass="p10 f28"
+                    ItemStyle.CssClass="p20 f28"
+                    ItemStyle.CustomStyle="text-align:right;padding-right:90px;" />
+                  
+                  <com:XActiveTemplateColumn
+                    ID="status"
+                    HeaderText=""
+                    ItemStyle.Width="12%" />
+                  
+                  <com:XActiveButtonColumn												
+                    HeaderText="Mode"
+                    Text="Delete"
+                    Visible="False"
+                    ID="Hapus" ItemStyle.Width="60px"
+                    ItemStyle.HorizontalAlign="Center"
+                    ButtonType="PushButton"									
+                    CommandName="delete" />	
+                    
+                </com:XActiveDataGrid>
+                      
+              </div>
+        		</div>
+  				</div>                             
+  			</div>
+  
+      </div>
+		</section>  
+      
+  </div>
+  
+  
+    
+  
+  
+</com:TContent>

@@ -1,0 +1,168 @@
+<%@ MasterClass="Application.layouts.MainLayout" %>
+<com:TContent ID="jdMain">
+	Resume Pasien Keluar
+    
+    <a href="<%= $this->Service->constructUrl('Simak') %>" onclick="maskContent()">
+    <span class="close-btn">
+        <span class="ui-icon ui-icon-circle-close"></span>
+    </span>
+    </a>
+    
+</com:TContent>	
+
+<com:TContent ID="Main"> 
+	
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>			  
+            <td>
+            <com:TLabel ID="showSql" />
+            <table width="100%" align="center" border="0">
+                <tr>
+                    <td align="center">
+                    <com:TPanel >
+                        <table width="100%"  border="0" align="left">
+                         <com:TControl ID="showFirst">                           
+                          
+                            <tr>
+                            <td width="17%"><span>&#8226;</span>&nbsp;&nbsp;No. CM</td>
+                            <td width="1%">:</td>
+                            <td width="82%">
+                                <com:TTextBox CssClass="input_text" 
+                                      ID="notrans" 
+                                      AutoPostBack="true"													   
+                                      MaxLength="7"
+                                      OnTextChanged="checkRegister"   
+                                      ToolTip="No. Register Pasien" 
+                                      Width="50px" TabIndex="5"	
+                                      />
+                                &nbsp;
+                                <com:TLabel 
+                                    ID="errMsg" 
+                                    ForeColor="#FF0000" />									</td>
+                            </tr>
+                          
+                            <com:TControl ID="cekCmCtrl" Visible="false">
+                            <tr>
+                              <td valign="top"><span>&#8226;</span>&nbsp;&nbsp;Tanggal Keluar </td>
+                              <td valign="top">:</td>
+                              <td valign="top">
+                                <com:TTextBox ID="tgl" ReadOnly="true" />
+                              </td>
+                              </tr>
+                            <tr>
+                              <td valign="top"><span>&#8226;</span>&nbsp;&nbsp;Diagnosa Masuk </td>
+                              <td valign="top">:</td>
+                              <td valign="top">
+                                <com:TTextBox 
+                                    ID="diagnosaMasuk" 
+                                    Width="450px"
+                                    Height="50px"
+                                    TextMode="MultiLine" />								  </td>
+                              </tr>
+                            <tr>
+                              <td valign="top"><span>&#8226;</span>&nbsp;&nbsp;Diagnosa Keluar </td>
+                              <td valign="top">:</td>
+                              <td valign="top">
+                                <com:TTextBox 
+                                    ID="diagnosaKeluar" 
+                                    Width="450px"
+                                    Height="50px"
+                                    TextMode="MultiLine" 										
+                                    ToolTip="Isi diagnosa keluar" />								  </td>
+                              </tr>
+                            <tr>
+                              <td valign="top"><span>&#8226;</span>&nbsp;&nbsp;Pembedahan </td>
+                              <td valign="top">:</td>
+                              <td valign="top">
+                                <com:TTextBox 
+                                    ID="bedah" 
+                                    Width="450px"
+                                    Height="50px"
+                                    TextMode="MultiLine" 										
+                                    ToolTip="Isi pembedahan" />								  </td>
+                              </tr>
+                            <tr>
+                              <td valign="top"><span>&#8226;</span>&nbsp;&nbsp;Tindakan Khusus </td>
+                              <td valign="top">:</td>
+                              <td valign="top">
+                                <com:TTextBox 
+                                    ID="tdkKhusus" 
+                                    Width="450px"
+                                    Height="50px"
+                                    TextMode="MultiLine" 										
+                                    ToolTip="Isi pembedahan" />								  </td>
+                              </tr>
+                            <tr>
+                              <td valign="top"><span>&#8226;</span>&nbsp;&nbsp;Anjuran </td>
+                              <td valign="top">:</td>
+                              <td valign="top">
+                                <com:TTextBox 
+                                    ID="anjuran" 
+                                    Width="450px"
+                                    Height="50px"
+                                    TextMode="MultiLine" 										
+                                    ToolTip="Isi anjuran" />									</td>
+                              </tr>
+                            <tr>
+                              <td valign="top"><span>&#8226;</span>&nbsp;&nbsp;Dokter yang merawat  </td>
+                              <td valign="top">:</td>
+                              <td valign="top">
+                                <com:TDropDownList 
+                                    ID="DDDokter"
+                                    PromptText ="--Silakan Pilih--"
+                                    PromptValue ="empty"											
+                                    DataTextField="nama"
+                                    DataValueField="id" 	
+                                    ToolTip="Pilih Dokter yang merawat.." 
+                                    Width="300px"
+                                      />
+                                <com:TRequiredFieldValidator
+                                    Display="Dynamic"
+                                    ControlToValidate="DDDokter"
+                                    Text="Dokter belum dipilih" 
+                                    InitialValue="empty" 
+                                    ValidationGroup="val"
+                                />			
+                              </td>
+                              </tr>
+                            </com:TControl>							 
+                          </com:TControl>
+                        </table>
+                        </com:TPanel>
+                    </td>
+                </tr>
+            </table>			</td>
+          </tr>
+          <tr>
+            <td><hr /></td>
+          </tr>
+          <tr>
+            <td><table width="10" border="0" align="center" cellpadding="0" cellspacing="2">
+                <tr>                                        
+                  <td><com:TButton Text="Simpan" 
+                                   OnClick="cetakClicked"
+                                   ID="cetakBtn"
+                                   CssClass="button_01" 
+                                   TabIndex="13" 
+                                   Enabled="false" 
+                                   CausesValidation="true" 
+                                   ValidationGroup="val"
+                                   Attributes.onclick = "if(!confirm('Simpan data sekarang..?')) return false; else maskContent();"/></td>
+                  <td><com:TButton Text="Batal" 
+                                   OnClick="batalClicked" 
+                                   CausesValidation="false" 
+                                   CssClass="button_01" 
+                                   TabIndex="14"
+                                   Attributes.onclick = "if(!confirm('Batalkan pengisian data..?')) return false; else maskContent();" /></td>				   
+                  <td><com:TButton Text="Keluar" 
+                                   OnClick="keluarClicked" 
+                                   CausesValidation="false" 
+                                   CssClass="button_01" 
+                                   Visible="false"
+                                   TabIndex="15" /></td>
+                </tr>
+            </table></td>
+          </tr>
+      </table>
+      
+</com:TContent> 

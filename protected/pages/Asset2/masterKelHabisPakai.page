@@ -1,0 +1,195 @@
+<%@ MasterClass="Application.layouts.AssetLayout" %>
+<com:TContent ID="Main">
+<tr>
+<table width="100%"  border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td height="40"><table width="10" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td><table width="10" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+          </table></td>
+          <td><table width="200" border="0" cellspacing="2" cellpadding="0">
+              <tr>
+                <td class="text_01">Data Master Aset </td>
+              </tr>
+          </table></td>
+          <td>&nbsp;</td>
+        </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="100%"  border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td width="1%"><table width="10" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+          </table></td>
+          <td width="99%" height="350" valign="top" class="table_03"><table width="100%"  border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td width="1%"><table width="18" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                      <td>&nbsp;</td>
+                    </tr>
+                </table></td>
+                <td width="99%"><table width="100%"  border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                      <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                      <td class="text_02">Data Aset Kelompok Habis Pakai</td>
+                    </tr>
+                    <tr>
+                      <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <com:TPanel ID="cariBtn">
+                      	<table width="650"  border="0" cellspacing="2" cellpadding="0">
+                        <tr>
+                          <td width="152">&#8226; ID  </td>
+                            <td width="3">:</td>
+                            <td width="487">
+								<com:TTextBox 
+									ID="ID"
+									CssClass="inputtex"  
+									Width="100px"/>
+							</td>
+                          </tr>
+                          <tr>
+                            <td>&#8226; Nama Kelompok</td>
+                            <td>:</td>
+                            <td>
+								<com:TTextBox 
+									ID="Nama" 
+									CssClass="inputtex" 
+									Width="280px" 
+									TabIndex="2" />
+								&nbsp;
+									<com:TCheckBox 
+										ID="Advance" 
+										Text="Elemen Kata" 
+										Value="1" 
+									/>
+							</td>
+                        </tr>
+                        <tr>
+                          <td valign="top">&nbsp;</td>
+                          <td valign="top">&nbsp;</td>
+                          <td valign="top"><com:TButton ID="btnCari" Text="Cari" OnClick="cariClicked" CssClass="button_01" /></td>
+                        </tr>
+                        <tr>
+                          <td colspan="3" valign="top"><hr /></td>
+                        </tr>
+                        <tr>
+                          <td colspan="3" valign="top">Jumlah Data : <com:TLabel ID="jmlData"/></td>
+                        </tr>
+                      </table>
+                      </com:TPanel>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+					  <com:TLabel ID="showSql" />
+					  <table width="700px"  border="0" align="left" cellpadding="0" cellspacing="1">                      
+						  <tr>
+							<td align="center">
+							<com:TDataGrid ID="UserGrid" 
+									DataKeyField="id"
+									AutoGenerateColumns="false"	
+									AllowPaging="true"
+									AllowCustomPaging="true"
+									AllowSorting="true"
+									Width="700px"					
+									PageSize="5"
+									PagerStyle.Mode="Numeric"			
+									PagerStyle.Font.Name="Arial"
+									PagerStyle.Font.Size="12"
+									PagerStyle.HorizontalAlign="Right"			
+									GridLines="None"
+									CellSpacing="1"
+									CellPadding="2" 
+									BackColor="#" 
+									HeaderStyle.CssClass="headerstyle"
+									ItemStyle.CssClass="itemstyle"
+									AlternatingItemStyle.CssClass="itemstyle2"
+									OnItemCreated="itemCreated"
+									OnDeleteCommand="deleteButtonClicked"								
+									OnPageIndexChanged="changePage"
+									OnPagerCreated="pagerCreated"			
+									OnSortCommand="sortGrid">								
+								</div>	
+									
+									<com:THyperLinkColumn   
+										SortExpression="id"     
+										HeaderText="ID"									
+										DataTextField="id"
+										ItemStyle.HorizontalAlign="Center"
+										ItemStyle.Width="80px"		
+										DataNavigateUrlField="id">
+										<prop:DataNavigateUrlFormatString>#
+										  $this->Service->constructUrl('Asset.masterKelHabisPakaiEdit',array('ID'=>{0},'mode'=>'01'))
+										</prop:DataNavigateUrlFormatString>
+									</com:THyperLinkColumn>	 
+									
+									<com:TBoundColumn
+										SortExpression="nama"
+										HeaderText="Nama"
+										ItemStyle.Width="500px"
+										DataField="nama" />
+										
+									<com:TButtonColumn												
+										HeaderText="Mode"
+										Text="Delete"
+										ID="Hapus"
+										ItemStyle.HorizontalAlign="Center"
+										ButtonType="PushButton"									
+										CommandName="delete" />	
+										
+								</com:TDataGrid>
+							</td>                       
+						  </tr>
+						</table>
+					  
+					  
+					  </td>
+                    </tr>
+                    <tr>
+                      <td><table width="95%"  border="0" cellspacing="0" cellpadding="0">
+                          <tr>
+                            <td class="table_05"></td>
+                          </tr>
+                      </table></td>
+                    </tr>
+                    <tr>
+                      <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                      <td><table width="100" border="0" align="center" cellpadding="0" cellspacing="4" class="table_04">
+                          <tr>
+                            <td><table width="10" border="0" cellspacing="2" cellpadding="0">
+                                <tr>
+                                   <td><com:TButton Text="Baru" OnClick="baruClicked" CssClass="button_01"  /></td>
+								  <td><!--<com:TButton Text="Batal" buttonType="Reset" CssClass="button_01"/>--></td>
+								  <td><com:TButton Text="Keluar" OnClick="keluarClicked" CausesValidation="false" CssClass="button_01" /></td>
+                                </tr>
+                            </table></td>
+                          </tr>
+                      </table></td>
+                    </tr>
+                    <tr>
+                      <td>&nbsp;</td>
+                    </tr>
+                </table></td>
+              </tr>
+          </table></td>
+        </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td height="10"></td>
+  </tr>
+</table>
+</com:TContent>

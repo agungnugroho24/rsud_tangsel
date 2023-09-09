@@ -1,0 +1,641 @@
+<%@ MasterClass="Application.layouts.MainLayout" %>
+<com:TContent ID="jdMain">
+	Hasil Pemeriksaan Radiologi
+    
+    <a href="<%= $this->Service->constructUrl('Simak') %>" onclick="maskContent()">
+    <span class="close-btn">
+        <span class="ui-icon ui-icon-circle-close"></span>
+    </span>
+    </a>
+    
+</com:TContent>	
+
+<com:TContent ID="Main"> 
+
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>			  
+                <td>
+				<com:TActiveLabel ID="showSql" />
+				<table width="100%" align="center" border="0">
+			  		<tr>
+						<td align="center">
+                        	<com:TActivePanel ID="showFirst">
+							<table width="100%"  border="0" align="left">
+							  <tr>
+								<td ><span>&#8226;</span>&nbsp;&nbsp;Jenis Pasien</td>
+								<td >:</td>
+								<td >
+                                	<com:TActiveRadioButtonList
+                                          ID="modeInput" 
+                                          RepeatDirection="Horizontal" 
+                                          AutoPostBack="true" 
+                                          CausesValidation="false" 
+                                          OnSelectedIndexChanged="modeInputChanged"
+                                          SelectedValue="0"
+                                          OnCallback="showFirstCallback">
+                                        <com:TListItem Text="Pasein Rawat Jalan" Value="0" />
+                                        <com:TListItem Text="Pasein Rawat Inap" Value="1" />
+                                        <com:TListItem Text="Pasien Luar" Value="2" />
+                                    </com:TActiveRadioButtonList>
+                                </td>
+							  </tr>
+                              <tr>
+								<td ><span>&#8226;</span>&nbsp;&nbsp;No. Rekam Medis</td>
+								<td >:</td>
+								<td >
+                                	<com:TActiveTextBox 
+                                    	CssClass="input_text" 
+                                          ID="cariCm" 
+                                          AutoPostBack="true"													   
+                                          MaxLength="7"
+                                          OnTextChanged="checkCm"
+                                          OnCallback="showFirstCallback"
+                                          CausesValidation="false"
+                                          Width="55px">
+                                          <prop:ClientSide 
+                                            OnLoading="maskContent();"
+                                            OnComplete="unmaskContent(); "/>
+                                	</com:TActiveTextBox>            
+                                    
+                                    <com:TButton ID="cariPasBtn" Text="Cari Pasien" />
+                              	</td>
+							  </tr>
+                              <tr>
+								<td width="150"><span>&#8226;</span>&nbsp;&nbsp;No. Radiologi</td>
+								<td width="5">:</td>
+								<td >
+                                	<com:TDropDownList 
+                                        ID="DDReg" 
+                                        PromptText ="--Silakan Pilih--"
+                                        PromptValue ="empty"	
+                                        Width="250px" 
+                                        DataTextField="nama" 
+                                        DataValueField="no_reg" 
+                                        OnSelectedIndexChanged="checkRegister"
+                                        
+                                        AutoPostBack="true" 
+                                        CausesValidation="false">
+                                    </com:TDropDownList>
+                                            
+                                    <com:TActiveTextBox CssClass="input_text" 
+												  ID="notrans" 
+												  AutoPostBack="true"													   
+												  MaxLength="14"
+												  OnTextChanged="checkRegister" 
+                                                  Visible="false"								  
+												  ToolTip="No. Register Pasien" 
+												  Width="120px" />&nbsp;<com:TActiveLabel ID="errMsg" ForeColor="#FF0000" />									</td>
+							  </tr>
+                              <tr>
+							    <td colspan="3"><hr/></td>
+                              </tr>  
+                            </table>
+                            </com:TActivePanel>
+                            
+                            <com:TActivePanel ID="showSecond">
+                            <table width="100%"  border="0" align="left">                              
+							  
+                              <tr>
+							    <td width="150"><span>&#8226;</span>&nbsp;&nbsp;No. Rekam Medis </td>
+							    <td width="5">:</td>
+							    <td><com:TActiveLabel ID="cm" /></td>
+							    </tr>
+							  <tr>
+								<td ><span>&#8226;</span>&nbsp;&nbsp;Nama Pasien </td>
+								<td >:</td>
+								<td><com:TActiveLabel ID="nama" /></td>
+							  </tr>
+							  <tr>
+                                <td><span>&#8226;</span>&nbsp;&nbsp;Dokter </td>
+							    <td>:</td>
+							    <td><com:TActiveLabel ID="dokter" /></td>
+							  </tr>
+                              <tr>
+                                <td><span>&#8226;</span>&nbsp;&nbsp;Dokter Radiotheraphy</td>
+							    <td>:</td>
+							    <td>
+                                	<com:TDropDownList 
+                                        ID="DDDokterRad" 
+                                        PromptText ="--Silakan Pilih--"
+                                        PromptValue ="empty"	
+                                        Width="250px" 
+                                        DataTextField="nama" 
+                                        DataValueField="id" 
+                                        AutoPostBack="false" 
+                                        CausesValidation="false">
+                                    </com:TDropDownList>
+                                </td>
+							  </tr>
+                              <tr>
+							    <td colspan="3">
+                                <com:TActivePanel ID="showTableObat" DefaultButton="" GroupingText="BHP">
+                        	<table width="100%">
+                          <tr>
+							    <td colspan="3"><hr/></td>
+                 </tr> 
+                          	<tr style="display:none">
+							   <td width="175"><span>&#8226;</span>&nbsp;&nbsp;Mode Paket</td>
+							   <td width="3">:</td>
+							   <td >
+                               	<com:TActiveRadioButtonList
+                                          ID="modePaket"
+                                          RepeatDirection="Horizontal" 
+                                          AutoPostBack="true" 
+                                          CausesValidation="false" 
+                                          SelectedValue="0"
+                                          OnSelectedIndexChanged="modePaketChanged"
+                                          Style="display:inline; vertical-align:bottom;">
+                                    <com:TListItem Text="Non Paket" Value="0" />
+                                    <com:TListItem Text="Paket" Value="1" />
+                                  </com:TActiveRadioButtonList>
+                                  &nbsp;&nbsp;
+                                  <com:TActiveCheckBox
+                                    ID="CBabaikanHarga"
+                                    Text="Abaikan Harga Paket"
+                                    AutoPostBack="false" 
+                                    CausesValidation="false"/>
+                               </td>
+							   </tr> 
+                 <tr>
+							    <td ><span>&#8226;</span>&nbsp;&nbsp;Nama BHP </td>
+							    <td >:</td>
+							    <td>
+                    <com:TAutoComplete
+                      ID="AutoComplete" 
+                      OnSuggest="suggestNames"
+                      OnSuggestionSelected="suggestionSelected1"
+                      ResultPanel.CssClass="acomplete"
+                      Suggestions.DataKeyField="kode"
+                      CausesValidation="false" 
+                      MinChars="3" 
+                      Visible="false"
+                      Enabled="false">
+                      <prop:Suggestions.ItemTemplate>
+                      	<li><%# $this->Data['nama'] %></li>
+                      </prop:Suggestions.ItemTemplate>
+                    </com:TAutoComplete>
+                    
+                    <com:TActiveTextBox ID="kodeObat" Width="50px" ReadOnly="true" Style="display:none;" />
+                    
+                    <com:TRequiredFieldValidator
+                      Display="Dynamic"
+                      ControlToValidate="AutoComplete"
+                      Text="BHP belum diisi" 
+                      ValidationGroup="valTambah"
+                      FocusOnError="true"
+                      Enabled="false" />
+                                    
+                    <com:TActiveDropDownList 
+                      ID="DDObat"
+                      PromptText ="--Silakan Pilih--"
+                      PromptValue ="empty"											
+                      DataTextField="nama"
+                      DataValueField="kode" 	
+                      ToolTip="Pilih BHP" 
+                      Width="300px"
+                      AutoPostBack="true"										
+                      OnSelectedIndexChanged="chObat"
+                      CausesValidation="false"
+                      Visible="true"
+                      Enabled="true"/>
+                    <com:TRequiredFieldValidator
+                      Display="Dynamic"
+                      ControlToValidate="DDObat"
+                      ErrorMessage=""
+                      InitialValue="empty" 
+                      ValidationGroup="valTambah"
+                      FocusOnError="true"
+                      Enabled="true"
+                      CssClass="valRequired"
+            					ControlCssClass="valctrl"/>
+                                  
+                      <com:TActiveDropDownList ID="RBtipeRacik"
+                        AutoPostBack="true"
+                        CausesValidation="false"
+                        OnSelectedIndexChanged="tipeRacikChanged"
+                        Width="100px"
+                        Style="display:none;">
+                          <com:TListItem Value="0" Text="Non Racikan" />
+                          <com:TListItem Value="1" Text="Racikan" />
+                          <com:TListItem Value="2" Text="Imunisasi" />
+                        </com:TActiveDropDownList>
+                        <com:TRequiredFieldValidator
+                          Display="Dynamic"
+                          ControlToValidate="RBtipeRacik"
+                          Text="*" 
+                          InitialValue="empty" 
+                          ValidationGroup="valTambah"
+                          FocusOnError="true"/>                  
+                                    
+                        <com:TActiveDropDownList 
+                          ID="DDRacik"
+                          PromptText ="--Silakan Pilih--"
+                          PromptValue ="empty"											
+                          DataTextField="nama"
+                          DataValueField="id" 	
+                          ToolTip="Pilih kelompok obat racikan.." 
+                          Width="150px"
+                          AutoPostBack="true"
+                          CausesValidation="false"
+                          OnSelectedIndexChanged="DDRacikChanged" 
+                          Style="display:none;"/>
+                        <com:TRequiredFieldValidator
+                          Display="Dynamic"
+                          ControlToValidate="DDRacik"
+                          Text="kelompok obat racikan belum dipilih" 
+                          InitialValue="empty" 
+                          ValidationGroup="valTambah"
+                          Enabled="false"/>
+                                    
+                        <com:TActiveDropDownList 
+                          ID="DDKemasan"
+                          PromptText ="--Silakan Pilih--"
+                          PromptValue ="empty"											
+                          DataTextField="nama"
+                          DataValueField="id" 	
+                          Width="100px"
+                          Style="display:none;"/>
+                        <com:TRequiredFieldValidator
+                          Display="Dynamic"
+                          ControlToValidate="DDKemasan"
+                          Text="*" 
+                          InitialValue="empty" 
+                          ValidationGroup="valTambah"
+                          Enabled="false"/>
+                                        
+                        <!--&nbsp; Jml Bungkus	-->
+                        <com:TActiveTextBox CssClass="input_text" 
+                          ID="jmlBungkus" 
+                          Width="50px"
+                          Style="display:none;"/>
+                        <com:TRequiredFieldValidator
+                          Display="Dynamic"
+                          ControlToValidate="jmlBungkus"
+                          Text="*"  
+                          ValidationGroup="valTambah"
+                          Enabled="false"/> 
+                        <com:TRegularExpressionValidator
+                          ValidationGroup="valTambah"
+                          ControlToValidate="jmlBungkus"
+                          RegularExpression="(^[1-9]+\d*$)"
+                          Text="*" 
+                          Enabled="false"/> 
+                        
+                        &nbsp; Jml BHP	
+                        <com:TActiveTextBox CssClass="input_text" 
+                        ID="jml"											  
+                        ToolTip="Jumlah yang diambil.." 
+                        Width="50px"
+                        OnTextChanged="prosesClicked"
+                        AutoPostBack="true"
+                        CausesValidation="true"
+                        ValidationGroup="valTambah">
+                          <prop:ClientSide 
+                          OnLoading="maskContent();"
+                          OnComplete="unmaskContent();"/>
+                        </com:TActiveTextBox>      
+                        <com:TRequiredFieldValidator
+                          Display="Dynamic"
+                          ControlToValidate="jml"
+                          Text="*" 
+                          ValidationGroup="valTambah"/>
+                        <com:TRegularExpressionValidator
+                          ControlToValidate="jml"
+                          FocusOnError="true"
+                          RegularExpression="[\d]{1,}"
+                          ErrorMessage="*"
+                          ValidationGroup="valTambah"/>
+                        
+                        &nbsp; Jml Stok
+                        <com:TActiveTextBox 
+                        ID="jmlStok"
+                        Width="50px"
+                        CssClass="input_text" 
+                        AutoPostBack="false"
+                        CausesValidation="false"/>
+                      </td>
+                      </tr>
+                      <tr>
+                      <td colspan="3">
+                      	<com:TActivePanel ID="showGridObat">
+                        	<div align="center" style="border-top:#999 solid 1px; padding-top:5px;"><com:TActiveLabel ID="msgStok" ForeColor="#FF0000" Style="font-weight:bold; font-size:12px;" /> </div> 
+                          <com:XActiveDataGrid ID="UserGridObat"
+								DataKeyField="id"
+								AutoGenerateColumns="false"	
+								AllowPaging="true"
+								AllowCustomPaging="true"
+								AllowSorting="true"
+								Width="100%"					
+								PageSize="100"
+								PagerStyle.Mode="Numeric"			
+								PagerStyle.Font.Name="Arial"
+								PagerStyle.Font.Size="12"
+								PagerStyle.HorizontalAlign="Right"			
+								GridLines="None"
+								CellSpacing="1"
+								CellPadding="2"						
+								HeaderStyle.CssClass="headerstyle"
+								ItemStyle.CssClass="itemstyle"
+								AlternatingItemStyle.CssClass="itemstyle2"								
+								OnDeleteCommand="deleteClickedObat"								
+								OnPageIndexChanged="changePage"
+								OnPagerCreated="pagerCreated">
+                        
+						<com:XActiveBoundColumn
+									SortExpression="nama"
+									HeaderText="Nama Obat"
+									ItemStyle.Width="350px"
+									DataField="nama" />
+						
+						<com:XActiveBoundColumn
+									SortExpression="jml"
+									HeaderText="Jumlah"
+									ItemStyle.Width="100px"
+									ItemStyle.Horizontalalign="Right"
+									DataField="jml" />						
+												
+                        <com:XActiveBoundColumn
+									SortExpression="total"
+									HeaderText="Total"
+									ItemStyle.Width="100px"
+									ItemStyle.Horizontalalign="Right"
+									DataField="total" />					
+						
+                       
+                        <com:XActiveTemplateColumn
+									HeaderText="Ket"
+									ItemStyle.Width="100px"
+									ItemStyle.Horizontalalign="Center">	
+                        	<prop:ItemTemplate>
+                            	<%%	
+                                	$st_imunisasi = $this->Parent->DataItem['st_imunisasi'];
+                                    $id_kel_imunisasi = $this->Parent->DataItem['id_kel_imunisasi'];
+                                    if($st_imunisasi=='0')
+                                    {
+                                    	$st_racik = $this->Parent->DataItem['st_racik'];
+                                        $id_kel_racik = $this->Parent->DataItem['id_kel_racik'];
+                                        if($st_racik=='0')
+                                        {
+                                            echo 'Non Racikan';
+                                        }
+                                        else
+                                        {
+                                            echo 'Racikan '.$id_kel_racik;
+                                        }
+                                    }
+                                    else
+                                    {
+                                    	echo 'Imunisasi '.ImunisasiRecord::finder()->findByPk($id_kel_imunisasi)->nama;
+                                    }
+                                    
+                                    
+                                   
+                                    
+                                %>
+                       		</prop:ItemTemplate>
+                        </com:XActiveTemplateColumn>
+                                    			                       
+                        <com:XActiveButtonColumn												
+									HeaderText="Mode"
+									Text="Delete"
+									ID="Hapus"
+									ItemStyle.HorizontalAlign="Center"									
+									ButtonType="PushButton"									
+									CommandName="delete" 
+                                    ItemStyle.Width="100px"/>
+                      </com:XActiveDataGrid>
+                                  
+                        </com:TActivePanel>
+                        </td>
+                      </tr>
+                      <com:TControl ID="ketBhpPanel" Visible="false" Enabled="false">
+                      <tr>
+                        <td valign="top"><span>&#8226;</span>&nbsp;&nbsp;Keterangan Pemakaian BHP</td>
+                        <td valign="top">:</td>
+                        <td>
+                        	<com:TActiveTextBox 
+                            ID="ket"
+                            Width="100%"
+                            TextMode="MultiLine"
+                            CssClass="input_text" 
+                            MaxLength="255"
+                            Height="50px"
+                            Enabled="false"
+                            Visible="false"/>
+                        </td>  
+                      </tr>  
+                      </com:TControl>
+                      </table>
+                      </com:TActivePanel>
+                                </td>
+                              </tr> 
+							</table>
+							</com:TActivePanel>
+                            
+                            <com:TActivePanel ID="showTable2" DefaultButton="">
+                            	<table width="100%"  border="0" align="left">   
+                                      
+                                <com:TActiveRepeater 
+                                        ID="Repeater"
+                                        OnItemCreated="repeaterDataBound"
+                                        EnableViewState="true" >                        
+                                        <prop:ItemTemplate>
+                                        	  <tr>
+                                                <td colspan="3">
+                                                	<span>&#8226;</span>&nbsp;&nbsp;<strong>Nama Tindakan : <com:TActiveLabel ID="nmTindakan"/></strong>
+                                                    <div style="float:right; ">
+                                                    	
+                                                        <com:TActiveButton 
+                                                           ID="uploadBtn" 
+                                                           Text="Upload File" 
+                                                           OnClick="Page.prosesUploadFoto"
+                                                           CausesValidation="false" 
+                                                           IsDefaultButton="false"
+                                                           CssClass="button_01"
+                                                           CommandParameter="<%#$this->Data['no_trans']%>" >
+                                                           <prop:ClientSide OnLoading="maskContent();"/>
+                                                        </com:TActiveButton>                                                        
+                                                           
+                                                    </div>
+                                                    
+                                                   
+                                                </td>
+                                              </tr>	
+                                              <tr>
+                                                <td colspan="3">
+                                                    <com:CSHtmlArea ID="HtmlArea" Width="100%" Height="300px" />
+                                                    <div style="display:none">
+                                                    <com:TActiveLabel ID="noTrans" Text="<%#$this->Data['no_trans']%>" />
+                                                    <com:TActiveLabel ID="nmTableTmp"/>
+                                                    </div>
+                                                </td>
+                                              </tr>
+                                              <tr>
+                                                <td colspan="3">
+                                                	<strong>File yang akan di upload : <com:TActiveLabel ID="jmlFile"/></strong>
+                                                    <br/>
+                                                    <ul style="list-style:none; padding:0;">
+                                                	<com:TActiveRepeater 
+                                                        ID="Repeater2"
+                                                        OnItemCreated="SourceTemplateControl.repeaterDataBound2"
+                                                        EnableViewState="true" >
+                                                        <prop:ItemTemplate>
+                                                        	<li style="padding-bottom:10px; display:inline-block; ">
+                                                            	<com:THiddenField ID="idTableTmp" />
+                                                            	<span class="ui-state-default ui-corner-all" style="padding:5px; display:inline;">
+	                                                            	<com:TActiveLabel ID="nmFileTmp"/>
+                                                                	<com:TActiveLinkButton 
+                                                                    	ID="delFileUpload"
+                                                                        OnClick="SourceTemplateControl.delFileUploadClicked"
+                                                                        OnCallback="SourceTemplateControl.Repeater2Callback"
+                                                                    	Text="" 
+                                                                        CssClass="ui-icon ui-icon-circle-close" 
+                                                                        Style="display:inline-block; outline-style:none; vertical-align:middle; padding-top:5px;">
+                                                                        <prop:ClientSide 
+                                                                            OnLoading="maskContent();"
+                                                                            OnComplete="unmaskContent(); "/>
+                                                                	</com:TActiveLinkButton>
+                                                                </span>    
+                                                            </li>
+                                                        </prop:ItemTemplate>
+                                                    </com:TActiveRepeater>    
+                                                    </ul>
+                                                </td>
+                                              </tr>
+                                              <tr>
+                                                <td colspan="3" height="25px"><hr/></td>
+                                              </tr>
+                                         </prop:ItemTemplate>
+                                </com:TActiveRepeater>     
+                                	
+                                </table>
+                            </com:TActivePanel>
+                            
+                            
+                            <com:TActivePanel ID="showTable" DefaultButton="">
+                            	<com:XActiveDataGrid ID="UserGrid"
+                                    DataKeyField="id"
+                                    AutoGenerateColumns="false"	
+                                    AllowPaging="true"
+                                    AllowCustomPaging="true"
+                                    AllowSorting="true"
+                                    Width="100%"					
+                                    PageSize="50"
+                                    PagerStyle.Mode="Numeric"			
+                                    PagerStyle.Font.Name="Arial"
+                                    PagerStyle.Font.Size="12"
+                                    PagerStyle.HorizontalAlign="Right"			
+                                    GridLines="None"
+                                    CellSpacing="1"
+                                    CellPadding="2"
+                                    HeaderStyle.CssClass="headerstyle"
+                                    ItemStyle.CssClass="itemstyle"
+                                    AlternatingItemStyle.CssClass="itemstyle2"
+                                    OnItemCreated="itemCreated"
+                                    OnEditCommand="editItem"
+                                    OnUpdateCommand="saveItem"
+                                    OnCancelCommand="cancelItem"
+                                    OnDeleteCommand="deleteButtonClicked"								
+                                    OnPageIndexChanged="changePage"
+                                    OnPagerCreated="pagerCreated"			
+                                    OnSortCommand="sortGrid">								
+                                                                    
+                                    <com:XActiveTemplateColumn 
+                                        ID="namaTdk" 	
+                                        HeaderText="Jenis Pemeriksaan" 
+                                        SortExpression="nama"
+                                        ItemStyle.HorizontalAlign="Center"
+                                        ItemStyle.Width="250px" >									
+                                        <prop:ItemTemplate>
+                                            <%=	$this->Parent->DataItem['nama'] %>
+                                        </prop:ItemTemplate>
+                                    </com:XActiveTemplateColumn>				
+                                        
+                                    <com:XActiveBoundColumn  
+                                        ID="nilai"
+                                        SortExpression="nilai"
+                                        HeaderText="nilai"
+                                        DataField="nilai"
+                                        ItemStyle.Horizontalalign="Center" />
+                                   	
+                                   <com:XActiveBoundColumn  
+                                        ID="normal"
+                                        SortExpression="normal"
+                                        HeaderText="Nilai Normal Pria"
+                                        DataField="normal"
+                                        ItemStyle.Horizontalalign="Center" /> 
+                                    
+                                    <com:XActiveBoundColumn  
+                                        ID="normal2"
+                                        SortExpression="normal_perempuan"
+                                        HeaderText="Nilai Normal Wanita"
+                                        DataField="normal_perempuan"
+                                        ItemStyle.Horizontalalign="Center" />    
+                                    
+                                    <com:XActiveEditCommandColumn
+                                        HeaderText="Edit"
+                                        HeaderStyle.Width="50px"
+                                        UpdateText="Save"
+                                        ItemStyle.HorizontalAlign="Center"
+                                        ItemStyle.Font.Italic="false"
+                                        />			
+                                </com:XActiveDataGrid>
+                            </com:TActivePanel>
+                            
+                    	</td>
+			  		</tr>
+				</table>
+                </td>
+              </tr>
+              
+              <tr>
+                <td align="center"></td>
+              </tr> 
+              <tr>
+                <td align="center">
+                	<com:TButton Text="Cetak" 
+					  				   OnClick="cetakClicked"
+									   ID="cetakBtn" 
+									   CausesValidation="false" 
+                                       IsDefaultButton="false"
+									   CssClass="button_01" 
+                                       Attributes.onclick = "maskContent();"/>
+					  <com:TActiveButton Text="Batal" 
+					  				   OnClick="batalClicked" 
+									   CausesValidation="false" 
+									   CssClass="button_01" 
+                                       IsDefaultButton="false"
+                                       Attributes.onclick = "maskContent();"/>				   
+					  <com:TActiveButton Text="Keluar" 
+					  				   OnClick="keluarClicked" 
+									   CausesValidation="false" 
+									   CssClass="button_01" 
+                                       Visible="false"
+                                       Attributes.onclick = "maskContent();"/>
+                </td>
+              </tr>
+          </table>
+          
+    <com:TCallback ID="UpdateCallback" OnCallback="prosesUploadFoto" ActiveControl.CausesValidation="false"/>
+    <com:TCallback ID="UpdateCallback2" OnCallback="prosesModal" ActiveControl.CausesValidation="false"/>
+	<script type="text/javascript">
+		//<![CDATA[
+		function uploadFotoClicked(notrans){
+			var request= <%= $this->UpdateCallback->ActiveControl->Javascript %>;
+				request.setCallbackParameter({
+					Id:notrans
+				});
+				request.dispatch();
+		}
+		
+		function modalCallback(index,nmtable){
+			var request= <%= $this->UpdateCallback2->ActiveControl->Javascript %>;
+				request.setCallbackParameter({
+					Id:index,nmTableTmp:nmtable
+				});
+				request.dispatch();
+		}
+		//]]>
+	</script>
+    
+</com:TContent> 

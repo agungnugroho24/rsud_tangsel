@@ -1,0 +1,152 @@
+<%@ MasterClass="Application.layouts.MainLayout" %>
+<com:TContent ID="jdMain">
+	Data Tarif Tindakan - Edit
+    
+    <a href="<%= $this->Service->constructUrl('Simak') %>" onclick="maskContent()">
+    <span class="close-btn">
+        <span class="ui-icon ui-icon-circle-close"></span>
+    </span>
+    </a>
+    
+</com:TContent>	
+<com:TContent ID="Main">
+
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+              <tr>
+                <td><table width="100%" border="0" align="right" cellpadding="0" cellspacing="2">
+                <!---
+                  <tr>
+                    <td width="150"><span>&#8226;</span> ID</td>
+                    <td width="5">:</td>
+                    <td ><com:TActiveTextBox CssClass="input_text" 
+												  ID="ID" 
+												  ReadOnly="true"													   
+												  MaxLength="4" 
+												  TabIndex="1"												   
+												  ToolTip="ID Tindakan" 
+												  Width="55px"													  
+												  ValidationGroup="ID" 
+												  />
+									</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="table_01"><span class="bullet_02">&#8226;</span> Poliklinik</td>
+                    <td>:</td>
+                    <td><com:TDropDownList ID="DDKlinik"
+											CssClass="input_text" 											
+											PromptText ="--Silakan Pilih--"
+											PromptValue =""											
+											DataTextField="nama"
+											DataValueField="id"									   
+										    ToolTip="Pilih kelompok kliniknya!" 
+										    TabIndex="2" /></td>
+                  </tr>
+                  <tr>
+                    <td><span>&#8226; </span>Nama </td>
+                    <td>:</td>
+                    <td><com:TTextBox ID="nama" Width="200px" TabIndex="3" />
+					<com:TRequiredFieldValidator 
+						  ControlToValidate="nama"											 
+						  ErrorMessage="Anda harus mengisikan nama Tindakan"
+						  Display="Dynamic" /></td>
+                  </tr>
+                  --->
+                  <tr>
+                    <td width="150" class="table_01"><span class="bullet_02">&#8226;</span> Poliklinik</td>
+                    <td width="5">:</td>
+                    <td ><com:TDropDownList ID="DDKlinik"
+											CssClass="input_text" 											
+											PromptText ="--Silakan Pilih--"
+											PromptValue =""
+											AutoPostBack="true"
+											OnSelectedIndexChanged="cekKlinik"
+											CausesValidation="false"											
+											DataTextField="nama"
+											DataValueField="id"									   
+										    ToolTip="Pilih kelompok kliniknya!" 
+										    TabIndex="1" /></td>
+                  </tr>
+                  
+                  <tr>
+                    <td><span>&#8226; </span>Nama</td>
+                    <td>:</td>
+                    <td><com:TDropDownList ID="DDNmTdk"
+											CssClass="input_text" 											
+											PromptText ="--Silakan Pilih--"
+										 	AutoPostBack="false"
+											CausesValidation="false"	
+											PromptValue =""											
+											DataTextField="nama"
+											DataValueField="id"									   
+										    ToolTip="Pilih nama tindakan!" 
+										    TabIndex="2" /></td>
+                  </tr>
+                  <tr>
+                    <td><span>&#8226; </span>Tarif 'A' </td>
+                    <td>:</td>
+                    <td><com:TTextBox ID="biaya1" Width="80px" TabIndex="3" />
+					<com:TRequiredFieldValidator 
+						  ControlToValidate="biaya1"											 
+						  ErrorMessage="Anda harus mengisikan tarif tindakan 1"
+						  Display="Dynamic" /></td>
+                  </tr>
+                  
+                  <tr>
+                    <td><span>&#8226; </span>Tarif 'B'</td>
+                    <td>:</td>
+                    <td><com:TTextBox ID="biaya2" Width="80px" TabIndex="4" />
+					<com:TRequiredFieldValidator 
+						  ControlToValidate="biaya2"											 
+						  ErrorMessage="Anda harus mengisikan tarif tindakan 2"
+						  Display="Dynamic" /></td>
+                  </tr>
+                  <tr>
+                    <td><span>&#8226; </span>Tarif 'C'</td>
+                    <td>:</td>
+                    <td><com:TTextBox ID="biaya3" Width="80px" TabIndex="5" />
+					<com:TRequiredFieldValidator 
+						  ControlToValidate="biaya3"											 
+						  ErrorMessage="Anda harus mengisikan tarif tindakan 3"
+						  Display="Dynamic" /></td>
+                  </tr>
+                  <tr>
+                    <td><span>&#8226; </span>Tarif 'D' </td>
+                    <td>:</td>
+                    <td><com:TTextBox ID="biaya4" Width="80px" TabIndex="6" />
+					<com:TRequiredFieldValidator 
+						  ControlToValidate="biaya4"											 
+						  ErrorMessage="Anda harus mengisikan tarif tindakan 4"
+						  Display="Dynamic" /></td>
+                  </tr>
+                </table></td>
+              </tr>
+              <tr>
+                <td><hr /></td>
+              </tr>
+              <tr>
+                <td><table width="10" border="0" align="center" cellpadding="0" cellspacing="2">
+                    <tr>
+                      <td><com:TButton Text="Simpan" Attributes.onclick = "maskContent();"  
+					  					OnClick="simpanClicked" 
+										CssClass="button_01" 
+										TabIndex="7" /></td>
+                      <td><com:TButton Text="Batal"  					  					
+										ButtonType="Reset" 
+										CausesValidation="false" 
+										CssClass="button_01" 
+										TabIndex="8" /></td>
+                      <td><com:TButton Text="Keluar" Attributes.onclick = "maskContent();" 
+					  			OnClick="keluarClicked" 
+								CausesValidation="false" 
+								CssClass="button_01" 
+								TabIndex="9" /></td>
+                    </tr>
+                </table></td>
+              </tr>
+          </table>
+          
+</com:TContent>

@@ -1,0 +1,413 @@
+<%@ MasterClass="Application.layouts.DialogLayout" %>
+
+<com:TContent ID="isi">
+	<script>
+		jQuery(document).ready(function () {		   
+			jQuery( "#dialog-tolak" ).dialog({
+				autoOpen: false,
+				height: 250,
+				width: 400,
+				modal: true,
+				buttons: {
+					"Proses": function() {					
+						var txt = jQuery("#<%= $this->pengali->getClientID() %>").val();
+						if(txt)
+						{
+							prosesTolak();
+							jQuery( this ).dialog( "close" );
+						}
+						else
+						{
+							alert("Faktor pengali belum diisi !");	
+						}
+					}
+				}
+			});
+			
+		});
+	</script>
+  
+  <div id="dialog-tolak" title="Faktor Pengali" align="center">
+  	<table width="100%">
+    	<tr>
+      	<td width="100">Pengali</td>
+        <td width="5" align="center">:</td>
+        <td>
+      		<com:TActiveTextBox 
+          ID="pengali" 
+          MaxLength="4"
+          Width="50px" />  
+        </td>
+      </tr>  
+      <tr>
+      	<td width="100">Catatan</td>
+        <td width="5" align="center">:</td>
+        <td>
+      		<com:TActiveTextBox 
+            ID="catatan" 
+            MaxLength="255"
+            Width="300px"/>
+        	<com:TActiveTextBox 
+            ID="idTmp" 
+            Width="30px" 
+            Style="display:none;"/>
+        </td>
+      </tr>  
+		</table>
+  </div>
+  
+	<com:TActiveLabel ID="showSql" />
+    <com:TActiveLabel ID="tes"  />
+    
+    
+    <com:TActivePanel ID="cariIcdPanel" padding-bottom:10px;" DefaultButton="cariBtn" GroupingText="<strong>Pencarian Data Tindakan</strong>">
+        <table width="100%"  border="0" align="left">
+        	<tr>
+                <td><span>&#8226;</span>&nbsp;&nbsp;Poliklinik </td>
+                <td>:</td>
+                <td>
+                	<com:TActiveDropDownList 
+                      ID="DDKlinik"
+                      PromptText ="--Silakan Pilih--"
+                      PromptValue ="empty"											
+                      DataTextField="nama"
+                      DataValueField="id" 
+                      Width="250px"
+                      AutoPostBack="true"
+                      CausesValidation="false"
+                      OnSelectedIndexChanged="cariClicked"  />
+                	<com:TRequiredFieldValidator
+                  	ID="valKlinik"
+                      ValidationGroup="valTambah"
+                        Display="Dynamic"
+                        ControlToValidate="DDKlinik"
+                        Text="*" 
+                        InitialValue="empty" 
+                        FocusOnError="true"
+                        CssClass="valRequired"
+                        ControlCssClass="valctrl"/>
+                	<com:TActiveCheckBox
+                  	ID="allPoli"
+                  	Text="Semua Tindakan"
+                    OnCheckedChanged="allPoliCheckedChanged"
+                    AutoPostBack="true"
+                    CausesValidation="false"/>
+                </td>
+          </tr>
+          		
+              <tr>
+                <td><span>&#8226;</span>&nbsp;&nbsp;Kode </td>
+                <td>:</td>
+                <td>
+                	<com:TActiveTextBox 
+                  	ID="kode" 
+                    Width="70px"  
+                    CssClass="input_text"
+                    AutoPostBack="true"
+                    CausesValidation="false"
+                    OnTextChanged="cariClicked" />
+                   &nbsp;<com:TActiveCheckBox ID="AdvanceIcdKode" Text="Elemen Kata" Value="1" Visible="false" />
+                  <com:TActiveCheckBox ID="stStandard" AutoPostBack="true" CausesValidation="false" OnCheckedChanged="stStandardChanged" Text="Non Standard" />
+                	<com:TRequiredFieldValidator
+                  	ID="valKode"
+                      ValidationGroup="valTambah"
+                      Display="Dynamic"
+                      ControlToValidate="kode"
+                      Text="*" 
+                      FocusOnError="true"
+                      CssClass="valRequired"
+                      ControlCssClass="valctrl"/>
+                </td>
+          </tr>
+              <tr>
+                <td><span>&#8226;</span>&nbsp;&nbsp;Nama </td>
+                <td>:</td>
+                <td>
+                	<com:TActiveTextBox 
+                  	ID="nmIndo" 
+                    Width="250px"  
+                    CssClass="input_text" 
+                    AutoPostBack="true"
+                    CausesValidation="false"
+                    OnTextChanged="cariClicked"/>&nbsp;<com:TCheckBox ID="Advance" Text="Elemen Kata" Value="1" Visible="false" />
+                  <com:TRequiredFieldValidator
+                  	ID="valNama"
+                      ValidationGroup="valTambah"
+                        Display="Dynamic"
+                        ControlToValidate="nmIndo"
+                        Text="*" 
+                        FocusOnError="true"
+                        CssClass="valRequired"
+                        ControlCssClass="valctrl"/>
+                </td>
+          </tr>
+          <tr>
+                <td></td>
+                <td></td>
+                <td>
+                	<com:TActiveButton
+                        ID="cariBtn" 
+                        Text="Cari" 
+                        OnClick="cariClicked" 
+                        CssClass="button_01" >
+                         <prop:ClientSide 
+                                OnLoading="maskContent();"
+                                OnComplete="unmaskContent(); "/>
+                    </com:TActiveButton>
+                </td>
+          </tr>    
+    	<tr>
+    <td colspan="3">
+    <table width="100%"  border="0" align="center" cellpadding="0" cellspacing="1" >                      
+      <tr><td>Jumlah Data : <strong><com:TActiveLabel ID="jmlData"/></strong></td></tr>
+      <tr>
+        <td align="center">
+        <com:XActiveDataGrid ID="grid"
+                DataKeyField="id"
+                AutoGenerateColumns="false"	
+                AllowPaging="true"
+                AllowCustomPaging="true"
+                AllowSorting="true"
+                Width="100%"					
+                PageSize="5"
+                PagerStyle.Mode="Numeric"			
+                PagerStyle.Font.Name="Arial"
+                PagerStyle.Font.Size="12"
+                PagerStyle.HorizontalAlign="Right"	
+                PagerStyle.CssClass="pager"
+                GridLines="None"
+                CellSpacing="1"
+                CellPadding="2"
+                HeaderStyle.CssClass="headerstyle"
+                ItemStyle.CssClass="itemstyle"
+                AlternatingItemStyle.CssClass="itemstyle2"								
+                OnItemCreated="grid_ItemCreated"
+                OnEditCommand="grid_EditCommand"
+                OnUpdateCommand="grid_UpdateCommand"
+                OnCancelCommand="grid_CancelCommand"
+                OnDeleteCommand="deleteButtonClicked"								
+                OnPageIndexChanged="grid_PageIndexChanged"
+                OnSortCommand="grid_SortCommand">	
+                
+                <com:XActiveBoundColumn
+                    SortExpression="id"
+                    HeaderText="Kode"
+                    HeaderStyle.ForeColor="#FFFFFF"
+                    ItemStyle.Width="60px"
+                    DataField="id" 
+                    ItemStyle.HorizontalAlign="Center"/>      
+
+                <com:XActiveBoundColumn
+                     SortExpression="nama"
+                     HeaderText="Nama Tindakan"
+                     HeaderStyle.ForeColor="#FFFFFF"
+                     ItemStyle.HorizontalAlign="Left"	
+                     DataField="nama" />		
+                
+                <com:XActiveTemplateColumn
+                		 ID="tarifColumn"
+                     SortExpression="biaya1"
+                     HeaderText="Tarif"
+                     HeaderStyle.ForeColor="#FFFFFF"
+                     ItemStyle.HorizontalAlign="Right"
+                     ItemStyle.Width="100px"
+                     Visible="True"/>				
+                
+                <com:XActiveTemplateColumn 
+                    ID="btnGrid" 
+                    ItemStyle.HorizontalAlign="Center" 
+                    ItemStyle.Width="120px">
+                    <prop:HeaderTemplate><a href="#">mode</a></prop:HeaderTemplate>
+                    <prop:ItemTemplate>
+                    <com:TActiveButton 
+                            ID="gridEditBrg" 
+                            Text="Tambahkan"
+                            CssClass="pager" 
+                            CommandParameter="<%# $this->Parent->Data['id'] %>" 
+                            CausesValidation="false"
+                            Attributes.onclick="tolakClicked('<%# $this->Parent->Data['id'] %>');">
+                            <prop:ClientSide 
+                                OnLoading="maskContent();"
+                                OnComplete="unmaskContent(); "/>
+                      </com:TActiveButton>	
+                  </prop:ItemTemplate>
+                </com:XActiveTemplateColumn>
+                
+                <com:XActiveTemplateColumn 
+                    ID="btnGrid2" 
+                    ItemStyle.HorizontalAlign="Center" 
+                    ItemStyle.Width="120px"
+                    Visible="False">
+                    <prop:HeaderTemplate><a href="#">mode</a></prop:HeaderTemplate>
+                    <prop:ItemTemplate>
+                    <com:TActiveButton 
+                            ID="gridEditBrg2" 
+                            Text="Tambahkan"
+                            CssClass="pager" 
+                            OnCommand="Page.gridMasukanClicked" 
+                            CommandParameter="<%# $this->Parent->Data['id'] %>" 
+                            CausesValidation="false"
+                            Attributes.onclick="tolakClicked('<%# $this->Parent->Data['id'] %>');">
+                            <prop:ClientSide 
+                                OnLoading="maskContent();"
+                                OnComplete="unmaskContent(); "/>
+                      </com:TActiveButton>	
+                  </prop:ItemTemplate>
+                </com:XActiveTemplateColumn>
+                                            
+            </com:XActiveDataGrid>
+        </td>                       
+      </tr>
+    </table></td>
+</tr>
+        </table>
+    </com:TActivePanel>
+    
+  <span style="clear:both;"/>
+
+<com:TActivePanel ID="icdPanel" padding-bottom:10px;" GroupingText="<strong>Tindakan yang dipilih</strong>">
+<table width="100%"  border="0" align="center" cellpadding="0" cellspacing="1">  
+    <tr>
+    <td>
+    <table width="100%"  border="0" align="center" cellpadding="0" cellspacing="1" >                      
+      <tr>
+        <td align="center">
+        	<com:XActiveDataGrid 
+                ID="UserGrid"
+                DataKeyField="id"
+                AutoGenerateColumns="false"	
+                AllowPaging="true"
+                AllowCustomPaging="true"
+                AllowSorting="true"
+                Width="100%"					
+                PageSize="5"
+                PagerStyle.Mode="Numeric"			
+                PagerStyle.Font.Name="Arial"
+                PagerStyle.Font.Size="12"
+                PagerStyle.HorizontalAlign="Right"		
+                PagerStyle.CssClass="pager"	
+                GridLines="None"
+                CellSpacing="1"
+                CellPadding="2"							
+                HeaderStyle.CssClass="headerstyle"
+                ItemStyle.CssClass="itemstyle"
+                AlternatingItemStyle.CssClass="itemstyle2"								
+                OnItemCreated="itemCreated"
+                OnDeleteCommand="deleteClicked"								
+                OnPageIndexChanged="changePage"		
+                OnSortCommand="sortGrid">
+                        
+                <com:XActiveTemplateColumn
+                		ID="kodeColumn"
+                    SortExpression="id_tdk"
+                    HeaderText="Kode"
+                    ItemStyle.Width="70px"
+                    ItemStyle.Horizontalalign="Center" />				
+                
+                <com:XActiveTemplateColumn
+                	ID="namaColumn"
+                  SortExpression="nama"
+                    HeaderText="Nama"
+                    ItemStyle.Horizontalalign="Left" />
+                
+                <com:XActiveTemplateColumn
+                		 ID="pengaliColumn"
+                     SortExpression="pengali"
+                     HeaderText="Faktor Pengali"
+                     HeaderStyle.ForeColor="#FFFFFF"
+                     ItemStyle.HorizontalAlign="Center"
+                     ItemStyle.Width="100px"
+                     Visible="True"/>		
+                     
+                <com:XActiveTemplateColumn
+                		 ID="tarifColumn2"
+                     SortExpression="jml"
+                     HeaderText="Tarif"
+                     HeaderStyle.ForeColor="#FFFFFF"
+                     ItemStyle.HorizontalAlign="Right"
+                     ItemStyle.Width="100px"/>
+                     
+                <com:XActiveTemplateColumn
+                		 ID="tarifColumn3"
+                     SortExpression="tanggungan_asuransi"
+                     HeaderText="Tanggungan Asuransi"
+                     HeaderStyle.ForeColor="#FFFFFF"
+                     ItemStyle.HorizontalAlign="Right"
+                     ItemStyle.Width="100px"/>
+                                                
+                <com:XActiveButtonColumn												
+                    HeaderText="<a href='#'>Mode</a>"
+                    Text="Hapus"
+                    ID="Hapus"
+                    ItemStyle.HorizontalAlign="Center"									
+                    ButtonType="PushButton"									
+                    CommandName="delete" 
+                    ItemStyle.Width="120px"/>
+                        
+            </com:XActiveDataGrid>
+        </td>                       
+      </tr>
+    </table></td>
+</tr>
+
+</table>
+</com:TActivePanel>
+
+<span style="clear:both;"/>
+
+<table width="100%"  border="0" align="center" cellpadding="0" cellspacing="1" >                      
+    <tr>
+        <td><hr/></td>
+    </tr>
+    <tr>
+    <td align="center">
+        <com:TActiveButton
+            ID="simpanBtn"
+            Text="Proses" 
+            OnClick="simpanClicked" 
+            CssClass="button_01" 
+            ValidationGroup="val">
+                <prop:ClientSide 
+                OnLoading="maskContent();"
+                OnComplete="unmaskContent(); "/>
+        </com:TActiveButton>
+        
+        <com:TActiveButton 
+            Text="Batal" 
+            Visible="True" 
+            Attributes.onclick = "maskContent();" 
+            OnClick="keluarClicked" 
+            CausesValidation="false" 
+            CssClass="button_01"  />
+    </td>
+    </tr>
+</table>
+
+<com:TCallback ID="UpdateCallback" OnCallback="prosesKonfirmasi" ActiveControl.CausesValidation="false"/>
+<com:TCallback ID="UpdateCallback3" OnCallback="gridMasukanClicked" ActiveControl.CausesValidation="false"/>
+	<script type="text/javascript">
+		//<![CDATA[
+		function tolakClicked(id){
+			jQuery("#<%= $this->idTmp->getClientID() %>").val(id);
+			jQuery("#<%= $this->pengali->getClientID() %>").val('1');
+			jQuery("#<%= $this->catatan->getClientID() %>").val('');
+			jQuery( "#dialog-tolak" ).dialog( "open" );
+		}
+		
+		function prosesTolak(){
+			var request= <%= $this->UpdateCallback3->ActiveControl->Javascript %>;
+				request.dispatch();
+		}
+		
+		function konfirmasi(mode){
+			var request= <%= $this->UpdateCallback->ActiveControl->Javascript %>;
+				request.setCallbackParameter({
+					Id:mode
+				});
+				request.dispatch();
+		}
+		//]]>
+	</script>     
+          
+</com:TContent>
+

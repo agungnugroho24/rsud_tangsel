@@ -1,0 +1,305 @@
+<%@ MasterClass="Application.layouts.AkuntansiLayout" %>
+<style type="text/css">
+<!--
+.style1 {color: #7FA1E6}
+-->
+</style>
+
+<com:TContent ID="Main">
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td height="18"></td>
+  </tr>
+  <tr>
+    <td><table width="10"  border="0" align="center" cellpadding="0" cellspacing="0">
+      <tr>
+        <td width="1%"><table width="100%"  border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="1%"><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndAppTopLft.png'%>" width="15" height="15" /></td>
+            <td width="99%" background="<%=$this->Page->Theme->BaseUrl.'/images/bkg3.png'%>">&nbsp;</td>
+            <td width="1%"><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndAppTopRgt.png'%>" width="15" height="15" /></td>
+          </tr>
+        </table></td>
+        </tr>
+      <tr>
+        <td valign="top" background="<%=$this->Page->Theme->BaseUrl.'/images/bkg3.png'%>"><table width="10" border="0" cellpadding="0" cellspacing="0">
+          <tr>
+            <td><table width="15" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+            </table></td>
+            <td><table width="750" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td class="text_08">Verifikasi</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td><table width="10" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndTopLft.png'%>" width="15" height="15" /></td>
+          <td><table width="720" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td><table width="720" border="0" align="right" cellpadding="0" cellspacing="0">
+                    <tr>
+                      <td width="130" class="text_07">&nbsp;Verifikasi Penerimaan Lainnya</td>
+					  <td width="400" background="<%=$this->Page->Theme->BaseUrl.'/images/rndBkgTop.png'%>"></td>
+                      </tr>
+                </table></td>
+              </tr>
+          </table></td>
+          <td><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndTopRgt.png'%>" width="15" height="15" /></td>
+        </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="10" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td background="<%=$this->Page->Theme->BaseUrl.'/images/rndBkgLft.png'%>"><table width="15" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+          </table></td>
+          <td><table width="720" border="0" cellspacing="0" cellpadding="0">
+		  <tr height="15px">
+		  	<td></td>
+		  </tr>
+              <tr>			  
+                <td>
+				<com:TLabel ID="showSql" />
+				<table width="700" align="center" border="0">
+			  		<tr>
+						<td align="center"><com:TPanel GroupingText="Kriteria" Width="680px">
+							<table width="85%"  border="0" align="left">
+							  <tr>
+							    <td width="39%"><span>&#8226;</span>&nbsp;&nbsp;Dokter</td>
+							    <td width="2%">:</td>
+							    <td colspan="3"><com:TDropDownList ID="DDDokter"
+									PromptText ="--Silakan Pilih--"
+								    PromptValue ="" 		  						    
+									DataTextField="nama"
+									DataValueField="id" 									
+									ToolTip="Tampilkan data berdasarkan dokter!" 
+									TabIndex="1" 
+								 /></td>
+							    </tr>
+							  <tr>
+							    <td><span>&#8226;</span>&nbsp;&nbsp;Poliklinik</td>
+							    <td>:</td>
+							    <td colspan="3"><com:TDropDownList ID="DDKlinik"
+									PromptText ="--Silakan Pilih--"
+								    PromptValue ="" 		  						    
+									DataTextField="nama"
+									DataValueField="id" 									
+									ToolTip="Tampilkan data berdasarkan ruangan!" 
+									TabIndex="2" 
+								 /></td>
+							    </tr>
+							  <tr>
+							    <td><span>&#8226;</span>&nbsp;&nbsp;Kelompok Pasien</td>
+							    <td>:</td>
+							    <td colspan="3"><com:TDropDownList ID="DDUrut"
+									PromptText ="--Silakan Pilih--"
+								    PromptValue =""
+ 		  						    AutoPostBack="true"
+									DataTextField="nama"
+									DataValueField="id" 
+									OnSelectedIndexChanged="selectionChangedUrut" 
+									ToolTip="Diurutkan berdasarkan group pasien!" 
+									TabIndex="3" 
+								 /></td>
+							    </tr>
+							  <tr>
+							    <td><span>&#8226;</span>&nbsp;&nbsp;Perusahaan</td>
+							    <td>:</td>
+							    <td colspan="3"><com:TDropDownList ID="DDKontrak"
+									PromptText ="--Silakan Pilih--"
+								    PromptValue ="" 		  						   
+									DataTextField="nama"
+									DataValueField="id" 									
+									ToolTip="Dicari berdasarkan Perusahaan!" 
+									TabIndex="4" 
+								 /></td>
+							    </tr>
+							  <tr>
+							    <td><span>&#8226;&nbsp;&nbsp;Tanggal </span></td>
+							    <td>:</td>
+							    <td colspan="3"><com:TDatePicker ID="tglMsk" ToolTip="Dicari berdasar tanggal tertentu" TabIndex="5" /></td>
+							    </tr>
+								<tr>
+							    <td><span>&#8226;&nbsp;&nbsp;Periode</span></td>
+							    <td>:</td>
+								<td width="17%"><com:TTextBox CssClass="inputtex" TabIndex="6" Width="80px"/></td>
+							    <td width="4%">s/d</td>
+							    <td width="38%"><com:TTextBox CssClass="inputtex" TabIndex="7" Width="80px"/></td>
+								<tr>
+								<td><span>&#8226;&nbsp;&nbsp;Bulan</span></td>
+								<td>:</td>
+								<td colspan="3"><com:TDropDownList ID="DDBulan"
+									PromptText ="--Silakan Pilih--"
+								    PromptValue ="" 		  						   
+									DataTextField="nama"
+									DataValueField="id" 									
+									ToolTip="Dicari berdasarkan bulan tertentu!" 
+									TabIndex="8" 
+								 />&nbsp;&nbsp;&nbsp;
+								 <com:TButton Text="Proses" OnClick="cariClicked" CssClass="button_01" TabIndex="9" />
+								</td>
+							  </tr>
+							</table>
+							</com:TPanel>
+						</td>
+			  		</tr>
+				</table>
+			</td>
+              </tr>
+			  <tr height="15px"><td></td></tr>
+              <tr>
+                <td><table width="95%"  border="0" align="center" cellpadding="0" cellspacing="1">                      
+                      <tr>
+                        <td align="center">
+						<com:TDataGrid ID="UserGrid"
+								DataKeyField="id"
+								AutoGenerateColumns="false"	
+								AllowPaging="true"
+								AllowCustomPaging="true"
+								AllowSorting="true"
+								Width="680px"					
+								PageSize="5"
+								PagerStyle.Mode="Numeric"			
+								PagerStyle.Font.Name="Arial"
+								PagerStyle.Font.Size="12"
+								PagerStyle.HorizontalAlign="Right"			
+								GridLines="None"
+								CellSpacing="1"
+								CellPadding="2"
+								BackColor="#000000"
+								HeaderStyle.CssClass="headerstyle"
+								ItemStyle.CssClass="itemstyle"
+								AlternatingItemStyle.CssClass="itemstyle2"
+								OnItemCreated="itemCreated"
+								OnDeleteCommand="deleteButtonClicked"								
+								OnPageIndexChanged="changePage"
+								OnPagerCreated="pagerCreated"			
+								OnSortCommand="sortGrid">								
+							</div>	
+								
+								<com:THyperLinkColumn   
+									SortExpression="cm"     
+									HeaderText="No. RM"									
+									DataTextField="cm"
+									ItemStyle.HorizontalAlign="Center"
+									ItemStyle.Width="55px"		
+									DataNavigateUrlField="cm">
+									<prop:DataNavigateUrlFormatString>#
+									  $this->Service->constructUrl('Pendaftaran.kunjPas',array('cm'=>{0},'mode'=>'02'))
+									</prop:DataNavigateUrlFormatString>
+								</com:THyperLinkColumn>	 
+								
+								<com:TBoundColumn
+									SortExpression="nama"
+									HeaderText="Nama Pasien"
+									ItemStyle.Width="120px"
+									DataField="nama" />								
+                
+                <com:TTemplateColumn HeaderText="Jenis Kelamin" SortExpression="jkel" ItemStyle.HorizontalAlign="Center" >									
+                  <prop:ItemTemplate>									
+                    <%= $this->Parent->DataItem->jkel==='0'? 'Laki-laki':'Perempuan' %>					
+                  </prop:ItemTemplate>
+                </com:TTemplateColumn>
+                
+                 <com:TBoundColumn
+                  SortExpression="alamat"
+                  HeaderText="Poliklinik"
+                  ItemStyle.HorizontalAlign="Center"									
+                  ItemStyle.Width="100px"
+                  DataField="alamat" />							           
+                 
+				  
+				  <com:TTemplateColumn HeaderText="Dokter" 
+				  		SortExpression="kelompok"
+						ItemStyle.Width="200px" 
+						ItemStyle.HorizontalAlign="Center" >									
+                  <prop:ItemTemplate>									
+                   <%= $this->Parent->DataItem->kelompok %>				   											
+                  </prop:ItemTemplate>
+                </com:TTemplateColumn>
+                  
+								<com:TButtonColumn												
+									HeaderText="Mode"
+									Text="Verified"
+									ID="Hapus"
+									ItemStyle.HorizontalAlign="Center"
+									ButtonType="PushButton"									
+									CommandName="delete" />	
+									
+							</com:TDataGrid>
+						</td>                       
+                      </tr>
+                    </table></td>
+              </tr>
+              <tr>
+                <td><hr align="center" width="96%" size="2" noshade color="#CECECE"/></td>
+              </tr>
+              <tr>
+                <td><table width="10" border="0" align="center" cellpadding="0" cellspacing="2">
+                    <tr>
+                      <td>
+                      <!---
+					  <com:TControl Visible="<%= $this->User->IsAdmin %>">
+					  	<com:TButton Text="Baru" OnClick="baruClicked" CssClass="button_01" TabIndex="6" />
+					  </com:TControl> --->
+					  </td>                      
+                      <td><com:TButton Text="Keluar" OnClick="keluarClicked" CausesValidation="false" CssClass="button_01" TabIndex="7" /></td>
+                    </tr>
+                </table></td>
+              </tr>
+          </table></td>
+          <td background="<%=$this->Page->Theme->BaseUrl.'/images/rndBkgRgt.png'%>"><table width="15" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+          </table></td>
+        </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="10" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndBtmLft.png'%>" width="15" height="15" /></td>
+          <td background="<%=$this->Page->Theme->BaseUrl.'/images/rndBkgBtm.png'%>"><table width="720" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+          </table></td>
+          <td><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndBtmRgt.png'%>" width="15" height="15" /></td>
+        </tr>
+    </table></td>
+  </tr>
+</table></td>
+            <td><table width="15" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+            </table></td>
+          </tr>
+        </table></td>
+      </tr>
+      <tr>
+        <td><table width="100%"  border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="1%"><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndAppBtmLft.png'%>" width="15" height="15" /></td>
+            <td width="99%" background="<%=$this->Page->Theme->BaseUrl.'/images/bkg3.png'%>">&nbsp;</td>
+            <td width="1%"><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndAppBtmRgt.png'%>" width="15" height="15" /></td>
+          </tr>
+        </table></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+</com:TContent>

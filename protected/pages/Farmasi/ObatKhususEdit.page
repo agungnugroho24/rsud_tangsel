@@ -1,0 +1,112 @@
+<%@ MasterClass="Application.layouts.MainLayout" %>
+<com:TContent ID="jdMain">
+	Edit Obat Harga Khusus
+    
+    <a href="<%= $this->Service->constructUrl('Simak') %>" onclick="maskContent()">
+    <span class="close-btn">
+        <span class="ui-icon ui-icon-circle-close"></span>
+    </span>
+    </a>
+    
+</com:TContent>	
+
+
+
+<com:TContent ID="Main">
+
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+              <tr>
+                <td><table width="100%" border="0" align="right" cellpadding="0" cellspacing="2">
+                  <tr>
+                    <td width="130"><span>&#8226;</span>&nbsp;&nbsp;Nama Obat </td>
+                    <td width="5">:</td>
+                    <td >
+                      <com:TTextBox 
+							ID="nama" 
+							Width="300px" 
+							TabIndex="3"
+							ValidationGroup="val"
+							ReadOnly = "True"
+						/>
+                      <com:TRequiredFieldValidator 
+							ControlToValidate="nama"											 
+						  	ErrorMessage="Anda harus mengisikan nama Obat"
+						  	Display="Dynamic" 
+							ValidationGroup="val"
+						/>                    </td>
+                  </tr>
+                  <com:TControl Visible="false">
+                  <tr>
+                    <td><span>&#8226;</span>&nbsp;&nbsp;Harga Beli Obat </td>
+                    <td>:</td>
+                    <td><com:TTextBox 
+							ID="hrgBeli" 
+							Width="100px" 
+							TabIndex="3" 
+                            ReadOnly="true"
+						/>
+                    </td>
+                  </tr>
+                  </com:TControl>
+                  <tr>
+                    <td><span>&#8226;</span>&nbsp;&nbsp;Harga Jual Obat</td>
+                    <td>:</td>
+                    <td>
+                      <com:TTextBox 
+							ID="hrg" 
+							Width="60px" 
+							TabIndex="14"
+							ValidationGroup="val" 
+						/>
+                    	<com:TRequiredFieldValidator 
+							ControlToValidate="hrg"											 
+						  	ErrorMessage="Anda harus mengisikan Harga Obat"
+						  	Display="Dynamic" 
+							ValidationGroup="val"
+						/>
+                        <com:TRegularExpressionValidator
+                            ControlToValidate="hrg"
+                            FocusOnError="true"
+                            RegularExpression="[\d]{1,}"
+                            ErrorMessage="Jumlah yang dimasukan tidak sesuai"
+                            ValidationGroup="val"
+                        />
+                        <br/>
+                        <com:TLabel ID="errMsg" ForeColor="#FF0000" Text="Harga jual lebih kecil dari harga beli" Visible="false" />
+                    </td>
+                  </tr>
+                </table></td>
+              </tr>
+              <tr>
+                <td><hr /></td>
+              </tr>
+              <tr>
+                <td><table width="10" border="0" align="center" cellpadding="0" cellspacing="2">
+                    <tr>
+                      <td><com:TButton Text="Simpan" 
+					  					OnClick="simpanClicked" 
+										CssClass="button_01" 
+										TabIndex="4" ValidationGroup="val" 
+                                        Attributes.onclick = "maskContent();"/></td>
+                      <td><!-- <com:TButton Text="Batal" 					  					
+										ButtonType="Reset" 
+										OnClick="batalClicked"
+										CausesValidation="false" 
+										CssClass="button_01" 
+										TabIndex="5" /> --></td>
+                      <td><com:TButton Text="Keluar" 
+					  			OnClick="keluarClicked" 
+								CausesValidation="false" 
+								CssClass="button_01" 
+								TabIndex="6" 
+                                Attributes.onclick = "maskContent();" />
+					  </td>
+                    </tr>
+                </table></td>
+              </tr>
+          </table>
+          
+</com:TContent>

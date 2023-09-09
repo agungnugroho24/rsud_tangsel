@@ -1,0 +1,437 @@
+<%@ MasterClass="Application.layouts.MainLayout" %>
+<com:TContent ID="jdMain">
+	Daftar Tindakan Laboratorium - Edit
+    
+    <a href="<%= $this->Service->constructUrl('Simak') %>" onclick="maskContent()">
+    <span class="close-btn">
+        <span class="ui-icon ui-icon-circle-close"></span>
+    </span>
+    </a>
+    
+</com:TContent>	
+<com:TContent ID="Main">
+
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+             
+              <tr>
+                <td>
+                <table width="100%" border="0" align="right" cellpadding="0" cellspacing="2">
+                  <com:TControl Enabled="false" Visible="false">
+                  <tr>
+                    <td ><span>&#8226;</span> ID</td>
+                    <td >:</td>
+      					<td  ><com:TActiveTextBox CssClass="input_text" 
+												  ID="ID" 												   
+												  MaxLength="4" 
+												  Width="80px"													  
+												  ValidationGroup="val" 
+												  />
+									<com:TActiveCustomValidator
+												ControlToValidate="ID"
+												ErrorMessage="Maaf, ID tersebut sudah ada!"
+												OnServerValidate="checkRM" 
+												FocusOnError="true"												
+												Display="Dynamic" 
+												ValidationGroup="val"/>
+									<com:TRequiredFieldValidator 
+												  ControlToValidate="ID"											 
+												  ErrorMessage="Anda harus mengisi ID Tindakan Laboratorium"
+												  Display="Dynamic" 
+												  ValidationGroup="val"/>
+									<com:TRegularExpressionValidator
+												 ValidationGroup="val"
+												  ControlToValidate="ID"
+												  FocusOnError="true"
+												  RegularExpression="\w{4}"
+												  Text="ID harus 4 digit" /></td>
+                  </tr>
+                  </com:TControl>
+                  
+                  <tr>
+                    <td width="200"><span>&#8226; </span>Nama Tindakan  </td>
+                    <td width="5">:</td>
+                    <td>
+                      <com:TActiveTextBox 
+							ID="nama" 
+							Width="300px" 
+							ValidationGroup="val" 
+						/>
+                      <com:TRequiredFieldValidator
+                            ControlToValidate="nama"
+                            ValidationGroup="val"
+                            ErrorMessage="*"
+                            Display="Dynamic"
+                            FocusOnError="true" 
+                            CssClass="valRequired"
+                            ControlCssClass="valctrl"/>
+                   		&nbsp;
+                        
+                        <com:TActiveCheckBox 
+                        	ID="modeRujukan"
+                            Text="Tindakan Rujukan"	
+                            OnCheckedChanged="modeRujukanChanged"
+                            AutoPostBack="true"
+                            CausesValidation="false"/>
+                            
+                    </td>
+                  </tr>
+                  
+                  <tr>
+                    <td><span>&#8226; </span>Laboratorium Rujukan</td>
+                    <td>:</td>
+                    <td>
+						<com:TActiveDropDownList 
+							ID="DDLabRujukan"
+							PromptText ="--Silakan Pilih--"
+							PromptValue ="empty"											
+							DataTextField="nama"
+							DataValueField="id" 	
+							Width="300px"/>
+						<com:TRequiredFieldValidator
+                        	ID="valRujukan"
+                            ControlToValidate="DDLabRujukan"
+                            ValidationGroup="val"
+                            ErrorMessage="*"
+                            Display="Dynamic"
+                            FocusOnError="true" 
+                            CssClass="valRequired"
+                            ControlCssClass="valctrl"
+                            InitialValue="empty"/>					</td>
+                  </tr>
+                  
+                  <tr>
+                    <td><span>&#8226; </span>Kategori  </td>
+                    <td>:</td>
+                    <td>
+						<com:TActiveDropDownList 
+							ID="DDLabKateg"
+							PromptText ="--Silakan Pilih--"
+							PromptValue ="empty"											
+							DataTextField="jenis"
+							DataValueField="kode" 	
+							Width="300px"/>
+						<com:TRequiredFieldValidator
+                            ControlToValidate="DDLabKateg"
+                            ValidationGroup="val"
+                            Enabled="false"
+                            ErrorMessage="*"
+                            Display="Dynamic"
+                            FocusOnError="true" 
+                            CssClass="valRequired"
+                            ControlCssClass="valctrl"
+                            InitialValue="empty"/>					</td>
+                  </tr>
+
+
+                  <tr>
+                    <td><span>&#8226; </span>Kelompok  </td>
+                    <td>:</td>
+                    <td>
+                      <com:TActiveDropDownList 
+							ID="DDLabKel"
+							PromptText ="--Silakan Pilih--"
+							PromptValue ="empty"											
+							DataTextField="nama"
+							DataValueField="kode" 
+							Width="300px"
+                            AutoPostBack="true"
+                            CausesValidation="false"
+                            OnSelectedIndexChanged="DDLabKelChanged"
+                            OnCallback="panelCallback"/>
+                      <com:TRequiredFieldValidator
+                        ControlToValidate="DDLabKel"
+                        ValidationGroup="val"
+                        ErrorMessage="*"
+                        Display="Dynamic"
+                        FocusOnError="true" 
+                        CssClass="valRequired"
+                        ControlCssClass="valctrl"
+                        InitialValue="empty"/>                    </td>
+                  </tr>
+                  
+                  <tr>
+                    <td colspan="3"><hr/></td>
+                  </tr>
+                  <tr>
+                    <td colspan="3"><strong>Nilai Normal</strong></td>
+                  </tr>
+                  
+                  <tr>
+                    <td colspan="3">
+                    	
+                    	<com:TActivePanel ID="itemPaketPanel">
+                        <table width="100%" border="0">
+                        	<tr>
+                            	<td width="193"><span>&#8226; </span>Nama Item Paket</td>
+                            	<td width="5">:</td>
+                                <td>
+                                	<com:TActiveTextBox 
+                                        ID="itemPaket" 
+                                        Width="300px"/>  
+                                    <com:TRequiredFieldValidator
+                                    	ID="itemPaketVal"
+                                        ControlToValidate="itemPaket"
+                                        ValidationGroup="valTambah"
+                                        ErrorMessage="*"
+                                        Display="Dynamic"
+                                        FocusOnError="true" 
+                                        CssClass="valRequired"
+                                        ControlCssClass="valctrl"
+                                        InitialValue="empty"/> 
+                                </td>
+                            </tr>
+                        </table>
+                    	</com:TActivePanel>
+                        
+                    </td>
+                  </tr>
+                  
+                  <tr>
+                    <td><span>&#8226; </span>Nilai Normal Laki-Laki</td>
+                    <td>:</td>
+                    <td>
+                      <com:TActiveTextBox 
+							ID="normal" 
+							Width="300px" 
+						/>                    </td>
+                  </tr>
+                  
+                  <tr>
+                    <td><span>&#8226; </span>Nilai Normal Perempuan</td>
+                    <td>:</td>
+                    <td>
+                      <com:TActiveTextBox 
+							ID="normal2" 
+							Width="300px" 
+						/>                    </td>
+                  </tr>
+                  
+                  <tr>
+                    <td colspan="3">
+                    	
+                    	<com:TActivePanel ID="gridPanel" DefaultButton="tambahBtn">
+                        <table width="100%" border="0">
+                        	<tr>
+                            	<td width="200"></td>
+                            	<td>
+                                	<com:TActiveButton 
+                                        ID="tambahBtn"
+                                        Text="Tambah" 
+                                        OnClick="tambahClicked" 
+                                        CssClass="button_01" 
+                                        CausesValidation="true"
+                                        ValidationGroup="valTambah"
+                                        Attributes.onclick = "maskContent();" />
+                                </td>
+                            </tr>
+                            <tr>
+                            	<td colspan="2">
+                                	<com:XActiveDataGrid 
+                                        ID="UserGrid"
+                                        DataKeyField="id"
+                                        AutoGenerateColumns="false"	
+                                        AllowPaging="true"
+                                        AllowCustomPaging="true"
+                                        AllowSorting="true"			
+                                        PageSize="50"
+                                        PagerStyle.Mode="Numeric"			
+                                        PagerStyle.Font.Name="Arial"
+                                        PagerStyle.Font.Size="12"
+                                        PagerStyle.HorizontalAlign="Right"		
+                                        Width="100%"	
+                                        GridLines="None"
+                                        CellSpacing="1"
+                                        CellPadding="2"						
+                                        HeaderStyle.CssClass="headerstyle"
+                                        ItemStyle.CssClass="itemstyle"
+                                        AlternatingItemStyle.CssClass="itemstyle2"								
+                                        OnDeleteCommand="deleteClicked"	
+                                        OnItemCreated="itemCreated"			
+                                        OnSortCommand="sortGrid"
+                                        EmptyTemplate="<div class=info><strong>BELUM ADA DATA PAKET</strong></div>">
+                                                
+                                        <com:XActiveTemplateColumn
+                                                ID="itemColoumn"
+                                                HeaderText="Tindakan"
+                                                ItemStyle.Width="250px"/>
+                                        
+                                        <com:XActiveTemplateColumn
+                                                ID="normalColoumn"
+                                                HeaderText="Nilai Normal Laki-Laki"
+                                                ItemStyle.Width="250px" />
+                                        
+                                        <com:XActiveTemplateColumn
+                                                ID="normal2Coloumn"
+                                                HeaderText="Nilai Normal Perempuan"
+                                                ItemStyle.Width="250px" />
+                                                
+                                        <com:XActiveButtonColumn												
+                                                HeaderText="Mode"
+                                                Text="Delete"
+                                                ID="Hapus"
+                                                ItemStyle.HorizontalAlign="Center"									
+                                                ButtonType="PushButton"		
+                                                ItemStyle.Width="25px"							
+                                                CommandName="delete" />
+                                                    
+                                      </com:XActiveDataGrid> 
+                                </td>
+                            </tr>
+                        </table>
+                    	</com:TActivePanel>
+                        
+                    </td>
+                  </tr>
+                  
+                  <tr>
+                    <td colspan="3"><hr/></td>
+                  </tr>
+                  
+                  <tr>
+                    <td colspan="3"><strong>Tarif Tindakan</strong></td>
+                  </tr>
+                  <tr>
+                    <td><span>&#8226; </span>Tarif Bisnis/Umum</td>
+                    <td>:</td>
+                    <td>
+                    	<com:TActiveTextBox CssClass="input_text" 
+                                      ID="Tarif1" 												   
+                                      MaxLength="10" 
+                                      Width="80px"										 
+                                      CausesValidation="false"
+                                      ValidationGroup="val"
+                                      Text="0"
+                                      />
+                			<com:TRegularExpressionValidator
+                                ControlToValidate="Tarif1"
+                                RegularExpression="[\d]{1,}"
+                                ErrorMessage="Tarif yang dimasukan tidak sesuai"
+                                ValidationGroup="val"
+                                Display="Dynamic"
+                                FocusOnError="true" 
+                                CssClass="valRequired"
+                                ControlCssClass="valctrl"
+                            />
+                    </td>
+                  </tr>
+                  
+                  <tr>
+                    <td><span>&#8226; </span>Tarif VIP</td>
+                    <td>:</td>
+                    <td>
+                    	<com:TActiveTextBox CssClass="input_text" 
+                                      ID="Tarif2" 												   
+                                      MaxLength="10" 
+                                      Width="80px"										 
+                                      CausesValidation="false"
+                                      ValidationGroup="val"
+                                      Text="0"
+                                      />
+                			<com:TRegularExpressionValidator
+                                ControlToValidate="Tarif2"
+                                RegularExpression="[\d]{1,}"
+                                ErrorMessage="Tarif yang dimasukan tidak sesuai"
+                                ValidationGroup="val"
+                                Display="Dynamic"
+                                FocusOnError="true" 
+                                CssClass="valRequired"
+                                ControlCssClass="valctrl"
+                            />
+                    </td>
+                  </tr>
+                  
+                  <tr>
+                    <td><span>&#8226; </span>Tarif Bisnis/Umum Cito</td>
+                    <td>:</td>
+                    <td>
+                    	<com:TActiveTextBox CssClass="input_text" 
+                                      ID="Tarif3" 												   
+                                      MaxLength="10" 
+                                      Width="80px"										 
+                                      CausesValidation="false"
+                                      ValidationGroup="val"
+                                      Text="0"
+                                      />
+                			<com:TRegularExpressionValidator
+                                ControlToValidate="Tarif3"
+                                RegularExpression="[\d]{1,}"
+                                ErrorMessage="Tarif yang dimasukan tidak sesuai"
+                                ValidationGroup="val"
+                                Display="Dynamic"
+                                FocusOnError="true" 
+                                CssClass="valRequired"
+                                ControlCssClass="valctrl"
+                            />
+                    </td>
+                  </tr>
+                  
+                  <tr>
+                    <td><span>&#8226; </span>Tarif VIP Cito</td>
+                    <td>:</td>
+                    <td>
+                    	<com:TActiveTextBox CssClass="input_text" 
+                                      ID="Tarif4" 												   
+                                      MaxLength="10" 
+                                      Width="80px"										 
+                                      CausesValidation="false"
+                                      ValidationGroup="val"
+                                      Text="0"
+                                      />
+                			<com:TRegularExpressionValidator
+                                ControlToValidate="Tarif4"
+                                RegularExpression="[\d]{1,}"
+                                ErrorMessage="Tarif yang dimasukan tidak sesuai"
+                                ValidationGroup="val"
+                                Display="Dynamic"
+                                FocusOnError="true" 
+                                CssClass="valRequired"
+                                ControlCssClass="valctrl"
+                            />
+                    </td>
+                  </tr>
+                  
+                </table></td>
+              </tr>
+              <tr>
+                <td><hr /></td>
+              </tr>
+              <tr>
+                <td><table width="10" border="0" align="center" cellpadding="0" cellspacing="2">
+                    <tr>
+                      <td>
+                      	<com:TActiveButton 
+                        	Text="Simpan"  
+                            Attributes.onclick = "maskContent();" 
+                            OnClick="simpanClicked"
+                            CssClass="button_01" 
+                            ValidationGroup="val" />
+                      </td>
+                      <td> <!-- <com:TActiveButton Text="Batal" 					  					
+										ButtonType="Reset" 
+										OnClick="batalClicked"
+										CausesValidation="false" 
+										CssClass="button_01"  /> --></td>
+                      <td><com:TActiveButton Text="Batal" Attributes.onclick = "maskContent();" 
+					  			OnClick="keluarClicked" 
+								CausesValidation="false" 
+								CssClass="button_01"/>
+					  </td>
+                    </tr>
+                </table></td>
+              </tr>
+          </table>
+ 
+ 	<com:TCallback ID="UpdateCallback" OnCallback="prosesKonfirmasi" ActiveControl.CausesValidation="false"/>
+	<script type="text/javascript">
+		//<![CDATA[
+		function konfirmasi(mode){
+			var request= <%= $this->UpdateCallback->ActiveControl->Javascript %>;
+				request.setCallbackParameter({
+					Id:mode
+				});
+				request.dispatch();
+		}
+		//]]>
+	</script>
+             
+</com:TContent>

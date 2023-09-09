@@ -1,0 +1,12 @@
+<%@ MasterClass="Application.layouts.MainLayout" %>
+<com:TContent ID="jdMain">
+	Welcome!
+</com:TContent>
+
+
+<com:TContent ID="Main">
+	<div align="center" style="width:100%; padding-top:20px;">
+    	<img src="<%=$this->Page->Theme->BaseUrl.'/images/logo01.png'%>" />
+    </div>
+    
+</com:TContent>

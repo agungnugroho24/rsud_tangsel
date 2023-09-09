@@ -1,0 +1,88 @@
+<%@ MasterClass="Application.layouts.MainLayout" %>
+<com:TContent ID="jdMain">
+	Pendaftaran Rawat Jalan
+	
+    <a href="<%= $this->Service->constructUrl('Simak') %>" onclick="maskContent()">
+    <span class="close-btn">
+        <span class="ui-icon ui-icon-circle-close"></span>
+    </span>
+    </a>
+    
+</com:TContent> 
+
+
+<com:TContent ID="Main">
+
+           <com:TActivePanel ID="tesPanel">
+			<com:TActiveButton ID="tes"
+				Text="tes"
+				OnCommand="tesClicked"
+				onCallback="tesCallback"/>
+			
+			<com:TActiveTextBox ID="tes2"/>			
+				
+			<com:TActiveButton ID="Button1"
+				Text="Method1"
+				OnCommand="Button1_Clicked"/>
+			<com:TActiveButton ID="Button2"
+				ButtonType="Button"
+				Text="Method2"
+				Attributes.onclick="Windows.show('<%=$this->Window2->ClientId%>')"/>
+			<table style="width:250px;">
+			<tr>
+				<th colspan=2>Details</th>
+			</tr>
+				<tr>
+					<td>First Name</td>
+					<td><com:TActiveLabel ID="Name"/></td>
+				</tr>
+				<tr>
+					<td>Last Name</td>
+					<td><com:TActiveLabel ID="Surname"/></td>
+				</tr>
+				<tr>
+					<td>Year of birth</td>
+					<td><com:TActiveLabel ID="Year"/></td>
+				</tr>
+			</table>
+		
+	<div id="HiddenTable" style="display:none;width:600px;">
+		<com:TActiveDataGrid ID="ChoiceGrid"
+			DataKeyField="id"
+			AutoGenerateColumns="false"
+			AllowSorting="false"
+			AllowPaging="false">
+			<com:TBoundColumn ID="name"
+				HeaderText="Name"
+				DataField="name"/>
+			<com:TBoundColumn ID="surname"
+				HeaderText="Surname"
+				DataField="surname"/>
+			<com:TTemplateColumn ID="command">
+				<prop:ItemTemplate>
+					<com:TActiveLinkButton ID="button"
+						Text="Select"
+						OnCommand="Page.showDetails"
+						CommandParameter="<%#$this->Parent->DataItem['id']%>"/>
+				</prop:ItemTemplate>
+			</com:TTemplateColumn>
+		</com:TActiveDataGrid>
+		
+		<com:PWCWindow ID="Window1" Title="This was on the Master page already" Theme="alphacube" Mode="Existing" Width="300" Height="300" Content="HiddenTable" AutoResize="true" AutoPosition="false" DestroyOnClose="False"/>
+		<com:PWCWindow ID="Window2" Title="This is Slave page" Left="50" Top="50" Theme="bluelighting" Width="300" Height="300" Mode="Url" DestroyOnClose="True" Content="?page=tes.Slave"/>
+	</div>
+	<com:TCallback ID="UpdateCallback" OnCallback="showDetails" ActiveControl.CausesValidation="false"/>
+	<script type="text/javascript">
+		//<![CDATA[
+		function updateFields(personId){
+			var request= <%= $this->UpdateCallback->ActiveControl->Javascript %>;
+				request.setCallbackParameter({
+					Id:personId
+				});
+				request.dispatch();
+		}
+		//]]>
+	</script>
+	</com:TActivePanel>
+  
+</com:TContent>

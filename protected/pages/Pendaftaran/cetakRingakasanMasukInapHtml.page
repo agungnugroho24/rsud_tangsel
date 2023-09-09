@@ -1,0 +1,223 @@
+<%@ MasterClass="Application.layouts.PrintLayout" %>
+
+<com:TContent ID="isi">
+	<style>
+		.cellLeft{
+			border-bottom:#000000 1px solid;
+			border-left:#000000 1px solid;
+			border-top:#000000 1px solid;
+		}	
+	</style>
+    
+	<div id="page-wrap">
+
+		<div id="header" style="text-align:left;" >RUMAH SAKIT UMUM TANGERANG SELATAN</div>
+		
+		<div id="identity" >
+		  JL. Pajajaran No. 101 Pamulang Telp.(021) 74718440<br/>
+          
+	    	<!--<div id="logo">
+              <img id="image" src="<%=$this->Page->Theme->BaseUrl.'/images/logo1.jpg'%>" alt="logo" width="220px" />
+			</div>-->
+	  </div>
+        
+	  <div style="clear:both"></div>
+		
+		<div id="customer">
+			<!--
+            <textarea id="customer-title">Widget Corp.
+c/o Steve Widget</textarea>
+
+            <table id="meta">
+                <tr>
+                    <td class="meta-head">Invoice #</td>
+                    <td><textarea>000123</textarea></td>
+                </tr>
+                <tr>
+
+                    <td class="meta-head">Date</td>
+                    <td><textarea id="date">December 15, 2009</textarea></td>
+                </tr>
+                <tr>
+                    <td class="meta-head">Amount Due</td>
+                    <td><div class="due">$875.00</div></td>
+                </tr>
+
+            </table>
+		-->
+		</div>
+		
+        <br/>
+        <hr/>
+        
+        <!--<div class="barcode" ><com:TActiveLabel ID="barcode"/></div>-->
+      <div class="titleTxt" style="font-size:22px">RINGKASAN MASUK</div>
+        <br/>
+        <table width="100%" border="0px" class="items">
+          <tr>
+            <td width="170" >&nbsp;</td>
+            <td width="5" align="center">&nbsp;</td>
+            <td width="800"></td>
+            <td width="100"><strong>No. CM</strong></td>
+            <td align="center" width="5"></td>
+            <td style="border:#000000 1px solid;" align="center"><strong>
+            <com:TActiveLabel ID="txt"/>
+            </strong></td>
+          </tr>
+        </table>
+          
+        <br/>
+        <table width="100%" border="0px">
+          <tr>
+            <td width="15%" >Nama Pasien</td>
+            <td width="1%" align="center">:</td>
+            <td width="50%"><strong>
+            <com:TActiveLabel ID="txt2"/>
+            </strong></td>
+            <td width="15%">No. Reg</td>
+            <td align="center" width="1%">:</td>
+            <td width="5%"><com:TActiveLabel ID="txt18"/></td>
+          </tr>
+          <tr>
+            <td>Tanggal Lahir</td>
+            <td align="center">:</td>
+            <td><com:TActiveLabel ID="txt3"/></td>
+            <td>Tipe Pasien</td>
+            <td align="center">:</td>
+            <td><com:TActiveLabel ID="txt19"/></td>
+          </tr>
+          <tr>
+            <td valign="top">Umur</td>
+            <td align="center" valign="top">:</td>
+            <td valign="top"><com:TActiveLabel ID="txt4"/></td>
+            <td valign="top"> Penjamin</td>
+            <td align="center" valign="top">:</td>
+            <td valign="top"><com:TActiveLabel ID="txt20"/></td>
+          </tr>
+          <tr>
+            <td>Agama</td>
+            <td align="center">:</td>
+            <td><com:TActiveLabel ID="txt5"/></td>
+            <td colspan="3">Cara Masuk Dikirim Oleh</td>
+          </tr>
+          <tr>
+            <td>Pendidikan</td>
+            <td align="center">:</td>
+            <td><com:TActiveLabel ID="txt6"/></td>
+            <td colspan="3" rowspan="8" valign="top"><com:TActiveLabel ID="txt21"/></td>
+          </tr>
+          <tr>
+            <td>Pekerjaan</td>
+            <td align="center">:</td>
+            <td><com:TActiveLabel ID="txt7"/></td>
+          </tr>
+          <tr>
+            <td valign="top">Alamat Lengkap</td>
+            <td align="center" valign="top">:</td>
+            <td><com:TActiveLabel ID="txt8"/></td>
+          </tr>
+          <tr>
+            <td valign="top">Status Perkawinan</td>
+            <td align="center" valign="top">:</td>
+            <td><com:TActiveLabel ID="txt9"/></td>
+          </tr>
+          <tr>
+            <td valign="top">Nama Penanggung Jawab / Pembayar</td>
+            <td align="center" valign="top">:</td>
+            <td valign="top"><com:TActiveLabel ID="txt10"/></td>
+          </tr>
+          <tr>
+            <td valign="top">Nama / Alamat Keluarga Terdekat</td>
+            <td align="center" valign="top">:</td>
+            <td valign="top"><com:TActiveLabel ID="txt11"/></td>
+          </tr>
+          <tr>
+            <td valign="top">Bag / Spesialis</td>
+            <td align="center" valign="top">:</td>
+            <td><com:TActiveLabel ID="txt12"/></td>
+          </tr>
+          <tr>
+            <td valign="top">Dokter Penanggung Jawab</td>
+            <td align="center" valign="top">:</td>
+            <td valign="top"><com:TActiveLabel ID="txt13"/></td>
+          </tr>
+          <tr>
+            <td colspan="3" valign="top">
+            	<table class="items" width="100%" border="0">
+                  <tr>
+                    <td width="25%"><div align="center">Kelas</div></td>
+                    <td width="25%"><div align="center">Ruang Rawat</div></td>
+                    <td width="25%"><div align="center">No. Kamar</div></td>
+                    <td width="25%"><div align="center">No. Bed</div></td>
+                  </tr>
+                </table>
+            </td>
+            <td>Tgl. Masuk</td>
+            <td align="center">:</td>
+            <td><com:TActiveLabel ID="txt22"/></td>
+          </tr>
+          <tr>
+            <td colspan="3" valign="top">
+            	<table class="items" width="100%" border="0">
+                  <tr>
+                    <td width="25%"><div align="center">
+                      <com:TActiveLabel ID="txt14"/>
+                    </div></td>
+                    <td width="25%"><div align="center">
+                      <com:TActiveLabel ID="txt15"/>
+                    </div></td>
+                    <td width="25%"><div align="center">
+                      <com:TActiveLabel ID="txt16"/>
+                    </div></td>
+                    <td width="25%"><div align="center">
+                      <com:TActiveLabel ID="txt17"/>
+                    </div></td>
+                  </tr>
+                </table>
+            </td>
+            <td>Jam Masuk</td>
+            <td align="center">:</td>
+            <td><com:TActiveLabel ID="txt23"/></td>
+          </tr>
+      </table>
+        
+      
+		<!--
+        <br style="page-break-before: always" />
+        <div>
+        	asjdhkasj dkjash jdkkahs dkajshdkjash 
+        </div>
+        
+		<div id="terms">
+		  <h5>Terms</h5>
+		  <textarea>NET 30 Days. Finance Charge of 1.5% will be made on unpaid balances after 30 days.</textarea>
+		</div>
+		-->
+		<div id="hide" align="center" style="width:100%; padding-top:10px;" >
+            <com:TActiveButton 
+                ID="cetakBtn"
+                Text="Cetak" 
+                CausesValidation="false"
+                Attributes.onclick = "window.print();return false;">
+            </com:TActiveButton>
+            
+            <com:TButton 
+                ID="tesBtn"
+                Text="Tes" 
+                CausesValidation="false"
+                OnClick="tesClicked"
+                Visible="false">
+            </com:TButton>
+            
+            <com:TActiveButton 
+                ID="closeBtn"
+                OnClick="closeBtnClicked"
+                Text="Tutup" 
+                CausesValidation="false"
+                Attributes.onclick = "maskContent();">
+            </com:TActiveButton>
+        </div>
+    </div>
+	
+    
+</com:TContent>

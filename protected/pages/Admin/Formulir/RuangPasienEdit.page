@@ -1,0 +1,235 @@
+<%@ MasterClass="Application.layouts.MainLayout" %>
+<com:TContent ID="jdMain">
+	Daftar Ruang Rawat - Edit
+    
+    <a href="<%= $this->Service->constructUrl('Simak') %>" onclick="maskContent()">
+    <span class="close-btn">
+        <span class="ui-icon ui-icon-circle-close"></span>
+    </span>
+    </a>
+    
+</com:TContent>	
+<com:TContent ID="Main">
+
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>
+                <table width="100%" border="0" align="right" cellpadding="0" cellspacing="2">
+                  <com:TControl Visible="false" Enabled="false">
+                  <tr>
+                    <td width="150"><span>&#8226;</span> ID</td>
+                    <td width="5">:</td>
+                    <td ><com:TActiveTextBox CssClass="input_text" 
+												  ID="ID" 												   
+												  MaxLength="2" 										   
+												  ToolTip="ID Ruangan Pasien" 
+												  Width="55px"	
+												  ValidationGroup="val"	
+												  />
+								<com:TRequiredFieldValidator 
+											  ControlToValidate="ID"											 
+											  ErrorMessage="Anda harus mengisi ID Ruangan Pasien"
+											  Display="Dynamic"
+											  ValidationGroup="val" />
+									<com:TActiveCustomValidator
+												ControlToValidate="ID"
+												ValidationGroup="val"
+												ErrorMessage="Maaf, ID tersebut sudah ada!"
+												OnServerValidate="checkRM" 
+												FocusOnError="true"												
+												Display="Dynamic" />								</td>
+                  </tr>
+                  </com:TControl>
+                  
+                  <tr>
+                    <td width="230"><span>&#8226; </span>Nama Ruangan</td>
+                    <td width="5">:</td>
+                    <td>
+						<com:TActiveTextBox 
+							ID="nama" 
+							Width="300px" 
+							ValidationGroup="val" />
+						<com:TRequiredFieldValidator
+                            ControlToValidate="nama"
+                            ValidationGroup="val"
+                            ErrorMessage="*"
+                            Display="Dynamic"
+                            FocusOnError="true" 
+                            CssClass="valRequired"
+                            ControlCssClass="valctrl"/>
+                     </td>
+                  </tr>
+                  
+                  <tr>
+                    <td ><span>&#8226; </span>Kelas</td>
+                    <td >:</td>
+                    <td>
+						<com:TActiveDropDownList 
+                            ID="DDKelas"
+                            PromptText ="--Silakan Pilih--"
+                            Width="200px"
+                            PromptValue ="empty"
+                            DataTextField="nama"
+                            DataValueField="id"
+                            AutoPostBack="false"/>	
+                    	<com:TRequiredFieldValidator
+                            ControlToValidate="DDKelas"
+                            ValidationGroup="val"
+                            ErrorMessage="*"
+                            Display="Dynamic"
+                            FocusOnError="true" 
+                            CssClass="valRequired"
+                            ControlCssClass="valctrl"/>
+                    </td>
+                  </tr>
+                  
+                  <tr>
+                    <td ><span>&#8226; </span>Kamar</td>
+                    <td >:</td>
+                    <td>
+						<com:TActiveDropDownList 
+                            ID="DDKamar"
+                            PromptText ="--Silakan Pilih--"
+                            Width="200px"
+                            PromptValue ="empty"
+                            DataTextField="nama"
+                            DataValueField="id"
+                            AutoPostBack="false"/>	
+                    	<com:TRequiredFieldValidator
+                            ControlToValidate="DDKamar"
+                            ValidationGroup="val"
+                            ErrorMessage="*"
+                            Display="Dynamic"
+                            FocusOnError="true" 
+                            CssClass="valRequired"
+                            ControlCssClass="valctrl"/>
+                    </td>
+                  </tr>
+                  
+                  <tr>
+                    <td ><span>&#8226; </span>Jumlah Bed</td>
+                    <td >:</td>
+                    <td>
+						<com:TActiveTextBox 
+                            ID="jmlBed"
+                            CssClass="input_text" 						   
+                              MaxLength="4" 
+                              Width="40px"										 
+                              CausesValidation="false"
+                              ValidationGroup="val"
+                              Text="0"/> 
+                            <com:TRequiredFieldValidator
+                                ControlToValidate="jmlBed"
+                                ValidationGroup="val"
+                                ErrorMessage="*"
+                                Display="Dynamic"
+                                FocusOnError="true" 
+                                CssClass="valRequired"
+                                ControlCssClass="valctrl"/>
+                            <com:TRegularExpressionValidator
+                                ControlToValidate="jmlBed"
+                                RegularExpression="^\d*\.?\d*$"
+                                ErrorMessage="*"
+                                ValidationGroup="val"
+                                Display="Dynamic"
+                                FocusOnError="true" 
+                                CssClass="valRequired"
+                                ControlCssClass="valctrl"/>
+                     </td>
+                  </tr>
+                  
+                  <tr>
+                    <td ><span>&#8226; </span>Jumlah Bed Terpakai</td>
+                    <td >:</td>
+                    <td>
+						<com:TActiveTextBox 
+                            ID="jmlBedPakai"
+                            CssClass="input_text" 						   
+                              MaxLength="4" 
+                              Width="40px"										 
+                              CausesValidation="false"
+                              ValidationGroup="val"
+                              Text="0"/> 
+                            <com:TRequiredFieldValidator
+                                ControlToValidate="jmlBedPakai"
+                                ValidationGroup="val"
+                                ErrorMessage="*"
+                                Display="Dynamic"
+                                FocusOnError="true" 
+                                CssClass="valRequired"
+                                ControlCssClass="valctrl"/>
+                            <com:TRegularExpressionValidator
+                                ControlToValidate="jmlBedPakai"
+                                RegularExpression="^\d*\.?\d*$"
+                                ErrorMessage="*"
+                                ValidationGroup="val"
+                                Display="Dynamic"
+                                FocusOnError="true" 
+                                CssClass="valRequired"
+                                ControlCssClass="valctrl"/>
+                     </td>
+                  </tr>
+                  
+                  <com:TControl Visible="false" Enabled="false">
+                  <tr>
+                    <td><span>&#8226; </span>Status</td>
+                    <td>:</td>
+                    <td>
+						<com:TActiveTextBox 
+							ID="st" 
+							Width="200px" 
+							ValidationGroup="val"
+						/>
+						<com:TRequiredFieldValidator
+                            ControlToValidate="st"
+                            ValidationGroup="val"
+                            ErrorMessage="*"
+                            Display="Dynamic"
+                            FocusOnError="true" 
+                            CssClass="valRequired"
+                            ControlCssClass="valctrl"/>
+                     </td>
+                  </tr>
+                  </com:TControl>
+                  
+                </table></td>
+              </tr>
+              <tr>
+                <td><hr /></td>
+              </tr>
+              <tr>
+                <td><table width="10" border="0" align="center" cellpadding="0" cellspacing="2">
+                    <tr>
+                      <td><com:TActiveButton Text="Simpan" Attributes.onclick = "maskContent();" 
+					  					OnClick="simpanClicked" 
+										CssClass="button_01" 
+										ValidationGroup="val"/></td>
+                      <td><!--<com:TButton Text="Batal" 					  					
+										ButtonType="Reset" 
+										OnClick="batalClicked"
+										CausesValidation="false" 
+										CssClass="button_01"  />--></td>
+                      <td><com:TActiveButton Text="Keluar" Visible="True" Attributes.onclick = "maskContent();" 
+					  			OnClick="keluarClicked" 
+								CausesValidation="false" 
+								CssClass="button_01"  />
+					  </td>
+                    </tr>
+                </table></td>
+              </tr>
+          </table>
+          
+	<com:TCallback ID="UpdateCallback" OnCallback="prosesKonfirmasi" ActiveControl.CausesValidation="false"/>
+	<script type="text/javascript">
+		//<![CDATA[
+		function konfirmasi(mode){
+			var request= <%= $this->UpdateCallback->ActiveControl->Javascript %>;
+				request.setCallbackParameter({
+					Id:mode
+				});
+				request.dispatch();
+		}
+		//]]>
+	</script>
+          
+</com:TContent>

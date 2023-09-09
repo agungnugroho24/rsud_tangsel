@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<application id="simrs" mode="Debug">
+  
+  <!-- configurations for modules 
+  <paths>   
+    <using namespace="System.data.*" />
+  </paths>  
+	-->
+  <!-- configurations for modules -->
+  <modules>
+  <!--
+   <module id="cache" class="System.Caching.TSqliteCache" />
+  -->
+    <!-- Remove this comment mark to enable PATH url format
+    <module id="request" class="THttpRequest" UrlFormat="Path" />
+    -->
+
+    <!-- Remove this comment mark to enable logging  	
+    <module id="log" class="System.Util.TLogRouter">
+      <route class="TBrowserLogRoute" Categories="System" />
+    </module>
+  	-->
+  <!--<module id="cache" class="System.Caching.TAPCCache" />-->	
+  <module id="db" class="System.Data.TDataSourceConfig">
+    <database ConnectionString="mysql:host=localhost;dbname=simak_tangsel" Username="simyantu" Password="jackass" />
+  </module>
+  <module class="System.Data.ActiveRecord.TActiveRecordConfig" ConnectionID="db" />    
+  
+  <module id="session" class="THttpSession" 
+		SessionName="SSID"
+		CookieMode="Allow" 
+		UseCustomStorage="false" 
+		AutoStart="true" 
+		GCProbability="1"              
+		UseTransparentSessionID="true" 
+		TimeOut="3600" />
+		
+  <!-- Remove this comment mark to enable PATH url format
+  <module id="auth"
+      class="System.Security.TAuthManager"
+      UserManager="users" 
+      LoginPage="users.LoginUser" />
+  -->
+  <!-- Remove this comment mark to enable PATH url format
+    <module id="users"
+      class="System.Security.TDbUserManager"
+      UserClass="Application.BlogUser" />
+  -->
+
+  <!-- Remove this comment mark to enable PATH url format
+  <module id="log" class="System.Util.TLogRouter">
+		<route class="TBrowserLogRoute" Categories="System" />
+		<route class="TFileLogRoute" Categories="System" Levels="Notice,Warning,Error,Alert,Fatal" />
+  </module>
+  -->
+	
+  <module id="auth"
+      class="System.Security.TAuthManager"
+      UserManager="users" 
+      LoginPage="login" /> 
+  
+    <module id="users"
+      class="System.Security.TDbUserManager"
+      UserClass="Application.SimakUser" 
+	  ConnectionID="db"/>
+  
+	<module id="memorylimit" class="TMemoryLimit" MemoryLimit="256M" />
+	
+  </modules>
+  
+  <services>
+    <service id="page" class="TPageService" DefaultPage="login">		
+      <pages MasterClass="Application.layouts.MainLayout" Theme="hijau"/>	  
+    </service>
+  </services>
+  
+  <parameters>
+  	<parameter id="CSHtmlAreaUserFilesPath" value="../gallery" />
+  </parameters>
+  	
+  <paths>
+  	<using namespace="Application.database.*" />
+	<using namespace="Application.common.*" />
+	<using namespace="System.Web.UI.ActiveControls.*" />
+	<using namespace="Application.modules.*"/>
+	<using namespace="Application.modules.LightWindow.*" />
+	<using namespace="Application.modules.CSHtmlArea.*" /> 
+	<using namespace="Application.modules.PWCWindow.*" />
+	<using namespace="Application.modules.Barcode.*" />
+	<using namespace="Application.modules.ChartDirector.*" />
+	
+  </paths>
+  <!-- application parameters
+  <parameters>
+    <parameter id="param1" value="value1" />
+    <parameter id="param2" value="value2" />
+  </parameters>
+  -->  
+</application>

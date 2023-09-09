@@ -1,0 +1,529 @@
+<%@ MasterClass="Application.layouts.MainLayout" %>
+<com:TContent ID="Main">
+<table width="56%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td height="18"></td>
+  </tr>
+  <tr>
+    <td><table width="10"  border="0" align="center" cellpadding="0" cellspacing="0">
+      <tr>
+        <td width="1%"><table width="100%"  border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="1%"><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndAppTopLft.png'%>" width="15" height="15" /></td>
+            <td width="99%" background="<%=$this->Page->Theme->BaseUrl.'/images/bkg3.png'%>">&nbsp;</td>
+            <td width="1%"><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndAppTopRgt.png'%>" width="15" height="15" /></td>
+          </tr>
+        </table></td>
+      </tr>
+      <tr>
+        <td valign="top" background="<%=$this->Page->Theme->BaseUrl.'/images/bkg3.png'%>"><table width="10" border="0" cellpadding="0" cellspacing="0">
+          <tr>
+            <td><table width="15" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+            </table></td>
+            <td><table width="750" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td class="text_08">Billing Kamar Tindakan / OK </td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td><table width="10" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndTopLft.png'%>" width="15" height="15" /></td>
+          <td><table width="720" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td><table width="720" border="0" align="right" cellpadding="0" cellspacing="0">
+                    <tr>
+                      <td width="1" height="15" class="text_07">&nbsp; </td>
+                      <td width="720" background="<%=$this->Page->Theme->BaseUrl.'/images/rndBkgTop.png'%>"></td>
+                    </tr>
+                </table></td>
+              </tr>
+          </table></td>
+          <td><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndTopRgt.png'%>" width="15" height="15" /></td>
+        </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="10" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td background="<%=$this->Page->Theme->BaseUrl.'/images/rndBkgLft.png'%>"><table width="15" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+          </table></td>
+          <td><table width="720" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>			  
+              <tr>
+                <td><table width="98%" border="0" align="right" cellpadding="0" cellspacing="2">
+                  <tr>
+                    <td width="21%"><span>&#8226;</span> No. CM </td>
+                    <td width="1%">:</td>
+                    <td width="78%">
+						<com:TTextBox 
+							ID="cm" 
+							Width="70px" 
+                            MaxLength="7"
+							TabIndex="1" 
+							OnTextChanged="checkCM" 
+							AutoPostBack="true"
+							/>
+                            &nbsp;
+                            <com:TLabel ID="errMsg" ForeColor="#FF0000" />					</td>
+                  </tr>
+				<com:TControl ID="showKateg" Visible="False">  
+				<tr>
+                <td><span>&#8226;</span>Kategori</td>
+				<td>:</td>
+				<td><com:TLabel ID="kategTxt" />              </tr>  
+			 </com:TControl>  
+                  <tr>
+                    <td><span>&#8226; Jenis Operasi </span></td>
+                    <td>:</td>
+                    <td>
+						<com:TDropDownList 
+							ID="DDtindakan" 
+							PromptText ="--Silakan Pilih--"
+							PromptValue =""											
+							DataTextField="nama"
+							DataValueField="id" 	
+							ToolTip="Pilih jenis operasi" 
+							Width="300px"
+							AutoPostBack="true"
+							Enabled="false"	 
+							TabIndex="2"
+                            OnSelectedIndexChanged="ChangedTdk"/>
+					  <com:TRequiredFieldValidator
+							Display="Dynamic"
+							ControlToValidate="DDtindakan"
+							Text="Jenis operasi belum dipilih" 
+							InitialValue="--Silakan Pilih--" 
+							ValidationGroup="val"
+						/>					</td>
+                  </tr>
+                  
+                  <com:TControl ID="satu" Visible="false">
+                  <tr>
+                    <td colspan="3"><hr/></td>
+                  </tr>
+                  <tr>
+                    <td valign="top"><span>&#8226;</span> Nama Operasi </td>
+                    <td valign="top">:</td>
+                    <td valign="top">
+						<com:TTextBox 
+							ID="nmOperasi" 
+							Width="150px" 
+						/>
+                        &nbsp; <com:TCheckBox 
+							ID="CBcito" 
+							Text="Cito"
+                            /> &nbsp;
+						<com:TRequiredFieldValidator
+							Display="Dynamic"
+							ControlToValidate="nmOperasi"
+							Text="Nama operasi belum diisi" 
+							ValidationGroup="val"
+						/>                    </td>
+                  </tr>
+				  
+				  <com:TControl ID="nonSalinCtrl" Visible="false">				  
+                  <tr>
+                    <td valign="top"><span>&#8226; Dokter Operator </span></td>
+                    <td valign="top">:</td>
+                    <td valign="top">
+						<com:TDropDownList 
+							ID="DDdokter" 
+							PromptText ="--Silakan Pilih--"
+							PromptValue =""											
+							DataTextField="nama"
+							DataValueField="id" 	
+							ToolTip="Pilih Dokter utama" 
+							Width="300px"
+							AutoPostBack="true"
+                            />
+						<com:TCheckBox 
+							ID="CBdokter" 
+							AutoPostBack="true" 
+							CausesValidation="false" 
+							Text="Dokter Luar"  
+							OnCheckedChanged="CBdokterCheck"/>	
+                        <com:TRequiredFieldValidator
+							Display="Dynamic"
+							ControlToValidate="DDdokter"
+							Text="Dokter utama belum dipilih" 
+							InitialValue="--Silakan Pilih--" 
+							ValidationGroup="val"
+						/>					</td>
+                  </tr>
+                  <tr>
+                    <td valign="top"><span>&#8226; Asisten Operator </span></td>
+                    <td valign="top">:</td>
+                    <td valign="top">
+						<com:TDropDownList 
+							ID="DDAsDokUtama" 
+							PromptText ="--Silakan Pilih--"
+							PromptValue =""											
+							DataTextField="nama"
+							DataValueField="id" 	
+							ToolTip="Pilih Asisten Dokter Utama" 
+							Width="300px"
+							AutoPostBack="true"
+                            />
+						<com:TCheckBox 
+							ID="CBAsDokUtama" 
+							AutoPostBack="true" 
+							CausesValidation="false"
+							Text="Asisten Luar"  
+							OnCheckedChanged="CBAsDokUtamaCheck"/>					</td>
+                  </tr>
+				  </com:TControl>
+				  
+				  <tr>
+                    <td valign="top"><span>&#8226; Dokter Anastesi </span></td>
+                    <td valign="top">:</td>
+                    <td valign="top">
+						<com:TDropDownList 
+							ID="DDanastesi" 
+							PromptText ="--Silakan Pilih--"
+							PromptValue =""											
+							DataTextField="nama"
+							DataValueField="id" 	
+							ToolTip="Pilih Dokter Anastesi" 
+							Width="300px"
+							AutoPostBack="true"
+                            />
+						<com:TCheckBox 
+							ID="CBanastesi" 
+							AutoPostBack="true" 
+							CausesValidation="false"
+							Text="Dokter Luar"  
+							OnCheckedChanged="CBanastesiCheck"/>					</td>
+                  </tr>
+                  <tr>
+                    <td valign="top"><span>&#8226; Asisten Anastesi </span></td>
+                    <td valign="top">:</td>
+                    <td valign="top">
+						<com:TDropDownList 
+							ID="DDAsDokAnastesi" 
+							PromptText ="--Silakan Pilih--"
+							PromptValue =""											
+							DataTextField="nama"
+							DataValueField="id" 	
+							ToolTip="Pilih Asisten Dokter Anastesi" 
+							Width="300px"
+							AutoPostBack="true"
+                            />
+						<com:TCheckBox 
+							ID="CBAsDokAnastesi" 
+							AutoPostBack="true" 
+							CausesValidation="false"
+							Text="Asisten Luar"  
+							OnCheckedChanged="CBAsDokAnastesiCheck"/>					</td>
+                  </tr>
+				  
+				  <com:TControl ID="SalinCtrl" Visible="false">				  
+				  <tr>
+                    <td valign="top"><span>&#8226; Dokter Obgyn </span></td>
+                    <td valign="top">:</td>
+                    <td valign="top"><com:TDropDownList 
+							ID="DDobgyn" 
+							PromptText ="--Silakan Pilih--"
+							PromptValue =""											
+							DataTextField="nama"
+							DataValueField="id" 	
+							ToolTip="Pilih Dokter Obgyn" 
+							Width="300px"
+							AutoPostBack="true"
+                            />
+                        <com:TCheckBox 
+							ID="CBobgyn" 
+							AutoPostBack="true" 
+							CausesValidation="false"
+							Text="Dokter Luar"  
+							OnCheckedChanged="CBobgynCheck"/>
+						<com:TRequiredFieldValidator
+							Display="Dynamic"
+							ControlToValidate="DDobgyn"
+							Text="Dokter Obgyn belum dipilih" 
+							InitialValue="--Silakan Pilih--" 
+							ValidationGroup="val"
+						/>					</td>
+                  </tr>
+                  <tr>
+                    <td valign="top"><span>&#8226; Asisten Obgyn </span></td>
+                    <td valign="top">:</td>
+                    <td valign="top">
+						<com:TDropDownList 
+							ID="DDAsDokObgyn" 
+							PromptText ="--Silakan Pilih--"
+							PromptValue =""											
+							DataTextField="nama"
+							DataValueField="id" 	
+							ToolTip="Pilih Asisten Dokter Obgyn" 
+							Width="300px"
+							AutoPostBack="true"
+                            />
+						<com:TCheckBox 
+							ID="CBAsDokObgyn" 
+							AutoPostBack="true" 
+							CausesValidation="false"
+							Text="Asisten Luar"  
+							OnCheckedChanged="CBAsDokObgynCheck"/>					</td>
+                  </tr>
+				  
+				  <com:TControl ID="pelakuResusitasiCtrl" >
+				   <tr>
+				     <td valign="top"><span>&#8226; Pelaksana Resusitasi </span></td>
+				     <td valign="top">:</td>
+				     <td valign="top">
+						<com:TRadioButtonList
+							  ID="modeResusitasi" 
+							  RepeatDirection="Horizontal" 
+							  AutoPostBack="true" 
+							  CausesValidation="false" 
+							  OnSelectedIndexChanged="modeResusitasiChanged">
+						<com:TListItem Text="Dokter" Value="0" />
+						<com:TListItem Text="Bidan" Value="1" />
+					  </com:TRadioButtonList>
+					  <com:TRequiredFieldValidator
+							Display="Dynamic"
+							ControlToValidate="modeResusitasi"
+							Text="Pelaksana Resusitasi belum dipilih" 
+							InitialValue="--Silakan Pilih--" 
+							ValidationGroup="val"
+						/>					 </td>
+				   </tr>
+				   </com:TControl>
+				   
+				   <com:TControl ID="bidanCtrl" >
+				   <tr>
+                    <td valign="top"><span>&#8226; Bidan </span></td>
+                    <td valign="top">:</td>
+                    <td valign="top"><com:TDropDownList 
+							ID="DDbidan" 
+							PromptText ="--Silakan Pilih--"
+							PromptValue =""											
+							DataTextField="nama"
+							DataValueField="id" 	
+							ToolTip="Pilih Bidan" 
+							Width="300px"
+							AutoPostBack="true"
+                            />
+						<com:TCheckBox 
+							ID="CBbidan" 
+							AutoPostBack="true" 
+							CausesValidation="false"
+							Text="Bidan Luar"  
+							OnCheckedChanged="CBbidanCheck"/>
+						<com:TRequiredFieldValidator 
+							ID="bidanValidator" 
+							Enabled="false"
+							Display="Dynamic"
+							ControlToValidate="DDbidan"
+							Text="Bidan belum dipilih" 
+							InitialValue="--Silakan Pilih--" 
+							ValidationGroup="val"
+						/>					</td>
+                  </tr>
+                  <tr>
+                    <td valign="top"><span>&#8226; Asisten Bidan </span></td>
+                    <td valign="top">:</td>
+                    <td valign="top">
+						<com:TDropDownList 
+							ID="DDAsBid" 
+							PromptText ="--Silakan Pilih--"
+							PromptValue =""											
+							DataTextField="nama"
+							DataValueField="id" 	
+							ToolTip="Pilih Asisten Bidan" 
+							Width="300px"
+							AutoPostBack="true"
+                            />
+						<com:TCheckBox 
+							ID="CBAsBid" 
+							AutoPostBack="true" 
+							CausesValidation="false"
+							Text="Asisten Luar"  
+							OnCheckedChanged="CBAsBidCheck"/>					</td>
+                  </tr>
+				  </com:TControl>
+				  </com:TControl>
+				  
+				  <com:TControl ID="resusitasiCtrl" Visible="false">
+				  <tr>
+                    <td valign="top"><span>&#8226; Dokter Resusitasi </span></td>
+				    <td valign="top">:</td>
+				    <td valign="top"><com:TDropDownList 
+							ID="DDresusitasi" 
+							PromptText ="--Silakan Pilih--"
+							PromptValue =""											
+							DataTextField="nama"
+							DataValueField="id" 	
+							ToolTip="Pilih Dokter Resusitasi" 
+							Width="300px"
+							AutoPostBack="true"
+                            />
+                        <com:TCheckBox 
+							ID="CBresusitasi" 
+							AutoPostBack="true" 
+							CausesValidation="false"
+							Text="Dokter Luar"  						
+							OnCheckedChanged="CBresusitasiCheck"/>
+						<com:TRequiredFieldValidator
+							Display="Dynamic"
+							ControlToValidate="DDresusitasi"
+							Text="Dokter resusitasi belum dipilih" 
+							InitialValue="--Silakan Pilih--" 
+							ValidationGroup="val"
+						/>					</td>
+				  </tr>
+				  </com:TControl>
+				  	
+				  <tr>
+                    <td valign="top"><span>&#8226; Instrumen</span></td>
+                    <td valign="top">:</td>
+                    <td valign="top"><com:TDropDownList 
+							ID="DDparam1" 
+							PromptText ="--Silakan Pilih--"
+							PromptValue =""											
+							DataTextField="nama"
+							DataValueField="id" 	
+							ToolTip="Pilih Paramedis" 
+							Width="300px"
+							AutoPostBack="true"
+                            />
+                        <com:TCheckBox 
+							ID="CBparam1" 
+							AutoPostBack="true" 
+							CausesValidation="false"
+							Text="Paramedis Luar"  
+							OnCheckedChanged="CBparam1Check"/>
+						<com:TRequiredFieldValidator
+							Display="Dynamic"
+							ControlToValidate="DDparam1"
+							Text="Paramedis 1 belum dipilih" 
+							InitialValue="--Silakan Pilih--" 
+							ValidationGroup="val"
+						/>					</td>
+                  </tr>
+				  
+				   <tr>
+                    <td valign="top"><span>&#8226; Sirkuler </span></td>
+                    <td valign="top">:</td>
+                    <td valign="top"><com:TDropDownList 
+							ID="DDparam2" 
+							PromptText ="--Silakan Pilih--"
+							PromptValue =""											
+							DataTextField="nama"
+							DataValueField="id" 	
+							ToolTip="Pilih Paramedis" 
+							Width="300px"
+							AutoPostBack="true"
+                            />
+						<com:TCheckBox 
+							ID="CBparam2" 
+							AutoPostBack="true" 
+							CausesValidation="false"
+							Text="Paramedis Luar"  
+							OnCheckedChanged="CBparam2Check"/>	
+                        <com:TRequiredFieldValidator
+							Display="Dynamic"
+							ControlToValidate="DDparam2"
+							Text="Paramedis 2 belum dipilih" 
+							InitialValue="--Silakan Pilih--" 
+							ValidationGroup="val"
+						/>					</td>
+                  </tr>
+				  
+				   <tr>
+                    <td valign="top"><span>&#8226; Sewa OK</span></td>
+                    <td valign="top">:</td>
+                    <td valign="top">&nbsp;Rp&nbsp;<com:TTextBox 
+							ID="tarifOK" 
+							Width="80px"
+                            Enabled="false" 
+							/></td>
+                  </tr>
+                  </com:TControl>
+                </table></td>
+              </tr>
+              <tr>
+                <td><hr align="center" width="96%" size="2" noshade color="#CECECE"/></td>
+              </tr>
+              <tr>
+                <td><table width="10" border="0" align="center" cellpadding="0" cellspacing="2">
+                    <tr>
+                      <td><com:TButton Text="Simpan" 
+					  					ID="simpanBtn" 	
+					  					OnClick="simpanClicked" 
+										CssClass="button_01" 
+										Enabled="false" 
+										TabIndex="4" 
+										ValidationGroup="val"/></td>
+                      <td><com:TButton Text="Batal" 					  					
+										ButtonType="Reset" 
+										CausesValidation="false" 
+										CssClass="button_01"
+										OnClick="batalClicked" 
+										TabIndex="5" /></td>
+                      <td><com:TButton Text="Keluar" 
+					  			OnClick="keluarClicked" 
+								CausesValidation="false" 
+								CssClass="button_01" 
+								TabIndex="6" /></td>
+                    </tr>
+                </table></td>
+              </tr>
+          </table></td>
+          <td background="<%=$this->Page->Theme->BaseUrl.'/images/rndBkgRgt.png'%>"><table width="15" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+          </table></td>
+        </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="10" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndBtmLft.png'%>" width="15" height="15" /></td>
+          <td background="<%=$this->Page->Theme->BaseUrl.'/images/rndBkgBtm.png'%>"><table width="720" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+          </table></td>
+          <td><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndBtmRgt.png'%>" width="15" height="15" /></td>
+        </tr>
+    </table></td>
+  </tr>
+</table></td>
+            <td><table width="15" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+            </table></td>
+          </tr>
+        </table></td>
+      </tr>
+      <tr>
+        <td><table width="100%"  border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="1%"><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndAppBtmLft.png'%>" width="15" height="15" /></td>
+            <td width="99%" background="<%=$this->Page->Theme->BaseUrl.'/images/bkg3.png'%>">&nbsp;</td>
+            <td width="1%"><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndAppBtmRgt.png'%>" width="15" height="15" /></td>
+          </tr>
+        </table></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+</com:TContent>

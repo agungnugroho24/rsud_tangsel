@@ -1,0 +1,213 @@
+<%@ MasterClass="Application.layouts.MainLayout" %>
+<com:TContent ID="jdMain">
+	Administrasi Pengguna Sistem - Baru
+    
+    <a href="<%= $this->Service->constructUrl('Simak') %>" onclick="maskContent()">
+    <span class="close-btn">
+        <span class="ui-icon ui-icon-circle-close"></span>
+    </span>
+    </a>
+    
+</com:TContent>	
+
+
+<com:TContent ID="Main">
+
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>
+				<com:TPanel DefaultButton="simpanBtn">
+				<table width="100%" border="0" align="right" cellpadding="0" cellspacing="2">
+                  <tr>
+                    <td width="150" valign="top"><span>&#8226;</span> Nama Pengguna </td>
+                    <td width="5" valign="top">:</td>
+                    <td valign="top">
+						<com:TActiveTextBox ID="Username"
+								   TabIndex="1" 
+								   MaxLength="15"
+								   CssClass="input_text"
+								   Width="110px" 											  
+								   ToolTip="Masukan nama pengguna!" 
+								   ValidationGroup="val" />                              		
+						<com:TActiveCustomValidator
+									ControlToValidate="Username"
+									ValidationGroup="val"
+									ErrorMessage="Maaf, nama tersebut sudah ada. Harap pilih yang lain."
+									OnServerValidate="checkUsername" 									
+									Display="Dynamic" />		
+						<com:TRequiredFieldValidator 
+									ValidationGroup="val"
+									ControlToValidate="Username"
+									ErrorMessage="Anda harus mengisi nama pengguna!"
+									Display="Dynamic" />			   						
+                    </td>
+                  </tr>
+                  <tr>
+                    <td valign="top"><span>&#8226;</span> Kata Kunci 1 </td>
+                    <td valign="top">:</td>
+                    <td valign="top"><com:TActiveTextBox CssClass="input_text"
+									  ID="Password" 						              
+									  MaxLength="15"									  
+									  TextMode="Password"
+									  Width="110px"									  
+									  TabIndex="2" 
+									  ToolTip="Masukan kata kunci pengguna..." 
+									  ValidationGroup="val" />
+                        <com:TRequiredFieldValidator 
+								 	  ValidationGroup="val"
+							     	  ControlToValidate="Password"
+								 	  FocusOnError="true"
+								 	  ErrorMessage="Anda harus mengisikan kata kunci pengguna!"
+								 	  Display="Dynamic" />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td valign="top"><span>&#8226;</span> Kata Kunci 2 </td>
+                    <td valign="top">:</td>
+                    <td valign="top"><com:TActiveTextBox ID="Password2" 
+						                  CssClass="input_text"
+										  AutoPostBack="true"										  
+										  TextMode="Password"
+										  Width="110px"
+										  MaxLength="15"
+										  TabIndex="3" 
+										  ToolTip="Masukan kata kunci pengguna..." 
+										  ValidationGroup="Group2" />
+                        <com:TRequiredFieldValidator 
+							     ControlToValidate="Password2"
+								 ValidationGroup="val"
+								 ErrorMessage="Anda harus mengisikan kata kunci pengguna lagi & harus sama!"
+								 Display="Dynamic" />
+						<com:TCompareValidator
+								 ControlToValidate="Password2"
+								 ControlToCompare="Password"
+								 ValidationGroup="val"
+								 ErrorMessage="Password yang anda masukan tidak sama!."
+								 Display="Dynamic" />		 
+                    </td>
+                  </tr>
+                  <tr>
+                    <td valign="top"><span>&#8226;</span> Status Aktif </td>
+                    <td valign="top">:</td>
+                    <td valign="top"><com:TDropDownList ID="DDAktif" TabIndex="4">
+							<com:TListItem Text="Ya" Value="1" />
+							<com:TListItem Text="Tidak" Value="0" />
+						</com:TDropDownList></td>
+                  </tr>
+                  <tr>
+                    <td valign="top"><span>&#8226;</span> N I P </td>
+                    <td valign="top">:</td>
+                    <td valign="top"><table width="160" border="0">
+						  <tr>
+							<td width="21"><com:TActiveTextBox CssClass="input_text" 
+									  ID="Nip1" 													   
+									  MaxLength="30"
+									  Width="220px" 
+									  TabIndex="5"									  										   
+									  ToolTip="Masukan NIP pengguna" 		
+									  ValidationGroup="val"
+									  ReadOnly="false" /></td>
+              <com:TControl Enabled="false" Visible="false">      
+							<td width="10"><b>.</b></td>
+							<td width="27"><com:TActiveTextBox CssClass="input_text" 
+									  ID="Nip2" 													   
+									  MaxLength="3"
+									  Width="30px" 
+									  TabIndex="5"									  										   
+									  ToolTip="Masukan NIP pengguna" 
+									  ReadOnly="true"
+									  ValidationGroup="val" /></td>
+							<td width="10"><b>.</b></td>
+							<td width="70"><com:TActiveTextBox CssClass="input_text" 
+									  ID="Nip3" 													   
+									  MaxLength="3"
+									  Width="30px" 
+									  TabIndex="5"	
+									  ReadOnly="true"								  										   
+									  ToolTip="Masukan NIP pengguna" 									  
+									  ValidationGroup="val" /></td>
+						  </com:TControl>
+              </tr>
+						</table>
+
+                        </td>
+                  </tr>
+                  <tr>
+                    <td valign="top" class="table_01"><span class="bullet_02">&#8226;</span> Nama Lengkap </td>
+                    <td valign="top">:</td>
+                    <td valign="top"><com:TActiveTextBox ID="Realname"
+						  					   TabIndex="6"
+											   AutoPostBack="true"
+											   CssClass="input_text"
+											   Width="220px" 
+											   MaxLength="30" 											  
+ 		 									   ToolTip="Masukan nama pengguna!" 
+										        />
+                              		<com:TRequiredFieldValidator 
+							                   ControlToValidate="Realname"
+								 			   ErrorMessage="Harap mengisikan nama lengkap pengguna"
+								 			   Display="Dynamic"
+											   ValidationGroup="val" /></td>
+                  </tr>
+                  <tr>
+                    <td valign="top"><span>&#8226;</span> Level Akses </td>
+                    <td valign="top">:</td>
+                    <td valign="top"><com:TDropDownList ID="DDRole" 
+											DataTextField="nama" 
+											DataValueField="id" 										   
+										   	ToolTip="Pilih level akses pengguna!" 
+										   	TabIndex="7" />
+</td>
+                  </tr>
+                  <tr>
+                    <td valign="top"><span>&#8226;</span> Hak Aplikasi</td>
+                    <td valign="top">:</td>
+                    <td valign="top">
+						<com:TListBox SelectionMode="Multiple" 
+							 ID="TLBAllow" 
+							 TabIndex="8"
+							 DataTextField="nama"
+							 DataValueField="id" 
+							 ToolTip="Pilih aplikasi mana saja yang bisa diakses!" />
+					</td>
+                  </tr>
+                  <tr>
+                    <td valign="top"><span>&#8226;</span> No. Handphone </td>
+                    <td valign="top">:</td>
+                    <td valign="top"><com:TActiveTextBox CssClass="input_text" 
+									  ID="NoHP" 													   
+									  MaxLength="20" 
+									  TabIndex="9"									  										   
+									  ToolTip="Masukan No. HP pengguna" 									  
+									  ValidationGroup="Group1" /></td>
+                  </tr>
+                  <tr>
+                    <td valign="top"><span>&#8226;</span> Catatan</td>
+                    <td valign="top">:</td>
+                    <td valign="top"><com:TTextBox TextMode="MultiLine" 
+									Wrap="true"
+									ID="Catatan" 
+									Width="275px"									 
+									TabIndex="10" 
+									ToolTip="Catatan tentang pengguna"
+									 /></td>
+                  </tr>
+                </table>
+				</com:TPanel>
+				</td>
+              </tr>
+              <tr>
+                <td><hr /></td>
+              </tr>
+              <tr>
+                <td><table width="10" border="0" align="center" cellpadding="0" cellspacing="2">
+                    <tr>
+                      <td><com:TButton ID="simpanBtn" Text="Simpan" OnClick="simpanClicked" CssClass="button_01" TabIndex="11" ValidationGroup="val" Attributes.onclick = "maskContent();"/></td>
+                      <td><com:TButton Text="Batal" OnClick="batalClicked" CssClass="button_01" TabIndex="12" Attributes.onclick = "maskContent();"/></td>
+                      <td><com:TButton Text="Keluar" Visible="false" OnClick="keluarClicked" CausesValidation="false" CssClass="button_01" TabIndex="13" /></td>
+                    </tr>
+                </table></td>
+              </tr>
+          </table>
+          
+</com:TContent>

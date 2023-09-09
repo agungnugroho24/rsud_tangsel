@@ -1,0 +1,131 @@
+<%@ MasterClass="Application.layouts.MainLayout" %>
+<com:TContent ID="jdMain">
+	Administrasi Aset Masuk Edit
+    
+    <a href="<%= $this->Service->constructUrl('Simak') %>" onclick="maskContent()">
+    <span class="close-btn">
+        <span class="ui-icon ui-icon-circle-close"></span>
+    </span>
+    </a>
+    
+</com:TContent>	
+
+
+<com:TContent ID="Main">
+	
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>
+                <div id="messages">
+                	<table width="100%"  border="0" align="center" cellpadding="0" cellspacing="1"> 
+                      <tr>
+                        <td align="center">
+                        	<com:XActiveDataGrid ID="EditGrid"
+                                DataKeyField="id"
+                                AutoGenerateColumns="false"	
+                                AllowPaging="true"
+                                AllowCustomPaging="true"
+                                AllowSorting="false"
+                                Width="100%"	
+                                PagerStyle.Mode="Numeric"			
+                                PagerStyle.Font.Name="Arial"
+                                PagerStyle.Font.Size="12"
+                                PagerStyle.HorizontalAlign="Right"			
+                                GridLines="None"
+                                CellSpacing="1"
+                                CellPadding="2"
+                                HeaderStyle.CssClass="headerstyle"
+                                ItemStyle.CssClass="itemstyle"
+                                AlternatingItemStyle.CssClass="itemstyle2"
+                                OnPageIndexChanged="dtgSomeData_PageIndexChanged"
+                                OnSortCommand="dtgSomeData_SortCommand"	
+                                OnItemCreated="itemCreated"
+                                OnEditCommand="editItem"
+                                OnUpdateCommand="saveItem"
+                                OnCancelCommand="cancelItem">
+                            <!---
+                           <com:XActiveTemplateColumn 
+                                 HeaderText="Kode" 	
+                                 SortExpression="kode"					 
+                                 ItemStyle.Width="75px" 
+                                 ItemStyle.HorizontalAlign="Center" >									
+                                <prop:ItemTemplate>
+                                    <%=	$this->Parent->DataItem['kode'] %>                                                    </prop:ItemTemplate>
+                            </com:XActiveTemplateColumn>--->
+							
+							 <com:XActiveDropDownListColumn 
+                                    ID="kode"
+                                    ItemStyle.HorizontalAlign="Left"
+                                    ItemStyle.Width="200px"
+                                    HeaderText="Kode"
+                                    SortExpression="nama"
+                                    ListDataSource=<%= $this->getTindakanRecords() %>
+                                    ListValueField="kode"
+                                    ListTextField="nama"					
+                                    DataTextField="kode"
+                                    />
+                           
+                           <com:XActiveTemplateColumn HeaderText="Nama" 						 
+                                 ItemStyle.Width="300px" 
+                                 ItemStyle.HorizontalAlign="Center" >									
+                                <prop:ItemTemplate>
+                                    <%=	BarangRecord::finder()->findByPk($this->Parent->DataItem['kode'])->nama;	  %>                                                    </prop:ItemTemplate>
+                            </com:XActiveTemplateColumn>
+                            
+                            <com:XActiveBoundColumn
+                            	ID="jmlColumn"
+                                HeaderText="Jumlah"
+                                ItemStyle.Width="100px"
+                                DataField="jml"
+                                ItemStyle.Horizontalalign="Center" />
+                                                    
+                            <com:XActiveEditCommandColumn
+                                HeaderText="Edit"
+                                HeaderStyle.Width="50px"
+                                UpdateText="Save" 
+                                ItemStyle.HorizontalAlign="Center"
+                                ItemStyle.Font.Italic="false"
+                                />	
+                            </com:XActiveDataGrid>
+                        </td>                       
+                      </tr>
+                    </table>
+                </div>
+				</td>
+              </tr>
+              <tr>
+                <td><hr/></td>
+              </tr>
+              <tr>
+                <td><table width="10" border="0" align="center" cellpadding="0" cellspacing="2">
+                    <tr>
+                      <td><com:TButton Text="Cetak" 
+					  					ID="cetakLapBtn" 
+					  					OnClick="cetakClicked" 
+										CssClass="button_01"
+                                        Attributes.onclick = "if(!confirm('Cetak data sekarang..?')) return false; else maskContent();">
+                           
+                        </com:TButton>             
+										</td>
+                      <td><com:TActiveButton Text="Batal" 
+										OnClick="batalClicked"
+										CausesValidation="false" 
+										CssClass="button_01">
+                      	<prop:ClientSide
+                                                OnLoading="maskContent();"/>
+                                    </com:TActiveButton>
+                      </td>
+                      <td><com:TActiveButton Text="Keluar" 
+					  			OnClick="keluarClicked" 
+								CausesValidation="false" 
+								CssClass="button_01">
+                                <prop:ClientSide
+                                    OnLoading="maskContent();"/>
+                        </com:TActiveButton>
+					  </td>
+                    </tr>
+                </table></td>
+              </tr>
+          </table>
+          
+</com:TContent>

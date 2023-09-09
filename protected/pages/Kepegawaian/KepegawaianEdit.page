@@ -1,0 +1,450 @@
+<%@ MasterClass="Application.layouts.MainLayout" %>
+<com:TContent ID="jdMain">
+	Edit Data Pegawai
+    
+    <a href="<%= $this->Service->constructUrl('Simak') %>" onclick="maskContent()">
+    <span class="close-btn">
+        <span class="ui-icon ui-icon-circle-close"></span>
+    </span>
+    </a>
+    
+</com:TContent>	
+
+
+<com:TContent ID="Main">
+
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td><table width="100%" border="0" align="center" cellpadding="0" cellspacing="2">                  
+                 <tr>
+					<td width="150"><span>&#8226;</span> ID Pegawai</td>
+					<td width="5">:</td>
+					<td><com:TTextBox CssClass="input_text"
+									  ID="IdPegawai" 
+									  ReadOnly="true" 									  
+									  Width="50px" 
+									  MaxLength="4"		
+									  ValidationGroup="ID" />
+						<com:TRequiredFieldValidator 
+									  ControlToValidate="IdPegawai"
+									  ValidationGroup="ID"
+									  ErrorMessage="Anda harus mengisikan ID pegawai"
+									  Display="Dynamic" />			
+						<com:TRegularExpressionValidator
+									ControlToValidate="IdPegawai"
+									ValidationGroup="ID"
+									Display="Dynamic"  
+									FocusOnError="true"
+									RegularExpression="[\w]{4,4}"									
+									ErrorMessage="ID pegawai harus angka & minimal 4 digit maksimal 4 digit!" />			    
+
+					</td>
+				  </tr>	
+				  <tr>
+                    <td><span>&#8226;</span> Nama Pegawai</td>
+                    <td>:</td>
+                    <td><com:TTextBox CssClass="input_text"
+									  ID="Nama" 									  
+						              Width="220px" 
+								      MaxLength="30"	
+									  ValidationGroup="Nama" />
+						<com:TRequiredFieldValidator 
+							          ControlToValidate="Nama"
+									  ValidationGroup="Nama"
+								      ErrorMessage="Anda harus mengisikan nama pegawai"
+								      Display="Dynamic" />			
+						<com:TRegularExpressionValidator
+									ControlToValidate="Nama"
+									ValidationGroup="Nama"
+									Display="Dynamic"  
+									FocusOnError="true"
+									RegularExpression="[\w]{2,30}"									
+									ErrorMessage="Nama pegawai harus huruf alphabet & minimal 2 huruf maksimal 30 huruf!" />			    
+									                         
+                    </td>
+                  </tr>
+				  <tr>
+                    <td><span>&#8226;</span> NIP Pegawai</td>
+                    <td>:</td>
+                    <td>
+                    	
+                        <com:TTextBox CssClass="input_text" 
+									  ID="nip" 													   
+									  MaxLength="30"
+									  Width="220px" />
+                                      
+                        <com:TControl Visible="false" Enabled="false">
+                    	<table width="160" border="0">
+						  <tr>
+							<td width="21"><com:TTextBox CssClass="input_text" 
+									  ID="Nip1" 													   
+									  MaxLength="3"
+									  Width="30px" 								  
+									  ValidationGroup="Group1" /></td>
+							<td width="10"><b>.</b></td>
+							<td width="27"><com:TTextBox CssClass="input_text" 
+									  ID="Nip2" 													   
+									  MaxLength="3"
+									  Width="30px" 									  
+									  ValidationGroup="Group1" /></td>
+							<td width="10"><b>.</b></td>
+							<td width="70"><com:TTextBox CssClass="input_text" 
+									  ID="Nip3" 													   
+									  MaxLength="3"
+									  Width="30px" 									  
+									  ValidationGroup="Group1" /></td>
+						  </tr>
+						</table>
+                        </com:TControl>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><span>&#8226;</span> Tempat Lahir</td>
+                    <td>:</td>
+                    <td><com:TTextBox CssClass="input_text"
+									  ID="TmpLahir" 
+						              MaxLength="20"
+									  Width="150px" 
+									  ValidationGroup="TmpLahir" />
+                        <com:TRequiredFieldValidator 
+							          ControlToValidate="TmpLahir"
+								      ErrorMessage="Anda harus mengisikan tempat lahir pegawai"
+								      Display="Dynamic" />							 
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><span>&#8226;</span> Tanggal Lahir</td>
+                    <td>:</td>
+                    <td><table width="105" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                          <td><com:TDatePicker ID="TglLahir"
+											   Width="70px" 
+											   DateFormat="dd-MM-yyyy"		
+										       ValidationGroup="TglLahir" />                              
+							   <com:TDataTypeValidator
+												ValidationGroup="TglLahir"
+												ControlToValidate="TglLahir"
+												DataType="Date"
+												DateFormat="dd-MM-yyyy"
+												Text="Anda harus memasukan tanggal yang benar seperti ini(dd-MM-yyyy)."
+												Display="Dynamic" />				   							 	 
+                          </td>
+                          <td width="43">&nbsp;</td>
+                          <td width="61">tgl-bln-thn</td>
+                        </tr>
+                      </table>
+                        </td>
+                  </tr>
+                  <tr>
+                    <td><span>&#8226;</span> Kelompok Pegawai</td>
+                    <td>:</td>
+                    <td>
+                    	<com:TDropDownList CssClass="input_text"
+						  						 ID="DDKelompok"
+												 PromptText ="--Silakan Pilih--"
+												 PromptValue ="empty"
+						  						 AutoPostBack="true"
+												 DataTextField="nama"
+												 DataValueField="id" 
+												 OnSelectedIndexChanged="selectionChangedKelompok" 
+												 ValidationGroup="DDKelompok" />
+                       
+                        <com:TRequiredFieldValidator 
+							     				 ControlToValidate="DDKelompok"
+								 				 ErrorMessage="Anda harus memilih kelompok pegawai"
+                                                 InitialValue="empty"
+								 				 Display="Dynamic" />
+                                                                          
+                            <com:TActiveCheckBox 
+                                AutoPostBack="false" 
+                                ID="tarifKhusus" 
+                                Text="Tarif Khusus untuk Kamar Tindakan" 
+                                CausesValidation="false"/>
+                    </td>
+                  </tr>
+				  <tr>
+                    <td><span>&#8226;</span> Spesialisasi Dokter</td>
+                    <td>:</td>
+                    <td><com:TDropDownList CssClass="input_text"
+										   ID="DDSpesialis"	
+										   PromptText ="--Silakan Pilih--"
+ 										   PromptValue =""									  									   
+										   DataTextField="nama"
+										   DataValueField="id" 	
+									       />
+                                            <com:TActiveCheckBox 
+                            AutoPostBack="false" 
+                            ID="subSpesialis" 
+                            Text="Sub Spesialis" 
+                            CausesValidation="false"/> 
+                                           
+                                           </td>
+                  </tr>
+				  <tr>
+                    <td><span>&#8226;</span> Poliklinik</td>
+                    <td>:</td>
+                    <td><com:TListBox SelectionMode="Multiple" 
+                    						CssClass="input_text"
+										   ID="DDKlinik"								  									   
+										   DataTextField="nama"
+										   DataValueField="id" 		
+									       /></td>
+                  </tr>
+                  <tr>
+                    <td><span>&#8226;</span> Status Pegawai</td>
+                    <td>:</td>
+                    <td><com:TDropDownList CssClass="input_text"
+										   ID="DDStatus"	
+										   PromptText ="--Silakan Pilih--"
+ 										   PromptValue =""									  									   
+										   DataTextField="nama"
+										   DataValueField="id" 	
+									       /></td>
+                  </tr>
+                  <tr>
+                    <td><span>&#8226;</span> Jabatan Pegawai</td>
+                    <td>:</td>
+                    <td><com:TDropDownList CssClass="input_text"
+										   ID="DDJabatan"	
+										   PromptText ="--Silakan Pilih--"
+ 										   PromptValue =""									  									   
+										   DataTextField="nama"
+										   DataValueField="id" 			
+									       /></td>
+                  </tr>				  
+                  <tr>
+                    <td><span>&#8226;</span> Agama</td>
+                    <td>:</td>
+                    <td><com:TDropDownList CssClass="input_text"
+										   ID="DDAgama" 												   
+										   DataTextField="nama"
+										   DataValueField="id"
+										   PromptText ="--Silakan Pilih--"
+ 										   PromptValue =""		  
+										   /></td>
+                  </tr>
+                  <tr>
+                    <td><span>&#8226;</span> Jenis Kelamin</td>
+                    <td>:</td>
+                    <td>
+                      <com:TRadioButtonList ID="JKel" >						 
+						<com:TListItem Text="Laki-Laki" />
+						<com:TListItem Text="Perempuan" />												 					
+						</com:TRadioButtonList>
+                     </td>
+                  </tr>
+                  <tr>
+                    <td><span>&#8226;</span> Alamat</td>
+                    <td>:</td>
+                    <td><com:TTextBox CssClass="input_text"
+									  ID="Alamat" 						                  
+									  MaxLength="65" 
+									  Width="425px"
+									  ValidationGroup="alamat"/>
+                        <com:TRequiredFieldValidator 
+							     	  ControlToValidate="Alamat"
+								 	  ErrorMessage="Anda harus mengisikan alamat pegawai tersebut"
+								 	  Display="Dynamic" /></td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td>:</td>
+                    <td><table width="10" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                          <td><com:TTextBox CssClass="input_text"
+						                    ID="RT" 						                  
+										    Width="16px" 
+										    MaxLength="2" /></td>
+                          <td>&nbsp;</td>
+                          <td>RT</td>
+                          <td>&nbsp;</td>
+                          <td></td>
+                          <td><com:TTextBox CssClass="input_text" 
+						  					ID="RW" 
+						                    Width="16px"
+										    MaxLength="2"  /></td>
+                          <td>&nbsp;RW</td>
+                          <td>&nbsp;</td>
+                          <td></td>
+                        </tr>
+                    </table></td>
+                  </tr>
+                  <tr>
+                    <td><span>&#8226;</span> Kabupaten / Kota</td>
+                    <td>:</td>
+                    <td><com:TDropDownList CssClass="input_text"
+										   ID="DDKab" 
+										   AutoPostBack="true"
+										   PromptText ="--Silakan Pilih--"
+ 										   PromptValue =""
+										   DataTextField="nama"
+										   DataValueField="id" 
+										   OnSelectedIndexChanged="selectionChangedKab" 
+										   ValidationGroup="DDKab" />
+                        <com:TRequiredFieldValidator 
+							     		   ControlToValidate="DDKab"
+								 		   ErrorMessage="Anda harus memilih Kabupaten/Kota"
+								 		   Display="Dynamic" /></td>
+                  </tr>
+                  <tr>
+                    <td><span>&#8226;</span> Kecamatan</td>
+                    <td>:</td>
+                    <td>
+					<table border="0" cellspacing="0" cellpadding="0" align="left" width="35%">
+					<tr><!--
+					<td width="20"><com:TDropDownList CssClass="input_text" 
+													  ID="DDKec"
+													  PromptText ="--Silakan Pilih--"
+ 										   			  PromptValue ="" 
+												      AutoPostBack="true"
+												      DataTextField="nama"
+												      DataValueField="id" 
+												      OnSelectedIndexChanged="selectionChangedKec" 
+												      ValidationGroup="DDKec" />
+                        <com:TRequiredFieldValidator
+								 					  CssClass="input_text"  
+							     					  ControlToValidate="DDKec"
+								 					  ErrorMessage="Anda harus memilih Kecamatan"
+								 					  Display="Dynamic" />
+						</td>
+						<td>&nbsp;</td>-->
+						<td width="30">		
+						<com:TTextBox CssClass="input_text"
+									  ID="KecLuar" 
+						              Width="100px" 
+									  MaxLength="30" />		 
+								 
+					</td>
+					</tr>
+					</table>
+					</td>							 
+                  </tr>
+                  <tr>
+                    <td><span>&#8226;</span> Kelurahan / Desa</td>
+                    <td>:</td>
+                    <td>
+					<table border="0" cellspacing="0" cellpadding="0" align="left" width="35%">
+					<tr><!--
+					<td width="20"><com:TDropDownList CssClass="input_text" 
+													  ID="DDKel"
+													  PromptText ="--Silakan Pilih--"
+ 										   			  PromptValue ="" 												      
+												      DataTextField="nama"
+												      DataValueField="id" 	
+												      ValidationGroup="DDKel" />
+                        <com:TRequiredFieldValidator
+								 					  ControlToValidate="DDKel"
+								 					  ErrorMessage="Anda harus memilih Kelurahan"
+								 					  Display="Dynamic" />
+					</td>
+					<td>&nbsp;</td>-->
+						<td width="30">		
+						<com:TTextBox CssClass="input_text"
+									  ID="KelurahanLuar" 
+						              Width="100px" 
+									  MaxLength="30"  />		 
+								 
+					</td>
+					</tr>
+					</table>
+					</td>
+                  </tr>                  
+                  <tr>
+                    <td valign="top" ><table width="100%" border="0" cellpadding="0" cellspacing="0" class="table_01">
+                        <tr>
+                          <td><span>&#8226;</span> Status</td>
+                        </tr>
+                    </table></td>
+                    <td valign="top">:</td>
+                    <td><table width="190" border="0" cellspacing="1" cellpadding="0">
+                        <tr>
+                          <td width="20">
+						  	<com:TRadioButtonList ID="stKawin" >						 
+							<com:TListItem Text="Kawin" />
+							<com:TListItem Text="Belum Kawin" />
+						 	<com:TListItem Text="Duda"  />
+							<com:TListItem Text="Janda" />						
+							</com:TRadioButtonList>
+						  </td>
+                        </tr>
+                    </table></td>
+                  </tr>
+                  
+                  <tr>
+                    <td><span>&#8226;</span> No. Rekening Bank</td>
+                    <td>:</td>
+                    <td><com:TTextBox CssClass="input_text"
+									  ID="noRek" 
+						              Width="150px"								     
+									  MaxLength="30" /></td>
+                  </tr>
+                  
+                  <tr>
+                    <td><span>&#8226;</span> NPWP</td>
+                    <td>:</td>
+                    <td><com:TTextBox CssClass="input_text"
+									  ID="npwp" 
+						              Width="150px"								     
+									  MaxLength="30" /></td>
+                  </tr>
+                  
+                  <tr>
+                    <td><span>&#8226;</span> SIP</td>
+                    <td>:</td>
+                    <td><com:TTextBox CssClass="input_text"
+									  ID="sip" 
+						              Width="150px"								     
+									  MaxLength="30" /></td>
+                  </tr>
+                  
+                  <tr>
+                    <td><span>&#8226;</span> No. Telepon</td>
+                    <td>:</td>
+                    <td><com:TTextBox CssClass="input_text"
+									  ID="NoTlp" 
+						              Width="150px"								     
+									  MaxLength="20"  /></td>
+                  </tr>
+                  <tr>
+                    <td><span>&#8226;</span> No. Handphone</td>
+                    <td>:</td>
+                    <td><com:TTextBox CssClass="input_text"
+									  ID="NoHP" 
+						              Width="150px"								     
+									  MaxLength="20"  /></td>
+                  </tr>
+                  <tr>
+                    <td><span>&#8226;</span> Pendidikan</td>
+                    <td>:</td>
+                    <td><com:TDropDownList CssClass="input_text"
+										   ID="DDPdk" 												   
+										   DataTextField="nama"
+										   DataValueField="id"
+										   PromptText ="--Silakan Pilih--"
+ 										   PromptValue ="" 	/></td>
+                  </tr>
+				  <tr>
+                    <td valign="top"><span>&#8226;</span> Catatan</td>
+                    <td valign="top">:</td>
+                    <td><com:TTextBox CssClass="input_text"
+									  ID="Catatan"
+					       	 		  Width="300px" 
+							 		  TextMode="MultiLine" /></td>
+                  </tr>
+                </table></td>
+              </tr>
+              <tr>
+			    <td><hr /></td>
+              </tr>
+              <tr>
+                <td><table width="10" border="0" align="center" cellpadding="0" cellspacing="2">
+                    <tr>
+                      <td><com:TButton Text="Simpan" OnClick="simpanClicked" CssClass="button_01" Attributes.onclick = "maskContent();" /></td>
+                      <td><com:TButton Text="Batal" OnClick="batalClicked" CssClass="button_01"  Attributes.onclick = "maskContent();" /></td>
+                      <td><com:TButton Text="Keluar" Visible="false" OnClick="keluarClicked" CausesValidation="false" CssClass="button_01" /></td>
+                    </tr>					
+                </table></td>
+              </tr>
+          </table>
+          
+</com:TContent>

@@ -1,0 +1,198 @@
+<%@ MasterClass="Application.layouts.MainLayout" %>
+<com:TContent ID="jdMain">
+	Rekam Pasien Pulang
+    
+    <a href="<%= $this->Service->constructUrl('Simak') %>" onclick="maskContent()">
+    <span class="close-btn">
+        <span class="ui-icon ui-icon-circle-close"></span>
+    </span>
+    </a>
+    
+</com:TContent>	
+
+<com:TContent ID="Main"> 
+
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>			  
+            <td>
+            <com:TLabel ID="showSql" />
+            <table width="100%" align="center" border="0">
+                <tr>
+                    <td align="center">
+                    <com:TPanel >
+                        <table width="100%"  border="0" align="left">
+                         <com:TControl ID="showFirst">                           
+                          
+                            <tr>
+                              <td><span>&#8226;</span>&nbsp;&nbsp;Mode</td>
+                              <td>:</td>
+                              <td>
+                                <com:TRadioButtonList
+                                      ID="modeInput" 
+                                      SelectedIndex="0" 
+                                      RepeatDirection="Horizontal" 
+                                      CausesValidation="false">
+                                <com:TListItem Text="Non Khusus" Value="0" />
+                                <com:TListItem Text="Khusus" Value="1" />
+                              </com:TRadioButtonList>								  </td>
+                            </tr>
+                            <tr>
+                            <td width="17%"><span>&#8226;</span>&nbsp;&nbsp;No. CM</td>
+                            <td width="1%">:</td>
+                            <td width="82%">
+                                <com:TTextBox CssClass="input_text" 
+                                      ID="notrans" 
+                                      AutoPostBack="true"													   
+                                      MaxLength="7"
+                                      OnTextChanged="checkRegister"   
+                                      ToolTip="No. Register Pasien" 
+                                      Width="50px" TabIndex="5"	
+                                      />
+                                &nbsp;
+                                <com:TLabel 
+                                    ID="errMsg" 
+                                    ForeColor="#FF0000" />									</td>
+                            </tr>
+                             <com:TControl ID="tglTransCtrl" Visible="false">
+                            <tr>
+                              <td><span>&#8226;</span>&nbsp;&nbsp;Tanggal Transaksi </td>
+                              <td>:</td>
+                              <td><com:TDropDownList 
+                                    ID="DDtglTrans" 
+                                    PromptText ="--Silakan Pilih--"
+                                    PromptValue =""	
+                                    Width="150px" 
+                                    OnSelectedIndexChanged="DDtglTransChanged" 
+                                    AutoPostBack="true" 
+                                    CausesValidation="false" />
+                                  <com:TRequiredFieldValidator 
+                                    ControlToValidate="DDtglTrans" 											 
+                                    ErrorMessage="Anda harus memilih Tanggal Transaksi"
+                                    Display="Dynamic" />
+                              </td>
+                              </tr>
+                            </com:TControl>
+                            <com:TControl ID="cekCmCtrl" Visible="false">
+                            <tr>
+                              <td valign="top"><span>&#8226;</span>&nbsp;&nbsp;Tanggal Masuk </td>
+                              <td valign="top">:</td>
+                              <td valign="top">
+                                <com:TTextBox
+                                    ID="tglMasuk" 
+                                    ReadOnly="true" />
+                                &nbsp;
+                                <com:TTextBox
+                                    ID="wktMasuk" 
+                                    Width="60px" 
+                                    ReadOnly="true" />									</td>
+                              </tr>
+                            <tr>
+                              <td valign="top"><span>&#8226;</span>&nbsp;&nbsp;Tanggal Keluar </td>
+                              <td valign="top">:</td>
+                              <td valign="top">
+                                <com:TTextBox
+                                    ID="tglKeluar"
+                                    ReadOnly="true" />
+                                &nbsp;
+                                <com:TTextBox
+                                    ID="wktKeluar"
+                                    Width="60px" 
+                                    ReadOnly="true" />								  </td>
+                            </tr>
+                            <tr>
+                              <td valign="top"><span>&#8226;</span>&nbsp;&nbsp;Cara Keluar</font> </td>
+                              <td valign="top">&nbsp;</td>
+                              <td valign="top">
+                                <com:TRadioButtonList
+                                      ID="RbCrKeluar" 
+                                      SelectedIndex="0" 
+                                      RepeatDirection="Vertical" 
+                                      CausesValidation="false">
+                                <com:TListItem Text="Sembuh" Value="0" />
+                                <com:TListItem Text="Membaik" Value="1" />
+                                <com:TListItem Text="Belum sembuh" Value="2" />
+                                <com:TListItem Text="Meninggal < 48 jam" Value="3" />
+                                <com:TListItem Text="Meninggal > 48 jam" Value="4" />
+                                <com:TListItem Text="Dirujuk ke RS lain" Value="5" />
+                              </com:TRadioButtonList>								  </td>
+                            </tr>
+                            <tr>
+                              <td height="5" valign="top"></td>
+                              <td height="5" valign="top"></td>
+                              <td height="5" valign="top"></td>
+                              </tr>
+                            <tr>
+                              <td valign="top"><span>&#8226;</span>&nbsp;&nbsp;Keadaan keluar</td>
+                              <td valign="top">&nbsp;</td>
+                              <td valign="top">
+                                <com:TRadioButtonList
+                                      ID="RbKeadaanKeluar" 
+                                      SelectedIndex="0" 
+                                      RepeatDirection="Vertical" 
+                                      CausesValidation="false">
+                                  <com:TListItem Text="Diijinkan pulang" Value="0" />
+                                  <com:TListItem Text="Pulang paksa" Value="1" />
+                                  <com:TListItem Text="Pindah Ke Rumah Sakit lain" Value="2" />
+                                  <com:TListItem Text="Lari" Value="3" />
+                                  <com:TListItem Text="Meninggal Dunia" Value="4" />
+                                  <com:TListItem Text="Dirujuk ke RS lain" Value="5" />
+                                </com:TRadioButtonList>                                  </td>
+                              </tr>
+                            <tr>
+                              <td height="5" valign="top"></td>
+                              <td height="5" valign="top"></td>
+                              <td height="5" valign="top"></td>
+                              </tr>
+                            <tr>
+                              <td valign="top"><span>&#8226;</span>&nbsp;&nbsp;Pembayaran</td>
+                              <td valign="top">&nbsp;</td>
+                              <td valign="top"><com:TRadioButtonList
+                                      ID="RbPembayaran" 
+                                      SelectedIndex="0" 
+                                      RepeatDirection="Horizontal" 
+                                      CausesValidation="false">
+                                  <com:TListItem Text="Lunas" Value="0" />
+                                  <com:TListItem Text="Belum Lunas" Value="1" />
+                                </com:TRadioButtonList>								  </td>
+                            </tr>
+                            </com:TControl>							 
+                          </com:TControl>
+                        </table>
+                        </com:TPanel>
+                    </td>
+                </tr>
+            </table>			</td>
+          </tr>
+          <tr>
+            <td><hr/></td>
+          </tr>
+          <tr>
+            <td><table width="10" border="0" align="center" cellpadding="0" cellspacing="2">
+                <tr>                                        
+                  <td><com:TButton Text="Simpan" 
+                                   OnClick="cetakClicked"
+                                   ID="cetakBtn"
+                                   CssClass="button_01" 
+                                   TabIndex="13" 
+                                   Enabled="false" 
+                                   CausesValidation="true" 
+                                   ValidationGroup="val"
+                                   Attributes.onclick = "if(!confirm('Cetak sekarang..?')) return false; else maskContent();"/></td>
+                  <td><com:TButton Text="Batal" 
+                                   OnClick="batalClicked" 
+                                   CausesValidation="false" 
+                                   CssClass="button_01" 
+                                   TabIndex="14"
+                                   Attributes.onclick = "if(!confirm('Batalkan pengisian data..?')) return false; else maskContent();" /></td>				   
+                  <td><com:TButton Text="Keluar" 
+                                   OnClick="keluarClicked" 
+                                   CausesValidation="false" 
+                                   CssClass="button_01" 
+                                   Visible="false"
+                                   TabIndex="15" /></td>
+                </tr>
+            </table></td>
+          </tr>
+      </table>
+      
+</com:TContent> 

@@ -1,0 +1,182 @@
+<%@ MasterClass="Application.layouts.LoginLayout" %>
+
+<com:TContent ID="Main">
+    
+    <script>
+		jQuery.noConflict();
+		
+		jQuery(document).ready(function () {
+			//jQuery.WsGrowl.show({title: 'Done loading!', content:'<p>First!</p>'});
+			
+			jQuery('.username-label, .password-label').animate({ opacity: "0.6" })
+				.click(function() {
+					var thisFor	= jQuery(this).attr('for');
+					jQuery('.'+thisFor).focus();
+			});
+		
+			jQuery('.username').focus(function() {
+			
+				jQuery('.username-label').animate({ opacity: "0" }, "fast");
+			
+					if(jQuery(this).val() == "username")
+						jQuery(this).val() == "";
+	
+				}).blur(function() {
+			
+					if(jQuery(this).val() == "") {
+						jQuery(this).val() == "username";
+						jQuery('.username-label').animate({ opacity: "0.6" }, "fast");
+					}
+				});
+		
+			jQuery('.password').focus(function() {
+			
+				jQuery('.password-label').animate({ opacity: "0" }, "fast");
+			
+					if(jQuery(this).val() == "password") {
+						jQuery(this).val() == "";
+					}
+				}).blur(function() {
+			
+					if(jQuery(this).val() == "") {
+						jQuery(this).val() == "password";
+						jQuery('.password-label').animate({ opacity: "0.6" }, "fast");
+					}
+			});
+			
+			jQuery.backstretch("<%~ background-large.jpg %>");
+			
+			/*
+			jQuery(function() {
+				//jQuery.datepicker.setDefaults( jQuery.datepicker.regional[ "id" ] );
+				jQuery( '#<%= $this->tgl->getClientID() %>' ).datepicker({
+					onSelect: function(dateText, inst) {
+						showPopup();
+					}
+				});
+				//jQuery( '#<%= $this->tgl->getClientID() %>' ).datepicker({ showOptions: {regional: 'id' }});
+			});
+			*/
+		})
+		
+		/*
+		function showPopup() { 
+			//alert('asdasd');
+			 if(confirm("Keluar Sekarang ?")){ 
+			  
+			  jQuery.getJSON(
+						"post2.php",
+						function(tes){
+							//alert(data);
+							//for (var i = 0; i < data.userdata.length; i++) {
+							jQuery.each(tes.userdata, function(i,user){
+								var d = (data[i] = {});
+								//teman = teman + "<li>" + n["nama"] + " suka : " + n["hobby"] + "</li>";
+								d["id"] = "id_" + i;
+								d["cm"] = user.cm;
+								d["nama"] = user.nama;
+								d["alamat"] = user.alamat;
+							});
+						}
+					);
+					alert("Bye bye!");
+					window.location = "http://localhost/simak_custom/";
+					 
+			} 
+			
+			//return false;	
+		}
+		
+		function popKill() { 
+			jQuery.getJSON(
+					"post2.php",
+					function(tes){
+						//alert(data);
+						//for (var i = 0; i < data.userdata.length; i++) {
+						jQuery.each(tes.userdata, function(i,user){
+							var d = (data[i] = {});
+							//teman = teman + "<li>" + n["nama"] + " suka : " + n["hobby"] + "</li>";
+							d["id"] = "id_" + i;
+							d["cm"] = user.cm;
+							d["nama"] = user.nama;
+							d["alamat"] = user.alamat;
+						});
+					}
+				);
+				
+			//alert('fghfhfgh');
+			//window.location = "http://localhost/simak_custom/";
+		}
+		*/
+		
+	</script>	
+
+    <com:TActivePanel ID="loginPanel" CssClass="login_panel" DefaultButton="loginButton"  style="height:100%; width:100%">
+		<!--
+		<div id="divPopup" ></div>
+        <com:TActiveTextBox ID="tgl" /><input type="text" id="datepicker"></p>
+        -->
+        
+        <com:TActiveLabel ID="msg"/>
+                
+        <div id="container" align="center">
+            <img src="<%=$this->Page->Theme->BaseUrl.'/images/user-login.png'%>" />
+            <br/>
+            <div class="lbl"><label class="username-label" for="<%= $this->Username->getClientID() %>">username</label></div>
+            <com:TActiveTextBox 
+                ID="Username" 
+                CssClass="username" 
+                MaxLength="10" />
+            
+            <span/>
+            <div class="lbl"><label class="password-label" for="<%= $this->Password->getClientID() %>">password</label></div>
+            <com:TActiveTextBox 
+                ID="Password" 
+                TextMode="Password" 
+                CssClass="password" />
+            
+            <span/>
+            
+            <com:TActiveCustomValidator
+                ControlToValidate="Password" 							 
+                ErrorMessage="Password anda salah!"
+                FocusOnError="true"
+                ForeColor="#FFFFFF"
+                Display="Dynamic"					 
+                OnServerValidate="validateUser"
+                ValidationGroup="val" />
+           
+           <div id="btn"> 
+            <com:TActiveLinkButton
+                ID="loginButton"						 
+                OnClick="loginClicked"
+                CssClass="btn_login"
+                CausesValidation="true"
+                ValidationGroup="val">
+                <prop:ClientSide
+                	OnLoading="maskContent();"/>
+             </com:TActiveLinkButton>
+        	</div>
+             
+        	<div id="loading" style="display:none;"><img src="<%=$this->Page->Theme->BaseUrl.'/images/loading.gif'%>" /></div>
+                                         
+    	</div>
+                                 
+        <div id="footer" align="center">
+            <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+              <tr>
+                <td align="center" style="color:#000; font-family:Geneva, Arial, Helvetica, sans-serif; font-size:12px;">
+                    &copy; Copyright of Intergo Telematics 2003 - <%= date('Y') %> </td>
+              </tr>
+              <tr>
+                <td height="10"></td>
+              </tr>
+              <tr>
+                <td align="center"><%= PRADO::poweredByPrado(1) %></td>
+              </tr>
+            </table>
+        </div>    
+    
+	</com:TActivePanel>
+    
+</com:TContent>

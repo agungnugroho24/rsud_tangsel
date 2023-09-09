@@ -1,0 +1,677 @@
+<%@ MasterClass="Application.layouts.MainLayout" %>
+<com:TContent ID="Main">
+<table width="56%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td height="18"></td>
+  </tr>
+  <tr>
+    <td><table width="10"  border="0" align="center" cellpadding="0" cellspacing="0">
+      <tr>
+        <td width="1%"><table width="100%"  border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="1%"><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndAppTopLft.png'%>" width="15" height="15" /></td>
+            <td width="99%" background="<%=$this->Page->Theme->BaseUrl.'/images/bkg3.png'%>">&nbsp;</td>
+            <td width="1%"><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndAppTopRgt.png'%>" width="15" height="15" /></td>
+          </tr>
+        </table></td>
+      </tr>
+      <tr>
+        <td valign="top" background="<%=$this->Page->Theme->BaseUrl.'/images/bkg3.png'%>"><table width="10" border="0" cellpadding="0" cellspacing="0">
+          <tr>
+            <td><table width="15" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+            </table></td>
+            <td><table width="750" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td class="text_08">Master Obat</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td><table width="10" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndTopLft.png'%>" width="15" height="15" /></td>
+          <td><table width="720" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td><table width="720" border="0" align="right" cellpadding="0" cellspacing="0">
+                    <tr>
+                      <td width="150" height="15" class="text_07">&nbsp;&nbsp;Penambahan Obat</td>
+                      <td width="570" background="<%=$this->Page->Theme->BaseUrl.'/images/rndBkgTop.png'%>"></td>
+                    </tr>
+                </table></td>
+              </tr>
+          </table></td>
+          <td><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndTopRgt.png'%>" width="15" height="15" /></td>
+        </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="10" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td background="<%=$this->Page->Theme->BaseUrl.'/images/rndBkgLft.png'%>"><table width="15" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+          </table></td>
+          <td><table width="720" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+              <tr>
+                <td><table width="98%" border="0" align="right" cellpadding="0" cellspacing="2">
+                  <tr>
+                    <td><span>&#8226;</span>&nbsp;&nbsp;Tipe Obat </td>
+                    <td>:</td>
+                    <td>
+						<com:TRadioButtonList ID="RBtipeObat" TabIndex="1" 
+							RepeatDirection="Horizontal">
+				
+							<com:TListItem Value="0" Text="Generik" />
+							<com:TListItem Value="1" Text="Non Generik" />
+			        	</com:TRadioButtonList>
+						<com:TRequiredFieldValidator
+							Display="Dynamic"
+							ControlToValidate="RBtipeObat"
+							Text="Tipe Obat belum dipilih" 
+							InitialValue="--Silakan Pilih--" 
+							ValidationGroup="val"
+						/>
+					</td>
+                  </tr>
+				  <tr>
+							    <td><span>&#8226;</span>&nbsp;&nbsp;Kategori</td>
+							    <td>:</td>
+							    <td><com:TDropDownList ID="DDKateg" TabIndex="2"
+												   PromptText ="--Silakan Pilih--"
+								    			   PromptValue =""	
+												   AutoPostBack="true" 
+												   OnSelectedIndexChanged="nextPoin">									
+									<com:TListItem Text="Obat" Value="01" />
+									<com:TListItem Text="Alkes" Value="02" />
+									<com:TListItem Text="BHP" Value="03" />
+								</com:TDropDownList>
+												<com:TRequiredFieldValidator
+													Display="Dynamic"
+													ControlToValidate="DDKateg"
+													Text="Kategori barang belum dipilih" 
+													InitialValue="--Silakan Pilih--" 
+													ValidationGroup="val"
+												/></td>
+							    </tr>
+                  <tr>
+                    <td width="25%"><span>&#8226;</span>&nbsp;&nbsp;Kode Obat </td>
+                    <td width="2%">:</td>
+                    <td width="73%"><com:TActiveTextBox CssClass="input_text" 
+												  ID="ID"
+												  AutoPostBack="true" 												   
+												  MaxLength="5"												  
+												  TabIndex="3"												   
+												  ToolTip="ID Obat" 
+												  Width="55px"
+												  Enabled="false"													  
+												  ValidationGroup="val1" 
+												  />
+									<com:TActiveCustomValidator
+												ControlToValidate="ID"
+												ErrorMessage="Maaf, ID tersebut sudah ada!"
+												OnServerValidate="checkRM" 
+												FocusOnError="true"												
+												Display="Dynamic" 
+												ValidationGroup="val1"/>
+									<com:TRequiredFieldValidator 
+												  ControlToValidate="ID"											 
+												  ErrorMessage="Anda harus mengisi Kode Obat"
+												  Display="Dynamic" 
+												  ValidationGroup="val1"/>
+					</td>
+                  </tr>				
+                  <tr>
+                    <td><span>&#8226;</span>&nbsp;&nbsp;Kelompok Obat </td>
+                    <td>:</td>
+                    <td>
+						<com:TRadioButtonList ID="RBkelObat" TabIndex="4" 
+							RepeatDirection="Horizontal">				
+							<com:TListItem Value="0" Text="Injeksi" />
+							<com:TListItem Value="1" Text="Oral" />							
+							<com:TListItem Value="2" Text="Lainnya" />						
+			        	</com:TRadioButtonList>
+						<com:TRequiredFieldValidator
+							Display="Dynamic"
+							ControlToValidate="RBkelObat"
+							Text="Kelompok Obat belum dipilih" 							
+							ValidationGroup="val"
+						/>
+					</td>
+                  </tr>   
+                  <tr>
+                    <td><span>&#8226;</span>&nbsp;&nbsp;Nama Obat </td>
+                    <td>:</td>
+                    <td>
+                      <com:TTextBox 
+							ID="nama" 
+							Width="300px" 
+							TabIndex="5"
+							ValidationGroup="val2" 
+						/>
+                      <com:TRequiredFieldValidator 
+							ControlToValidate="nama"											 
+						  	ErrorMessage="Anda harus mengisikan nama Obat"
+						  	Display="Dynamic" 
+							ValidationGroup="val2"
+						/>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><span>&#8226;</span>&nbsp;&nbsp;Golongan </td>
+                    <td>:</td>
+                    <td>
+						<com:TDropDownList 
+							ID="DDGol"
+							PromptText ="--Silakan Pilih--"
+							PromptValue =""											
+							DataTextField="nama"
+							DataValueField="id" 	
+							ToolTip="Pilih Golongan Obat" 
+							TabIndex="6" 
+							AutoPostBack="true" 
+							CausesValidation="false"
+							Width="300px" 
+							OnSelectedIndexChanged="selectionChangedGol"/>
+						<!--
+						<com:TRequiredFieldValidator
+							Display="Dynamic"
+							ControlToValidate="DDGol"
+							Text="Golongan Obat belum dipilih" 
+							InitialValue="--Silakan Pilih--" 
+							ValidationGroup="val3"
+						/> -->
+					</td>
+                  </tr>
+                  <tr>
+                    <td><span>&#8226;</span>&nbsp;&nbsp;Klasifikasi</td>
+                    <td>:</td>
+                    <td>
+                      <com:TDropDownList 
+							ID="DDKlas"
+							PromptText ="--Silakan Pilih--"
+							PromptValue =""											
+							DataTextField="jenis"
+							DataValueField="id" 	
+							ToolTip="Pilih Klasifikasi Obat" 
+							TabIndex="7" 
+							Enabled="false" 
+							Width="300px" 
+							AutoPostBack="true" 
+							CausesValidation="false"
+							OnSelectedIndexChanged="selectionChangedKlas"/>
+						<!--
+						<com:TRequiredFieldValidator
+							Display="Dynamic"
+							ControlToValidate="DDKlas"
+							Text="Klasifikasi Obat belum dipilih" 
+							InitialValue="--Silakan Pilih--" 
+							ValidationGroup="val4"
+						/> -->
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><span>&#8226;</span>&nbsp;&nbsp;Derivat</td>
+                    <td>:</td>
+                    <td>
+                      <com:TDropDownList 
+							ID="DDDerivat"
+							PromptText ="--Silakan Pilih--"
+							PromptValue =""											
+							DataTextField="nama"
+							DataValueField="id" 	
+							ToolTip="Pilih Derivat Obat" 
+							TabIndex="8" 
+							Enabled="false"
+							AutoPostBack="true"
+							CausesValidation="false"
+							Width="300px"/>
+						<!--
+						<com:TRequiredFieldValidator
+							Display="Dynamic"
+							ControlToValidate="DDDerivat"
+							Text="Derivat Obat belum dipilih" 
+							InitialValue="--Silakan Pilih--" 
+							ValidationGroup="val5"
+						/> -->
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><span>&#8226;</span>&nbsp;&nbsp;Satuan</td>
+                    <td>:</td>
+                    <td>
+                      <com:TDropDownList 
+							ID="DDSat"
+							PromptText ="--Silakan Pilih--"
+							PromptValue =""											
+							DataTextField="nama"
+							DataValueField="kode" 	
+							ToolTip="Pilih Satuan Obat" 
+							TabIndex="9" 
+							Width="300px"/>
+                      <com:TRequiredFieldValidator
+							Display="Dynamic"
+							ControlToValidate="DDSat"
+							Text="Satuan Obat belum dipilih" 
+							InitialValue="--Silakan Pilih--" 
+							ValidationGroup="val6"
+						/>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><span>&#8226;</span>&nbsp;&nbsp;PBF</td>
+                    <td>:</td>
+                    <td>
+                      <com:TDropDownList 
+							ID="DDPbf"
+							PromptText ="--Silakan Pilih--"
+							PromptValue =""											
+							DataTextField="nama"
+							DataValueField="id" 	
+							ToolTip="Pilih PBF" 
+							TabIndex="10" 
+							Width="300px"/>
+						<!--
+						<com:TRequiredFieldValidator
+							Display="Dynamic"
+							ControlToValidate="DDPbf"
+							Text="PBF belum dipilih" 
+							InitialValue="--Silakan Pilih--" 
+							ValidationGroup="val7"
+						/> -->
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><span>&#8226;</span>&nbsp;&nbsp;Produsen</td>
+                    <td>:</td>
+                    <td>
+                      <com:TDropDownList 
+							ID="DDProd"
+							PromptText ="--Silakan Pilih--"
+							PromptValue =""											
+							DataTextField="nama"
+							DataValueField="id" 	
+							ToolTip="Pilih Produsen Obat" 
+							TabIndex="11" 
+							Width="300px"/>
+						<!--
+						<com:TRequiredFieldValidator
+							Display="Dynamic"
+							ControlToValidate="DDProd"
+							Text="Produsen Obat belum dipilih" 
+							InitialValue="--Silakan Pilih--" 
+							ValidationGroup="val8"
+						/> -->
+                    </td>
+                  </tr>				  
+                  <tr>
+				<td colspan="3">  
+				<hr align="center" width="96%" size="2" noshade color="#CECECE"/>				
+				</td>
+				</tr>
+                    <td colspan="3"><table width="90%" border="0" align="left">
+                      <tr>
+                        <td><table width="100%" border="0">
+                          <tr>
+    <td width="169" valign="top"><span>&#8227;</span>&nbsp;Min Gudang </td>
+    <td width="10" valign="top">:</td>
+    <td width="131" valign="top"><com:TTextBox 
+							ID="minGudang" 
+							Width="60px" 
+							TabIndex="12"
+							Text = "0"
+							ValidationGroup="val9" 
+						/>
+						<!--
+						<com:TRequiredFieldValidator 
+							ControlToValidate="minGudang"											 
+						  	ErrorMessage="Anda harus mengisikan jumlah minimal stok obat di Gudang"
+						  	Display="Dynamic" 
+							ValidationGroup="val9"
+						/>
+                      <com:TRegularExpressionValidator
+							ControlToValidate="minGudang"
+							FocusOnError="true"
+							RegularExpression="[\d]{1,}"
+							ErrorMessage="Jumlah yang dimasukan tidak sesuai"
+							ValidationGroup="val9"
+						/>  -->  </td>
+  </tr>
+  <tr>
+    <td valign="top"><span>&#8227;</span>&nbsp;in Loket </td>
+    <td valign="top">:</td>
+    <td valign="top"><com:TTextBox 
+							ID="minLoket" 
+							Width="60px" 
+							TabIndex="13"
+							Text = "0"
+							ValidationGroup="val11" 
+						/>
+						<!--
+						<com:TRequiredFieldValidator 
+							ControlToValidate="minLoket"											 
+						  	ErrorMessage="Anda harus mengisikan jumlah minimal stok obat di Loket/Apotik"
+						  	Display="Dynamic" 
+							ValidationGroup="val11"
+						/>
+                      <com:TRegularExpressionValidator
+							ControlToValidate="minLoket"
+							FocusOnError="true"
+							RegularExpression="[\d]{1,}"
+							ErrorMessage="Jumlah yang dimasukan tidak sesuai"
+							ValidationGroup="val11"
+						/>  -->  </td>
+  </tr>
+  <tr>
+    <td valign="top"><span>&#8227;</span>&nbsp;Min Depo </td>
+    <td valign="top">:</td>
+    <td valign="top"><com:TTextBox 
+							ID="minDepo" 
+							Width="60px" 
+							Text = "0"
+							TabIndex="14"
+							ValidationGroup="val" 
+						/>
+						<!--
+						<com:TRequiredFieldValidator 
+							ControlToValidate="minDepo"											 
+						  	ErrorMessage="Anda harus mengisikan jumlah minimal stok obat di Depo"
+						  	Display="Dynamic" 
+							ValidationGroup="val13"
+						/>
+                      <com:TRegularExpressionValidator
+							ControlToValidate="minDepo"
+							FocusOnError="true"
+							RegularExpression="[\d]{1,}"
+							ErrorMessage="Jumlah yang dimasukan tidak sesuai"
+							ValidationGroup="val13"
+						/>   --> </td>
+  </tr>
+  <tr>
+    <td valign="top"><span>&#8227;</span>&nbsp;Min OK</td>
+    <td valign="top">:</td>
+    <td valign="top"><com:TTextBox 
+							ID="minOK" 
+							Width="60px" 
+							Text = "0"
+							TabIndex="15"
+							ValidationGroup="val" 
+						/>
+						<!--
+						<com:TRequiredFieldValidator 
+							ControlToValidate="minOK"											 
+						  	ErrorMessage="Anda harus mengisikan jumlah minimal stok obat di OK"
+						  	Display="Dynamic" 
+							ValidationGroup="val15"
+						/>
+                      <com:TRegularExpressionValidator
+							ControlToValidate="minOK"
+							FocusOnError="true"
+							RegularExpression="[\d]{1,}"
+							ErrorMessage="Jumlah yang dimasukan tidak sesuai"
+							ValidationGroup="val15"
+						/>   --> </td>
+  </tr>
+  <tr>
+    <td valign="top"><span>&#8227;</span>&nbsp;Min IGD </td>
+    <td valign="top">:</td>
+    <td valign="top"><com:TTextBox 
+							ID="minIGD" 
+							Width="60px" 
+							Text = "0"
+							TabIndex="16"
+							ValidationGroup="val17" 
+						/>
+						<!--
+						<com:TRequiredFieldValidator 
+							ControlToValidate="minIGD"											 
+						  	ErrorMessage="Anda harus mengisikan jumlah minimal stok obat di IGD"
+						  	Display="Dynamic" 
+							ValidationGroup="val17"
+						/>
+                      <com:TRegularExpressionValidator
+							ControlToValidate="minIGD"
+							FocusOnError="true"
+							RegularExpression="[\d]{1,}"
+							ErrorMessage="Jumlah yang dimasukan tidak sesuai"
+							ValidationGroup="val17"
+						/>  -->  </td>
+  </tr>
+  <tr>
+    <td valign="top"><span>&#8227;</span>&nbsp;Min ICU </td>
+    <td valign="top">:</td>
+    <td valign="top"><com:TTextBox 
+							ID="minIcu" 
+							Width="60px" 
+							Text = "0"
+							TabIndex="16"
+							ValidationGroup="val17" 
+						/>
+						<!--
+        <com:TRequiredFieldValidator 
+							ControlToValidate="minIGD"											 
+						  	ErrorMessage="Anda harus mengisikan jumlah minimal stok obat di IGD"
+						  	Display="Dynamic" 
+							ValidationGroup="val17"
+						/>
+        <com:TRegularExpressionValidator
+							ControlToValidate="minIGD"
+							FocusOnError="true"
+							RegularExpression="[\d]{1,}"
+							ErrorMessage="Jumlah yang dimasukan tidak sesuai"
+							ValidationGroup="val17"
+						/>   --> </td>
+  </tr>
+                        </table></td>
+                        <td width="1%">&nbsp;</td>
+                        <td width="47%" align="left"><table width="100%" border="0">
+                          <tr>
+    <td width="53%" valign="top"><span>&#8227;</span>&nbsp;Max Gudang </td>
+    <td width="4%" valign="top">:</td>
+    <td width="43%" valign="top"><com:TTextBox 
+							ID="maxGudang" 
+							Width="60px" 
+							Text = "0"
+							TabIndex="17"
+							ValidationGroup="val10" 
+						/>
+						<!--
+						<com:TRequiredFieldValidator 
+							ControlToValidate="maxGudang"											 
+						  	ErrorMessage="Anda harus mengisikan jumlah maksimal stok obat di Gudang"
+						  	Display="Dynamic" 
+							ValidationGroup="val10"
+						/>
+                      <com:TRegularExpressionValidator
+							ControlToValidate="maxGudang"
+							FocusOnError="true"
+							RegularExpression="[\d]{1,}"
+							ErrorMessage="Jumlah yang dimasukan tidak sesuai"
+							ValidationGroup="val10"
+						/>   --> </td>
+  </tr>
+  <tr>
+    <td valign="top"><span>&#8227;</span>&nbsp;Max Loket </td>
+    <td valign="top">:</td>
+    <td valign="top"><com:TTextBox 
+							ID="maxLoket" 
+							Width="60px" 
+							Text = "0"
+							TabIndex="18"
+							ValidationGroup="val12" 
+						/>
+						<!--
+						<com:TRequiredFieldValidator 
+							ControlToValidate="maxLoket"											 
+						  	ErrorMessage="Anda harus mengisikan jumlah maksimal stok obat di Loket"
+						  	Display="Dynamic" 
+							ValidationGroup="val12"
+						/>
+                      <com:TRegularExpressionValidator
+							ControlToValidate="maxLoket"
+							FocusOnError="true"
+							RegularExpression="[\d]{1,}"
+							ErrorMessage="Jumlah yang dimasukan tidak sesuai"
+							ValidationGroup="val12"
+						/>   --> </td>
+  </tr>
+  <tr>
+    <td valign="top"><span>&#8227;</span>&nbsp;Max Depo </td>
+    <td valign="top">:</td>
+    <td valign="top"><com:TTextBox 
+							ID="maxDepo" 
+							Width="60px" 
+							Text = "0"
+							TabIndex="19"
+							ValidationGroup="val14" 
+						/>
+						<!--
+						<com:TRequiredFieldValidator 
+							ControlToValidate="maxDepo"											 
+						  	ErrorMessage="Anda harus mengisikan jumlah maksimal stok obat di Depo"
+						  	Display="Dynamic" 
+							ValidationGroup="val14"
+						/>
+                      <com:TRegularExpressionValidator
+							ControlToValidate="maxDepo"
+							FocusOnError="true"
+							RegularExpression="[\d]{1,}"
+							ErrorMessage="Jumlah yang dimasukan tidak sesuai"
+							ValidationGroup="val14"
+						/> -->   </td>
+  </tr>
+  <tr>
+    <td valign="top"><span>&#8227;</span>&nbsp;Max OK </td>
+    <td valign="top">:</td>
+    <td valign="top"><com:TTextBox 
+							ID="maxOK" 
+							Width="60px" 
+							Text = "0"
+							TabIndex="20"
+							ValidationGroup="val16" 
+						/>
+						<!--
+						<com:TRequiredFieldValidator 
+							ControlToValidate="maxIGD"											 
+						  	ErrorMessage="Anda harus mengisikan jumlah maksimal stok obat di IGD"
+						  	Display="Dynamic" 
+							ValidationGroup="val16"
+						/>
+                      <com:TRegularExpressionValidator
+							ControlToValidate="maxIGD"
+							FocusOnError="true"
+							RegularExpression="[\d]{1,}"
+							ErrorMessage="Jumlah yang dimasukan tidak sesuai"
+							ValidationGroup="val16"
+						/>   --> </td>
+  </tr>
+  <tr>
+    <td valign="top"><span>&#8227;</span>&nbsp;Max IGD </td>
+    <td valign="top">:</td>
+    <td valign="top"><com:TTextBox 
+							ID="maxIGD" 
+							Width="60px" 
+							Text = "0"
+							TabIndex="21"
+							ValidationGroup="val" 
+						/>    </td>
+  </tr>
+  <tr>
+    <td valign="top"><span>&#8227;</span>&nbsp;Max ICU </td>
+    <td valign="top">:</td>
+    <td valign="top"><com:TTextBox 
+							ID="maxICU" 
+							Width="60px" 
+							Text = "0"
+							TabIndex="21"
+							ValidationGroup="val" 
+						/>    </td>
+  </tr>
+                        </table></td>
+                      </tr>
+                    </table></td>
+                    </tr>  
+                </table></td>
+              </tr>
+              <tr>
+                <td><hr align="center" width="96%" size="2" noshade color="#CECECE"/></td>
+              </tr>
+              <tr>
+                <td><table width="10" border="0" align="center" cellpadding="0" cellspacing="2">
+                    <tr>
+                      <td><com:TButton Text="Simpan" 
+					  					OnClick="simpanClicked" 
+										CssClass="button_01" 
+										TabIndex="22" ValidationGroup="val15" /></td>
+                      <td><!-- <com:TButton Text="Batal" 					  					
+										ButtonType="Reset" 
+										OnClick="batalClicked"
+										CausesValidation="false" 
+										CssClass="button_01" 
+										TabIndex="5" /> --></td>
+                      <td><com:TButton Text="Keluar" 
+					  			OnClick="keluarClicked" 
+								CausesValidation="false" 
+								CssClass="button_01" 
+								TabIndex="23" />
+					  </td>
+                    </tr>
+                </table></td>
+              </tr>
+          </table></td>
+          <td background="<%=$this->Page->Theme->BaseUrl.'/images/rndBkgRgt.png'%>"><table width="15" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+          </table></td>
+        </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="10" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndBtmLft.png'%>" width="15" height="15" /></td>
+          <td background="<%=$this->Page->Theme->BaseUrl.'/images/rndBkgBtm.png'%>"><table width="720" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+          </table></td>
+          <td><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndBtmRgt.png'%>" width="15" height="15" /></td>
+        </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+</table></td>
+            <td><table width="15" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+            </table></td>
+          </tr>
+        </table></td>
+      </tr>
+      <tr>
+        <td><table width="100%"  border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="1%"><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndAppBtmLft.png'%>" width="15" height="15" /></td>
+            <td width="99%" background="<%=$this->Page->Theme->BaseUrl.'/images/bkg3.png'%>">&nbsp;</td>
+            <td width="1%"><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndAppBtmRgt.png'%>" width="15" height="15" /></td>
+          </tr>
+        </table></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+</com:TContent>

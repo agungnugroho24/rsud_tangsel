@@ -1,0 +1,359 @@
+<%@ MasterClass="Application.layouts.MainLayout" %>
+<com:TContent ID="jdMain">
+	Administrasi ICD & Rekam Medis
+    
+    <a href="<%= $this->Service->constructUrl('Simak') %>" onclick="maskContent()">
+    <span class="close-btn">
+        <span class="ui-icon ui-icon-circle-close"></span>
+    </span>
+    </a>
+    
+</com:TContent>
+
+<com:TContent ID="Main">
+
+	<com:TActiveLabel ID="showSql" />
+    <com:TActiveLabel ID="tes"  />
+    
+    <com:TActivePanel ID="cariPanel" Style="display:block; padding-bottom:10px;" GroupingText="<strong>International Classification Desease</strong>" >
+    <table width="100%"  border="0" align="left">
+    <tr>
+        <td><span>&#8226;</span>&nbsp;&nbsp;Tanggal</td>
+        <td>:</td>
+        <td><com:TActiveTextBox ID="tglMsk" 
+                          CssClass="input_text" 
+                        MaxLength="10"   
+                          Width="80px" 
+                          ToolTip="Tanggal pasien berobat!" />
+              <com:TRequiredFieldValidator 
+                  ControlToValidate="tglMsk"											 
+                  ErrorMessage="Anda harus mengisi tanggal pasien berobat!"
+                  Display="Dynamic" /></td>
+      </tr>
+      <tr>
+        <td><span>&#8226;</span>&nbsp;&nbsp;Jenis Pasien </td>
+        <td>:</td>
+        <td>
+            <com:TActiveRadioButtonList
+                  ID="jnsPas"
+                  RepeatDirection="Horizontal" 	
+                  AutoPostBack="true"
+                  CausesValidation="false"
+                  OnSelectedIndexChanged="jnsPasChanged"
+                  CssClass="radiobtn"								  
+                  >
+                    <com:TListItem Text="Rawat Jalan" Value="1" />
+                    <com:TListItem Text="Rawat Inap" Value="2" />
+                </com:TActiveRadioButtonList>
+                
+                <com:TRequiredFieldValidator 
+                  ID="noAct3"
+                  ControlToValidate="jnsPas"											 
+                  ErrorMessage="*"
+                  Display="Dynamic"
+                  FocusOnError="true" 
+                  CssClass="valRequired"
+                  ControlCssClass="valctrl"/>
+        </td>
+        </tr>
+      <tr>
+        <td width="23%"><span>&#8226;</span>&nbsp;&nbsp;No. Rekam Medis</td>
+        <td width="1%">:</td>
+        <td width="76%"><com:TActiveTextBox CssClass="input_text" 
+                          ID="cm" 
+                          AutoPostBack="true"
+                          OnTextChanged="callCM"	
+                          OnCallback="cmCallback"												   
+                          MaxLength="7" 											   										   
+                          ToolTip="No. Rekam Medis" 
+                          Width="55px"													  
+                          ValidationGroup="cm" >
+                          	<prop:ClientSide 
+                                OnLoading="maskContent();"
+                                OnComplete="unmaskContent(); "/>
+                          </com:TActiveTextBox>
+                          
+                          &nbsp;
+                          <com:TActiveCheckBox 
+                            AutoPostBack="true" 
+                            ID="cariICDsaja" 
+                            Text="Abaikan" 
+                            Value="1"
+                            OnCheckedChanged="cariICDsajaChanged"
+                            OnCallback="cariICDsajaCallback"
+                            CausesValidation="false" />&nbsp;&nbsp;<com:TActiveLabel ID="ErrMsg" ForeColor="#FF0000" />
+            
+        <com:TRequiredFieldValidator 
+                    ID="noAct1"										
+                      ControlToValidate="cm"											 
+                     ErrorMessage="*"
+                    Display="Dynamic"
+                    FocusOnError="true"
+                    CssClass="valRequired"
+                    ControlCssClass="valctrl" />
+        <com:TRegularExpressionValidator
+                      ControlToValidate="cm"
+                      ID="noAct2"
+                      ErrorMessage="*"
+                        Display="Dynamic"
+                        CssClass="valRequired"
+                        ControlCssClass="valctrl"
+                      FocusOnError="true"
+                      RegularExpression="\d{6}"
+                      Text="No. Rekam Medis harus 6 digit/angka" /></td>
+      </tr>												
+    </table>
+    </com:TActivePanel>
+    
+    <com:TActivePanel ID="showUp" Style="display:block; padding-bottom:10px;" GroupingText="<strong>Data Pasien</strong>">
+        <table width="100%"  border="0" align="left">
+            <tr>
+                <td width="23%"><span>&#8226;</span>&nbsp;&nbsp;Nama Pasien</td>
+                <td width="1%">:</td>
+                <td width="76%"><strong><com:TActiveLabel ID="nmPas"/></strong></td>
+              </tr>
+              <tr>
+                <td><span>&#8226;</span>&nbsp;&nbsp;Poliklinik</td>
+                <td>:</td>
+                <td>
+                    <com:TActiveDropDownList 
+                        ID="DDKlinik"
+                        CssClass="input_text" 											
+                        PromptText ="--Silakan Pilih--"
+                        PromptValue ="empty"											
+                        DataTextField="nama"
+                        DataValueField="id"
+                        Width="200px"
+                        AutoPostBack="true"
+                        CausesValidation="false"
+                        OnSelectedIndexChanged="chKlinik">
+                         <prop:ClientSide 
+                                OnLoading="maskContent();"
+                                OnComplete="unmaskContent(); "/>
+                    </com:TActiveDropDownList>
+                    
+                    <com:TRequiredFieldValidator 
+                        ControlToValidate="DDKlinik"											 
+                        ErrorMessage="*"
+                        Display="Dynamic"
+                        FocusOnError="true"
+                        CssClass="valRequired"
+                        ControlCssClass="valctrl"
+                        InitialValue="empty" />
+                          
+                    <com:TActiveLabel ID="klinik" ForeColor="#000000" />
+                </td>
+              </tr>
+              <tr>						  
+                <td><span>&#8226;</span>&nbsp;&nbsp;Dokter</td>
+                <td>:</td>
+                <td>
+                    <com:TActiveTextBox ID="dokterTxt" Width="200px" ReadOnly="true"/>
+                </td>
+              </tr>
+              <tr>						  
+                <td><span>&#8226;</span>&nbsp;&nbsp;Kode ICD</td>
+                <td>:</td>
+                <td>
+                    <com:TActiveTextBox ID="icdTxt" Width="200px" ReadOnly="true"/>
+                </td>
+              </tr>
+              <tr style="display:none;">
+                <td valign="top"><span>&#8226;</span>&nbsp;&nbsp;Keluhan</td>
+                <td valign="top">:</td>
+                <td valign="top">
+                    <com:TActiveTextBox 
+                      ID="keluhan"
+                      Width="200px"
+                      Height="50px"
+                      TextMode="MultiLine"
+                      CssClass="input_text" 
+                      MaxLength="50"/>
+                </td>
+                </tr>
+        </table>
+    </com:TActivePanel>
+    
+    
+    <com:TActivePanel ID="cariIcdPanel" Style="display:block; padding-bottom:10px;" DefaultButton="cariBtn" GroupingText="<strong>Pencarian Data ICD</strong>">
+        <table width="100%"  border="0" align="left">
+              <tr style="display:none;">
+                <td width="23%"><span>&#8226;</span>&nbsp;&nbsp;Kode DTD </td>
+                <td width="1%">:</td>
+                <td width="76%"><com:TActiveTextBox ID="dtd" Width="70px" CssClass="input_text" />&nbsp;<com:TCheckBox ID="AdvanceDtd" Text="Elemen Kata" Value="1" /><com:THiddenField ID="noTrans" /></td>
+                </tr>
+              <tr>
+                <td><span>&#8226;</span>&nbsp;&nbsp;Kode ICD </td>
+                <td>:</td>
+                <td><com:TActiveTextBox ID="kode" Width="70px"  CssClass="input_text" />&nbsp;<com:TCheckBox ID="AdvanceIcdKode" Text="Elemen Kata" Value="1" /></td>
+                </tr>
+              <tr>
+                <td><span>&#8226;</span>&nbsp;&nbsp;Group ICD </td>
+                <td>:</td>
+                <td><com:TActiveTextBox ID="kat" Width="70px" CssClass="input_text" />&nbsp;<com:TCheckBox ID="AdvanceIcdGroup" Text="Elemen Kata" Value="1" /></td>
+                </tr>
+              <tr>
+                <td><span>&#8226;</span>&nbsp;&nbsp;ICD Indonesia </td>
+                <td>:</td>
+                <td><com:TActiveTextBox ID="nmIndo" Width="250px"  CssClass="input_text" />&nbsp;<com:TCheckBox ID="Advance" Text="Elemen Kata" Value="1" /></td>
+                </tr>
+              <tr>
+                <td><span>&#8226;&nbsp;&nbsp;ICD Inggris </span></td>
+                <td>:</td>
+                <td>
+                    <com:TActiveTextBox 
+                        ID="nmEng" 
+                        Width="250px"  
+                        CssClass="input_text" />&nbsp;&nbsp;&nbsp;
+                 
+                     <com:TActiveButton
+                        ID="cariBtn" 
+                        Text="Cari" 
+                        OnClick="cariClicked" 
+                        CssClass="button_01" >
+                         <prop:ClientSide 
+                                OnLoading="maskContent();"
+                                OnComplete="unmaskContent(); "/>
+                    </com:TActiveButton>
+                    </td>
+                </tr>	
+        </table>
+    </com:TActivePanel>
+    
+    <div style="clear:both;"></div>
+    
+    <table width="100%"  border="0" align="center" cellpadding="0" cellspacing="1" >                      
+    <tr>
+    <td><hr/></td>
+    </tr>
+    <td>
+    <table width="100%"  border="0" align="center" cellpadding="0" cellspacing="1" >                      
+      <tr>
+        <td align="center">
+        <com:XActiveDataGrid ID="grid"
+                DataKeyField="kode"
+                AutoGenerateColumns="false"	
+                AllowPaging="true"
+                AllowCustomPaging="true"
+                AllowSorting="true"
+                Width="100%"					
+                PageSize="10"
+                PagerStyle.Mode="Numeric"			
+                PagerStyle.Font.Name="Arial"
+                PagerStyle.Font.Size="12"
+                PagerStyle.HorizontalAlign="Right"			
+                GridLines="None"
+                CellSpacing="1"
+                CellPadding="2"
+                BackColor="#CCCCCC"
+                HeaderStyle.CssClass="headerstyle"
+                ItemStyle.CssClass="itemstyle"
+                AlternatingItemStyle.CssClass="itemstyle2"								
+                OnItemCreated="grid_ItemCreated"
+                OnEditCommand="grid_EditCommand"
+                OnUpdateCommand="grid_UpdateCommand"
+                OnCancelCommand="grid_CancelCommand"
+                OnDeleteCommand="deleteButtonClicked"								
+                OnPageIndexChanged="grid_PageIndexChanged"
+                OnSortCommand="grid_SortCommand">	
+                
+                <com:XActiveHyperLinkColumn   
+                    SortExpression="kode"     
+                    HeaderText="Kode ICD"									
+                    DataTextField="kode"
+                    ItemStyle.HorizontalAlign="Center"
+                    ItemStyle.Width="55px"
+                    HeaderStyle.ForeColor="#FFFFFF"		
+                    DataNavigateUrlField="kode">
+                    <prop:DataNavigateUrlFormatString>#
+                      $this->Service->constructUrl('Pendaftaran.icdEdit',array('kode'=>{0},'mode'=>'01'))
+                    </prop:DataNavigateUrlFormatString>
+                </com:XActiveHyperLinkColumn>	 
+                
+                <com:XActiveBoundColumn
+                    SortExpression="dtd"
+                    HeaderText="Kode DTD"
+                    HeaderStyle.ForeColor="#FFFFFF"
+                    ItemStyle.Width="70px"
+                    DataField="dtd" />           
+
+                    <com:XActiveBoundColumn
+                     SortExpression="indonesia"
+                     HeaderText="Definisi Indonesia"
+                     HeaderStyle.ForeColor="#FFFFFF"
+                     ItemStyle.HorizontalAlign="Left"									 								
+                     ItemStyle.Width="225px"
+                     DataField="indonesia" />							           
+                                                      
+                    <com:XActiveBoundColumn
+                     SortExpression="inggris"
+                     HeaderText="Definisi Inggris"
+                     HeaderStyle.ForeColor="#FFFFFF"
+                     ItemStyle.HorizontalAlign="Left"									 						
+                     ItemStyle.Width="225px"
+                     DataField="inggris" />
+                
+                <com:XActiveTemplateColumn 
+                    ID="btnGrid" 
+                    ItemStyle.HorizontalAlign="Center" 
+                    ItemStyle.Width="75px">
+                    
+                    <prop:HeaderTemplate>mode</prop:HeaderTemplate>
+                    <prop:ItemTemplate>
+                    <com:TActiveButton 
+                            ID="gridEditBrg" 
+                            Text="Masukan"
+                            CssClass="pager" 
+                            OnCommand="Page.gridMasukanClicked" 
+                            CommandParameter="<%# $this->Parent->Data['kode'] %>" 
+                            CausesValidation="true"
+                             Attributes.onclick = "if(!confirm('Masukan ICD dengan kode : <%# $this->Parent->Data['kode'] %> ?')) return false;" >
+                            <prop:ClientSide 
+                                OnLoading="maskContent();"
+                                OnComplete="unmaskContent(); "/>
+                          </com:TActiveButton>	
+                        </prop:ItemTemplate>
+                    </com:XActiveTemplateColumn>
+                                            
+            </com:XActiveDataGrid>
+        </td>                       
+      </tr>
+    </table></td>
+</tr>
+<tr>
+<td><hr/></td>
+</tr>
+<tr>
+<td align="center">
+<com:TActiveButton 
+        Text="Baru" 
+        OnClick="baruClicked" 
+        CausesValidation="false" 
+        CssClass="button_01" 
+        Attributes.onclick = "if(!confirm('Mulai pengisian data ICD10..?')) return false; else maskContent();">
+        </com:TActiveButton>
+        
+    <com:TActiveButton 
+        Text="Batal" 
+        OnClick="batalClicked" 
+        CausesValidation="false" 
+        CssClass="button_01" 
+        Attributes.onclick = "if(!confirm('Batalkan pengisian data..?')) return false; else maskContent();">
+        </com:TActiveButton>
+    
+    <com:TActiveButton 
+        Text="Keluar" 
+        Visible="false"
+        OnClick="keluarClicked" 
+        CausesValidation="false" 
+        CssClass="button_01"  
+        Attributes.onclick = "if(!confirm('Keluar sekarang..?')) return false;">
+            <prop:ClientSide
+                         OnLoading="Element.show('loading');"/>
+        </com:TActiveButton>  
+</td>
+</tr>
+</table>
+
+    
+</com:TContent>

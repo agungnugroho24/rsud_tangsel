@@ -1,0 +1,168 @@
+<%@ MasterClass="Application.layouts.MainLayout" %>
+<com:TContent ID="jdMain">
+	Administrasi Formulir
+    
+    <a href="<%= $this->Service->constructUrl('Simak') %>" onclick="maskContent()">
+    <span class="close-btn">
+        <span class="ui-icon ui-icon-circle-close"></span>
+    </span>
+    </a>
+    
+</com:TContent>	
+
+
+<com:TContent ID="Main"> 
+	
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>			  
+                <td>
+				<com:TLabel ID="showSql" />
+				<table width="100%" align="center" border="0">
+			  		<tr>
+						<td align="center"><com:TPanel GroupingText="Pilih Formulir" >
+							<table width="100%"  border="0" align="left">
+							  <tr>
+								<td width="150"><span>&#8226;</span>&nbsp;&nbsp;Group Formulir</td>
+								<td width="5">:</td>
+								<td >
+								<com:TDropDownList ID="group" 
+												   PromptText ="--Silakan Pilih--"
+								    			   PromptValue =""	
+												   AutoPostBack="true" 
+												   OnSelectedIndexChanged="chGroup">									
+									<com:TListItem Text="Rekam Medis" Value="0" />
+									<com:TListItem Text="Sistem Admin" Value="1" />
+									<com:TListItem Text="Poliklinik" Value="2" />
+									<com:TListItem Text="Laboratorium" Value="3" />
+									<com:TListItem Text="Radiologi" Value="4" />
+                                    <com:TListItem Text="Fisio" Value="5" />
+									
+								</com:TDropDownList></td>
+							  </tr>
+							  <com:TControl ID="master" >
+							  <tr>
+								<td><span>&#8226;</span>&nbsp;&nbsp;Modul Formulir </td>
+								<td>:</td>
+								<td>
+								<com:TControl ID="rmShow" >
+								<com:TDropDownList ID="DDRm" 
+												   AutoPostBack="true"
+												   PromptText ="--Silakan Pilih--"
+								    			   PromptValue ="" 
+												   OnSelectedIndexChanged="chRmForm">									
+									<com:TListItem Text="Kelompok Pasien" Value="0" />
+									<com:TListItem Text="Perusahaan/Kontrak" Value="1" />
+									<com:TListItem Text="Pendidikan Pasien" Value="2" />
+                                    <com:TListItem Text="Kabupaten" Value="4" />
+									<com:TListItem Text="Kecamatan" Value="5" />
+									<com:TListItem Text="Kelurahan" Value="6" />
+								</com:TDropDownList>
+								</com:TControl>
+								<com:TControl ID="sysShow" >
+								<com:TDropDownList ID="DDSys" 
+												   AutoPostBack="true"
+												   PromptText ="--Silakan Pilih--"
+								    			   PromptValue =""  
+												   OnSelectedIndexChanged="chSysForm">									
+									<com:TListItem Text="Poliklinik" Value="0" />
+									<com:TListItem Text="Ruang Rawat" Value="1" />
+									<com:TListItem Text="Spesialisasi" Value="2" />
+									<com:TListItem Text="Allowed Modul" Value="3" />
+									<com:TListItem Text="Kamar Pasien" Value="4" />
+									<com:TListItem Text="Kamar Operasi" Value="6" />
+                                    <com:TListItem Text="Kamar Operasi - Tarif" Value="7" />
+									<com:TListItem Text="Tindakan Operasi" Value="8" />
+									<com:TListItem Text="Kelas Kamar Pasien" Value="10" />
+									<com:TListItem Text="Tarif Adm Kamar Pasien" Value="11" />
+                                    <com:TListItem Text="Tarif Oksigen" Value="12" />
+                                    <com:TListItem Text="Tarif Visite Dokter" Value="13" />
+                                    <com:TListItem Text="Tarif Ambulan" Value="14" />
+                                    <com:TListItem Text="Tarif Ambulan - Tunggu" Value="15" />
+                                    <com:TListItem Text="Fraksi Jasmed" Value="16" />
+                                    
+                                    <com:TListItem Text="Master Askep" Value="18" />
+									<com:TListItem Text="Master BHP" Value="22" />
+                                    <com:TListItem Text="Master Oksigen" Value="19" />
+                                    <com:TListItem Text="Master Perujuk" Value="17" />                                    
+                                    <com:TListItem Text="Master Sewa Alat" Value="23" />
+                                    <com:TListItem Text="Master Sewa Alat Penunjang" Value="21" />
+                                    <com:TListItem Text="Master Tindakan Emergency" Value="24" />
+                                    <com:TListItem Text="Master Tindakan Khusus" Value="20" />
+								</com:TDropDownList>
+								</com:TControl>
+								<com:TControl ID="poliShow" >
+								<com:TDropDownList ID="DDPoli" 
+												   AutoPostBack="true"
+												   PromptText ="--Silakan Pilih--"
+								    			   PromptValue =""  
+												   OnSelectedIndexChanged="chPoliForm">	
+                                    <com:TListItem Text="Nama Tindakan" Value="0" />
+									<com:TListItem ID="tes" Text="Tarif Tindakan" Value="1"  />
+                                    <com:TListItem Text="BHP/Sewa Alkes Tindakan" Value="2" />
+                                    <com:TListItem Text="Tarif Retribusi" Value="3" />
+								</com:TDropDownList>
+								</com:TControl>
+								<com:TControl ID="labShow" >
+								<com:TDropDownList ID="DDLab" 
+												   AutoPostBack="true"
+												   PromptText ="--Silakan Pilih--"
+								    			   PromptValue =""   
+												   OnSelectedIndexChanged="chLabForm">									
+									<com:TListItem Text="Nama Tindakan Lab" Value="0" />
+									<com:TListItem Text="Kelompok Lab" Value="1" />
+									<com:TListItem Text="Kategori Lab" Value="2" />
+									<com:TListItem Text="Tarif Lab" Value="3" />
+                                    <com:TListItem Text="Lab Rujukan" Value="4" />
+                                    <com:TListItem Text="Tarif Lab Rujukan" Value="5" />																
+								</com:TDropDownList>
+								</com:TControl>
+								<com:TControl ID="radShow" >
+								<com:TDropDownList ID="DDRad" 
+												   AutoPostBack="true"
+												   PromptText ="--Silakan Pilih--"
+								    			   PromptValue =""  
+												   OnSelectedIndexChanged="chRadForm">									
+									<com:TListItem Text="Nama Tindakan Rad" Value="0" />
+									<com:TListItem Text="Kelompok Rad" Value="1" />
+									<com:TListItem Text="Kategori Rad" Value="2" />
+									<com:TListItem Text="Tarif Radiologi" Value="3" />	
+                                    <com:TListItem Text="Radiologi Rujukan" Value="4" />
+                                    <com:TListItem Text="Tarif Radiologi Rujukan" Value="5" />																
+								</com:TDropDownList>
+								</com:TControl>
+                                
+                                <com:TControl ID="fisioShow" >
+								<com:TDropDownList ID="DDFisio" 
+												   AutoPostBack="true"
+												   PromptText ="--Silakan Pilih--"
+								    			   PromptValue =""  
+												   OnSelectedIndexChanged="chFisioForm">									
+									<com:TListItem Text="Nama Tindakan Fisio" Value="0" />
+									<com:TListItem Text="Kelompok Fisio" Value="1" />
+									<com:TListItem Text="Kategori Fisio" Value="2" />
+									<com:TListItem Text="Tarif Fisio" Value="3" />
+                                    <com:TListItem Text="Fisio Rujukan" Value="4" />
+                                    <com:TListItem Text="Tarif Fisio Rujukan" Value="5" />																
+								</com:TDropDownList>
+								</com:TControl>
+                                
+								</td>
+							  </tr>
+							  </com:TControl>
+							</table>
+							</com:TPanel>
+						</td>
+			  		</tr>
+				</table>
+			</td>
+              </tr>
+              <tr>
+                <td><table width="10" border="0" align="center" cellpadding="0" cellspacing="2">
+                    <tr>                     
+                      <td><com:TButton Text="Keluar" Visible="false" OnClick="keluarClicked" CausesValidation="false" CssClass="button_01" TabIndex="7" /></td>
+                    </tr>
+                </table></td>
+              </tr>
+          </table>
+          
+</com:TContent> 

@@ -1,0 +1,312 @@
+<%@ MasterClass="Application.layouts.MainLayout" %>
+<com:TContent ID="jdMain">
+	Daftar Master Obat Paket - Baru
+    
+    <a href="<%= $this->Service->constructUrl('Simak') %>" onclick="maskContent()">
+    <span class="close-btn">
+        <span class="ui-icon ui-icon-circle-close"></span>
+    </span>
+    </a>
+    
+</com:TContent>	
+<com:TContent ID="Main">
+
+	<table width="100%" border="0" cellspacing="2" cellpadding="2">
+              <tr>
+                <td>
+                <table width="100%" border="0" align="right" cellpadding="0" cellspacing="2">
+                  <com:TControl Visible="false" Enabled="false">
+                  <tr>
+                    <td width="150"><span>&#8226;</span> ID</td>
+                    <td width="5">:</td>
+                    <td ><com:TActiveTextBox CssClass="input_text" 
+												  ID="ID" 												   
+												  MaxLength="2" 										   
+												  ToolTip="ID Ruangan Pasien" 
+												  Width="55px"	
+												  ValidationGroup="val"	
+												  />
+								<com:TRequiredFieldValidator 
+											  ControlToValidate="ID"											 
+											  ErrorMessage="Anda harus mengisi ID Ruangan Pasien"
+											  Display="Dynamic"
+											  ValidationGroup="val" />
+									<com:TActiveCustomValidator
+												ControlToValidate="ID"
+												ValidationGroup="val"
+												ErrorMessage="Maaf, ID tersebut sudah ada!"
+												OnServerValidate="checkRM" 
+												FocusOnError="true"												
+												Display="Dynamic" />								</td>
+                  </tr>
+                  </com:TControl>
+                  
+                  <tr>
+                    <td width="150"><span>&#8226; </span>Nama Paket</td>
+                    <td width="5">:</td>
+                    <td>
+                    	<com:TActiveTextBox 
+                            ID="nama"
+                            CssClass="input_text" 						   
+                              Width="300px"										 
+                              CausesValidation="false"/>
+                        <com:TRequiredFieldValidator
+                            ControlToValidate="nama"
+                            ValidationGroup="val"
+                            ErrorMessage="*"
+                            Display="Dynamic"
+                            FocusOnError="true"
+                            CssClass="valRequired"
+                            ControlCssClass="valctrl"/>
+                     </td>
+                  </tr>
+                  <com:TControl Enabled="false" Visible="false">
+                  <tr>
+                    <td colspan="3"><hr/></td>
+                  </tr>
+                  <tr>
+                    <td><span>&#8226; </span>Plafon Obat</td>
+                    <td>:</td>
+                    <td>
+						<com:TActiveTextBox 
+                            ID="plafonObat"
+                            CssClass="input_text" 						   
+                              MaxLength="10" 
+                              Width="80px"										 
+                              CausesValidation="false"
+                              ValidationGroup="val"
+                              Text="0"/>
+                            <com:TRegularExpressionValidator
+                                ControlToValidate="jumlah"
+                                RegularExpression="^\d*\.?\d*$"
+                                ErrorMessage="*"
+                                ValidationGroup="val"
+                                Display="Dynamic"
+                                FocusOnError="true" 
+                                CssClass="valRequired"
+                                ControlCssClass="valctrl"
+                            />	
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><span>&#8226; </span>Margin Obat</td>
+                    <td>:</td>
+                    <td>
+						<com:TActiveTextBox 
+                            ID="marginObat"
+                            CssClass="input_text" 						   
+                              MaxLength="3" 
+                              Width="30px"										 
+                              CausesValidation="false"
+                              ValidationGroup="val"
+                              Text="0"/> %
+                            <com:TRegularExpressionValidator
+                                ControlToValidate="marginObat"
+                                RegularExpression="^\d*\.?\d*$"
+                                ErrorMessage="*"
+                                ValidationGroup="val"
+                                Display="Dynamic"
+                                FocusOnError="true" 
+                                CssClass="valRequired"
+                                ControlCssClass="valctrl"
+                            />	
+                    </td>
+                  </tr>
+                  </com:TControl>
+                  
+                  <tr>
+                    <td colspan="3"><hr/></td>
+                  </tr>
+                  </table>
+                  
+                  <com:TActivePanel ID="secondPanel" DefaultButton="tambahBtn">
+                  <table width="100%" border="0" align="left" cellpadding="0" cellspacing="2">
+                  <tr>
+                    <td><strong>Isi Paket</strong></td>
+                  </tr>
+                  
+                  <tr>
+                    <td width="150"><span>&#8226; </span>Nama Obat / Alkes</td>
+                    <td width="5">:</td>
+                    <td>
+                    	<com:TAutoComplete
+                            ID="AutoComplete" 
+                            OnSuggest="suggestNames"
+                            OnSuggestionSelected="suggestionSelected1"                            
+                            ResultPanel.CssClass="acomplete"
+                            Suggestions.DataKeyField="kode" 
+                            Width="300px"	
+                            OnCallback="secondCallBack" 
+                            CausesValidation="false" 
+                            MinChars="3" >
+                         
+                            <prop:Suggestions.ItemTemplate>
+                                <li><%# $this->Data['nama'] %></li>
+                            </prop:Suggestions.ItemTemplate>
+                        </com:TAutoComplete>
+                        <com:TActiveTextBox ID="kodeObat" Width="50px" ReadOnly="true" Visible="false" />
+                        
+                        <com:TRequiredFieldValidator
+                            ControlToValidate="AutoComplete"
+                            ValidationGroup="valTambah"
+                            ErrorMessage="*"
+                            Display="Dynamic"
+                            FocusOnError="true" 
+                            CssClass="valRequired"
+                            ControlCssClass="valctrl"/>
+                     </td>
+                  </tr>
+                  
+                  <!--
+                  <tr>
+                    <td colspan="3"><strong>Standar Tarif :</strong></td>
+                  </tr>-->
+                  <tr>
+                    <td><span>&#8226; </span>Jumlah</td>
+                    <td>:</td>
+                    <td>
+						<com:TActiveTextBox 
+                            ID="jumlah"
+                            CssClass="input_text" 						   
+                              MaxLength="10" 
+                              Width="80px"										 
+                              CausesValidation="false"
+                              ValidationGroup="val"
+                              Text=""/>
+                            <com:TRequiredFieldValidator
+                                ControlToValidate="jumlah"
+                                ValidationGroup="valTambah"
+                                ErrorMessage="*"
+                                Display="Dynamic"
+                                FocusOnError="true" 
+                                CssClass="valRequired"
+                                ControlCssClass="valctrl"/>
+                            <com:TRegularExpressionValidator
+                                ControlToValidate="jumlah"
+                                RegularExpression="^\d*\.?\d*$"
+                                ErrorMessage="*"
+                                ValidationGroup="valTambah"
+                                Display="Dynamic"
+                                FocusOnError="true" 
+                                CssClass="valRequired"
+                                ControlCssClass="valctrl"
+                            />	
+                    </td>
+                  </tr>
+                  
+                  <tr>
+                    <td></td>
+                    <td></td>
+                    <td>
+                    	<com:TActiveButton 
+                        	ID="tambahBtn"
+                        	Text="Tambah" 
+                            OnClick="tambahClicked" 
+							CssClass="button_01" 
+                            CausesValidation="true"
+							ValidationGroup="valTambah"
+                            Attributes.onclick = "maskContent();" />
+                    </td>
+                  </tr>
+                  
+                  <tr>
+                    <td colspan="3">
+                    	<com:XActiveDataGrid 
+                        	ID="UserGrid"
+                            DataKeyField="id"
+                            AutoGenerateColumns="false"	
+                            AllowPaging="true"
+                            AllowCustomPaging="true"
+                            AllowSorting="true"			
+                            PageSize="50"
+                            PagerStyle.Mode="Numeric"			
+                            PagerStyle.Font.Name="Arial"
+                            PagerStyle.Font.Size="12"
+                            PagerStyle.HorizontalAlign="Right"		
+                            Width="100%"	
+                            GridLines="None"
+                            CellSpacing="1"
+                            CellPadding="2"						
+                            HeaderStyle.CssClass="headerstyle"
+                            ItemStyle.CssClass="itemstyle"
+                            AlternatingItemStyle.CssClass="itemstyle2"								
+                            OnDeleteCommand="deleteClicked"	
+                            OnItemCreated="itemCreated"			
+                            OnSortCommand="sortGrid">
+                                    
+                            <com:XActiveTemplateColumn
+                                    ID="nmColoumn"
+                                    HeaderText="Nama Obat / Alkes"
+                                    ItemStyle.Width="80%"/>
+                            
+                            <com:XActiveTemplateColumn
+                                    ID="jmlColoumn"
+                                    HeaderText="Jumlah"
+                                    ItemStyle.Width="15%" 
+                                    ItemStyle.HorizontalAlign="Center"/>
+                                    
+                            <com:XActiveButtonColumn												
+                                    HeaderText="Mode"
+                                    Text="Delete"
+                                    ID="Hapus"
+                                    ItemStyle.HorizontalAlign="Center"									
+                                    ButtonType="PushButton"		
+                                    ItemStyle.Width="25px"							
+                                    CommandName="delete" />
+                                        
+                          </com:XActiveDataGrid>
+                    </td>
+                  </tr>
+                </table>
+                    
+                </com:TActivePanel>
+                
+                </td>
+              </tr>
+              <tr>
+                <td><hr /></td>
+              </tr>
+              <tr>
+                <td><table width="10" border="0" align="center" cellpadding="0" cellspacing="2">
+                    <tr>
+                      <td><com:TActiveButton ID="simpanBtn" Text="Simpan" Attributes.onclick = "maskContent();" 
+					  					OnClick="simpanClicked" 
+										CssClass="button_01" 
+										ValidationGroup="val"/></td>
+                      <td><com:TActiveButton Text="Batal" Visible="True" Attributes.onclick = "maskContent();" 
+					  			OnClick="batalClicked" 
+								CausesValidation="false" 
+								CssClass="button_01"  /></td>
+                      <td><com:TActiveButton Text="Keluar" Visible="True" Attributes.onclick = "maskContent();" 
+					  			OnClick="keluarClicked" 
+								CausesValidation="false" 
+								CssClass="button_01"  />
+					  </td>
+                    </tr>
+                </table></td>
+              </tr>
+          </table>
+          
+	<com:TCallback ID="UpdateCallback" OnCallback="prosesKonfirmasi" ActiveControl.CausesValidation="false"/>
+    <com:TCallback ID="UpdateCallback2" OnCallback="prosesKonfirmasi2" ActiveControl.CausesValidation="false"/>
+	<script type="text/javascript">
+		//<![CDATA[
+		function konfirmasi(mode){
+			var request= <%= $this->UpdateCallback->ActiveControl->Javascript %>;
+				request.setCallbackParameter({
+					Id:mode
+				});
+				request.dispatch();
+		}
+		
+		function konfirmasi2(mode){
+			var request= <%= $this->UpdateCallback2->ActiveControl->Javascript %>;
+				request.setCallbackParameter({
+					Id:mode
+				});
+				request.dispatch();
+		}
+		//]]>
+	</script>
+          
+</com:TContent>

@@ -1,0 +1,132 @@
+<%@ MasterClass="Application.layouts.MainLayout" %>
+<com:TContent ID="jdMain">
+	Persentase Margin Obat & Alkes
+    
+    <a href="<%= $this->Service->constructUrl('Simak') %>" onclick="maskContent()">
+    <span class="close-btn">
+        <span class="ui-icon ui-icon-circle-close"></span>
+    </span>
+    </a>
+    
+</com:TContent>	
+
+
+
+<com:TContent ID="Main"> 
+
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>			  
+                <td>
+					<com:TActiveLabel ID="showSql" />
+				</td>
+              </tr>
+              <com:TControl Visible="false">
+			  <tr ><td>
+			  	Jumlah Data Hasil Pencarian : <com:TActiveLabel ID="jmlData"/> data
+			  </td></tr>
+              </com:TControl>
+              
+              <tr>
+                <td><table width="100%"  border="0" align="center" cellpadding="0" cellspacing="1">                      
+                      <tr>
+                        <td align="center">
+						<com:XActiveDataGrid ID="dtgSomeData"
+								DataKeyField="id"
+								AutoGenerateColumns="false"	
+								AllowPaging="true"
+								AllowCustomPaging="true"
+								AllowSorting="true"
+								Width="100%"					
+								PageSize="10"
+								PagerStyle.Mode="Numeric"			
+								PagerStyle.Font.Name="Arial"
+								PagerStyle.Font.Size="12"
+								PagerStyle.HorizontalAlign="Right"			
+								GridLines="None"
+								CellSpacing="1"
+								CellPadding="2"
+								HeaderStyle.CssClass="headerstyle"
+								ItemStyle.CssClass="itemstyle"
+								AlternatingItemStyle.CssClass="itemstyle2"
+								OnItemCreated="itemCreated"
+								OnEditCommand="editItem"
+								OnUpdateCommand="saveItem"
+								OnCancelCommand="cancelItem"
+								OnPageIndexChanged="dtgSomeData_PageIndexChanged"
+								OnSortCommand="dtgSomeData_SortCommand"							
+                                EmptyTemplate="<div class='info'>Data Tidak Ada!.</div>">
+								
+								<com:TTemplateColumn HeaderText="Kelompok Margin" 
+													 SortExpression="nama"									 
+													 ItemStyle.Width="200px" 
+													 ItemStyle.HorizontalAlign="Center" >									
+									<prop:ItemTemplate>
+										<%=	$this->Parent->DataItem['nama'] %>
+									</prop:ItemTemplate>
+								</com:TTemplateColumn>	 
+								
+								<com:XActiveBoundColumn 
+                                	ID="umum"
+									SortExpression="persentase"
+									HeaderText="Pasien Umum (%)"
+									ItemStyle.Width="50px"
+									DataField="persentase"
+                                    ItemStyle.HorizontalAlign="Center" />
+								
+                                <com:XActiveBoundColumn 
+                                	ID="asuransi"
+									SortExpression="persentase_asuransi"
+									HeaderText="Pasien Asuransi (%)"
+									ItemStyle.Width="50px"
+									DataField="persentase_asuransi"
+                                    ItemStyle.HorizontalAlign="Center" />
+                                 
+                                 <com:XActiveBoundColumn 
+                                	ID="jamper"
+									SortExpression="persentase_jamper"
+									HeaderText="Pasien Jamper (%)"
+									ItemStyle.Width="50px"
+									DataField="persentase_jamper"
+                                    ItemStyle.HorizontalAlign="Center" />
+                                 
+                                 <com:XActiveBoundColumn 
+                                	ID="unitInternal"
+									SortExpression="persentase_unit_internal"
+									HeaderText="Unit Internal(%)"
+									ItemStyle.Width="50px"
+									DataField="persentase_unit_internal"
+                                    ItemStyle.HorizontalAlign="Center" />
+                                    
+                                 <com:XActiveEditCommandColumn
+									HeaderText="Edit"
+									HeaderStyle.Width="50px"
+									Visible="<%= $this->User->IsAdmin %>"
+									UpdateText="Save"
+									ItemStyle.HorizontalAlign="Center"
+									ItemStyle.Font.Italic="false"/>	   	
+							</com:XActiveDataGrid>
+						</td>                       
+                      </tr>
+                    </table></td>
+              </tr>
+              <tr>
+                <td><hr/></td>
+              </tr>
+              
+              <com:TControl Visible="<%= $this->User->IsAdmin %>">
+              <tr>
+                <td><table width="10" border="0" align="center" cellpadding="0" cellspacing="2">
+                    <tr>
+                      <td>                     
+					  
+					  	<com:TActiveButton Text="Baru" Attributes.onclick = "maskContent();" OnClick="baruClicked" CssClass="tes" />
+					  </td>                      
+                      <td><com:TButton Text="Keluar" OnClick="keluarClicked" CausesValidation="false" Attributes.onclick = "maskContent();" CssClass="button_01" TabIndex="7" /></td>
+                    </tr>
+                </table></td>
+              </tr>
+              </com:TControl>
+              
+          </table>
+          
+</com:TContent>

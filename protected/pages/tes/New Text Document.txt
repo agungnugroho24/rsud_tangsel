@@ -1,0 +1,46 @@
+<div style="float:right; display:none;">
+        <a id="dokumenUpload" 
+                href="<%= $this->Service->constructUrl('Rad.uploadFile',array('noTrans'=>$this->Data['no_trans']))%>" 
+                title="Upload Dokumen Radiologi" 
+                class="ui-state-default ui-corner-all">
+                <span class="ui-icon ui-icon-newwin"></span>Upload Dokumen
+            </a>
+            &nbsp; 
+            <a  id="fotoUpload"
+                title="Upload Foto Radiologi"
+                href="#" 
+                class="ui-state-default ui-corner-all"
+                onclick="maskContent(); uploadFotoClicked(<%#$this->Data['no_trans']%>)">
+                <span class="ui-icon ui-icon-newwin"></span>Upload Foto 
+            </a>   
+            
+            Jumlah Foto
+            <com:TActiveTextBox 
+                  CssClass="input_text" 
+                  ID="jmlFoto" 													   
+                  MaxLength="1"
+                  CausesValidation="false"
+                  Width="25px">
+            </com:TActiveTextBox> 
+            
+            
+            
+            &nbsp;
+            Jumlah Dokumen
+            <com:TActiveTextBox 
+                  CssClass="input_text" 
+                  ID="jmlDok" 													   
+                  MaxLength="1"
+                  CausesValidation="false"
+                  Width="25px">
+            </com:TActiveTextBox> 
+            <com:TActiveButton 
+               ID="uploadDocBtn" 
+               Text="Upload Dokumen" 
+               OnClick="Page.uploadDocBtnClicked"
+               CausesValidation="false" 
+               IsDefaultButton="false"
+               CssClass="button_01"
+               CommandParameter="<%#$this->Data['no_trans']%>" />
+               
+        </div>

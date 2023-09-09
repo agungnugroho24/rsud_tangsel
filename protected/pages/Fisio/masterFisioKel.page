@@ -1,0 +1,143 @@
+<%@ MasterClass="Application.layouts.MainLayout" %>
+<com:TContent ID="jdMain">
+	Daftar Kelompok Tindakan Elektromedik
+    
+    <a href="<%= $this->Service->constructUrl('Simak') %>" onclick="maskContent()">
+    <span class="close-btn">
+        <span class="ui-icon ui-icon-circle-close"></span>
+    </span>
+    </a>
+    
+</com:TContent>	
+
+
+<com:TContent ID="Main">
+
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+		  
+              <tr>			  
+                <td>
+				<com:TLabel ID="showSql" />
+				<table width="100%" align="center" border="0">
+			  		<tr>
+						<td align="center"><com:TPanel GroupingText="Pencarian Data kelompok Elektromedik" Width="100%">
+							<table width="100%"  border="0" align="left">
+							  <tr>
+								<td width="200"><span>&#8226;</span>&nbsp;&nbsp;ID </td>
+								<td width="5">:</td>
+								<td ><com:TTextBox ID="ID" 
+										MaxLength="7"										
+										Width="100px" 
+										ToolTip="Cari berdasarkan ID kelompok Elektromedik !!" 
+										TabIndex="1"/></td>
+							  </tr>
+							  <tr>
+								<td><span>&#8226;</span>&nbsp;&nbsp;Nama Kelompok </td>
+								<td>:</td>
+								<td>
+									<com:TTextBox ID="cariNama" 
+										MaxLength="30" 
+										Width="180px" 										
+										ToolTip="Cari berdasarkan kelompok Elektromedik!!" 
+										TabIndex="2"
+									/>
+										&nbsp;
+									<com:TCheckBox 
+										ID="Advance" 
+										Text="Elemen Kata" 
+										Value="1" 
+									/>
+								</td>
+							  </tr>
+							  <tr>
+							    <td>&nbsp;</td>
+							    <td>&nbsp;</td>
+							    <td><com:TButton Text="Cari" Attributes.onclick = "maskContent();" OnClick="cariClicked" CssClass="button_01" TabIndex="3" /></td>
+							    </tr>
+							</table>
+							</com:TPanel>
+						</td>
+			  		</tr>
+				</table>
+			</td>
+              </tr>
+			  
+              <tr>
+                <td><table width="100%"  border="0" align="center" cellpadding="0" cellspacing="1">                      
+                      <tr>
+                        <td align="center">
+						<com:TDataGrid ID="UserGrid"
+								DataKeyField="kode"
+								AutoGenerateColumns="false"	
+								AllowPaging="true"
+								AllowCustomPaging="true"
+								AllowSorting="true"
+								Width="100%"					
+								PageSize="5"
+								PagerStyle.Mode="Numeric"			
+								PagerStyle.Font.Name="Arial"
+								PagerStyle.Font.Size="12"
+								PagerStyle.HorizontalAlign="Right"			
+								GridLines="None"
+								CellSpacing="1"
+								CellPadding="2"
+								
+								HeaderStyle.CssClass="headerstyle"
+								ItemStyle.CssClass="itemstyle"
+								AlternatingItemStyle.CssClass="itemstyle2"
+								OnItemCreated="itemCreated"
+								OnDeleteCommand="deleteButtonClicked"								
+								OnPageIndexChanged="changePage"
+								OnPagerCreated="pagerCreated"			
+								OnSortCommand="sortGrid">								
+							</div>	
+								
+								<com:THyperLinkColumn   
+									SortExpression="kode"     
+									HeaderText="ID"									
+									DataTextField="kode"
+									ItemStyle.HorizontalAlign="Center"
+									ItemStyle.Width="100px"		
+									DataNavigateUrlField="kode">
+									<prop:DataNavigateUrlFormatString>#
+									  $this->Service->constructUrl('Fisio.masterFisioKelEdit',array('ID'=>{0},'mode'=>'01'))
+									</prop:DataNavigateUrlFormatString>
+								</com:THyperLinkColumn>	 
+								
+								<com:TBoundColumn
+									SortExpression="nama"
+									HeaderText="kelompok Elektromedik"
+									ItemStyle.Width="400px"
+									DataField="nama" />								
+								
+								<com:TButtonColumn												
+									HeaderText="Mode"
+									Text="Delete"
+									ID="Hapus" ItemStyle.Width="50px"
+									ItemStyle.HorizontalAlign="Center"
+									ButtonType="PushButton"									
+									CommandName="delete" />	
+									
+							</com:TDataGrid>
+						</td>                       
+                      </tr>
+                    </table></td>
+              </tr>
+              <tr>
+                <td><hr /></td>
+              </tr>
+              <tr>
+                <td><table width="10" border="0" align="center" cellpadding="0" cellspacing="2">
+                    <tr>
+                      <td>
+                      <!---
+					  <com:TControl Visible="<%= $this->User->IsAdmin %>"> --->
+					  	<com:TButton Text="Baru" Attributes.onclick = "maskContent();" OnClick="baruClicked" CssClass="button_01" TabIndex="6" />
+					  <!---</com:TControl> --->
+					  </td>                      
+                      <td><com:TButton Text="Keluar" Attributes.onclick = "maskContent();" OnClick="keluarClicked" CausesValidation="false" CssClass="button_01" TabIndex="7" /></td>
+                    </tr>
+                </table></td>
+              </tr>
+          </table>
+</com:TContent>

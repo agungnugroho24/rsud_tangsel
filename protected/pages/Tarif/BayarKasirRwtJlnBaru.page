@@ -1,0 +1,558 @@
+<%@ MasterClass="Application.layouts.MainLayout" %>
+<style type="text/css">
+<!--
+.style1 {color: #7FA1E6}
+-->
+</style>
+
+<com:TContent ID="Main">
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td height="18"></td>
+  </tr>
+  <tr>
+    <td><table width="10"  border="0" align="center" cellpadding="0" cellspacing="0">
+      <tr>
+        <td width="1%"><table width="100%"  border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="1%"><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndAppTopLft.png'%>" width="15" height="15" /></td>
+            <td width="99%" background="<%=$this->Page->Theme->BaseUrl.'/images/bkg3.png'%>">&nbsp;</td>
+            <td width="1%"><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndAppTopRgt.png'%>" width="15" height="15" /></td>
+          </tr>
+        </table></td>
+        </tr>
+      <tr>
+        <td valign="top" background="<%=$this->Page->Theme->BaseUrl.'/images/bkg3.png'%>"><table width="10" border="0" cellpadding="0" cellspacing="0">
+          <tr>
+            <td><table width="15" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+            </table></td>
+            <td><table width="750" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td class="text_08">Kasir Rawat Jalan </td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td><table width="10" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndTopLft.png'%>" width="15" height="15" /></td>
+          <td><table width="720" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td><table width="720" border="0" align="right" cellpadding="0" cellspacing="0">
+                    <tr>
+                      <td width="174" class="text_07">&nbsp;Pembayaran Rawat Jalan </td>
+					  <td width="546" background="<%=$this->Page->Theme->BaseUrl.'/images/rndBkgTop.png'%>"></td>
+                      </tr>
+                </table></td>
+              </tr>
+          </table></td>
+          <td><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndTopRgt.png'%>" width="15" height="15" /></td>
+        </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="10" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td background="<%=$this->Page->Theme->BaseUrl.'/images/rndBkgLft.png'%>"><table width="15" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+          </table></td>
+          <td><table width="720" border="0" cellspacing="0" cellpadding="0">
+		  <tr height="15px">
+		  	<td></td>
+		  </tr>
+              <tr>			  
+                <td>
+				<com:TLabel ID="showSql" />
+				<table width="700" align="center" border="0">
+			  		<tr>
+						<td align="center"><com:TPanel GroupingText="Pencarian No. Register Pasien" Width="680px" DefaultButton="bayarBtn">
+							<table width="100%"  border="0" align="left">
+							 <com:TControl ID="showFirst">
+							   <tr>
+								<td width="20%"><span>&#8226;</span>&nbsp;&nbsp;Cito</td>
+								<td width="1%">:</td>
+								<td width="79%">
+									<com:TCheckBox ID="citoCheck" AutoPostBack="true" CausesValidation="false"/>									</td>
+							  </tr>
+							   <tr>
+								<td width="20%"><span>&#8226;</span>&nbsp;&nbsp;Rawat Inap</td>
+								<td width="1%">:</td>
+								<td width="79%">
+									<com:TCheckBox 
+										ID="CBrwtInap" 
+										AutoPostBack="true" 
+										CausesValidation="false" 
+										OnCheckedChanged="CBrwtInapCheck"/>
+								</td>
+							  </tr>
+							  <com:TControl ID="modeInputCtrl" Visible="true">
+							   <tr>
+							 	<td><span>&#8226;</span>&nbsp;&nbsp;Jenis Pasien</td>
+							   	<td>:</td>
+							   	<td>
+							   		<com:TRadioButtonList
+                                          ID="modeInput" 
+                                          RepeatDirection="Horizontal" 
+										  AutoPostBack="true" 
+										  SelectedIndex="0" 
+										  CausesValidation="false" 
+										  OnSelectedIndexChanged="modeInputChanged">
+										<com:TListItem Text="Pasien Internal" Value="0" />
+										<com:TListItem Text="Luar/Rujukan" Value="1" />
+                                  	</com:TRadioButtonList>
+								</td>
+							 </tr>
+							 </com:TControl>
+							 <com:TControl ID="jnsTransCtrl" Visible="false">
+							   <tr>
+                                 <td><span>&#8226;</span>&nbsp;&nbsp;Jenis Transaksi </td>
+							     <td>:</td>
+							     <td><com:TRadioButtonList
+                                          ID="modeInputTrans" 
+                                          RepeatDirection="Horizontal" 
+										  AutoPostBack="true" 
+										  CausesValidation="false" 
+										  OnSelectedIndexChanged="modeInputTransChanged">
+                                     <com:TListItem Text="Laboratorium" Value="0" />
+                                     <com:TListItem Text="Radiologi" Value="1" />
+                                   </com:TRadioButtonList>
+                                 </td>
+							   </tr>
+							   </com:TControl>	 
+							   <tr>
+                                 <td><span>&#8226;</span>&nbsp;&nbsp;No. CM </td>
+							     <td>:</td>
+							     <td>
+								 	<com:TTextBox 
+										  CssClass="input_text" 
+										  ID="notrans" 
+										  AutoPostBack="true"													   
+										  MaxLength="7"
+										  OnTextChanged="checkRegister" 
+										  TabIndex="1"												  
+										  ToolTip="No. Register Pasien" 
+										  Width="50px" />
+									  &nbsp;
+									  <com:TLabel ID="errMsg" ForeColor="#FF0000" />								 </td>
+							   </tr>
+							  </com:TControl>
+							  <com:TControl ID="noTransCtrl">
+							  <tr>
+							    <td><span>&#8226;</span>&nbsp;&nbsp;No. Transaksi  </td>
+							    <td>:</td>
+							    <td>
+									<com:TDropDownList 
+										ID="DDtrans" 
+										PromptText ="--Silakan Pilih--"
+										PromptValue =""	
+										Width="150px" 
+										DataTextField="nama" 
+										DataValueField="no_trans" 
+										OnSelectedIndexChanged="DDtransChanged" 
+										AutoPostBack="true" 
+										CausesValidation="false" />
+										
+									 <com:TRequiredFieldValidator 
+										ControlToValidate="DDtrans" 											 
+										ErrorMessage="Anda harus memilih No. Transaksi"
+										Display="Dynamic" 
+										ValidationGroup="cari"/>								</td>
+							    </tr>
+							 </com:TControl>
+							  <com:TControl ID="showSecond">	
+							  <tr>
+								<td width="20%"><span>&#8226;</span>&nbsp;&nbsp;Nama Pasien </td>
+								<td width="1%">:</td>
+								<td width="79%"><com:TLabel ID="nama" /></td>
+							  </tr>
+							  <tr>
+							    <td><span>&#8226;</span>&nbsp;&nbsp;Jumlah</td>
+							    <td>:</td>
+							    <td><com:TLabel ID="jmlShow" /></td>
+							    </tr>
+								<tr>
+							    <td><span>&#8226;</span>&nbsp;&nbsp;Bayar</td>
+							    <td>:</td>
+							    <td><com:TTextBox CssClass="input_text" 
+												  ID="bayar" 													   
+												  MaxLength="12"												  
+												  TabIndex="5"												  
+												  ToolTip="jumlah bayar" 
+												  Width="100px" />&nbsp;&nbsp;&nbsp;
+								 <com:TButton
+                                 	Text="Bayar" 
+                                    OnClick="bayarClicked" 
+                                    ID="bayarBtn" 
+                                    CssClass="button_01" 
+                                    TabIndex="6" />
+                                 <com:TButton
+                                 	Text="Detail" 
+                                    OnClick="detailClicked" 
+                                    ID="detailBtn" 
+                                    CssClass="button_01" 
+                                    TabIndex="6" />                                 </td>
+							    </tr>
+								<tr>
+							    <td><span>&#8226;</span>&nbsp;&nbsp;Sisa/Kembalian</td>
+							    <td>:</td>
+							    <td><com:TLabel ID="sisaByr" />&nbsp;<com:TLabel ID="errByr" ForeColor="#FF0000" /></td>
+							    </tr>
+								</com:TControl>
+							</table>
+							</com:TPanel>						</td>
+			  		</tr>
+                    <tr>
+                <td align="center">
+                <!-- ---------------------- Detail Panel ----------------------  -->
+                <com:TPanel 
+                	ID="detailPanel" 
+                    GroupingText="Detail Transaksi Rawat Jalan" 
+                    Width="680px"
+                    Visible="false">
+                <table width="100%"  border="0" align="left">
+				  <com:TControl ID="dgTdkCtrl">	
+                  <tr>
+                    <td width="29%"><span>&#8226;</span>&nbsp;&nbsp;Transaksi Rawat Jalan</td>
+                    <td width="1%"></td>
+                    <td width="70%">&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td colspan="3" align="center">
+						<com:TLabel ID="tdkMsg" Font.Size="12px" ForeColor="#FF0000" />
+					</td>
+                  </tr>
+                  <tr>
+                    <td colspan="3" align="center"><!-- ---------------------- datagrid u/ tindakan rwtjln ----------------------  -->
+                        <com:TDataGrid
+                            ID="admRwtJlnGrid"
+                            DataKeyField="id"
+                            AutoGenerateColumns="false"	
+                            AllowPaging="false"
+                            AllowCustomPaging="false"
+                            AllowSorting="false"
+                            Width="630px"					
+                            PageSize="30"
+                            PagerStyle.Mode="Numeric"			
+                            PagerStyle.Font.Name="Arial"
+                            PagerStyle.Font.Size="12"
+                            PagerStyle.HorizontalAlign="Right"			
+                            GridLines="None"
+                            CellSpacing="1"
+                            CellPadding="2"
+                            BackColor="#000000"								
+                            HeaderStyle.CssClass="headerstyle"
+                            ItemStyle.CssClass="itemstyle"
+                            AlternatingItemStyle.CssClass="itemstyle2"	
+                            OnPagerCreated="pagerCreated"			
+                            OnSortCommand="sortGrid">
+						  
+						  <com:TTemplateColumn 
+						  		HeaderText="Tanggal Transaksi" 
+								SortExpression="tgl" 
+								ItemStyle.Width="100px"
+								ItemStyle.HorizontalAlign="Center" >									
+							  <prop:ItemTemplate>									
+								<%% 
+									$c=substr($this->Parent->Data['tgl'],0,4);
+									$b=substr($this->Parent->Data['tgl'],5,2);
+									$a=substr($this->Parent->Data['tgl'],8,2);
+									$d = $a . '-' . $b . '-' .$c;
+									echo $d;
+								%>					
+							  </prop:ItemTemplate>
+							</com:TTemplateColumn>
+						  
+						  <com:TBoundColumn
+                                SortExpression="nama"
+                                HeaderText="Nama Tindakan"
+                                ItemStyle.Width="200px"
+                                DataField="nama"
+                                ItemStyle.Horizontalalign="Center" />
+                         
+						  <com:TBoundColumn
+                                SortExpression="total"
+                                HeaderText="Jumlah Bayar"
+                                ItemStyle.Width="100px"
+                                DataField="total"
+								DataFormatString="Rp. %.2f"
+								ItemStyle.HorizontalAlign="Right" />
+                        </com:TDataGrid>                    </td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>
+				  </com:TControl>
+				  <com:TControl ID="dgLabCtrl">	
+                  <tr>
+                    <td><span>&#8226;</span>&nbsp;&nbsp;Transaksi Laboratorium </td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>
+				   <tr>
+                    <td colspan="3" align="center">
+						<com:TLabel ID="labMsg" Font.Size="12px" ForeColor="#FF0000" />
+					</td>
+                  </tr>
+                  <tr>
+                    <td colspan="3" align="center"><!-- ---------------------- datagrid u/ transaksi lab ----------------------  -->
+                        <com:TDataGrid
+                            ID="labRwtJlnGrid"
+                            DataKeyField="id"
+                            AutoGenerateColumns="false"	
+                            AllowPaging="false"
+                            AllowCustomPaging="false"
+                            AllowSorting="false"
+                            Width="630px"					
+                            PageSize="30"
+                            PagerStyle.Mode="Numeric"			
+                            PagerStyle.Font.Name="Arial"
+                            PagerStyle.Font.Size="12"
+                            PagerStyle.HorizontalAlign="Right"			
+                            GridLines="None"
+                            CellSpacing="1"
+                            CellPadding="2"
+                            BackColor="#000000"								
+                            HeaderStyle.CssClass="headerstyle"
+                            ItemStyle.CssClass="itemstyle"
+                            AlternatingItemStyle.CssClass="itemstyle2"	
+                            OnPagerCreated="pagerCreated"			
+                            OnSortCommand="sortGrid">
+                           <com:TTemplateColumn 
+						  		HeaderText="Tanggal Transaksi" 
+								SortExpression="tgl" 
+								ItemStyle.Width="100px"
+								ItemStyle.HorizontalAlign="Center" >									
+							  <prop:ItemTemplate>									
+								<%% 
+									$c=substr($this->Parent->Data['tgl'],0,4);
+									$b=substr($this->Parent->Data['tgl'],5,2);
+									$a=substr($this->Parent->Data['tgl'],8,2);
+									$d = $a . '-' . $b . '-' .$c;
+									echo $d;
+								%>					
+							  </prop:ItemTemplate>
+							</com:TTemplateColumn>
+							
+						 	<com:TTemplateColumn 
+								HeaderText="Nama Tindakan" 
+								SortExpression="nama" 
+								ItemStyle.Width="200px"
+								ItemStyle.HorizontalAlign="Center" >									
+								  <prop:ItemTemplate>									
+									<%% 
+										$nmTdkLab = $this->Parent->DataItem['nama'];
+										if($nmTdkLab == '')
+										{
+											if($this->Parent->DataItem['total'] == '2000' || $this->Parent->DataItem['total'] == '4000')
+											{
+												echo 'Rujukan';
+											}
+											elseif($this->Parent->DataItem['total'] == '2500' || $this->Parent->DataItem['total'] == '5000')
+											{
+												echo 'Pendaftaran';
+											}
+										}
+										else
+										{
+											echo $this->Parent->DataItem['nama'];
+										}
+									%>
+													
+								  </prop:ItemTemplate>
+							</com:TTemplateColumn>
+							
+                          <com:TBoundColumn
+                                SortExpression="total"
+                                HeaderText="Jumlah Bayar"
+                                ItemStyle.Width="100px"
+                                DataField="total"
+								DataFormatString="Rp. %.2f"
+								ItemStyle.HorizontalAlign="Right" />
+                        </com:TDataGrid>                    </td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>				
+				  </com:TControl>  
+				  <com:TControl ID="dgRadCtrl">
+                  <tr>
+                    <td><span>&#8226;</span>&nbsp;&nbsp;Transaksi Radiologi </td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>
+				   <tr>
+                    <td colspan="3" align="center">
+						<com:TLabel ID="radMsg" Font.Size="12px" ForeColor="#FF0000"/>
+					</td>
+                  </tr>
+                   <tr>
+                    <td colspan="3" align="center">
+                        <!-- ---------------------- datagrid daftar u/ transaksi rad ----------------------  -->
+                        <com:TDataGrid
+                            ID="radRwtJlnGrid"
+                            DataKeyField="id"
+                            AutoGenerateColumns="false"	
+                            AllowPaging="false"
+                            AllowCustomPaging="false"
+                            AllowSorting="false"
+                            Width="630px"					
+                            PageSize="30"
+                            PagerStyle.Mode="Numeric"			
+                            PagerStyle.Font.Name="Arial"
+                            PagerStyle.Font.Size="12"
+                            PagerStyle.HorizontalAlign="Right"			
+                            GridLines="None"
+                            CellSpacing="1"
+                            CellPadding="2"
+                            BackColor="#000000"								
+                            HeaderStyle.CssClass="headerstyle"
+                            ItemStyle.CssClass="itemstyle"
+                            AlternatingItemStyle.CssClass="itemstyle2"	
+                            OnPagerCreated="pagerCreated"			
+                            OnSortCommand="sortGrid">
+                          <com:TTemplateColumn 
+						  		HeaderText="Tanggal Transaksi" 
+								SortExpression="tgl" 
+								ItemStyle.Width="100px"
+								ItemStyle.HorizontalAlign="Center" >									
+							  <prop:ItemTemplate>									
+								<%% 
+									$c=substr($this->Parent->Data['tgl'],0,4);
+									$b=substr($this->Parent->Data['tgl'],5,2);
+									$a=substr($this->Parent->Data['tgl'],8,2);
+									$d = $a . '-' . $b . '-' .$c;
+									echo $d;
+								%>					
+							  </prop:ItemTemplate>
+							</com:TTemplateColumn>
+						  
+						  <com:TTemplateColumn 
+								HeaderText="Nama Tindakan" 
+								SortExpression="nama" 
+								ItemStyle.Width="200px"
+								ItemStyle.HorizontalAlign="Center" >									
+								  <prop:ItemTemplate>									
+									<%% 
+										$nmTdkRad = $this->Parent->DataItem['nama'];
+										if($nmTdkRad == '')
+										{
+											if($this->Parent->DataItem['total'] == '2000' || $this->Parent->DataItem['total'] == '4000')
+											{
+												echo 'Rujukan';
+											}
+											elseif($this->Parent->DataItem['total'] == '2500' || $this->Parent->DataItem['total'] == '5000')
+											{
+												echo 'Pendaftaran';
+											}
+										}
+										else
+										{
+											echo $this->Parent->DataItem['nama'];
+										}
+									%>
+													
+								  </prop:ItemTemplate>
+							</com:TTemplateColumn>
+                          
+						  <com:TBoundColumn
+                                SortExpression="total"
+                                HeaderText="Jumlah Bayar"
+                                ItemStyle.Width="100px"
+                                DataField="total"
+								DataFormatString="Rp. %.2f"
+                                ItemStyle.HorizontalAlign="Right" />
+                          </com:TDataGrid>
+					</td>
+                  </tr>
+				  </com:TControl>
+                </table>
+                </com:TPanel>
+                
+                </td>
+              </tr>
+              <tr>
+			  		<tr>
+			  		  <td align="center">&nbsp;</td>
+			  		  </tr>
+				</table>			</td>
+              </tr>
+			  
+              <tr>
+                <td><table width="10" border="0" align="center" cellpadding="0" cellspacing="2">
+                    <tr>                                        
+                      <td><com:TButton Text="Cetak" 
+					  				   OnClick="cetakClicked"
+									   ID="cetakBtn" 
+									   CausesValidation="false" 
+									   CssClass="button_01" 
+									   TabIndex="7" /></td>
+					  <td><com:TButton Text="Batal" 
+					  				   OnClick="batalClicked" 
+									   CausesValidation="false" 
+									   CssClass="button_01" 
+									   TabIndex="8" /></td>				   
+					  <td><com:TButton Text="Keluar" 
+					  				   OnClick="keluarClicked" 
+									   CausesValidation="false" 
+									   CssClass="button_01" 
+									   TabIndex="9" /></td>
+                    </tr>
+                </table></td>
+              </tr>
+          </table></td>
+          <td background="<%=$this->Page->Theme->BaseUrl.'/images/rndBkgRgt.png'%>"><table width="15" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+          </table></td>
+        </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="10" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndBtmLft.png'%>" width="15" height="15" /></td>
+          <td background="<%=$this->Page->Theme->BaseUrl.'/images/rndBkgBtm.png'%>"><table width="720" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+          </table></td>
+          <td><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndBtmRgt.png'%>" width="15" height="15" /></td>
+        </tr>
+    </table></td>
+  </tr>
+</table></td>
+            <td><table width="15" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+            </table></td>
+          </tr>
+        </table></td>
+      </tr>
+      <tr>
+        <td><table width="100%"  border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="1%"><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndAppBtmLft.png'%>" width="15" height="15" /></td>
+            <td width="99%" background="<%=$this->Page->Theme->BaseUrl.'/images/bkg3.png'%>">&nbsp;</td>
+            <td width="1%"><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndAppBtmRgt.png'%>" width="15" height="15" /></td>
+          </tr>
+        </table></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+</com:TContent>

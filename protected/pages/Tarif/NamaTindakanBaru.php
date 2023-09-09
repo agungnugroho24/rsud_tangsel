@@ -1,0 +1,134 @@
+<?php
+
+class NamaTindakanBaru extends SimakConf
+{
+	public function onInit($param)
+	 {		
+		parent::onInit($param);
+		$tmpVar=$this->authApp('9');
+		if($tmpVar == "False")
+			$this->Response->redirect($this->Service->constructUrl('login'));
+	 }
+	 
+	public function onLoad($param)
+	{				
+		parent::onLoad($param);		
+			
+		if(!$this->IsPostBack && !$this->IsCallBack)        		
+		{				
+			$this->nama->focus();	
+			
+			$sql = "SELECT * FROM tbm_poliklinik ORDER BY nama ";
+			$this->DDKlinik->DataSource = PoliklinikRecord::finder()->findAllBySql($sql);
+			$this->DDKlinik->dataBind();
+		}
+	}
+		
+	public function checkRM($sender,$param)
+    {
+        // valid if the username is not found in the database
+        $param->IsValid=(OperasiNamaRecord::finder()->findByPk($this->ID->Text)===null);		
+    }	   
+	
+	public function simpanClicked()
+	{
+		if($this->IsValid)
+		{
+			$nama = strtolower(trim($this->nama->Text));
+			$idKlinik = $this->DDKlinik->SelectedValue;
+			
+			$sql = "SELECT nama FROM tbm_nama_tindakan WHERE LOWER(nama) = '$nama' AND id_klinik='$idKlinik'";
+			$arr = $this->queryAction($sql,'S');
+			
+			if($arr)
+			{
+				$this->getPage()->getClientScript()->registerEndScript
+					('','unmaskContent();
+						jQuery.WsGrowl.show({title: \'\', content:\'<p class="msg_error">Nama Tindakan :<br/> <b>'.ucwords($this->nama->Text).'</b> untuk poliklinik <b>'.$this->ambilTxt($this->DDKlinik).'</b><br/> sudah ada dalam database !</p>\',timeout: 4000,dialog:{
+							modal: true
+						}});');	
+						
+				$this->Page->CallbackClient->focus($this->nama);	
+			}
+			else
+			{
+				//INSERT tbm_nama_tindakan
+				$kodeTdk = $this->numUrut('tbm_nama_tindakan',NamaTindakanRecord::finder(),4);
+				
+				$data = new NamaTindakanRecord();		
+				$data->id = $kodeTdk;
+				$data->nama = ucwords($this->nama->Text);	
+				$data->id_klinik = $this->DDKlinik->SelectedValue;	
+				$data->save();	
+				
+				$tarifStandar = floatval($this->tarifOperator->Text);
+					
+				//INSERT tbm_tarif_tindakan
+				$dataTarif = new TarifTindakanRecord;
+				$dataTarif->id = $kodeTdk;
+				$dataTarif->biaya1 = $tarifStandar;
+				$dataTarif->save(); 	
+				
+				$this->getPage()->getClientScript()->registerEndScript
+				('','unmaskContent();
+					jQuery.WsGrowl.show({title: \'\', content:\'<p class="msg_question">Nama Tindakan <b>'.ucwords($this->nama->Text).'</b> telah ditambahkan dalam database. <br/><br/> Apakah akan menambah nama tindakan baru lagi ?</p>\',timeout: 600000,dialog:{
+						modal: true,
+						buttons: {
+							"Ya": function() {
+								jQuery( this ).dialog( "close" );
+								konfirmasi(\'ya\');
+							},
+							Tidak: function() {
+								jQuery( this ).dialog( "close" );
+								maskContent();
+								konfirmasi(\'tidak\');
+							}
+						}
+					}});');	
+				
+				$this->nama->Text = '';
+				$this->DDKlinik->SelectedValue = 'empty';	
+				$this->tarifOperator->Text = '0';
+			}	
+        }	
+		else
+		{
+			$this->getPage()->getClientScript()->registerEndScript('','unmaskContent();');	
+		}	
+	}	
+	
+	public function prosesKonfirmasi($sender,$param)
+	{
+		$mode = $param->CallbackParameter->Id;
+		
+		//$this->getPage()->getClientScript()->registerEndScript('','alert('.$mode.')');	
+				
+		if($mode == 'ya')
+		{	
+			$this->Page->CallbackClient->focus($this->nama);
+			$this->getPage()->getClientScript()->registerEndScript('','unmaskContent();');
+		}
+		else
+		{
+			$this->Response->redirect($this->Service->constructUrl('Tarif.NamaTindakan'));	
+		}
+	}
+	
+	/*
+	public function batalClicked($sender,$param)
+	{		
+		$this->ID->Text='';			
+		$this->nama->Text='';		
+		$this->alamat->Text='';		
+		$this->telp->Text='';		
+		$this->npwp->Text='';		
+		$this->npkp->Text='';				
+	}
+	*/
+	public function keluarClicked($sender,$param)
+	{		
+		$this->Response->redirect($this->Service->constructUrl('Tarif.NamaTindakan'));		
+	}
+
+}
+?>

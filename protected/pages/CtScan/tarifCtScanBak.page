@@ -1,0 +1,117 @@
+<%@ MasterClass="Application.layouts.MainLayout" %>
+<com:TContent ID="jdMain">
+	Daftar Tindakan CT Scan
+    
+    <a href="<%= $this->Service->constructUrl('Simak') %>" onclick="maskContent()">
+    <span class="close-btn">
+        <span class="ui-icon ui-icon-circle-close"></span>
+    </span>
+    </a>
+    
+</com:TContent>	
+
+
+<com:TContent ID="Main">
+
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+		  
+              <tr>			  
+                <td>	<com:TLabel ID="showSql" /></td>
+              </tr>
+			  
+              <tr>
+                <td><table width="100%"  border="0" align="center" cellpadding="0" cellspacing="1">                      
+                      <tr>
+                        <td align="center">
+						<com:TDataGrid ID="UserGrid"
+								DataKeyField="id"
+								AutoGenerateColumns="false"	
+								AllowPaging="true"
+								AllowCustomPaging="true"
+								AllowSorting="true"
+								Width="100%"					
+								PageSize="5"
+								PagerStyle.Mode="Numeric"			
+								PagerStyle.Font.Name="Arial"
+								PagerStyle.Font.Size="12"
+								PagerStyle.HorizontalAlign="Right"			
+								GridLines="None"
+								CellSpacing="1"
+								CellPadding="2"
+								
+								HeaderStyle.CssClass="headerstyle"
+								ItemStyle.CssClass="itemstyle"
+								AlternatingItemStyle.CssClass="itemstyle2"
+								OnItemCreated="itemCreated"
+								OnDeleteCommand="deleteButtonClicked"								
+								OnPageIndexChanged="changePage"
+								OnPagerCreated="pagerCreated"			
+								OnSortCommand="sortGrid">								
+							</div>	
+								
+								<com:THyperLinkColumn   
+									SortExpression="id"     
+									HeaderText="ID"									
+									DataTextField="id"
+									ItemStyle.HorizontalAlign="Center"
+									ItemStyle.Width="100px"		
+									DataNavigateUrlField="id">
+									<prop:DataNavigateUrlFormatString>#
+									  $this->Service->constructUrl('CtScan.masterRadEdit',array('ID'=>{0},'mode'=>'01'))
+									</prop:DataNavigateUrlFormatString>
+								</com:THyperLinkColumn>	 
+								
+								<com:TBoundColumn
+									SortExpression="nama"
+									HeaderText="Nama"
+									ItemStyle.Width="200px"
+									DataField="nama" />	
+								
+								<com:TBoundColumn
+									SortExpression="tarif"
+									HeaderText="Tarif 1"
+									ItemStyle.Width="200px"
+									DataField="tarif" />	
+									
+								<com:TBoundColumn
+									SortExpression="tarif2"
+									HeaderText="Tarif 2"
+									ItemStyle.Width="200px"
+									DataField="tarif2" />	
+								
+								<com:TBoundColumn
+									SortExpression="tarif3"
+									HeaderText="Tarif 3"
+									ItemStyle.Width="400px"
+									DataField="tarif3" />	
+									               
+								<com:TButtonColumn												
+									HeaderText="Mode"
+									Text="Delete"
+									ID="Hapus" ItemStyle.Width="50px"
+									ItemStyle.HorizontalAlign="Center"
+									ButtonType="PushButton"									
+									CommandName="delete" />	
+							</com:TDataGrid>
+						</td>                       
+                      </tr>
+                    </table></td>
+              </tr>
+              <tr>
+                <td><hr /></td>
+              </tr>
+              <tr>
+                <td><table width="10" border="0" align="center" cellpadding="0" cellspacing="2">
+                    <tr>
+                      <td>
+                      <!---
+					  <com:TControl Visible="<%= $this->User->IsAdmin %>"> --->
+					  	<com:TButton Text="Baru" Attributes.onclick = "maskContent();" OnClick="baruClicked" CssClass="button_01" TabIndex="6" />
+					  <!---</com:TControl> --->
+					  </td>                      
+                      <td><com:TButton Text="Keluar" Attributes.onclick = "maskContent();" OnClick="keluarClicked" CausesValidation="false" CssClass="button_01" TabIndex="7" /></td>
+                    </tr>
+                </table></td>
+              </tr>
+          </table>
+</com:TContent>

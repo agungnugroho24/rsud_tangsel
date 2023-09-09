@@ -1,0 +1,237 @@
+<?php
+class MasterObatBaru extends SimakConf
+{
+	public function onInit($param)
+	 {		
+		parent::onInit($param);
+		$tmpVar=$this->authApp('4');
+		if($tmpVar == "False")//Bila tidak ada hak utk modul aplikasi Farmasi
+			$this->Response->redirect($this->Service->constructUrl('login'));
+	 }
+	 
+ public function onLoad($param)
+	{
+		parent::onLoad($param);
+		/*
+		$tmpVar=$this->authApp('8');//ID aplikasi keKaban
+		if($tmpVar == "False")//Bila tidak ada hak utk modul aplikasi pendaftaran
+		{
+			$this->Response->redirect($this->Service->constructUrl('Home'));
+		
+		}
+		*/
+			
+		if(!$this->IsPostBack){
+			$this->DDGol->DataSource=GolObatRecord::finder()->findAll();
+			$this->DDGol->dataBind();	
+			
+			$this->DDKlas->DataSource=KlasifikasiObatRecord::finder()->findAll();
+			$this->DDKlas->dataBind();	
+			
+			$this->DDDerivat->DataSource=DerivatObatRecord::finder()->findAll();
+			$this->DDDerivat->dataBind();	
+			
+			$this->DDPbf->DataSource=PbfObatRecord::finder()->findAll();
+			$this->DDPbf->dataBind();	
+			
+			$this->DDProd->DataSource=ProdusenObatRecord::finder()->findAll();
+			$this->DDProd->dataBind();	
+			
+			$this->DDSat->DataSource=SatuanObatRecord::finder()->findAll();
+			$this->DDSat->dataBind();	
+						
+			$this->DDKateg->focus();		
+		}		
+	}
+	
+	public function selectionChangedGol($sender,$param)
+	{	
+		if(!$this->DDGol->SelectedValue=='')
+		{
+			$gol = $this->DDGol->SelectedValue;	
+			$this->DDKlas->DataSource=KlasifikasiObatRecord::finder()->findAll('gol_id = ?', $gol);
+			$this->DDKlas->dataBind(); 	
+			$this->DDKlas->Enabled=true;
+		}
+		else
+		{
+			$this->DDKlas->DataSource=KlasifikasiObatRecord::finder()->findAll();
+			$this->DDKlas->dataBind();	
+			$this->DDKlas->Enabled=false;		
+			
+			$this->DDDerivat->DataSource=DerivatObatRecord::finder()->findAll();
+			$this->DDDerivat->dataBind();
+			$this->DDDerivat->Enabled=false;
+		}
+		
+	}
+	
+	public function selectionChangedKlas($sender,$param)
+	{	
+		if(!$this->DDKlas->SelectedValue=='')
+		{
+			$klas = $this->DDKlas->SelectedValue;	
+			$this->DDDerivat->DataSource=DerivatObatRecord::finder()->findAll('klas_id = ?', $klas);
+			$this->DDDerivat->dataBind(); 	
+			$this->DDDerivat->Enabled=true;
+		}
+		else
+		{
+			$this->DDDerivat->DataSource=DerivatObatRecord::finder()->findAll();
+			$this->DDDerivat->dataBind();
+			$this->DDDerivat->Enabled=false;
+		}		
+	}
+	
+	public function checkRM($sender,$param)
+    {       
+		// valid if the id kabupaten is not found in the database
+		$param->IsValid=(ObatRecord::finder()->findByPk($this->ID->Text)===null);
+    }
+	
+	public function nextPoin()
+    {  
+		$sql="SELECT kode FROM tbm_obat ORDER BY kode DESC";
+		$no = ObatRecord::finder()->findBySql($sql);
+			
+		if($no==NULL)//jika kosong bikin ndiri
+		{	
+			$urut='00001';
+			$urut=$codeAwal.$urut;
+		}else
+		{
+			$no1=intval(substr($no->getColumnValue('kode'),-5,5));
+			if ($no1==99999)
+			{
+				$urut='00001';
+			}else
+			{
+				$urut=$no1+1;
+				$urut=substr('00000',-5,5-strlen($urut)).$urut;					
+			}
+		}
+		//$this->ID->Text=$urut;
+		//$this->RBkelObat->focus();
+		return $urut;
+    }
+	
+	protected function collectSelectionListResult($input)
+	{
+		$indices=$input->SelectedIndices;		
+		foreach($indices as $index)
+		{
+			$item=$input->Items[$index];
+			return $index;
+		}		
+	}		
+	
+	public function simpanClicked($sender,$param)
+	{			
+		if($this->IsValid)  // when all validations succeed
+        {
+           	//$idGol=$this->DDGol->SelectedValue;
+           // $sql = "SELECT * FROM tbm_golongan_obat WHERE id = '$idGol'";
+        	//$cariNamaGol=GolObatRecord::finder()->findBySql($sql);
+			
+		    // populates a UserRecord object with user inputs
+			$ObatRecord=new ObatRecord;		
+			//$ObatRecord->tipe=$this->RBtipeObat->SelectedValue;
+			$ObatRecord->tipe=TPropertyValue::ensureString($this->collectSelectionListResult($this->RBtipeObat));
+			$ObatRecord->kode=ucwords($this->nextPoin());		     
+			$ObatRecord->kel_obat=TPropertyValue::ensureString($this->collectSelectionListResult($this->RBkelObat));
+            $ObatRecord->nama=ucwords($this->nama->Text);
+			$ObatRecord->gol=TPropertyValue::ensureString($this->DDGol->SelectedValue);
+			$ObatRecord->klasifikasi=TPropertyValue::ensureString($this->DDKlas->SelectedValue);
+			$ObatRecord->derivat=TPropertyValue::ensureString($this->DDDerivat->SelectedValue);
+			$ObatRecord->produsen=TPropertyValue::ensureString($this->DDProd->SelectedValue);
+			$ObatRecord->pbf=TPropertyValue::ensureString($this->DDPbf->SelectedValue);
+			$ObatRecord->satuan=TPropertyValue::ensureString($this->DDSat->SelectedValue);
+			$ObatRecord->min_gud=$this->minGudang->Text;
+			$ObatRecord->max_gud=$this->maxGudang->Text;
+			$ObatRecord->min_loket=$this->minLoket->Text;
+			$ObatRecord->max_loket=$this->maxLoket->Text;
+			$ObatRecord->min_depo=$this->minDepo->Text;
+			$ObatRecord->max_depo=$this->maxDepo->Text;
+			$ObatRecord->min_ok=$this->minOK->Text;
+			$ObatRecord->max_ok=$this->maxOK->Text;
+			$ObatRecord->min_igd=$this->minIGD->Text;
+			$ObatRecord->max_igd=$this->maxIGD->Text;
+			$ObatRecord->min_icu=$this->minIcu->Text;
+			$ObatRecord->max_icu=$this->maxICU->Text;
+			$ObatRecord->kategori=$this->DDKateg->SelectedValue;//$this->maxLoket->Text;
+			$ObatRecord->st='0';
+			
+			// saves to the database via Active Record mechanism
+            $ObatRecord->save(); 		
+			
+			if(!StokLainRecord::finder()->find('id_obat = ? AND tujuan = ?',$this->ID->Text, '2'))			
+			{
+				// populates a UserRecord object with user inputs
+				$StokRecord=new StokLainRecord;	
+				$StokRecord->id_obat=$this->ID->Text;
+				$StokRecord->jumlah='0';
+				$StokRecord->sumber='01';
+				$StokRecord->tujuan='2';
+				// saves to the database via Active Record mechanism
+				$StokRecord->save();
+			}
+			
+			if(!StokLainRecord::finder()->find('id_obat = ? AND tujuan = ?',$this->ID->Text, '2'))//Stok Apotik			
+			{
+				// populates a UserRecord object with user inputs
+				$StokRecord=new StokLainRecord;	
+				$StokRecord->id_obat=$this->ID->Text;
+				$StokRecord->jumlah='0';
+				$StokRecord->sumber='01';
+				$StokRecord->tujuan='2';
+				// saves to the database via Active Record mechanism
+				$StokRecord->save();
+			}
+			
+			if(!StokLainRecord::finder()->find('id_obat = ? AND tujuan = ?',$this->ID->Text, '5'))//Stok IGD			
+			{
+				// populates a UserRecord object with user inputs
+				$StokRecord=new StokLainRecord;	
+				$StokRecord->id_obat=$this->ID->Text;
+				$StokRecord->jumlah='0';
+				$StokRecord->sumber='01';
+				$StokRecord->tujuan='5';
+				// saves to the database via Active Record mechanism
+				$StokRecord->save();
+			}
+			if(!StokLainRecord::finder()->find('id_obat = ? AND tujuan = ?',$this->ID->Text, '6'))//Stok OK			
+			{
+				// populates a UserRecord object with user inputs
+				$StokRecord=new StokLainRecord;	
+				$StokRecord->id_obat=$this->ID->Text;
+				$StokRecord->jumlah='0';
+				$StokRecord->sumber='01';
+				$StokRecord->tujuan='6';
+				// saves to the database via Active Record mechanism
+				$StokRecord->save();
+			}
+			
+			if(!HrgObatRecord::finder()->findByKode($this->ID->Text))			
+			{
+			$HrgObatRecord = new HrgObatRecord;
+			$HrgObatRecord->id;
+			$HrgObatRecord->kode=$this->ID->Text;
+			$HrgObatRecord->sumber='01';
+			$HrgObatRecord->hrg_netto='0';
+			$HrgObatRecord->hrg_ppn='0';
+			$HrgObatRecord->hrg_netto_disc='0';
+			$HrgObatRecord->hrg_ppn_disc='0';
+            // saves to the database via Active Record mechanism
+			$HrgObatRecord->save();
+			}			
+			// redirects the browser to the homepage
+			$this->Response->redirect($this->Service->constructUrl('Farmasi.MasterObat'));
+        }			
+	}
+	
+	public function keluarClicked($sender,$param)
+	{		
+		$this->Response->redirect($this->Service->constructUrl('Farmasi.MasterObat'));		
+	}
+}
+?>

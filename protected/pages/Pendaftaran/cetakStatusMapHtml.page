@@ -1,0 +1,164 @@
+<%@ MasterClass="Application.layouts.PrintLayout" %>
+
+<com:TContent ID="isi">
+
+	<div id="page-wrap">
+
+		<div id="header">RUMAH SAKIT UMUM DAERAH CICALENGKA</div>
+		
+		<div id="identity">
+		  <textarea name="address" id="address">Jl. H. Darham No. 35 - Cikopo Desa Tenjolaya Cicalengka 
+Telp. 022-7949734 / 022-7949743; Fax 022-7952204</textarea>
+          
+	    	<div id="logo">
+              <img id="image" src="<%=$this->Page->Theme->BaseUrl.'/images/logo1.jpg'%>" alt="logo" width="220px" />
+			</div>
+		</div>
+        
+	  <div style="clear:both"></div>
+		
+		<div id="customer">
+			<!--
+            <textarea id="customer-title">Widget Corp.
+c/o Steve Widget</textarea>
+
+            <table id="meta">
+                <tr>
+                    <td class="meta-head">Invoice #</td>
+                    <td><textarea>000123</textarea></td>
+                </tr>
+                <tr>
+
+                    <td class="meta-head">Date</td>
+                    <td><textarea id="date">December 15, 2009</textarea></td>
+                </tr>
+                <tr>
+                    <td class="meta-head">Amount Due</td>
+                    <td><div class="due">$875.00</div></td>
+                </tr>
+
+            </table>
+		-->
+		</div>
+		
+        <br/>
+        <hr/>
+        
+        <div class="barcode" ><com:TActiveLabel ID="barcode"/></div>
+        <div class="titleTxt">DATA IDENTITAS PASIEN</div>
+        
+        <table class="items" width="100%" border="0px">
+          <tr >
+            <td colspan="3"><strong>Data Pasien</strong></td>
+          </tr>
+          <tr >
+            <td width="125">No. Rekam Medis</td>
+            <td width="5" align="center">:</td>
+            <td><strong>
+            <com:TActiveLabel ID="txt"/>
+            </strong></td>
+          </tr>
+          <tr >
+            <td colspan="3" height="5px"></td>
+          </tr>
+          <tr >
+            <td>Nama Pasien</td>
+            <td align="center">:</td>
+            <td><strong>
+            <com:TActiveLabel ID="txt2"/>
+            </strong></td>
+          </tr>
+          <tr >
+            <td>Tempat/Tgl. Lahir</td>
+            <td align="center">:</td>
+            <td><com:TActiveLabel ID="txt3"/></td>
+          </tr>
+          <tr >
+            <td>Jenis Kelamin</td>
+            <td align="center">:</td>
+            <td><com:TActiveLabel ID="txt4"/></td>
+          </tr>
+          <tr >
+            <td>Alamat</td>
+            <td align="center">:</td>
+            <td><com:TActiveLabel ID="txt5"/></td>
+          </tr>
+          <tr >
+            <td>No. Telp</td>
+            <td align="center">:</td>
+            <td><com:TActiveLabel ID="txt6"/></td>
+          </tr>
+          <tr >
+            <td>HP</td>
+            <td align="center">:</td>
+            <td><com:TActiveLabel ID="txt7"/></td>
+          </tr>
+          <tr >
+            <td>Status</td>
+            <td align="center">:</td>
+            <td><com:TActiveLabel ID="txt8"/></td>
+          </tr>
+          <tr >
+            <td>Golongan Darah</td>
+            <td align="center">:</td>
+            <td><com:TActiveLabel ID="txt9"/></td>
+          </tr>
+          <tr >
+            <td>Nama Keluarga</td>
+            <td align="center">:</td>
+            <td><com:TActiveLabel ID="txt10"/></td>
+          </tr>
+          <tr >
+            <td>Pekerjaan</td>
+            <td align="center">:</td>
+            <td><com:TActiveLabel ID="txt11"/></td>
+          </tr>
+          <tr >
+            <td>Pendidikan</td>
+            <td align="center">:</td>
+            <td><com:TActiveLabel ID="txt12"/></td>
+          </tr>
+          <tr >
+            <td>&nbsp;</td>
+            <td align="center">&nbsp;</td>
+            <td></td>
+          </tr>
+        </table>
+		
+        <table width="100%" border="1">
+          <tr >
+            <td width="30%" align="center">Kelompok Pasien<br />
+            <com:TActiveLabel ID="txt13"/></td>
+            <td width="30%" align="center">Pemegang Asuransi<br />
+            <com:TActiveLabel ID="txt14"/></td>
+            <td width="30%" align="center">No. Asuransi<br />
+            <com:TActiveLabel ID="txt15"/></td>
+          </tr>
+        </table>
+		
+        <!--
+		<div id="terms">
+		  <h5>Terms</h5>
+		  <textarea>NET 30 Days. Finance Charge of 1.5% will be made on unpaid balances after 30 days.</textarea>
+		</div>
+		-->
+		<div id="hide" align="center" style="width:100%; padding-top:10px;" >
+            <com:TActiveButton 
+                ID="cetakBtn"
+                Text="Cetak" 
+                CausesValidation="false"
+                Attributes.onclick = "window.print();return false;">
+            </com:TActiveButton>
+            
+            <com:TActiveButton 
+                ID="closeBtn"
+                OnClick="closeBtnClicked"
+                Text="Tutup" 
+                CausesValidation="false"
+                Attributes.onclick = "maskContent();">
+            </com:TActiveButton>
+        </div>
+    </div>
+	
+    
+</com:TContent>

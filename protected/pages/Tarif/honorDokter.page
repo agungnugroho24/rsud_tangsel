@@ -1,0 +1,443 @@
+<%@ MasterClass="Application.layouts.MainLayout" %><com:TContent ID="Main">
+<com:TTimeTriggeredCallback OnCallback="refreshMe" StartTimerOnLoad="true" Interval="5" />
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td height="18"></td>
+  </tr>
+  <tr>
+    <td><table width="10"  border="0" align="center" cellpadding="0" cellspacing="0">
+      <tr>
+        <td width="1%"><table width="100%"  border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="1%"><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndAppTopLft.png'%>" width="15" height="15" /></td>
+            <td width="99%" background="<%=$this->Page->Theme->BaseUrl.'/images/bkg3.png'%>">&nbsp;</td>
+            <td width="1%"><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndAppTopRgt.png'%>" width="15" height="15" /></td>
+          </tr>
+        </table></td>
+        </tr>
+      <tr>
+        <td valign="top" background="<%=$this->Page->Theme->BaseUrl.'/images/bkg3.png'%>"><table width="10" border="0" cellpadding="0" cellspacing="0">
+          <tr>
+            <td><table width="15" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+            </table></td>
+            <td><table width="750" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td class="text_08">Honor Dokter  </td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td><table width="10" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndTopLft.png'%>" width="15" height="15" /></td>
+          <td><table width="720" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td><table width="720" border="0" align="right" cellpadding="0" cellspacing="0">
+                    <tr>
+                      <td width="186" background="<%=$this->Page->Theme->BaseUrl.'/images/rndBkgTop.png'%>">&nbsp;</td>
+					  <td width="534" background="<%=$this->Page->Theme->BaseUrl.'/images/rndBkgTop.png'%>"></td>
+                      </tr>
+                </table></td>
+              </tr>
+          </table></td>
+          <td><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndTopRgt.png'%>" width="15" height="15" /></td>
+        </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="10" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td background="<%=$this->Page->Theme->BaseUrl.'/images/rndBkgLft.png'%>"><table width="15" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+          </table></td>
+          <td><table width="720" border="0" cellspacing="0" cellpadding="0">
+		  <tr height="15px">
+		  	<td></td>
+		  </tr>
+              <tr>			  
+                <td>
+				<com:TLabel ID="showSql" />
+				<table width="700" align="center" border="0">
+			  		<tr>
+						<td align="center"><com:TPanel GroupingText="Laporan Jasa Medis Dokter" Width="680px">
+							<table width="100%"  border="0" align="left">							  
+							  <tr>
+                                <td width="18%"><span>&#8226;</span>&nbsp;&nbsp;Poliklinik</td>
+                                <td width="2%">:</td>
+                                <td width="80%">
+                                  <com:TDropDownList 
+										ID="DDPoli"
+										PromptText ="--Silakan Pilih--"
+										PromptValue =""											
+										DataTextField="nama"
+										DataValueField="id" 	
+										ToolTip="Pilih Spesialisasi" 
+										TabIndex="2" 
+										Width="300px" 
+										AutoPostBack="true"
+										CausesValidation="false"
+										OnSelectedIndexChanged="DDPoliChanged"/>
+								   <com:TRequiredFieldValidator
+										Display="Dynamic"
+										ControlToValidate="DDPoli"
+										Text="Spesialisasi belum dipilih" 
+										InitialValue="--Silakan Pilih--" 
+										ValidationGroup="val"
+									/>								  </td>
+							    </tr>
+							  <tr>
+                                <td><span>&#8226;</span>&nbsp;&nbsp;Dokter</td>
+                                <td>:</td>
+                                <td>
+                                  <com:TDropDownList 
+										ID="DDDokter"
+										PromptText ="--Silakan Pilih--"
+										PromptValue =""											
+										DataTextField="nama"
+										DataValueField="id" 	
+										ToolTip="Pilih Nama Dokter" 
+										TabIndex="3" 
+										Width="300px" 
+										AutoPostBack="true" 
+										CausesValidation="false"
+										OnSelectedIndexChanged="DDDokterChanged" 
+										Enabled="false"/>
+									 <com:TRequiredFieldValidator
+										Display="Dynamic"
+										ControlToValidate="DDDokter"
+										Text="Dokter belum dipilih" 
+										InitialValue="--Silakan Pilih--" 
+										ValidationGroup="val"
+									/>									 </td>
+							    </tr>
+							  <tr>
+                                <td><span>&#8226;</span>&nbsp;&nbsp;Periode</td>
+                                <td>:</td>
+                                <td>
+                                  <com:TDropDownList 
+											ID="DDberdasarkan"
+											PromptText ="--Silakan Pilih--"
+											PromptValue ="" 	
+											Width="130px" 
+											AutoPostBack="true" 
+											CausesValidation="false" 
+											OnSelectedIndexChanged="ChangedDDberdasarkan" > 
+											<com:TListItem Value="1" Text="Harian" />
+											<com:TListItem Value="2" Text="Mingguan" /> 
+											<com:TListItem Value="3" Text="Bulanan" />
+								  </com:TDropDownList>                                </td>
+							    </tr>
+								
+							  <com:TControl ID="hari" Visible="false">	
+							  <tr>
+							    <td>&nbsp;&nbsp;&nbsp;&nbsp;- Harian</td>
+							    <td>&nbsp;</td>
+							    <td>
+									<com:TDatePicker ID="tgl"
+									Width="70px" 
+									DateFormat="dd-MM-yyyy"											   											   
+									ToolTip="Masukan tanggal awal" 
+									MaxLength="10" 
+									ValidationGroup="tgl_awal"/>
+								<com:TRequiredFieldValidator 
+									ControlToValidate="tgl"											 
+									ErrorMessage="Anda harus mengisi tanggal awal"
+									Display="Dynamic" 
+									ValidationGroup="val"/>
+								<com:TDataTypeValidator
+									ValidationGroup="val"
+									ControlToValidate="tgl"
+									DataType="Date"
+									DateFormat="dd-MM-yyyy"
+									Text="Anda harus memasukan tanggal yang benar seperti ini(dd-MM-yyyy)."
+									Display="Dynamic" 
+									/>								</td>
+							  </tr>
+							  </com:TControl>
+							  <com:TControl ID="minggu" Visible="false">
+							  <tr>
+							    <td>&nbsp;&nbsp;&nbsp;&nbsp;- Mingguan </td>
+							    <td>&nbsp;</td>
+							    <td>
+								<com:TDatePicker ID="tglawal"
+									Width="70px" 
+									DateFormat="dd-MM-yyyy"											   											   
+									ToolTip="Masukan tanggal awal" 
+									MaxLength="10" 
+									ValidationGroup="tgl_awal"/>
+								<com:TRequiredFieldValidator 
+									ControlToValidate="tglawal"											 
+									ErrorMessage="Anda harus mengisi tanggal awal"
+									Display="Dynamic" 
+									ValidationGroup="val"/>
+								<com:TDataTypeValidator
+									ValidationGroup="val"
+									ControlToValidate="tglawal"
+									DataType="Date"
+									DateFormat="dd-MM-yyyy"
+									Text="Anda harus memasukan tanggal yang benar seperti ini(dd-MM-yyyy)."
+									Display="Dynamic" 
+									/>
+									  s/d
+								<com:TDatePicker ID="tglakhir" 
+									Width="70px" 
+									DateFormat="dd-MM-yyyy"											   											   
+									ToolTip="Masukan tanggal akhir"
+									MaxLength="10" 
+									ValidationGroup="tgl_akhir"
+									/>&nbsp;<com:TLabel ID="msg" ForeColor="#FF0000" />
+								<com:TRequiredFieldValidator 
+									ControlToValidate="tglakhir"											 
+									ErrorMessage="Anda harus mengisi tanggal akhir"
+									Display="Dynamic" 
+									ValidationGroup="val"/>
+								<com:TDataTypeValidator
+									ValidationGroup="val"
+									ControlToValidate="tglakhir"
+									DataType="Date"
+									DateFormat="dd-MM-yyyy"
+									Text="Anda harus memasukan tanggal yang benar seperti ini(dd-MM-yyyy)."
+									Display="Dynamic" 
+									/>
+								<com:TActiveCustomValidator
+									ControlToValidate="tglakhir"
+									ErrorMessage="Maaf, tanggal akhir tidak sesuai!"
+									OnServerValidate="checkTgl" 			
+									Display="Dynamic" 
+									ValidationGroup="val"/>								</td>
+							  </tr>
+							  </com:TControl>
+							  <com:TControl ID="bulan" Visible="false">
+							  <tr>
+							    <td>&nbsp;&nbsp;&nbsp;&nbsp;- Bulanan</td>
+							    <td>&nbsp;</td>
+							    <td>
+									<com:TDropDownList 
+									ID="DDbulan"
+									Width="130px"
+									PromptText ="--Silakan Pilih--"
+									PromptValue =""
+									AutoPostBack="true" 
+									CausesValidation="false"
+									OnSelectedIndexChanged="ChangedDDbulan" 
+									ValidationGroup="val">
+									<com:TListItem Value="01" Text="Januari" />
+									<com:TListItem Value="02" Text="Februari" />
+									<com:TListItem Value="03" Text="Maret" />
+									<com:TListItem Value="04" Text="April" />
+									<com:TListItem Value="05" Text="Mei" />
+									<com:TListItem Value="06" Text="Juni" />
+									<com:TListItem Value="07" Text="Juli" />
+									<com:TListItem Value="08" Text="Agustus" />
+									<com:TListItem Value="09" Text="September" />
+									<com:TListItem Value="10" Text="Oktober" />
+									<com:TListItem Value="11" Text="November" />
+									<com:TListItem Value="12" Text="Desember" />
+								  </com:TDropDownList> 
+								  <com:TRequiredFieldValidator 
+									ControlToValidate="DDbulan" 											 
+									ErrorMessage="Anda harus memilih bulan"
+									Display="Dynamic" 
+									ValidationGroup="val"/>
+								  &nbsp;								  
+								  <com:TDropDownList 
+								  	ID="DDtahun" 
+									PromptText ="--Silakan Pilih--"
+									PromptValue =""	
+									Width="130px" 
+									Enabled="false"
+									AutoPostBack="true" 
+									CausesValidation="false" 
+									OnSelectedIndexChanged="ChangedDDtahun" 
+									ValidationGroup="val"/>
+									
+								 <com:TRequiredFieldValidator 
+									ControlToValidate="DDtahun" 											 
+									ErrorMessage="Anda harus memilih tahun"
+									Display="Dynamic" 
+									ValidationGroup="val"/>								</td>
+							  </tr>
+							  </com:TControl>
+							  <tr>
+							    <td>&nbsp;</td>
+							    <td>&nbsp;</td>
+							    <td>
+									<com:TButton 
+										ID="prosesBtn" 
+										Text="Proses" 
+										OnClick="cariClicked" 
+										CssClass="button_01" 
+										ValidationGroup="val"/>
+								  </td>
+							    </tr>
+							  
+							  <com:TControl ID="rincianCtrl" Visible="false">
+							  <tr>
+							    <td colspan="3"><hr/></td>
+							    </tr>
+							  <tr>
+							    <td colspan="3">
+									
+									<table width="100%" border="0">
+									  <tr>
+									    <td height="36" colspan="5"><strong>
+									      <com:TLabel ID="txtPeriode"></com:TLabel>
+									    </strong></td>
+									    </tr>
+									  <tr>
+										<td width="30%"><span>&#8226;</span>&nbsp;&nbsp;Sub Total 1 ( Rawat Inap ) </td>
+										<td width="1%" align="center">:</td>
+										<td width="4%">Rp.</td>
+									    <td width="13%" align="right"><com:TLabel ID="subTot1"/></td>
+									    <td width="52%" align="right">&nbsp;</td>
+									  </tr>
+									  <tr>
+										<td><span>&#8226;</span>&nbsp;&nbsp;Sub Total 2 ( Rawat Jalan ) </td>
+										<td align="center">:</td>
+										<td>Rp.</td>
+									    <td align="right"><com:TLabel ID="subTot2"/></td>
+									    <td align="right">&nbsp;</td>
+									  </tr>
+									  <tr>
+										<td><span>&#8226;</span>&nbsp;&nbsp;Total </td>
+										<td align="center">:</td>
+										<td>Rp.</td>
+									    <td align="right"><com:TLabel ID="total"/></td>
+									    <td align="right">&nbsp;</td>
+									  </tr>
+									  <tr>
+                                        <td><span>&#8226;</span>&nbsp;&nbsp;Pajak ( 7,5 % )  </td>
+									    <td align="center">:</td>
+									    <td>Rp.</td>
+									    <td align="right"><com:TLabel ID="pajak"/></td>
+									    <td align="right">&nbsp;</td>
+									  </tr>
+									  <tr>
+                                        <td><span>&#8226;</span>&nbsp;&nbsp;Potongan Rumah Sakit ( 5 % )  </td>
+									    <td align="center">:</td>
+									    <td>Rp.</td>
+									    <td align="right"><com:TLabel ID="potongan"/></td>
+									    <td align="right">&nbsp;</td>
+									  </tr>
+									  <tr>
+									    <td><span>&#8226;</span>&nbsp;&nbsp;<strong>Grand Total  </strong></td>
+									    <td align="center">:</td>
+									    <td><strong>Rp.</strong></td>
+									    <td align="right"><strong>
+									      <com:TLabel ID="grandTot"/>
+									    </strong> </td>
+									    <td align="right">&nbsp;</td>
+									  </tr>
+									  <tr>
+									    <td>&nbsp;</td>
+									    <td align="center">&nbsp;</td>
+									    <td colspan="3">
+											<strong>
+											<com:TLabel ID="terbilang"/>										
+											</strong></td>
+									    </tr>
+									</table>
+
+									
+								</td>
+							    </tr>
+								</com:TControl>
+							</table>
+							</com:TPanel>
+						</td>
+			  		</tr>
+				</table>
+			</td>
+              </tr>
+			  <tr height="15px"><td></td></tr>
+              <tr>
+                <td>
+					
+				</td>
+              </tr>
+              <tr>
+                <td><hr align="center" width="96%" size="2" noshade color="#CECECE"/></td>
+              </tr>
+              <tr>
+                <td><table width="50%" border="0" align="center" cellpadding="0" cellspacing="2">
+                    <tr>
+                      <td>                     
+					  	<!--<com:TButton Text="Baru" OnClick="baruClicked" CssClass="button_01" TabIndex="6" />-->
+
+					  </td>                      
+                      <td>
+					  	<com:TButton 
+							ID="cetakBtn"
+							Text="Cetak"  
+							OnClick="cetakClicked" 
+							CssClass="button_01" 
+							ValidationGroup="val" 
+							Enabled="false"/>
+						<com:TButton Text="Batal" 
+						   OnClick="batalClicked" 
+						   CausesValidation="false" 
+						   CssClass="button_01" 
+						   TabIndex="8" />	
+					  	<com:TButton 
+							Text="Keluar" 
+							OnClick="keluarClicked" 
+							CausesValidation="false" 
+							CssClass="button_01" 
+							/>
+						</td>
+                    </tr>
+                </table></td>
+              </tr>
+          </table></td>
+          <td background="<%=$this->Page->Theme->BaseUrl.'/images/rndBkgRgt.png'%>"><table width="15" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+          </table></td>
+        </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="10" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndBtmLft.png'%>" width="15" height="15" /></td>
+          <td background="<%=$this->Page->Theme->BaseUrl.'/images/rndBkgBtm.png'%>"><table width="720" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+          </table></td>
+          <td><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndBtmRgt.png'%>" width="15" height="15" /></td>
+        </tr>
+    </table></td>
+  </tr>
+</table></td>
+            <td><table width="15" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+            </table></td>
+          </tr>
+        </table></td>
+      </tr>
+      <tr>
+        <td><table width="100%"  border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="1%"><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndAppBtmLft.png'%>" width="15" height="15" /></td>
+            <td width="99%" background="<%=$this->Page->Theme->BaseUrl.'/images/bkg3.png'%>">&nbsp;</td>
+            <td width="1%"><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndAppBtmRgt.png'%>" width="15" height="15" /></td>
+          </tr>
+        </table></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+</com:TContent>

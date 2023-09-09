@@ -1,0 +1,251 @@
+<%@ MasterClass="Application.layouts.MainLayout" %>
+<com:TContent ID="Main">
+<table width="56%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td height="18"></td>
+  </tr>
+  <tr>
+    <td><table width="10"  border="0" align="center" cellpadding="0" cellspacing="0">
+      <tr>
+        <td width="1%"><table width="100%"  border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="1%"><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndAppTopLft.png'%>" width="15" height="15" /></td>
+            <td width="99%" background="<%=$this->Page->Theme->BaseUrl.'/images/bkg3.png'%>">&nbsp;</td>
+            <td width="1%"><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndAppTopRgt.png'%>" width="15" height="15" /></td>
+          </tr>
+        </table></td>
+      </tr>
+      <tr>
+        <td valign="top" background="<%=$this->Page->Theme->BaseUrl.'/images/bkg3.png'%>"><table width="10" border="0" cellpadding="0" cellspacing="0">
+          <tr>
+            <td><table width="15" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+            </table></td>
+            <td><table width="750" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td class="text_08">PEMBUATAN KTP </td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td><table width="10" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndTopLft.png'%>" width="15" height="15" /></td>
+          <td><table width="720" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td><table width="720" border="0" align="right" cellpadding="0" cellspacing="0">
+                    <tr>
+                      <td width="155" height="15" class="text_07">&nbsp;PENDUDUK TETAP </td>
+                      <td width="1000" background="<%=$this->Page->Theme->BaseUrl.'/images/rndBkgTop.png'%>"></td>
+                    </tr>
+                </table></td>
+              </tr>
+          </table></td>
+          <td><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndTopRgt.png'%>" width="15" height="15" /></td>
+        </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="10" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td background="<%=$this->Page->Theme->BaseUrl.'/images/rndBkgLft.png'%>"><table width="15" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+          </table></td>
+          <td><table width="720" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+              <tr>
+                <td><table width="98%" border="0" align="right" cellpadding="0" cellspacing="2">
+                  <tr>
+                    <td width="30%"><span>&#8226;</span> Tempat Lahir </td>
+                    <td width="1%">:</td>
+                    <td width="69%"><com:TDropDownList ID="DDTempatLahir"
+											PromptText ="--Silakan Pilih--"
+											PromptValue =""											
+											DataTextField="nama"
+											DataValueField="id" 										   
+										    ToolTip="Pilih Kota Kelahiran!" 
+										    TabIndex="2" />						
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><span>&#8226; Tanggal Lahir </span></td>
+                    <td>:</td>
+                    <td><com:TTextBox ID="TanggalLahir"  Width="70px" ReadOnly="true" />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><span>&#8226;</span> No.Induk Penduduk </td>
+                    <td>:</td>
+                    <td><com:TTextBox CssClass="input_text" 
+									  ID="No_induk" 													   
+									  MaxLength="7" 
+									  TabIndex="1"
+									  Width="70px"
+									  AutoPostBack="true"												   
+									  ToolTip="No Induk Penduduk"									 												  
+									   />
+                        <com:TRequiredFieldValidator 
+									  ControlToValidate="No_induk"											 
+									  ErrorMessage="Anda harus mengisi No Induk Penduduk"
+									  Display="Dynamic" />
+                        <com:TRegularExpressionValidator
+									  ValidationGroup="Group1"
+									  ControlToValidate="No_induk"
+									  FocusOnError="true"
+									  RegularExpression="\d{6}"
+								 	  Text="No_Induk Penduduk harus 6 digit/angka" /></td>
+                  </tr>
+                  <tr>
+                    <td class="table_01"><span class="bullet_02">&#8226;</span> Kelurahan 
+                    <td>&nbsp;</td>
+                    <td><com:TDropDownList ID="DDKelurahan"
+											PromptText ="--Silakan Pilih--"
+											PromptValue =""											
+											DataTextField="nama"
+											DataValueField="id" 										   
+										    ToolTip="Pilih Kelurahan Tempat Tinggal Anda!" 
+										    TabIndex="2" />&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td class="table_01"><span class="bullet_02">&#8226;</span> Kecamatan </td>
+                    <td>:</td>
+                    <td><com:TDropDownList ID="DDKecamatan"
+											PromptText ="--Silakan Pilih--"
+											PromptValue =""											
+											DataTextField="nama"
+											DataValueField="id" 										   
+										    ToolTip="Pilih Kecamatan Tempat Tinggal Anda!" 
+										    TabIndex="2" /></td>
+                  </tr>
+                  <tr>
+                    <td><span>&#8226;</span> Asal/Pindahan</td>
+                    <td>:</td>
+                    <td><table width="10" border="0" cellspacing="0" cellpadding="0">
+                      <tr>
+                        <td><com:TDropDownList ID="DDCaraMsk"
+											PromptText ="--Silakan Pilih--"
+											PromptValue =""											
+											DataTextField="nama"
+											DataValueField="id" 										   
+										    ToolTip="Pilih cara pasien masuk!" 
+										    TabIndex="3" /></td>
+                        <td>&nbsp;</td>
+                        <td><com:TTextBox ID="TextBox" /></td>
+                      </tr>
+                    </table></td>
+                  </tr>
+                  <tr>
+                    <td valign="top"><span>&#8226; Keterangan Pindah </span></td>
+                    <td valign="top">:</td>
+                    <td>
+<com:TTextBox TextMode="MultiLine" /></td>
+                  </tr>
+                  <tr>
+                    <td valign="top"><span>&#8226;</span> Kebangsaan/Suku Bangsa </td>
+                    <td valign="top">&nbsp;</td>
+                    <td><com:TDropDownList ID="DDKebangsaan"
+											PromptText ="--Silakan Pilih--"
+											PromptValue =""											
+											DataTextField="nama"
+											DataValueField="id" 										   
+										    ToolTip="Pilih Negara yang dituju!" 
+										    TabIndex="2"/>
+                  </tr>
+                  <tr>
+                    <td valign="top"><span>&#8226;</span> Catatan Kewarganegaraan </td>
+                    <td valign="top">&nbsp;</td>
+                    <td><com:TTextBox TextMode="MultiLine" /></td>
+                  </tr>
+                  <tr>
+                    <td valign="top"><span>&#8226; Status Perkawinan </span></td>
+                    <td valign="top">&nbsp;</td>
+                    <td><table width="40%"  border="0">
+  <tr>
+    <td><com:TRadioButtonList ID="statkawinl" TabIndex="10">						 
+						<com:TListItem Text="Belum Kawin" />
+						<com:TListItem Text="Kawin" />
+						<com:TListItem Text="Duda" />
+						<com:TListItem Text="Janda" /> 					
+						</com:TRadioButtonList>  
+  
+</table> </td>
+                  </tr>
+                  <tr>
+                    <td valign="top"><span>&#8226;</span> Status Rumah </td>
+                    <td valign="top">:</td>
+                    <td><com:TDropDownList ID="DDStatusRumah"
+											PromptText ="--Silakan Pilih--"
+											PromptValue =""											
+											DataTextField="nama"
+											DataValueField="id" 										   
+										    ToolTip="Pilih Status Rumah!" 
+										    TabIndex="2" />		 
+                  </tr>
+                </table></td>
+              </tr>
+              <tr>
+                <td><hr align="center" width="96%" size="2" noshade color="#CECECE"/></td>
+              </tr>
+              <tr>
+                <td><table width="10" border="0" align="center" cellpadding="0" cellspacing="2">
+                    <tr>
+                      <td><com:TButton Text="Simpan" OnClick="simpanClicked" CssClass="button_01" /></td>
+                      <td><com:TButton Text="Batal" OnClick="batalClicked" CssClass="button_01" /></td>
+                      <td><com:TButton Text="Keluar" OnClick="keluarClicked" CssClass="button_01" /></td>
+                    </tr>
+                </table></td>
+              </tr>
+          </table></td>
+          <td background="<%=$this->Page->Theme->BaseUrl.'/images/rndBkgRgt.png'%>"><table width="15" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+          </table></td>
+        </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="10" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndBtmLft.png'%>" width="15" height="15" /></td>
+          <td background="<%=$this->Page->Theme->BaseUrl.'/images/rndBkgBtm.png'%>"><table width="720" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+          </table></td>
+          <td><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndBtmRgt.png'%>" width="15" height="15" /></td>
+        </tr>
+    </table></td>
+  </tr>
+</table></td>
+            <td><table width="15" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+            </table></td>
+          </tr>
+        </table></td>
+      </tr>
+      <tr>
+        <td><table width="100%"  border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="1%"><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndAppBtmLft.png'%>" width="15" height="15" /></td>
+            <td width="99%" background="<%=$this->Page->Theme->BaseUrl.'/images/bkg3.png'%>">&nbsp;</td>
+            <td width="1%"><img src="<%=$this->Page->Theme->BaseUrl.'/images/rndAppBtmRgt.png'%>" width="15" height="15" /></td>
+          </tr>
+        </table></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+</com:TContent>

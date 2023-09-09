@@ -1,0 +1,120 @@
+<%@ MasterClass="Application.layouts.MainLayout" %>
+<com:TContent ID="jdMain">
+	Daftar Derivat Obat - Edit
+    
+    <a href="<%= $this->Service->constructUrl('Simak') %>" onclick="maskContent()">
+    <span class="close-btn">
+        <span class="ui-icon ui-icon-circle-close"></span>
+    </span>
+    </a>
+    
+</com:TContent>	
+<com:TContent ID="Main">
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+              
+              <tr>
+                <td><table width="100%" border="0" align="right" cellpadding="0" cellspacing="2">
+                  <tr>
+                    <td width="25%"><span>&#8226;</span> ID</td>
+                    <td width="2%">:</td>
+                    <td width="73%"><com:TActiveTextBox CssClass="input_text" 
+												  ID="ID" 												   
+												  MaxLength="4" 
+												  TabIndex="1"												   
+												  ToolTip="ID Klasifikasi Obat" 
+												  Width="55px"	
+												  ReadOnly="true" 
+												  /></td>
+                  </tr>
+                  <tr>
+                    <td><span>&#8226; </span>Golongan Obat </td>
+                    <td>:</td>
+                    <td>
+						<com:TDropDownList 
+							ID="DDGol"
+							PromptText ="--Silakan Pilih--"
+							PromptValue =""											
+							DataTextField="nama"
+							DataValueField="id" 	
+							ToolTip="Pilih Golongan Obat" 
+							TabIndex="2" 
+							OnSelectedIndexChanged="selectionChangedGol"
+							AutoPostBack="true" 
+							CausesValidation="false" 
+							Width="300px"/>
+						<com:TRequiredFieldValidator
+							Display="Dynamic"
+							ControlToValidate="DDGol"
+							Text="Klasifikasi Obat belum dipilih" 
+							InitialValue="--Silakan Pilih--" 
+							ValidationGroup="val"
+						/>
+					</td>
+                  </tr>
+                  <tr>
+                    <td><span>&#8226; </span>Klasifikasi Obat </td>
+                    <td>:</td>
+                    <td>
+                      <com:TDropDownList 
+							ID="DDKlas"
+							PromptText ="--Silakan Pilih--"
+							PromptValue =""											
+							DataTextField="jenis"
+							DataValueField="id" 	
+							ToolTip="Pilih Klasifikasi Obat" 
+							TabIndex="2"
+							Width="300px"/>
+                      <com:TRequiredFieldValidator
+							Display="Dynamic"
+							ControlToValidate="DDKlas"
+							Text="Klasifikasi Obat belum dipilih" 
+							InitialValue="--Silakan Pilih--" 
+							ValidationGroup="val"
+						/></td>
+                  </tr>
+                  <tr>
+                    <td><span>&#8226; </span>Nama Derivat </td>
+                    <td>:</td>
+                    <td>
+                      <com:TTextBox 
+							ID="nama" 
+							Width="200px" 
+							TabIndex="3"
+							ValidationGroup="val" 
+						/>
+                      <com:TRequiredFieldValidator 
+							ControlToValidate="nama"											 
+						  	ErrorMessage="Anda harus mengisikan nama Klasifikasi Obat"
+						  	Display="Dynamic" 
+							ValidationGroup="val"
+						/></td>
+                  </tr>
+                </table></td>
+              </tr>
+              <tr>
+                <td><hr /></td>
+              </tr>
+              <tr>
+                <td><table width="10" border="0" align="center" cellpadding="0" cellspacing="2">
+                    <tr>
+                      <td><com:TButton Text="Simpan" Attributes.onclick = "maskContent();" 
+					  					OnClick="simpanClicked" 
+										CssClass="button_01" 
+										TabIndex="4" ValidationGroup="val" /></td>
+                      <td><!-- <com:TButton Text="Batal" 					  					
+										ButtonType="Reset" 
+										OnClick="batalClicked"
+										CausesValidation="false" 
+										CssClass="button_01" 
+										TabIndex="5" /> --></td>
+                      <td><com:TButton Text="Keluar" Attributes.onclick = "maskContent();" 
+					  			OnClick="keluarClicked" 
+								CausesValidation="false" 
+								CssClass="button_01" 
+								TabIndex="6" />
+					  </td>
+                    </tr>
+                </table></td>
+              </tr>
+          </table>
+</com:TContent>
